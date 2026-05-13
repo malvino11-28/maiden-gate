@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Schema;
 
 // aqui define uma classe anônima que estende a classe Migration.
 // é o padrão para o laravel saber que isso aqui é uma instrução de banco de dados.
-return new class extends Migration() {
+return new class extends Migration {
     /**
      * o método UP é executado quando roda a migration (cria a tabela).
      */
