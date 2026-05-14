@@ -11,8 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
+
         Schema::create('users', function (Blueprint $table) {
             $table->id();
+            $table->enum('type', ['Mestre', 'Jogador']);
             $table->string('name')->unique();
             $table->string('password');
             $table->rememberToken();
