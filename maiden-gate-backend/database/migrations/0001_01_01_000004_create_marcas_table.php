@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration {
     public function up(): void {
-        Schea::create('marcas', function(Blueprint $table) {
+        Schema::create('marcas', function(Blueprint $table) {
 
             $table->id();
             $table->string('name')->unique(); // string comporta 255 caracteres
@@ -20,7 +20,7 @@ return new class extends Migration {
         });
     }
 
-    public function down(): void {
-        Schema::dropIfExist('marcas');
-    }
+        public function down(): void {
+            Schema::dropIfExist('marcas');
+        }
 };

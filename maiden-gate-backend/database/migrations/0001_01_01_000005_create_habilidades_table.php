@@ -21,7 +21,10 @@ return new class extends Migration {
         $table->Integer('custo_recurso')->default(0);
         $table->string('alcance');
 
-        $table->timestamp();
+        $table->timestamps();
         });
-    }
 }
+    public function down(): void {
+        Schema::dropIfExist('skills');
+    }
+};

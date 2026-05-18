@@ -51,12 +51,11 @@ return new class extends Migration {
         // cria automaticamente duas colunas, created_at e updated_at
         // isso registra quando a ficha foi criada e quando foi editada
 
-        $table->timestamp();
+        $table->timestamps();
         });
-
+    }
         public function down(): void { // método down
             //deleta tabela characters
             Schema::dropIfExists('characters');
         }
-    }
-}
+};
