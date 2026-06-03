@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId("campaign_id")->nullable()->constrained("campaigns")->onDelete("cascade");
             $table->string("title");
-            $table->text("desc");
+            $table->text("description");
             $table->string("chronology");
             $table->string("event_date")->nullable();
             $table->timestamps();

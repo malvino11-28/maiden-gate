@@ -13,10 +13,10 @@ return new class extends Migration
     {
         Schema::create('npcs', function (Blueprint $table) {
             $table->id();
-            $table->foreignId("campaign_id")->nullable()->constrained("campaigns")->onDelete("cascade");
-            $table->foreignId("marca_id")->nullable()->constrained("marcas")->onDelete("set null");
+            $table->foreignId("campaign_id")->nullable()->constrained("campaigns")->nullOnDelete();
+            $table->foreignId("marca_id")->nullable()->constrained("marcas")->nullOnDelete();
             $table->string("name");
-            $table->text("desc");
+            $table->text("description");
             $table->jsonb("skills")->nullable();
             $table->jsonb("stats")->nullable();
             $table->timestamps();

@@ -16,12 +16,13 @@ return new class extends Migration
              // foreignId('user_id'): cria uma coluna para o ID do dono da ficha.
             // constrained() garante que esse usuário exista na tabela 'users'.
             // onDelete('cascade') se o usuário for deletado, a ficha dele some também.
-            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->foreignId('user_id')->constrained("users")->onDelete('cascade');
 
             // aqui é o ID da campanha. nullable() significa que o personagem pode estar "sem mesa" no momento (ficha avulsa).
-            $table->foreignId('campanha_id')->nullable()->constrained()->onDelete('set null');
+            $table->foreignId('campanha_id')->nullable()->constrained("campaigns")->onDelete('set null');
 
-            $table->foreignId("marca_id");
+            $table->foreignId("marca_id")->constrained("marcas")->onDelete("cascade");
+
             $table->string("name");
             $table->text("lore");
             $table->integer("level")->default(1);
@@ -37,7 +38,7 @@ return new class extends Migration
             $table->integer("hp_current")->default(0);
             $table->integer("hp_max")->default(0);
 
-            $table->string("effect");
+            $table->string("effect")->nullable();
 
             $table->integer("pt")->default(0);
             $table->integer("pr")->default(1);

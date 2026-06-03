@@ -15,7 +15,8 @@ return new class extends Migration
             $table->id();
             $table->foreignId("character_id")->constrained("characters")->onDelete("cascade");
             $table->foreignId("item_id")->constrained("items");
-            $table->integer("quantity");
+            $table->integer("quantity")->default(1);
+            $table->unique(["character_id", "item_id"]); // evitando inventário clonado e item clonado   
             $table->timestamps();
         });
     }

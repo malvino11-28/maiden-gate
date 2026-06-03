@@ -19,7 +19,7 @@ return new class extends Migration
             $table->enum("categoria", ["ofensiva", "suporte_defensiva", "destreza_utilidade", "passiva", "penalidade", "ult"]);
             $table->integer("unlock_level")->default(1);
             $table->integer("resource_cost")->default(0);
-            $table->string("alcance");
+            $table->string("alcance")->nullable();
             $table->timestamps();
         });
     }

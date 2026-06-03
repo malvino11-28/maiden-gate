@@ -15,8 +15,8 @@ return new class extends Migration
             $table->id();
             $table->foreignId("campaign_id")->nullable(true)->constrained("campaigns")->onDelete("cascade");
             $table->string("name");
-            $table->enum("types", ["city", "raid", "point"]);
-            $table->text("desc");
+            $table->enum("type", ["city", "raid", "point"]);
+            $table->text("description");
             $table->timestamps();
         });
     }

@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('bestiary', function (Blueprint $table) {
             $table->id();
             $table->string("name");
-            $table->text("desc");
+            $table->text("description");
             $table->jsonb("skills");
             $table->jsonb("stats");
             $table->timestamps();

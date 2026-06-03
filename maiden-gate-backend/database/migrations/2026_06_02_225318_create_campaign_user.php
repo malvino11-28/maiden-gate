@@ -16,6 +16,7 @@ return new class extends Migration
             $table->foreignId("campaign_id")->constrained("campaigns")->onDelete("cascade");
             $table->foreignId("user_id")->constrained("users")->onDelete("cascade");
             $table->enum("role", ["master", "player"])->nullable();
+            $table->unique(["campaign_id", "user_id"]);
             $table->timestamps();
         });
     }

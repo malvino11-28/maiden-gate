@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('marcas', function (Blueprint $table) {
             $table->id();
             $table->enum("name", ["Manifesto", "Oculto", "Respiração", "Entoadora", "Maso"])->unique();
-            $table->text("desc");
+            $table->text("description");
             $table->timestamps();
         });
     }
