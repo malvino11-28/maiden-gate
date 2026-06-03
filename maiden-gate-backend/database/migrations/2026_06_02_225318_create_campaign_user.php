@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('campaign_user', function (Blueprint $table) {
             $table->id();
-            $table->foreignId("campaing_id");
+            $table->foreignId("campaign_id");
             $table->foreignId("user_id");
             $table->enum("role", ["master", "player"])->nullable();
             $table->timestamps();

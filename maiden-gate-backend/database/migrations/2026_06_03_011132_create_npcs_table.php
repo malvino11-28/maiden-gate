@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('npcs', function (Blueprint $table) {
             $table->id();
-            $table->foreignId("campaing_id")->nullable();
+            $table->foreignId("campaign_id")->nullable();
             $table->foreignId("marca_id")->nullable();
             $table->string("name");
             $table->text("desc");
