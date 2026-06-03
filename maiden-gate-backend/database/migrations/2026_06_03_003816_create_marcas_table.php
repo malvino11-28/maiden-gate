@@ -11,11 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('campaign_user', function (Blueprint $table) {
+        Schema::create('marcas', function (Blueprint $table) {
             $table->id();
-            $table->foreignId("campaing_id");
-            $table->foreignId("user_id");
-            $table->enum("role", ["master", "player"])->nullable();
+            $table->enum("name", ["Manifesto", "Oculto", "Respiração", "Entoadora", "Maso"])->unique();
+            $table->text("desc");
             $table->timestamps();
         });
     }
@@ -25,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('campaign_user');
+        Schema::dropIfExists('marcas');
     }
 };

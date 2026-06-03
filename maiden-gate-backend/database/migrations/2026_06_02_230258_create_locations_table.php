@@ -13,6 +13,10 @@ return new class extends Migration
     {
         Schema::create('locations', function (Blueprint $table) {
             $table->id();
+            $table->foreignId("campaing_id");
+            $table->string("name");
+            $table->enum("types", ["city", "raid", "point"]);
+            $table->text("desc");
             $table->timestamps();
         });
     }

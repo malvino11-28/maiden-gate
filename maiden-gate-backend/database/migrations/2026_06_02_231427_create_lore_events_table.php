@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('lore_events', function (Blueprint $table) {
             $table->id();
-            $table->foreignId("campaign_id");
+            $table->foreignId("campaing_id");
             $table->string("title");
             $table->text("desc");
             $table->string("chronology");
