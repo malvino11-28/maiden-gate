@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('campaign_user', function (Blueprint $table) {
             $table->id();
-            $table->foreignId("campaign_id");
-            $table->foreignId("user_id");
+            $table->foreignId("campaign_id")->constrained("campaigns")->onDelete("cascade");
+            $table->foreignId("user_id")->constrained("users")->onDelete("cascade");
             $table->enum("role", ["master", "player"])->nullable();
             $table->timestamps();
         });

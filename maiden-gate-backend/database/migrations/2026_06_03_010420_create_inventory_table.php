@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('inventory', function (Blueprint $table) {
             $table->id();
-            $table->foreignId("character_id");
-            $table->foreignId("item_id");
+            $table->foreignId("character_id")->constrained("characters")->onDelete("cascade");
+            $table->foreignId("item_id")->constrained("items");
             $table->integer("quantity");
             $table->timestamps();
         });

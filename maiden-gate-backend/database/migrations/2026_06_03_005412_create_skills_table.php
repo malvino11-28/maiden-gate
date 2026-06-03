@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('skills', function (Blueprint $table) {
             $table->id();
-            $table->foreignId("marca_id");
+            $table->foreignId("marca_id")->constrained("marcas")->onDelete("cascade");
             $table->string("name");
             $table->text("desc");
             $table->enum("categoria", ["ofensiva", "suporte_defensiva", "destreza_utilidade", "passiva", "penalidade", "ult"]);
