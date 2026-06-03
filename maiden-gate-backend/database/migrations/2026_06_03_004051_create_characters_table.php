@@ -13,27 +13,34 @@ return new class extends Migration
     {
         Schema::create('characters', function (Blueprint $table) {
             $table->id();
-            $table->foreignId("user_id");
-            $table->foreignId("campaing_id")->nullable();
+             // foreignId('user_id'): cria uma coluna para o ID do dono da ficha.
+            // constrained() garante que esse usuário exista na tabela 'users'.
+            // onDelete('cascade') se o usuário for deletado, a ficha dele some também.
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+
+            // aqui é o ID da campanha. nullable() significa que o personagem pode estar "sem mesa" no momento (ficha avulsa).
+            $table->foreignId('campanha_id')->nullable()->constrained()->onDelete('set null');
+
             $table->foreignId("marca_id");
             $table->string("name");
             $table->text("lore");
-            $table->integer("level");
-            $table->integer("exp");
+            $table->integer("level")->default(1);
+            $table->integer("exp")->default(0);
             
-            $table->integer("pod");
-            $table->integer("res");
-            $table->integer("des");
-            $table->integer("intelec");
-            $table->integer("det");
-            $table->integer("pre");
+            $table->integer("pod")->default(0);
+            $table->integer("res")->default(0);
+            $table->integer("des")->default(0);
+            $table->integer("intelec")->default(0);
+            $table->integer("det")->default(0);
+            $table->integer("pre")->default(0);
 
-            $table->integer("hp_current");
-            $table->integer("hp_max");
+            $table->integer("hp_current")->default(0);
+            $table->integer("hp_max")->default(0);
+
             $table->string("effect");
 
-            $table->integer("pt");
-            $table->integer("pr");
+            $table->integer("pt")->default(0);
+            $table->integer("pr")->default(1);
         
             $table->timestamps();
         });
