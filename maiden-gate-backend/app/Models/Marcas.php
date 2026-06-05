@@ -15,7 +15,6 @@ class Marcas extends Model
     //         $table->text("description");
     //         $table->timestamps();
     public function characters() {
-
         return $this->hasMany(Character::class);
     }
 }

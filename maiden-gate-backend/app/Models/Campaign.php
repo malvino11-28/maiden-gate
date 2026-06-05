@@ -14,7 +14,7 @@ class Campaign extends Model
     ];
 
     public function master() {
-        return $this->belongsTo(User::class, 'master_id');
+        return $this->belongsTo(User::class);
     }
 
     public function characters() {
