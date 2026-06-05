@@ -6,13 +6,13 @@ use Illuminate\Database\Eloquent\Model;
 
 class Items extends Model
 {
-    
     protected $fillable = [
     'name',
     'description',
-    'type'
+    'type',
     ];
-    public function items() {
-        return $this->hasMany(Items::class);
+
+    public function inventories() {
+        return $this->hasMany(Inventory::class, 'item_id');
     }
 }

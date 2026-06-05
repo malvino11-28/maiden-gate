@@ -20,4 +20,10 @@ class Campaign extends Model
     public function characters() {
         return $this->hasMany(Character::class);
     }
+
+    public function users() {
+    return $this->belongsToMany(User::class, 'campaign_user')
+        ->withPivot('role')
+        ->withTimestamps();
+}
 }

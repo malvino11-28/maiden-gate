@@ -8,7 +8,7 @@ class Character extends Model
 {
     protected $fillable = [
     'user_id',
-    'campaign_id',
+    'campanha_id',
     'marca_id',
 
     'name',
@@ -19,7 +19,7 @@ class Character extends Model
     'pod',
     'des',
     'res',
-    'int',
+    'intelec',
     'det',
     'pre',
 

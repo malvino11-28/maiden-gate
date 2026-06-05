@@ -9,11 +9,15 @@ class Npcs extends Model
     protected $fillable = [
     'campaign_id',
     'marca_id',
-
     'name',
     'description',
     'skills',
-    'stats'
+    'stats',
+    ];
+
+    protected $casts = [
+    'skills' => 'array',
+    'stats' => 'array',
     ];
 
     public function campaign() {

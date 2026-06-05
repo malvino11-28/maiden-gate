@@ -17,4 +17,8 @@ class Marcas extends Model
     public function characters() {
         return $this->hasMany(Character::class);
     }
+
+    public function skills() {
+    return $this->hasMany(Skills::class, 'marca_id');
+}
 }
