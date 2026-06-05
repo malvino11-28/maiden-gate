@@ -19,7 +19,7 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained("users")->onDelete('cascade');
 
             // aqui é o ID da campanha. nullable() significa que o personagem pode estar "sem mesa" no momento (ficha avulsa).
-            $table->foreignId('campanha_id')->nullable()->constrained("campaigns")->onDelete('set null');
+            $table->foreignId('campaign_id')->nullable()->constrained("campaigns")->onDelete('set null');
 
             $table->foreignId("marca_id")->constrained("marcas")->onDelete("cascade");
 
