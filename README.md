@@ -1,3 +1,9 @@
+<p align="center">
+  <b>Português</b> | <a href="README.en.md">English</a>
+</p>
+
+---
+
 # Maiden Gate
 
 > Uma plataforma web de suporte para o sistema de RPG de mesa autoral "Voice Of Flower: Awakening of Maiden", projetada para centralizar informações, automatizar cálculos de atributos e servir como assistente digital para Mestres e Jogadores.
