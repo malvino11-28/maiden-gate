@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\CampaignUser;
 
 class CampaignUserController extends Controller
 {
@@ -12,15 +13,23 @@ class CampaignUserController extends Controller
      */
     public function index()
     {
-        //
+        return response()->json(CampaignUser::with(['campaign', 'user'])->get());
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a newly created resou  rce in storage.
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->validate([
+            'campaign_id' => 'required|exists:campaigns, id',
+            'user_id' => 'required|exists:users, id',
+            'role' => 'required|string'
+        ]);
+
+        $campaignUser = CampaignUser::create($data);
+
+        return response()->json($campaignUser, 201);
     }
 
     /**
@@ -28,15 +37,9 @@ class CampaignUserController extends Controller
      */
     public function show(string $id)
     {
-        //
-    }
+        $campaignUser = CampaignUser::with(['campaign, user'])->findOrFail($id);
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
+        return response()->json($campaignUser);
     }
 
     /**
@@ -44,6 +47,11 @@ class CampaignUserController extends Controller
      */
     public function destroy(string $id)
     {
-        //
-    }
+        $campaignUser = CampaignUser::with(['campaign, user'])->findOrFail($id);
+
+        $campaignUser->delete();
+        
+        return response()->json(['message' => 'participacao removido com suceop']);
+    } 
 }
+  
