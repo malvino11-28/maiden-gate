@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Models\Bestiary;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
@@ -12,7 +13,7 @@ class BestiaryController extends Controller
      */
     public function index()
     {
-        //
+        return response()->json(Bestiary::all());
     }
 
     /**
@@ -20,7 +21,15 @@ class BestiaryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->validate(['name' => 'required|string|max:255', 
+        'description' => 'required|string',
+        'skills' => 'required|array',
+        'stats' => 'required|array'
+        ]);
+
+        $monster = Bestiary::create($data);
+
+        return response()->json($monster, 201);
     }
 
     /**
@@ -28,7 +37,9 @@ class BestiaryController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $monster = Bestiary::findOrFail($id);
+
+        return response()->json($monster);
     }
 
     /**
@@ -36,7 +47,19 @@ class BestiaryController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $monster = Bestiary::findOrFail($id);
+
+        $data = $request->validate([
+            'name' => 'sometimes|string|max:255',
+            'description' => 'sometimes|string',
+
+            'skills' => 'sometimes|array',
+            'stats' => 'sometimes|array'
+        ]);
+
+        $monster->update($data);
+
+        return response()->json($monster);
     }
 
     /**
@@ -44,6 +67,12 @@ class BestiaryController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $monster = Bestiary::findOrFail($id);
+
+        $monster->delete();
+
+        return response()->json([
+            'message' => 'Monstro removido com sucesso.'
+        ]);
     }
 }
