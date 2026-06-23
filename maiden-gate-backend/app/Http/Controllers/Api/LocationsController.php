@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Models\Locations;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
@@ -12,7 +13,7 @@ class LocationsController extends Controller
      */
     public function index()
     {
-        //
+        return response()->json(Locations::all());
     }
 
     /**
@@ -20,7 +21,16 @@ class LocationsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->validate([
+            'campaign_id' => 'nullable|integer:exist:campaign,id',
+            'name' => 'required|string|max:255',
+            'type' => 'required|string',
+            'description' => 'required|string'
+        ]);
+
+        $location = Locations::create($data);
+
+        return response()->json($location, 201);
     }
 
     /**
@@ -28,7 +38,9 @@ class LocationsController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $location = Locations::findOrFail($id);
+
+        return response()->json($location);
     }
 
     /**
@@ -36,7 +48,17 @@ class LocationsController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $location = Locations::findOrFail($id);
+
+        $data = $request->validate([
+            'name' => 'sometimes|string|max:255',
+            'type' => 'sometimes|string',
+            'description' => 'sometimes|string'
+        ]);
+
+        $location = Locations::update($data);
+
+        return response()->json($location);
     }
 
     /**
@@ -44,6 +66,10 @@ class LocationsController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $location = Locations::findOrFail($id);
+
+        $location->delete();
+
+        return response($location);
     }
 }

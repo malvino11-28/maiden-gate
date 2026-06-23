@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Models\Items;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
@@ -12,7 +13,7 @@ class ItemsController extends Controller
      */
     public function index()
     {
-        
+        return response()->json(Items::all());
     }
 
     /**
@@ -20,7 +21,15 @@ class ItemsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->validate([
+            'name' => 'required|string|max:255',
+            'description' => 'required|string',
+            'type' => 'nullable|string'
+        ]);
+
+        $items = Items::create($data);
+
+        return response()->json($items, 201);
     }
 
     /**
@@ -28,7 +37,9 @@ class ItemsController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $items = Items::findOrFail($id);
+
+        return response()->json($items);
     }
 
     /**
@@ -36,7 +47,17 @@ class ItemsController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $items = Items::findOrFail($id);
+
+        $data = $request->validate([
+            'name' => 'sometimes|string|max:255',
+            'description' => 'sometimes|string',
+            'type' => 'sometimes|string'
+        ]);
+
+        $items->update($data);
+
+        return response()->json(['message' => 'item atualizado', 'item' => $items]);
     }
 
     /**
@@ -44,6 +65,10 @@ class ItemsController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $items = Items::findOrFail($id);
+
+        $items->delete();
+
+        return response()->json($items);
     }
 }
