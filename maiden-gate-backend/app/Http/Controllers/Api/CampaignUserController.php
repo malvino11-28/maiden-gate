@@ -22,8 +22,8 @@ class CampaignUserController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate([
-            'campaign_id' => 'required|exists:campaigns, id',
-            'user_id' => 'required|exists:users, id',
+            'campaign_id' => 'required|exists:campaigns,id',
+            'user_id' => 'required|exists:users,id',
             'role' => 'required|string'
         ]);
 

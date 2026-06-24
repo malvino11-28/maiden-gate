@@ -23,8 +23,8 @@ class NpcsController extends Controller
     {
         $data = $request->validate(
             [
-            'campaign_id' => 'required|integer|exist:campaign, id',
-            'marca_id' => 'required|integer|exist:marca,id',
+            'campaign_id' => 'required|integer|exists:campaign,id',
+            'marca_id' => 'required|integer|exists:marca,id',
             'name' => 'required|string|max:255',
             'description' => 'required|string',
 

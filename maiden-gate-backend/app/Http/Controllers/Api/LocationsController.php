@@ -22,7 +22,7 @@ class LocationsController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate([
-            'campaign_id' => 'nullable|integer:exist:campaign,id',
+            'campaign_id' => 'nullable|exist:campaign,id',
             'name' => 'required|string|max:255',
             'type' => 'required|string',
             'description' => 'required|string'

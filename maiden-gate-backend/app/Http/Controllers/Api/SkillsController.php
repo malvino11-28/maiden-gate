@@ -22,7 +22,7 @@ class SkillsController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate([
-            'marca_id' => 'required|integer|exist:marca, id',
+            'marca_id' => 'required|integer|exists:marca,id',
             'name' => 'required|string|max:255',
             'desc' => 'required|string',
             'categoria' => 'required|string',
