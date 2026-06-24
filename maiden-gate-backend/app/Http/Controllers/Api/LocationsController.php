@@ -56,7 +56,7 @@ class LocationsController extends Controller
             'description' => 'sometimes|string'
         ]);
 
-        $location = Locations::update($data);
+        $location->update($data);
 
         return response()->json($location);
     }

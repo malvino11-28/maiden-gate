@@ -66,7 +66,7 @@ class NpcsController extends Controller
             ]
         );
 
-        $npc = Npcs::update($data);
+        $npc->update($data);
         
         return response()->json($npc);
     }

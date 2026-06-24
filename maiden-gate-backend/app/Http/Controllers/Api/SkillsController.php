@@ -62,7 +62,7 @@ class SkillsController extends Controller
             'alcance' => 'sometimes|string'
         ]);
 
-        $skill = Skills::update($data);
+        $skill->update($data);
 
         return response()->json($skill);
     }
