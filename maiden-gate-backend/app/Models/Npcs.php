@@ -28,3 +28,11 @@ class Npcs extends Model
         return $this->belongsTo(Marcas::class);
     }
 }
+
+$table->foreignId("campaign_id")->nullable()->constrained("campaigns")->nullOnDelete();
+            $table->foreignId("marca_id")->nullable()->constrained("marcas")->nullOnDelete();
+            $table->string("name");
+            $table->text("description");
+            $table->jsonb("skills")->nullable();
+            $table->jsonb("stats")->nullable();
+            $table->timestamps();

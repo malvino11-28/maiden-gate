@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Models\Npcs;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
@@ -12,7 +13,7 @@ class NpcsController extends Controller
      */
     public function index()
     {
-        //
+        return response()->json();
     }
 
     /**
@@ -20,7 +21,21 @@ class NpcsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->validate(
+            [
+            'campaign_id' => 'required|integer|exist:campaign, id',
+            'marca_id' => 'required|integer|exist:marca,id',
+            'name' => 'required|string|max:255',
+            'description' => 'required|string',
+
+            'skills' => 'nullable|array',
+            'stats' => 'nullable|array'
+            ]
+        );
+
+        $npc = Npcs::create($data);
+        
+        return response()->json($npc);
     }
 
     /**
@@ -28,7 +43,9 @@ class NpcsController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $npc = Npcs::findOrFail($id);
+
+        return response()->json($npc);
     }
 
     /**
@@ -36,7 +53,22 @@ class NpcsController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $npc = Npcs::findOrFail($id);
+
+        $data = $request->validate(
+            [
+            'marca_id' => 'sometimes|integer|exist:marca,id',
+            'name' => 'sometimes|string|max:255',
+            'description' => 'sometimes|string',
+
+            'skills' => 'sometimes|array',
+            'stats' => 'sometimes|array'
+            ]
+        );
+
+        $npc = Npcs::update($data);
+        
+        return response()->json($npc);
     }
 
     /**
@@ -44,6 +76,10 @@ class NpcsController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $npc = Npcs::findOrFail($id);
+
+        $npc->delete();
+
+        return response()->json($npc);
     }
 }
