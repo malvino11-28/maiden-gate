@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\BestiaryController;
 use App\Http\Controllers\Api\CampaignController;
 use App\Http\Controllers\Api\CampaignUserController;
@@ -26,6 +27,7 @@ Route::get('/teste', function () {
     ]);
 });
 
+Route::apiResource('register', AuthController::class);
 Route::apiResource('bestiary', BestiaryController::class);
 Route::apiResource('campaign', CampaignController::class);
 Route::apiResource('campaign_user', CampaignUserController::class);
