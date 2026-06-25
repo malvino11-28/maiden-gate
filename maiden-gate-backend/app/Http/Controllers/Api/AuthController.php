@@ -12,8 +12,8 @@ class AuthController extends Controller
     public function register(Request $request)
     {
         $data = $request->validate([
-            'type' => 'required|in:master, player',
-            'name' => 'required|string|max:255|unique:users, name',
+            'type' => 'required|in:master,player',
+            'name' => 'required|string|max:255|unique:users,name',
             'password' => 'required|string|min:6',
         ]);
 
@@ -36,7 +36,7 @@ class AuthController extends Controller
             return response()->json(['message' => 'usuario nao encontrado'], 404);
         }
 
-        if (Hash::check($data['password'], $user->password)) {
+        if (!Hash::check($data['password'], $user->password)) {
             return response()->json(['message' => 'senha invalida'], 401);
         }
 
