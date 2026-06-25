@@ -42,8 +42,13 @@ class CharacterController extends Controller
         $data['hp_max'] = (int) floor($data['res'] * 1.5);
         $data['hp_current'] = $data['hp_max'];
         // $data['effect'] vem como null
-        $data['pt'] = $data['des'] * ($data['intelec'] - 6); // pontos de energia
-        $data['pr'] = $data['des'] * ($data['det'] - 12); // pontos de reacao
+        // garante que o pt mínimo seja sempre 1, mesmo com penalidades externas
+        $calculo_pt = 4 + floor($data['int'] * 0.6) + floor($data['des'] * 0.2);
+        $data['pt'] = max(1, $calculo_pt); 
+
+        // garante que o pr mínimo seja sempre 1, mesmo com penalidades externas
+        $calculo_pr = 1 + floor($data['des'] * 0.25) + floor($data['det'] * 0.1);
+        $data['pr'] = max(1, $calculo_pr);
 
         $character = Character::create($data);
 
@@ -87,11 +92,19 @@ class CharacterController extends Controller
             'intelec' => 'sometimes|integer|min:0',
             'det' => 'sometimes|integer|min:0',
             'pre' => 'sometimes|integer|min:0',
+            'hp_current' => 'sometimes|integer|min:1'
         ]);
 
         $character->update($data);
 
-        $character->hp_max = (int) floor($character->res * 1.5);
+        if ($character->hp_current == $character->hp_max) {
+            $character->hp_max = (int) floor($character->res * 1.5);
+            $character->hp_current = $character->hp_max;
+        } 
+        else {
+            $character->hp_max = (int) floor($character->res * 1.5);
+        }
+
         $character->pt = $character->des * ($character->intelec - 6);
         $character->pr = $character->des * ($character->det - 12);
 

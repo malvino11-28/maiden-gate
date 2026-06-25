@@ -51,7 +51,7 @@ class InventoryController extends Controller
      */
     public function show(string $id)
     {
-        $inventory = Inventory::findOrFail($id);
+        $inventory = Inventory::with('item')->findOrFail($id);
 
         return response()->json($inventory);
     }
