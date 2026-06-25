@@ -22,8 +22,8 @@ class CampaignController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate([
-            'master_id' => 'sometimes|required|exists:users,id',
-            'name' => 'sometimes|required|string',
+            'master_id' => 'required|exists:users,id',
+            'name' => 'required|string',
             'description' => 'sometimes|nullable|string',
         ]);
 
@@ -48,7 +48,7 @@ class CampaignController extends Controller
     public function update(Request $request, Campaign $campaign)
     {
         $data = $request->validate([
-            'master_id' => 'sometimes|required|exists:user,id',
+            'master_id' => 'sometimes|required|exists:users,id',
             'name' => 'sometimes|required|string',
             'description' => 'sometimes|nullable|string',
         ]);

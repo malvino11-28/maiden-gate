@@ -28,7 +28,8 @@ Route::get('/teste', function () {
 });
 
 Route::apiResource('register', AuthController::class);
-Route::post('register', [AuthController::class, 'register']);
+    Route::post('register', [AuthController::class, 'register']);
+    Route::post('login', [AuthController::class, 'login']);
 Route::apiResource('bestiary', BestiaryController::class);
 Route::apiResource('campaign', CampaignController::class);
 Route::apiResource('campaign_user', CampaignUserController::class);
