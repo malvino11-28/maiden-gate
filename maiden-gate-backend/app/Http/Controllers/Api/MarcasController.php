@@ -22,7 +22,8 @@ class MarcasController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate([
-            'name' => 'required|string|unique:marcas,name',
+            // 'name' => 'required|string|unique:marcas,name',
+            'name' => 'required|string|in:Manifesto,Oculto,Respiração,Entoadora,Maso|unique:marcas,name',
             'description' => 'required|string',
         ]); // validando
 
@@ -45,13 +46,13 @@ class MarcasController extends Controller
     public function update(Request $request, Marcas $marca)
     {
         $data = $request->validate([
-            'name' => 'sometimes|required|string|unique:marcas,name,' . $marca->id,
+            'name' => 'required|string|in:Manifesto,Oculto,Respiração,Entoadora,Maso|unique:marcas,name' . $marca->id,
             'description' => 'sometimes|required|string',
         ]);
 
         $marca->update($data);
 
-        return response()->json($data);
+        return response()->json($marca);
     }
 
     /**
