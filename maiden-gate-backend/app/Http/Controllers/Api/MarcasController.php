@@ -46,7 +46,7 @@ class MarcasController extends Controller
     public function update(Request $request, Marcas $marca)
     {
         $data = $request->validate([
-            'name' => 'required|string|in:Manifesto,Oculto,Respiração,Entoadora,Maso|unique:marcas,name' . $marca->id,
+            'name' => 'sometimes|string|in:Manifesto,Oculto,Respiração,Entoadora,Maso|unique:marcas,name' . $marca->id,
             'description' => 'sometimes|required|string',
         ]);
 
