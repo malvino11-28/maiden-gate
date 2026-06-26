@@ -1,6 +1,12 @@
+<p align="center">
+  <b>Português</b> | <a href="README.en.md">English</a>
+</p>
+
+---
+
 # Maiden Gate
 
-> Uma plataforma web de suporte para o sistema de RPG de mesa "Voice Of Flower: Forsaken Maiden", projetada para centralizar informações, automatizar cálculos de atributos e servir como assistente digital para Mestres e Jogadores.
+> Uma plataforma web de suporte para o sistema de RPG de mesa autoral "Voice Of Flower: Awakening of Maiden", projetada para centralizar informações, automatizar cálculos de atributos e servir como assistente digital para Mestres e Jogadores.
 
 ---
 
@@ -8,13 +14,13 @@
 
 O Maiden Gate nasce para substituir os métodos tradicionais de gerenciamento de RPG, como anotações físicas e planilhas dispersas. A proposta é eliminar o excesso de papel na mesa e otimizar o fluxo de informações, permitindo que o grupo foque na narrativa e na imersão.
 
-Embora seja moldado inicialmente para o sistema Voice Of Flower, o núcleo da plataforma está sendo projetado para ser adaptável para outros sistemas de RPG.
+Embora seja moldado inicialmente para o sistema VOF (Voice of Flower), o núcleo da plataforma está sendo projetado para ser adaptável para outros sistemas de RPG.
 
 ---
 
-## Sobre o Sistema Voice Of Flower
+## Sobre o Sistema VOF
 
-O **Voice Of Flower: Forsaken Maiden** é um sistema próprio de RPG de mesa que atualmente está sendo desenvolvido por mim. Ele possui um cenário e mecânicas autorais, o que torna este software uma ferramenta essencial e sob medida para testar e aplicar suas regras de forma dinâmica.
+O **Voice Of Flower: Awakening of Maiden** é um sistema próprio de RPG de mesa que atualmente está sendo desenvolvido por mim. Ele possui um cenário e mecânicas autorais, o que torna este software uma ferramenta essencial e sob medida para testar e aplicar suas regras de forma dinâmica.
 
 ---
 
