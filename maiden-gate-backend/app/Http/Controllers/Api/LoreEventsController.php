@@ -24,6 +24,7 @@ class LoreEventsController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate([
+            'campaign_id' => 'nullable|exists:campaigns,id',
             'title' => 'required|string|max:255',
             'description' => 'required|string',
             'chronology' => 'required|string|max:255',
@@ -32,7 +33,7 @@ class LoreEventsController extends Controller
 
         $lore = LoreEvents::create($data);
 
-        return response()->json($lore);
+        return response()->json($lore, 201);
     }
 
     /**
