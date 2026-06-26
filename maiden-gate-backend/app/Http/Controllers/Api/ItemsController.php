@@ -69,6 +69,6 @@ class ItemsController extends Controller
 
         $items->delete();
 
-        return response()->json($items);
+        return response()->json(['message' => 'item excluido']);
     }
 }
