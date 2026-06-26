@@ -22,6 +22,7 @@ class CharacterController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate([
+            'user_id' => 'required|exists:users,id',
             'campaign_id' => 'nullable|exists:campaigns,id',
             'marca_id' => 'required|exists:marcas,id',
 
