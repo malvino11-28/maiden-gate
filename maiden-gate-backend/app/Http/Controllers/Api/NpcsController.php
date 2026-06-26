@@ -13,11 +13,12 @@ class NpcsController extends Controller
      */
 public function index(string $campaignId)
 {
-    $npcs = Npcs::whereIn('campaign_id', [$campaignId, null])->get();
+    $npcs = Npcs::where('campaign_id', $campaignId)
+                ->orWhereNull('campaign_id')
+                ->get();
 
     return response()->json($npcs);
 }
-
 
     /**
      * Store a newly created resource in storage.
