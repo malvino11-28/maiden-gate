@@ -11,10 +11,13 @@ class NpcsController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
-    {
-        return response()->json();
-    }
+public function index(string $campaignId)
+{
+    $npcs = Npcs::whereIn('campaign_id', [$campaignId, null])->get();
+
+    return response()->json($npcs);
+}
+
 
     /**
      * Store a newly created resource in storage.
@@ -23,8 +26,8 @@ class NpcsController extends Controller
     {
         $data = $request->validate(
             [
-            'campaign_id' => 'required|integer|exists:campaign,id',
-            'marca_id' => 'required|integer|exists:marca,id',
+            'campaign_id' => 'nullable|integer|exists:campaigns,id',
+            'marca_id' => 'nullable|integer|exists:marcas,id',
             'name' => 'required|string|max:255',
             'description' => 'required|string',
 
@@ -57,7 +60,7 @@ class NpcsController extends Controller
 
         $data = $request->validate(
             [
-            'marca_id' => 'sometimes|integer|exist:marca,id',
+            'marca_id' => 'sometimes|integer|exists:marcas,id',
             'name' => 'sometimes|string|max:255',
             'description' => 'sometimes|string',
 
@@ -80,6 +83,6 @@ class NpcsController extends Controller
 
         $npc->delete();
 
-        return response()->json($npc);
+        return response()->json(['message' => 'NPC removido com sucesso.']);
     }
 }
