@@ -69,7 +69,11 @@ class InventoryController extends Controller
 
         $inventory->update($data);
 
-        return response()->json(['message' => 'item adicionado ao inventário', 'item' => $inventory]);
+        if ($inventory->quantity == 0) { 
+            $inventory->delete(); 
+        }
+
+        return response()->json($inventory);
     }
 
     /**
@@ -81,6 +85,6 @@ class InventoryController extends Controller
 
         $inventory->delete();
 
-        return response()->json($inventory);
+        return response()->json(['message' => 'item removido do inventário']);
     }
 }
