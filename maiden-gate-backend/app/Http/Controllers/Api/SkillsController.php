@@ -22,10 +22,10 @@ class SkillsController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate([
-            'marca_id' => 'required|integer|exists:marca,id',
+            'marca_id' => 'required|integer|exists:marcas,id',
             'name' => 'required|string|max:255',
             'desc' => 'required|string',
-            'categoria' => 'required|string',
+            'categoria' => 'required|string|in:ofensiva,suporte_defensiva,destreza_utilidade,passiva,penalidade,ult',
             'unlock_level' => 'required|integer|min:1',
             'resource_cost' => 'required|integer|min:0',
             'alcance' => 'nullable|string'
@@ -56,7 +56,7 @@ class SkillsController extends Controller
         $data = $request->validate([
             'name' => 'sometimes|string|max:255',
             'desc' => 'sometimes|string',
-            'categoria' => 'sometimes|string',
+            'categoria' => 'sometimes|string|in:ofensiva,suporte_defensiva,destreza_utilidade,passiva,penalidade,ult',
             'unlock_level' => 'sometimes|integer|min:1',
             'resource_cost' => 'sometimes|integer|min:0',
             'alcance' => 'sometimes|string'
@@ -76,6 +76,6 @@ class SkillsController extends Controller
 
         $skill->delete();
 
-        return response()->json($skill);
+        return response()->json(['message' => 'habilidade excluida']);
     }
 }
