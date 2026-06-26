@@ -37,7 +37,7 @@ class CampaignUserController extends Controller
      */
     public function show(string $id)
     {
-        $campaignUser = CampaignUser::with(['campaign, user'])->findOrFail($id);
+        $campaignUser = CampaignUser::with(['campaign', 'user'])->findOrFail($id);
 
         return response()->json($campaignUser);
     }
@@ -47,11 +47,11 @@ class CampaignUserController extends Controller
      */
     public function destroy(string $id)
     {
-        $campaignUser = CampaignUser::with(['campaign, user'])->findOrFail($id);
+        $campaignUser = CampaignUser::with(['campaign', 'user'])->findOrFail($id);
 
         $campaignUser->delete();
         
-        return response()->json(['message' => 'participacao removido com suceop']);
+        return response()->json(['message' => 'participacao removido com sucesso']);
     } 
 }
   
