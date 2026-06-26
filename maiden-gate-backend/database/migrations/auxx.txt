@@ -1,0 +1,115 @@
+ 
+users ( ==================
+id INTEGER [PK], // 
+type ENUM[‘Mestre’, ‘Jogador’], //
+name STRING UNIQUE, //
+password STRING, //
+token, //
+date TIMESTAMP //
+) ==================
+_____________________________
+sessions (
+id INTEGER [PK],
+user_id INTEGER [FK] NULL,
+ip_adress STRING NULL,
+user_agent TEXT NULL,
+payload TEXT,
+last_activity INTEGER
+)
+_____________________________
+roles (
+id : op ? op
+)
+________________________________________
+________________________________________
+campaigns (
+id INTEGER [PK],
+id_master INTEGER [FK],
+desc TEXT,
+players INTEGER [FK] //camp memb
+)
+_____________________________
+locations (
+city TEXT,
+raid TEXT,
+points TEXT
+) _____________________________
+lore_events (
+register TEXT,
+crono TEXT
+)
+________________________________________
+________________________________________
+characters (
+id INTEGER [PK],
+user_id INTEGER [FK],
+campanha_id INTEGER NULL [FK],
+marca INTEGER [FK]
+name STRING,
+lore TEXT,
+level INTEGER,
+exp INTEGER,
+pod INTEGER,
+res INTEGER,
+des INTEGER,
+int INTEGER,
+det INTEGER,
+pre INTEGER,
+hp_current INTEGER,
+hp_max INTEGER,
+effect STRING,
+pt INTEGER,
+pr INTEGER,
+date TIMESTAMP
+)________________________________________
+________________________________________
+marcas (
+id INTEGER [PK],
+name STRING UNIQUE,
+marca ENUM[‘Manifesto’, ‘Oculto’, ‘Respiração’, ‘Entoadora’, ‘Maso’],
+desc TEXT,
+date TIMESTAMP
+)
+
+skills (
+id INTEGER [PK],
+marca_id INTEGER [FK],
+name STRING,
+desc TEXT,
+categoria ENUM[‘Ofensiva’,’Suporte/Defensiva’,’Destreza/Utilidade’,’Passiva’,’Penalidade’, ‘Ult’],
+nivel_desbloqueio INTEGER,
+custo_recurso INTEGER,
+alcance STRING
+)
+
+________________________________________
+________________________________________
+
+
+
+item (
+id INTEGER [PK]
+name STRING,
+desc TEXT,
+qtd INTEGER
+)
+_____________________________
+inventory (
+id_item INTEGER [FK],
+id_player INTEGER [FK],
+storage INTEGER
+)
+_____________________________
+bestiary (
+id INTEGER [PK],
+skills TEXT,
+stats TEXT
+)
+_____________________________
+npc (
+id INTEGER [PK],
+marca INTEGER [FK],
+name STRING,
+desc TEXT
+)
+
