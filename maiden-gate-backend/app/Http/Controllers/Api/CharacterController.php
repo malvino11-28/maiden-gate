@@ -43,7 +43,7 @@ class CharacterController extends Controller
         $data['hp_current'] = $data['hp_max'];
         // $data['effect'] vem como null
         // garante que o pt mínimo seja sempre 1, mesmo com penalidades externas
-        $calculo_pt = 4 + floor($data['int'] * 0.6) + floor($data['des'] * 0.2);
+        $calculo_pt = 4 + floor($data['intelec'] * 0.6) + floor($data['des'] * 0.2);
         $data['pt'] = max(1, $calculo_pt); 
 
         // garante que o pr mínimo seja sempre 1, mesmo com penalidades externas
@@ -51,16 +51,6 @@ class CharacterController extends Controller
         $data['pr'] = max(1, $calculo_pr);
 
         $character = Character::create($data);
-
-        // a ser imple manual do servidor
-        // $user_id
-        // level
-        // exp
-        // hp_max
-        // hp_current
-        // effect
-        // pt
-        // pr
 
         return response()->json($character, 201);
     }
@@ -105,8 +95,14 @@ class CharacterController extends Controller
             $character->hp_max = (int) floor($character->res * 1.5);
         }
 
-        $character->pt = $character->des * ($character->intelec - 6);
-        $character->pr = $character->des * ($character->det - 12);
+        // garante que o pt mínimo seja sempre 1, mesmo com penalidades externas
+        $calculo_pt = 4 + floor($character->intelec * 0.6) + floor($character->des * 0.2);
+        $character->pt = max(1, $calculo_pt);
+
+        // garante que o pr mínimo seja sempre 1, mesmo com penalidades externas
+        $calculo_pr = 1 + floor($character->des * 0.25) + floor($character->det * 0.1);
+        $character->pr = max(1, $calculo_pr);
+
 
         $character->save();
 
