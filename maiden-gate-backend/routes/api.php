@@ -38,6 +38,7 @@ Route::apiResource('inventory', InventoryController::class);
 Route::apiResource('items', ItemsController::class);
 Route::apiResource('locations', LocationsController::class);
 Route::apiResource('lore_events', LoreEventsController::class);
+    Route::get('/campaign/{campaignId}/lore_events', [LoreEventsController::class, 'index']);
 Route::apiResource('marcas', MarcasController::class);
 Route::apiResource('npcs', NpcsController::class);
 Route::apiResource('skills', SkillsController::class);
