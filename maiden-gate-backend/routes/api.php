@@ -35,6 +35,7 @@ Route::apiResource('campaign', CampaignController::class);
 Route::apiResource('campaign_user', CampaignUserController::class);
 Route::apiResource('characters', CharacterController::class);
 Route::apiResource('inventory', InventoryController::class);
+    Route::get('/characters/{characterId}/inventory', [InventoryController::class, 'index']);
 Route::apiResource('items', ItemsController::class);
 Route::apiResource('locations', LocationsController::class);
 Route::apiResource('lore_events', LoreEventsController::class);
