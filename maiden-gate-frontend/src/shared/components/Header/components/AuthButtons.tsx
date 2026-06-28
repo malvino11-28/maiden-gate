@@ -1,11 +1,11 @@
 type AuthButtonsProps = {
-  onLoginCheck: () => void;
-  onRegisterCheck: () => void;
+  onLoginClick: () => void;
+  onRegisterClick: () => void;
 };
 
 export default function AuthButtons({
-  onLoginCheck,
-  onRegisterCheck,
+  onLoginClick,
+  onRegisterClick,
 }: AuthButtonsProps) {
   return (
     <div
@@ -16,7 +16,7 @@ export default function AuthButtons({
             "
     >
       <button
-        onClick={onLoginCheck}
+        onClick={onLoginClick}
         className="
                     rounded-xl
                     border
@@ -39,7 +39,7 @@ export default function AuthButtons({
       </button>
 
       <button
-        onClick={onRegisterCheck}
+        onClick={onRegisterClick}
         className="
             rounded-xl
             bg-amber-500

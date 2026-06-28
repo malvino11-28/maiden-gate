@@ -3,7 +3,7 @@ import { useState } from "react";
 import Logo from "./components/Logo";
 import Navigation from "./components/Navigation";
 import AuthButtons from "./components/AuthButtons";
-import UseMenu from "./components/UserMenu";
+import UserMenu from "./components/UserMenu";
 
 export default function Header() {
   const [isAuthenticated] = useState(false);
@@ -55,8 +55,8 @@ export default function Header() {
           <UserMenu />
         ) : (
           <AuthButtons
-            onLoginCheck={handleLoginClick}
-            onRegisterCheck={handleRegisterClick}
+            onLoginClick={handleLoginClick}
+            onRegisterClick={handleRegisterClick}
           />
         )}
       </div>

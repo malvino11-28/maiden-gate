@@ -1,7 +1,7 @@
-import AppRoutes from "./routes/AppRoutes";
+import Header from "./shared/components/Header/Header";
 
 function App() {
-  return <AppRoutes />;
+  return <Header />;
 }
 
 export default App;
