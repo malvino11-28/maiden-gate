@@ -1,5 +1,5 @@
 // responsavel por conversar com o back
-import api from "./api";
+import api from "../../../services/api.ts";
 
 type LoginData = {
   // dados obrigatórios para o login
