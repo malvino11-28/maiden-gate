@@ -14,6 +14,7 @@ import CookiesPage from "../features/legal/pages/CookiesPage";
 import MasterDashboard from "../features/dashboard/master/pages/MasterDashboard";
 import PlayerDashboard from "../features/dashboard/player/pages/PlayerDashboard";
 import ProtectedRoute from "./ProtectedRoute";
+import RoleProtectedRoute from "./RolePRotectedRoute";
 
 export default function AppRoutes() {
   return (
@@ -29,8 +30,13 @@ export default function AppRoutes() {
       </Route>
 
       <Route element={<ProtectedRoute />}>
-        <Route path="/dashboard/master" element={<MasterDashboard />} />
-        <Route path="/dashboard/player" element={<PlayerDashboard />} />
+        <Route element={<RoleProtectedRoute allowedRole="master" />}>
+          <Route path="/dashboard/master" element={<MasterDashboard />} />
+        </Route>
+
+        <Route element={<RoleProtectedRoute allowedRole="player" />}>
+          <Route path="/dashboard/player" element={<PlayerDashboard />} />
+        </Route>
       </Route>
     </Routes>
   );
