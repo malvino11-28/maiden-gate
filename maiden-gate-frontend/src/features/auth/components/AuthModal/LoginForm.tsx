@@ -9,6 +9,7 @@ import Input from "../../../../shared/components/Form/Input";
 import PasswordInput from "../../../../shared/components/Form/PasswordInput";
 import Label from "../../../../shared/components/Form/Label";
 import Button from "../../../../shared/components/Form/Button";
+import { useAuth } from "../../hooks/useAuth";
 
 type LoginModalProps = {
   isOpen: boolean;
@@ -21,17 +22,20 @@ export default function LoginModal({
   onClose,
   onOpenRegister,
 }: LoginModalProps) {
-  const [name, setName] = useState("");
+  const { login: authLogin } = useAuth();
 
+  const [name, setName] = useState("");
   const [password, setPassword] = useState("");
 
-  async function handleSubmit(e: React.SubmitEvent) {
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
     try {
       const data = await login(name, password);
 
-      console.log(data);
+      authLogin(data.user);
+
+      onClose();
     } catch (error) {
       console.error(error);
     }

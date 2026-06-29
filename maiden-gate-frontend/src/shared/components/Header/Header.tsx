@@ -7,8 +7,10 @@ import UserMenu from "./components/UserMenu";
 import LoginModal from "../../../features/auth/components/AuthModal/LoginForm";
 import RegisterModal from "../../../features/auth/components/AuthModal/RegisterForm";
 
+import { useAuth } from "../../../features/auth/hooks/useAuth";
+
 export default function Header() {
-  const [isAuthenticated] = useState(false);
+  const { user } = useAuth();
 
   const [isLoginOpen, setIsLoginOpen] = useState(false);
   const [isRegisterOpen, setIsRegisterOpen] = useState(false);
@@ -65,7 +67,7 @@ export default function Header() {
 
           <Navigation />
 
-          {isAuthenticated ? (
+          {user ? (
             <UserMenu />
           ) : (
             <AuthButtons
