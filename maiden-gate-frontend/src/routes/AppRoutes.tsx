@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 
 import MainLayout from "../shared/layouts/MainLayout";
 
@@ -16,28 +16,19 @@ import PlayerDashboard from "../features/dashboard/player/pages/PlayerDashboard"
 
 export default function AppRoutes() {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route element={<MainLayout />}>
-          <Route path="/" element={<HomePage />} />
+    <Routes>
+      <Route element={<MainLayout />}>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/rules" element={<RulesPage />} />
+        <Route path="/tools" element={<ToolsPage />} />
+        <Route path="/contact" element={<ContactPage />} />
+        <Route path="/privacy" element={<PrivacyPage />} />
+        <Route path="/terms" element={<TermsPage />} />
+        <Route path="/cookies" element={<CookiesPage />} />
+      </Route>
 
-          <Route path="/rules" element={<RulesPage />} />
-
-          <Route path="/tools" element={<ToolsPage />} />
-
-          <Route path="/contact" element={<ContactPage />} />
-
-          <Route path="/privacy" element={<PrivacyPage />} />
-
-          <Route path="/terms" element={<TermsPage />} />
-
-          <Route path="/cookies" element={<CookiesPage />} />
-        </Route>
-
-        <Route path="/dashboard/master" element={<MasterDashboard />} />
-
-        <Route path="/dashboard/player" element={<PlayerDashboard />} />
-      </Routes>
-    </BrowserRouter>
+      <Route path="/dashboard/master" element={<MasterDashboard />} />
+      <Route path="/dashboard/player" element={<PlayerDashboard />} />
+    </Routes>
   );
 }
