@@ -1,31 +1,15 @@
-// responsavel por conversar com o back
-import api from "../../../services/api.ts";
+import api from "../../../services/api";
 
-type LoginData = {
-  // dados obrigatórios para o login
-  name: string;
-  password: string;
-};
+import type { LoginResponse } from "../types/auth";
 
-type RegisterData = {
-  // dados obrigatórios para o registro
-  type: "master" | "player";
-  name: string;
-  password: string;
-};
+export async function login(
+  name: string,
+  password: string,
+): Promise<LoginResponse> {
+  const response = await api.post<LoginResponse>("/login", {
+    name,
+    password,
+  });
 
-const authService = {
-  async login(data: LoginData) {
-    const response = await api.post("/login", data); // esperando o laravel responder
-
-    return response.data;
-  },
-
-  async register(data: RegisterData) {
-    const response = await api.post("/register", data);
-
-    return response.data;
-  },
-};
-
-export default authService;
+  return response.data;
+}
