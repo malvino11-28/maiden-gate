@@ -3,7 +3,7 @@ import NavigationItem from "./NavigationItem";
 const navigationItems = [
   {
     label: "Play VOF",
-    href: "/vof",
+    href: "/",
   },
   {
     label: "Rules",
