@@ -4,21 +4,34 @@ import Logo from "./components/Logo";
 import Navigation from "./components/Navigation";
 import AuthButtons from "./components/AuthButtons";
 import UserMenu from "./components/UserMenu";
+import LoginModal from "../../../features/auth/components/AuthModal/LoginForm";
+import RegisterModal from "../../../features/auth/components/AuthModal/RegisterForm";
 
 export default function Header() {
   const [isAuthenticated] = useState(false);
 
-  const handleLoginClick = () => {
-    console.log("Abrir modal de login");
+  const [isLoginOpen, setIsLoginOpen] = useState(false);
+  const [isRegisterOpen, setIsRegisterOpen] = useState(false);
+
+  const openLogin = () => {
+    setIsRegisterOpen(false);
+    setIsLoginOpen(true);
   };
 
-  const handleRegisterClick = () => {
-    console.log("Abrir modal de registro");
+  const openRegister = () => {
+    setIsLoginOpen(false);
+    setIsRegisterOpen(true);
+  };
+
+  const closeModals = () => {
+    setIsLoginOpen(false);
+    setIsRegisterOpen(false);
   };
 
   return (
-    <header
-      className="
+    <>
+      <header
+        className="
             fixed
             top-0
             left-0
@@ -33,9 +46,9 @@ export default function Header() {
             bg-zinc-950/40
             backdrop-blur-md
         "
-    >
-      <div
-        className="
+      >
+        <div
+          className="
             mx-auto
             flex
             h-full
@@ -47,20 +60,33 @@ export default function Header() {
             px-6
             lg:px-10
         "
-      >
-        <Logo />
+        >
+          <Logo />
 
-        <Navigation />
+          <Navigation />
 
-        {isAuthenticated ? (
-          <UserMenu />
-        ) : (
-          <AuthButtons
-            onLoginClick={handleLoginClick}
-            onRegisterClick={handleRegisterClick}
-          />
-        )}
-      </div>
-    </header>
+          {isAuthenticated ? (
+            <UserMenu />
+          ) : (
+            <AuthButtons
+              onLoginClick={openLogin}
+              onRegisterClick={openRegister}
+            />
+          )}
+        </div>
+      </header>
+
+      <LoginModal
+        isOpen={isLoginOpen}
+        onClose={closeModals}
+        onOpenRegister={openRegister}
+      />
+
+      <RegisterModal
+        isOpen={isRegisterOpen}
+        onClose={closeModals}
+        onOpenLogin={openRegister}
+      />
+    </>
   );
 }
