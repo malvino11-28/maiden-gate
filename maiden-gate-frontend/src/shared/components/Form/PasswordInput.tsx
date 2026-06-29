@@ -1,13 +1,10 @@
 import { useState } from "react";
+import type { InputHTMLAttributes } from "react";
 import { Eye, EyeOff } from "lucide-react";
 
 import Input from "./Input";
 
-type PasswordInputProps = {
-  placeholder?: string;
-  value?: string;
-  onChange?: React.ChangeEventHandler<HTMLInputElement>;
-};
+type PasswordInputProps = InputHTMLAttributes<HTMLInputElement>;
 
 export default function PasswordInput({
   placeholder,
