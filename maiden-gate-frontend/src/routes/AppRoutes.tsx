@@ -13,6 +13,7 @@ import CookiesPage from "../features/legal/pages/CookiesPage";
 
 import MasterDashboard from "../features/dashboard/master/pages/MasterDashboard";
 import PlayerDashboard from "../features/dashboard/player/pages/PlayerDashboard";
+import ProtectedRoute from "./ProtectedRoute";
 
 export default function AppRoutes() {
   return (
@@ -27,8 +28,10 @@ export default function AppRoutes() {
         <Route path="/cookies" element={<CookiesPage />} />
       </Route>
 
-      <Route path="/dashboard/master" element={<MasterDashboard />} />
-      <Route path="/dashboard/player" element={<PlayerDashboard />} />
+      <Route element={<ProtectedRoute />}>
+        <Route path="/dashboard/master" element={<MasterDashboard />} />
+        <Route path="/dashboard/player" element={<PlayerDashboard />} />
+      </Route>
     </Routes>
   );
 }
