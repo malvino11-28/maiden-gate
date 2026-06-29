@@ -85,7 +85,7 @@ export default function Header() {
       <RegisterModal
         isOpen={isRegisterOpen}
         onClose={closeModals}
-        onOpenLogin={openRegister}
+        onOpenLogin={openLogin}
       />
     </>
   );
