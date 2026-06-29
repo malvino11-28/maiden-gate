@@ -16,7 +16,12 @@ export default function RoleProtectedRoute({
   }
 
   if (user.type !== allowedRole) {
-    return <Navigate to="/" replace />;
+    return (
+      <Navigate
+        to={user.type === "master" ? "/dashboard/master" : "/dashboard/player"}
+        replace
+      />
+    );
   }
 
   return <Outlet />;
