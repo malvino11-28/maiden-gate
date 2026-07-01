@@ -1,3 +1,6 @@
+import LegalPage from "../components/LegalPage";
+import { terms } from "../data/terms";
+
 export default function TermsPage() {
-  return <h1>Terms</h1>;
+  return <LegalPage {...terms} />;
 }
