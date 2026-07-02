@@ -52,7 +52,7 @@ export default function ItemModal({ isOpen, onClose }: ItemModalProps) {
           Cancelar
         </Button>
 
-        <Button>Criar Evento</Button>
+        <Button>Criar Item</Button>
       </ModalFooter>
     </Modal>
   );

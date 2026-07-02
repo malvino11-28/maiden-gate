@@ -57,7 +57,7 @@ export default function LocationModal({ isOpen, onClose }: LocationModalProps) {
           Cancelar
         </Button>
 
-        <Button>Criar Evento</Button>
+        <Button>Criar Localização</Button>
       </ModalFooter>
     </Modal>
   );

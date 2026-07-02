@@ -11,6 +11,8 @@ import {
   Copy,
 } from "lucide-react";
 
+import type { LucideIcon } from "lucide-react";
+
 export const stats = [
   {
     icon: BookOpen,
@@ -58,33 +60,54 @@ export const campaigns = [
   },
 ];
 
-export const quickActions = [
+export type ActiveModal =
+  | "event"
+  | "npc"
+  | "monster"
+  | "item"
+  | "location"
+  | "duply";
+
+type QuickAction = {
+  id: ActiveModal;
+  icon: LucideIcon;
+  title: string;
+  description: string;
+};
+
+export const quickActions: QuickAction[] = [
   {
+    id: "location",
     icon: MapPinned,
     title: "Nova Localização",
     description: "Adicione cidades, regiões e masmorras.",
   },
   {
+    id: "npc",
     icon: Users,
     title: "Novo NPC",
     description: "Crie personagens não-jogadores.",
   },
   {
+    id: "monster",
     icon: Skull,
     title: "Novo Monstro",
     description: "Adicione criaturas ao bestiário.",
   },
   {
+    id: "item",
     icon: Gem,
     title: "Novo Item",
     description: "Armas, armaduras e artefatos.",
   },
   {
+    id: "event",
     icon: CalendarPlus,
     title: "Novo Evento",
     description: "Registre acontecimentos da campanha.",
   },
   {
+    id: "duply",
     icon: Copy,
     title: "Duplicar Recursos",
     description: "Reutilize NPCs, locais e monstros.",
