@@ -1,6 +1,11 @@
 import { useState } from "react";
 import { Plus } from "lucide-react";
 
+import EventModal from "../components/modals/EventModal";
+import ItemModal from "../components/modals/ItemModal";
+import LocationModal from "../components/modals/LocationModal";
+import MonsterModal from "../components/modals/MonsterModal";
+
 import DashboardHeader from "../components/DashboardHeader";
 import DashboardTabs from "../components/DashboardTabs";
 import StatCard from "../components/StatCard";
@@ -9,11 +14,16 @@ import QuickActionCard from "../components/QuickActionCard";
 import Button from "../../../../shared/components/Button/Button";
 
 import { stats, campaigns, quickActions } from "../data/dashboardMock";
+import NpcModal from "../components/modals/NpcModal";
 
 export default function MasterDashboard() {
   const [activeTab, setActiveTab] = useState<"campaigns" | "profile">(
     "campaigns",
   );
+
+  const [activeModal, setActiveModal] = useState<
+    "event" | "npc" | "monster" | "item" | "location" | null
+  >(null);
 
   return (
     <div className="space-y-10">
@@ -92,11 +102,64 @@ export default function MasterDashboard() {
                 icon={action.icon}
                 title={action.title}
                 description={action.description}
+                onClick={() => {
+                  console.log(action.title);
+
+                  switch (action.title) {
+                    case "Novo Evento":
+                      setActiveModal("event");
+                      break;
+
+                    case "Novo NPC":
+                      setActiveModal("npc");
+                      break;
+
+                    case "Novo Monstro":
+                      setActiveModal("monster");
+                      break;
+
+                    case "Novo Item":
+                      setActiveModal("item");
+                      break;
+
+                    case "Nova Localização":
+                      setActiveModal("location");
+                      break;
+
+                    default:
+                      break;
+                  }
+                }}
               />
             ))}
           </aside>
         </div>
       </div>
+
+      <EventModal
+        isOpen={activeModal === "event"}
+        onClose={() => setActiveModal(null)}
+      />
+
+      <ItemModal
+        isOpen={activeModal === "item"}
+        onClose={() => setActiveModal(null)}
+      />
+
+      <LocationModal
+        isOpen={activeModal === "location"}
+        onClose={() => setActiveModal(null)}
+      />
+
+      <MonsterModal
+        isOpen={activeModal === "monster"}
+        onClose={() => setActiveModal(null)}
+      />
+
+      <NpcModal
+        isOpen={activeModal === "npc"}
+        onClose={() => setActiveModal(null)}
+      />
     </div>
   );
 }

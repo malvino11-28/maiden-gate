@@ -4,15 +4,18 @@ type QuickActionCardProps = {
   icon: LucideIcon;
   title: string;
   description: string;
+  onClick?: () => void;
 };
 
 export default function QuickActionCard({
   icon: Icon,
   title,
   description,
+  onClick,
 }: QuickActionCardProps) {
   return (
     <button
+      onClick={onClick}
       className="
         flex
         w-full
