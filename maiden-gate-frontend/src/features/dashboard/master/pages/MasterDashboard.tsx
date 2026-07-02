@@ -1,3 +1,102 @@
+import { useState } from "react";
+import { Plus } from "lucide-react";
+
+import DashboardHeader from "../components/DashboardHeader";
+import DashboardTabs from "../components/DashboardTabs";
+import StatCard from "../components/StatCard";
+import CampaignCard from "../components/CampaignCard";
+import QuickActionCard from "../components/QuickActionCard";
+import Button from "../../../../shared/components/Button/Button";
+
+import { stats, campaigns, quickActions } from "../data/dashboardMock";
+
 export default function MasterDashboard() {
-  return <h1>DashMaster</h1>;
+  const [activeTab, setActiveTab] = useState<"campaigns" | "profile">(
+    "campaigns",
+  );
+
+  return (
+    <div className="space-y-10">
+      <div className="mx-auto max-w-7xl space-y-10">
+        <DashboardHeader name="Aldric Voss" />
+
+        <section className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-4">
+          {stats.map((stat) => (
+            <StatCard
+              key={stat.label}
+              icon={stat.icon}
+              value={stat.value}
+              label={stat.label}
+            />
+          ))}
+        </section>
+
+        <div className="grid gap-8 xl:grid-cols-[2fr_380px]">
+          <section className="space-y-6">
+            <DashboardTabs activeTab={activeTab} onChange={setActiveTab} />
+
+            {activeTab === "campaigns" && (
+              <>
+                <div className="flex items-center justify-between">
+                  <h2 className="text-3xl font-bold text-white">
+                    Campanhas Criadas
+                  </h2>
+
+                  <Button
+                    className="
+                      w-auto
+                      px-6
+                      py-3
+                    "
+                  >
+                    <Plus size={18} />
+                    Nova Campanha
+                  </Button>
+                </div>
+
+                <div className="space-y-5">
+                  {campaigns.map((campaign) => (
+                    <CampaignCard key={campaign.title} {...campaign} />
+                  ))}
+                </div>
+              </>
+            )}
+
+            {activeTab === "profile" && (
+              <div
+                className="
+                  rounded-2xl
+                  border
+                  border-white/10
+                  bg-[#11162B]
+                  p-10
+                "
+              >
+                <h2 className="mb-3 text-2xl font-bold text-white">Perfil</h2>
+
+                <p className="text-stone-400">
+                  Área reservada para edição do perfil do mestre.
+                </p>
+              </div>
+            )}
+          </section>
+
+          <aside className="space-y-5">
+            <h2 className="text-xl font-bold uppercase tracking-widest text-stone-300">
+              Ações Rápidas
+            </h2>
+
+            {quickActions.map((action) => (
+              <QuickActionCard
+                key={action.title}
+                icon={action.icon}
+                title={action.title}
+                description={action.description}
+              />
+            ))}
+          </aside>
+        </div>
+      </div>
+    </div>
+  );
 }
