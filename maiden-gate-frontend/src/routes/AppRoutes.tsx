@@ -14,6 +14,9 @@ import CookiesPage from "../features/legal/pages/CookiesPage";
 
 import MasterDashboard from "../features/dashboard/master/pages/MasterDashboard";
 import PlayerDashboard from "../features/dashboard/player/pages/PlayerDashboard";
+import PlayerCampaignPage from "../features/dashboard/player/pages/PlayerCampaignPage";
+import CreateCharacterPage from "../features/dashboard/player/pages/CreateCharacterPage";
+import EditCharacterPage from "../features/dashboard/player/pages/EditCharacterPage";
 import CreateCampaignPage from "../features/dashboard/master/campaign/CreateCampaignPage";
 import MasterCampaignPage from "../features/dashboard/master/pages/MasterCampaignPage";
 
@@ -41,6 +44,18 @@ export default function AppRoutes() {
 
           <Route element={<RoleProtectedRoute allowedRole="player" />}>
             <Route path="/dashboard/player" element={<PlayerDashboard />} />
+            <Route
+              path="/dashboard/player/campaign/:id"
+              element={<PlayerCampaignPage />}
+            />
+            <Route
+              path="/dashboard/player/character/new"
+              element={<CreateCharacterPage />}
+            />
+            <Route
+              path="/dashboard/player/character/:id/edit"
+              element={<EditCharacterPage />}
+            />
           </Route>
         </Route>
 
