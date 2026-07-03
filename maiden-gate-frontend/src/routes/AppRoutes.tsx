@@ -16,6 +16,7 @@ import PlayerDashboard from "../features/dashboard/player/pages/PlayerDashboard"
 import ProtectedRoute from "./ProtectedRoute";
 import RoleProtectedRoute from "./RoleProtectedRoute";
 import DashboardLayout from "../shared/layouts/DashboardLayout";
+import CreateCampaignPage from "../features/dashboard/master/campaign/CreateCampaignPage";
 
 export default function AppRoutes() {
   return (
@@ -32,6 +33,10 @@ export default function AppRoutes() {
 
       <Route element={<ProtectedRoute />}>
         <Route element={<RoleProtectedRoute allowedRole="master" />}>
+          <Route
+            path="/dashboard/master/create-campaign"
+            element={<CreateCampaignPage />}
+          />
           <Route element={<DashboardLayout />}>
             <Route path="/dashboard/master" element={<MasterDashboard />} />
           </Route>
