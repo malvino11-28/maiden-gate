@@ -15,6 +15,7 @@ import CookiesPage from "../features/legal/pages/CookiesPage";
 import MasterDashboard from "../features/dashboard/master/pages/MasterDashboard";
 import PlayerDashboard from "../features/dashboard/player/pages/PlayerDashboard";
 import CreateCampaignPage from "../features/dashboard/master/campaign/CreateCampaignPage";
+import MasterCampaignPage from "../features/dashboard/master/pages/MasterCampaignPage";
 
 import ProtectedRoute from "./ProtectedRoute";
 import RoleProtectedRoute from "./RoleProtectedRoute";
@@ -47,6 +48,10 @@ export default function AppRoutes() {
           <Route
             path="/dashboard/master/create-campaign"
             element={<CreateCampaignPage />}
+          />
+          <Route
+            path="/dashboard/master/campaign/:id"
+            element={<MasterCampaignPage />}
           />
         </Route>
       </Route>

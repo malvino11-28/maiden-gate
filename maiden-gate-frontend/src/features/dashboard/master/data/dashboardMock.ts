@@ -38,6 +38,7 @@ export const stats = [
 
 export const campaigns = [
   {
+    id: "1",
     title: "A Flor do Abismo",
     players: 4,
     sessions: 12,
@@ -45,6 +46,7 @@ export const campaigns = [
     status: "active" as const,
   },
   {
+    id: "2",
     title: "Crônicas de Vareth",
     players: 3,
     sessions: 7,
@@ -52,6 +54,7 @@ export const campaigns = [
     status: "paused" as const,
   },
   {
+    id: "3",
     title: "O Despertar da Donzela",
     players: 5,
     sessions: 20,

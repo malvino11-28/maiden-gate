@@ -20,7 +20,9 @@ import { stats, campaigns, quickActions } from "../data/dashboardMock";
 import type { ActiveModal } from "../data/dashboardMock";
 
 export default function MasterDashboard() {
-  const [activeTab, setActiveTab] = useState<"campaigns" | "profile">("campaigns");
+  const [activeTab, setActiveTab] = useState<"campaigns" | "profile">(
+    "campaigns",
+  );
   const [activeModal, setActiveModal] = useState<ActiveModal | null>(null);
 
   return (
@@ -30,7 +32,12 @@ export default function MasterDashboard() {
 
         <section className="grid grid-cols-2 gap-4 sm:grid-cols-4">
           {stats.map((stat) => (
-            <StatCard key={stat.label} icon={stat.icon} value={stat.value} label={stat.label} />
+            <StatCard
+              key={stat.label}
+              icon={stat.icon}
+              value={stat.value}
+              label={stat.label}
+            />
           ))}
         </section>
 
@@ -70,7 +77,9 @@ export default function MasterDashboard() {
                       <User className="h-8 w-8 text-amber-400" />
                     </div>
                     <div>
-                      <p className="text-lg font-semibold text-amber-100">Aldric Voss</p>
+                      <p className="text-lg font-semibold text-amber-100">
+                        Aldric Voss
+                      </p>
                       <span className="mt-1 inline-flex items-center gap-1.5 rounded-full border border-amber-500/30 bg-amber-500/10 px-2.5 py-1 text-xs text-amber-300">
                         <Crown className="h-3 w-3" /> Mestre
                       </span>
@@ -81,7 +90,10 @@ export default function MasterDashboard() {
                     {[
                       { label: "Nome", value: "Aldric Voss" },
                       { label: "Tipo de conta", value: "Mestre" },
-                      { label: "Campanhas criadas", value: String(campaigns.length) },
+                      {
+                        label: "Campanhas criadas",
+                        value: String(campaigns.length),
+                      },
                       { label: "Sessões narradas", value: "39" },
                       { label: "Membro desde", value: "Jan 2026" },
                       { label: "Status", value: "Ativo" },
@@ -122,19 +134,38 @@ export default function MasterDashboard() {
                 </p>
               </div>
               <p className="text-xs leading-relaxed text-amber-100/45">
-                Crie localizações antes de montar sessões para que os jogadores possam explorar o mundo com mais imersão.
+                Crie localizações antes de montar sessões para que os jogadores
+                possam explorar o mundo com mais imersão.
               </p>
             </div>
           </aside>
         </div>
       </div>
 
-      <EventModal isOpen={activeModal === "event"} onClose={() => setActiveModal(null)} />
-      <ItemModal isOpen={activeModal === "item"} onClose={() => setActiveModal(null)} />
-      <LocationModal isOpen={activeModal === "location"} onClose={() => setActiveModal(null)} />
-      <MonsterModal isOpen={activeModal === "monster"} onClose={() => setActiveModal(null)} />
-      <NpcModal isOpen={activeModal === "npc"} onClose={() => setActiveModal(null)} />
-      <TransferElementModal isOpen={activeModal === "transfer"} onClose={() => setActiveModal(null)} />
+      <EventModal
+        isOpen={activeModal === "event"}
+        onClose={() => setActiveModal(null)}
+      />
+      <ItemModal
+        isOpen={activeModal === "item"}
+        onClose={() => setActiveModal(null)}
+      />
+      <LocationModal
+        isOpen={activeModal === "location"}
+        onClose={() => setActiveModal(null)}
+      />
+      <MonsterModal
+        isOpen={activeModal === "monster"}
+        onClose={() => setActiveModal(null)}
+      />
+      <NpcModal
+        isOpen={activeModal === "npc"}
+        onClose={() => setActiveModal(null)}
+      />
+      <TransferElementModal
+        isOpen={activeModal === "transfer"}
+        onClose={() => setActiveModal(null)}
+      />
     </main>
   );
 }
