@@ -4,28 +4,19 @@ import type { CampaignData } from "../types/campaign";
 
 const initialCampaign: CampaignData = {
   image: "",
-
   name: "",
-
   description: "",
-
   recommendedLevel: "Iniciante",
-
   players: "",
-
   locations: [],
-
   npcs: [],
-
   monsters: [],
-
   items: [],
-
   events: [],
 };
 
 export default function useCampaignForm() {
-  const [campaign, setCampaign] = useState(initialCampaign);
+  const [campaign, setCampaign] = useState<CampaignData>(initialCampaign);
 
   function updateField<K extends keyof CampaignData>(
     field: K,

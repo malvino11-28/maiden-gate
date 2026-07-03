@@ -1,33 +1,39 @@
+import { Link } from "react-router-dom";
+
+import Button from "../../../shared/components/Button/Button";
 import { tools } from "../data/tools";
-
 import ToolInfoCard from "../components/ToolInfoCard";
-
-import CTASection from "../../home/components/CTASection";
 
 export default function ToolsPage() {
   return (
-    <main className="bg-[#090D1F]">
-      <section className="mx-auto max-w-7xl px-6 py-32">
-        <h1 className="mb-4 text-6xl font-bold text-white">Ferramentas</h1>
+    <main className="mx-auto max-w-7xl px-4 pb-20 pt-32 sm:px-6 lg:px-8">
+      <h1 className="mb-4 text-5xl font-semibold text-amber-100">
+        Ferramentas
+      </h1>
 
-        <p className="mb-16 text-xl text-stone-400">
-          Recursos desenvolvidos para facilitar campanhas, acelerar sessões e
-          oferecer uma experiência completa dentro do universo Voice Of Flower.
+      <p className="mb-12 max-w-3xl text-lg leading-8 text-amber-100/70">
+        Recursos desenvolvidos para facilitar campanhas, acelerar sessões e
+        oferecer uma experiência completa dentro do universo Voice Of Flower.
+      </p>
+
+      <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+        {tools.map((tool) => (
+          <ToolInfoCard key={tool.id} {...tool} />
+        ))}
+      </div>
+
+      <section className="mt-20 rounded-2xl border border-amber-700/30 bg-gradient-to-r from-amber-900/30 to-rose-900/30 p-10 text-center">
+        <h2 className="mb-3 text-2xl font-semibold text-amber-100">
+          Precisa de mais ferramentas?
+        </h2>
+        <p className="mx-auto mb-7 max-w-xl text-amber-100/60">
+          Estamos sempre expandindo o Voice Of Flower. Envie suas ideias e ajude
+          a construir novas funcionalidades para a comunidade.
         </p>
-
-        <div className="grid gap-8 lg:grid-cols-3">
-          {tools.map((tool) => (
-            <ToolInfoCard key={tool.id} {...tool} />
-          ))}
-        </div>
+        <Link to="/contact">
+          <Button size="lg">Enviar sugestão</Button>
+        </Link>
       </section>
-
-      <CTASection
-        title="Precisa de mais ferramentas?"
-        description="Estamos sempre expandindo o Voice Of Flower. Envie suas ideias e ajude a construir novas funcionalidades para a comunidade."
-        buttonText="Enviar sugestão"
-        buttonLink="/contact"
-      />
     </main>
   );
 }

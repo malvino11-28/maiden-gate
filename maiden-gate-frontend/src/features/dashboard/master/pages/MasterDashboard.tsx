@@ -1,11 +1,13 @@
 import { useState } from "react";
-import { Plus } from "lucide-react";
+import { Link } from "react-router-dom";
+import { Plus, Swords, User, Crown } from "lucide-react";
 
 import EventModal from "../components/modals/EventModal";
 import ItemModal from "../components/modals/ItemModal";
 import LocationModal from "../components/modals/LocationModal";
 import MonsterModal from "../components/modals/MonsterModal";
 import NpcModal from "../components/modals/NpcModal";
+import TransferElementModal from "../components/modals/TransferElementModal";
 
 import DashboardHeader from "../components/DashboardHeader";
 import DashboardTabs from "../components/DashboardTabs";
@@ -16,83 +18,89 @@ import Button from "../../../../shared/components/Button/Button";
 
 import { stats, campaigns, quickActions } from "../data/dashboardMock";
 import type { ActiveModal } from "../data/dashboardMock";
-import TransferElementModal from "../components/modals/TransferElementModal";
 
 export default function MasterDashboard() {
-  const [activeTab, setActiveTab] = useState<"campaigns" | "profile">(
-    "campaigns",
-  );
-
+  const [activeTab, setActiveTab] = useState<"campaigns" | "profile">("campaigns");
   const [activeModal, setActiveModal] = useState<ActiveModal | null>(null);
 
   return (
-    <div className="space-y-10">
-      <div className="mx-auto max-w-7xl space-y-10">
+    <main className="mx-auto w-full max-w-7xl px-4 pb-16 pt-28 sm:px-6 lg:px-8">
+      <div className="space-y-10">
         <DashboardHeader name="Aldric Voss" />
 
-        <section className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-4">
+        <section className="grid grid-cols-2 gap-4 sm:grid-cols-4">
           {stats.map((stat) => (
-            <StatCard
-              key={stat.label}
-              icon={stat.icon}
-              value={stat.value}
-              label={stat.label}
-            />
+            <StatCard key={stat.label} icon={stat.icon} value={stat.value} label={stat.label} />
           ))}
         </section>
 
-        <div className="grid gap-8 xl:grid-cols-[2fr_380px]">
-          <section className="space-y-6">
+        <div className="grid items-start gap-8 lg:grid-cols-[1fr_300px]">
+          <section>
             <DashboardTabs activeTab={activeTab} onChange={setActiveTab} />
 
             {activeTab === "campaigns" && (
-              <>
-                <div className="flex items-center justify-between">
-                  <h2 className="text-3xl font-bold text-white">
+              <div className="space-y-4">
+                <div className="mb-2 flex items-center justify-between">
+                  <h2 className="text-lg font-semibold text-amber-100">
                     Campanhas Criadas
                   </h2>
 
-                  <Button
-                    className="
-                      w-auto
-                      px-6
-                      py-3
-                    "
-                  >
-                    <Plus size={18} />
-                    Nova Campanha
-                  </Button>
+                  <Link to="/dashboard/master/create-campaign">
+                    <Button size="sm">
+                      <Plus className="h-3.5 w-3.5" />
+                      Nova Campanha
+                    </Button>
+                  </Link>
                 </div>
 
-                <div className="space-y-5">
-                  {campaigns.map((campaign) => (
-                    <CampaignCard key={campaign.title} {...campaign} />
-                  ))}
-                </div>
-              </>
+                {campaigns.map((campaign) => (
+                  <CampaignCard key={campaign.title} {...campaign} />
+                ))}
+              </div>
             )}
 
             {activeTab === "profile" && (
-              <div
-                className="
-                  rounded-2xl
-                  border
-                  border-white/10
-                  bg-[#11162B]
-                  p-10
-                "
-              >
-                <h2 className="mb-3 text-2xl font-bold text-white">Perfil</h2>
+              <div className="max-w-xl space-y-5">
+                <h2 className="mb-2 text-lg font-semibold text-amber-100">
+                  Informações do Perfil
+                </h2>
+                <div className="rounded-xl border border-amber-900/25 bg-slate-900/50 p-6">
+                  <div className="mb-5 flex items-center gap-5">
+                    <div className="flex h-16 w-16 flex-shrink-0 items-center justify-center rounded-full border-2 border-amber-500/40 bg-gradient-to-br from-amber-500/30 to-rose-600/30">
+                      <User className="h-8 w-8 text-amber-400" />
+                    </div>
+                    <div>
+                      <p className="text-lg font-semibold text-amber-100">Aldric Voss</p>
+                      <span className="mt-1 inline-flex items-center gap-1.5 rounded-full border border-amber-500/30 bg-amber-500/10 px-2.5 py-1 text-xs text-amber-300">
+                        <Crown className="h-3 w-3" /> Mestre
+                      </span>
+                    </div>
+                  </div>
 
-                <p className="text-stone-400">
-                  Área reservada para edição do perfil do mestre.
-                </p>
+                  <div className="grid gap-4 border-t border-amber-900/20 pt-4 sm:grid-cols-2">
+                    {[
+                      { label: "Nome", value: "Aldric Voss" },
+                      { label: "Tipo de conta", value: "Mestre" },
+                      { label: "Campanhas criadas", value: String(campaigns.length) },
+                      { label: "Sessões narradas", value: "39" },
+                      { label: "Membro desde", value: "Jan 2026" },
+                      { label: "Status", value: "Ativo" },
+                    ].map(({ label, value }) => (
+                      <div key={label}>
+                        <p className="mb-0.5 text-xs uppercase tracking-wider text-amber-100/40">
+                          {label}
+                        </p>
+                        <p className="text-sm text-amber-100">{value}</p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
               </div>
             )}
           </section>
 
-          <aside className="space-y-5">
-            <h2 className="text-xl font-bold uppercase tracking-widest text-stone-300">
+          <aside className="space-y-3">
+            <h2 className="text-sm font-semibold uppercase tracking-widest text-amber-100/60">
               Ações Rápidas
             </h2>
 
@@ -102,45 +110,31 @@ export default function MasterDashboard() {
                 icon={action.icon}
                 title={action.title}
                 description={action.description}
-                onClick={() => {
-                  console.log(action.id);
-                  setActiveModal(action.id);
-                }}
+                onClick={() => setActiveModal(action.id)}
               />
             ))}
+
+            <div className="rounded-xl border border-amber-900/20 bg-slate-900/30 p-4">
+              <div className="mb-2 flex items-center gap-2">
+                <Swords className="h-4 w-4 text-amber-400" />
+                <p className="text-xs font-semibold uppercase tracking-wider text-amber-100/70">
+                  Dica do Mestre
+                </p>
+              </div>
+              <p className="text-xs leading-relaxed text-amber-100/45">
+                Crie localizações antes de montar sessões para que os jogadores possam explorar o mundo com mais imersão.
+              </p>
+            </div>
           </aside>
         </div>
       </div>
 
-      <EventModal
-        isOpen={activeModal === "event"}
-        onClose={() => setActiveModal(null)}
-      />
-
-      <ItemModal
-        isOpen={activeModal === "item"}
-        onClose={() => setActiveModal(null)}
-      />
-
-      <LocationModal
-        isOpen={activeModal === "location"}
-        onClose={() => setActiveModal(null)}
-      />
-
-      <MonsterModal
-        isOpen={activeModal === "monster"}
-        onClose={() => setActiveModal(null)}
-      />
-
-      <NpcModal
-        isOpen={activeModal === "npc"}
-        onClose={() => setActiveModal(null)}
-      />
-
-      <TransferElementModal
-        isOpen={activeModal === "transfer"}
-        onClose={() => setActiveModal(null)}
-      />
-    </div>
+      <EventModal isOpen={activeModal === "event"} onClose={() => setActiveModal(null)} />
+      <ItemModal isOpen={activeModal === "item"} onClose={() => setActiveModal(null)} />
+      <LocationModal isOpen={activeModal === "location"} onClose={() => setActiveModal(null)} />
+      <MonsterModal isOpen={activeModal === "monster"} onClose={() => setActiveModal(null)} />
+      <NpcModal isOpen={activeModal === "npc"} onClose={() => setActiveModal(null)} />
+      <TransferElementModal isOpen={activeModal === "transfer"} onClose={() => setActiveModal(null)} />
+    </main>
   );
 }

@@ -6,30 +6,7 @@ export default function TextArea({ className = "", ...props }: TextAreaProps) {
   return (
     <textarea
       {...props}
-      className={`
-        w-full
-        rounded-2xl
-        border
-        border-orange-500/20
-        bg-[#11162B]
-        px-4
-        py-3
-
-        text-stone-200
-        placeholder:text-stone-500
-
-        outline-none
-
-        transition
-
-        focus:border-orange-400
-        focus:ring-2
-        focus:ring-orange-500/20
-
-        resize-none
-
-        ${className}
-      `}
+      className={`w-full resize-none rounded-lg border border-amber-900/40 bg-slate-900/80 px-4 py-3 text-amber-100 placeholder:text-amber-100/25 outline-none transition-colors focus:border-amber-500/70 focus:ring-1 focus:ring-amber-500/30 ${className}`}
     />
   );
 }

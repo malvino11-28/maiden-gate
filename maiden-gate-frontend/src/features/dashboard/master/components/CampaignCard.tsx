@@ -11,71 +11,41 @@ type CampaignCardProps = {
 const statusMap = {
   active: {
     label: "Ativa",
-    className: "bg-green-500/20 text-green-300",
+    className: "border-emerald-500/30 bg-emerald-500/15 text-emerald-300",
   },
   paused: {
     label: "Pausada",
-    className: "bg-yellow-500/20 text-yellow-300",
+    className: "border-amber-500/30 bg-amber-500/15 text-amber-300",
   },
   closed: {
     label: "Encerrada",
-    className: "bg-stone-500/20 text-stone-300",
+    className: "border-slate-500/30 bg-slate-500/15 text-slate-400",
   },
 };
 
-export default function CampaignCard({
-  title,
-  players,
-  sessions,
-  lastSession,
-  status,
-}: CampaignCardProps) {
+export default function CampaignCard({ title, players, sessions, lastSession, status }: CampaignCardProps) {
   const currentStatus = statusMap[status];
 
   return (
-    <button
-      className="
-        flex
-        w-full
-        items-center
-        justify-between
-        rounded-2xl
-        border
-        border-white/10
-        bg-[#11162B]
-        p-6
-        transition
-        hover:border-orange-500/40
-      "
-    >
-      <div className="flex items-center gap-5">
-        <div className="rounded-xl bg-orange-500/20 p-3">
-          <BookOpen className="text-yellow-400" />
+    <button className="group flex w-full items-center justify-between gap-4 rounded-xl border border-amber-900/25 bg-slate-900/50 px-5 py-4 text-left transition-colors hover:border-amber-700/40">
+      <div className="flex min-w-0 items-center gap-4">
+        <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg bg-gradient-to-br from-amber-500/15 to-rose-600/15">
+          <BookOpen className="h-5 w-5 text-amber-400" />
         </div>
 
-        <div className="text-left">
-          <h3 className="text-xl font-semibold text-white">{title}</h3>
-
-          <p className="text-stone-400">
-            {players} jogadores • {sessions} sessões • Última: {lastSession}
+        <div className="min-w-0">
+          <h3 className="truncate font-medium text-amber-100">{title}</h3>
+          <p className="mt-0.5 text-xs text-amber-100/50">
+            {players} jogadores · {sessions} sessões · Última: {lastSession}
           </p>
         </div>
       </div>
 
-      <div className="flex items-center gap-4">
-        <span
-          className={`
-            rounded-full
-            px-3
-            py-1
-            text-sm
-            ${currentStatus.className}
-          `}
-        >
+      <div className="flex flex-shrink-0 items-center gap-3">
+        <span className={`rounded-full border px-2.5 py-1 text-xs ${currentStatus.className}`}>
           {currentStatus.label}
         </span>
-
-        <ChevronRight className="text-stone-500" />
+        <ChevronRight className="h-4 w-4 text-amber-100/30 transition-colors group-hover:text-amber-400" />
       </div>
     </button>
   );

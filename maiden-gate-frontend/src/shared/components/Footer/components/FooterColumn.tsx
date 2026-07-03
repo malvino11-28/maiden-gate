@@ -1,24 +1,17 @@
+import type { ReactNode } from "react";
+
 type FooterColumnProps = {
   title: string;
-  children: React.ReactNode;
+  children: ReactNode;
 };
 
 export default function FooterColumn({ title, children }: FooterColumnProps) {
   return (
-    <div className="space-y-5">
-      <h3
-        className="
-          text-lg
-          font-semibold
-          uppercase
-          tracking-wider
-          text-orange-100
-        "
-      >
+    <div>
+      <h3 className="mb-4 text-sm font-semibold uppercase tracking-[0.22em] text-amber-300/80">
         {title}
       </h3>
-
-      <div className="flex flex-col gap-3">{children}</div>
+      <div className="space-y-3">{children}</div>
     </div>
   );
 }

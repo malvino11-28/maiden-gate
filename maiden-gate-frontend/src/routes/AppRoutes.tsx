@@ -1,6 +1,7 @@
 import { Routes, Route } from "react-router-dom";
 
 import MainLayout from "../shared/layouts/MainLayout";
+import DashboardLayout from "../shared/layouts/DashboardLayout";
 
 import HomePage from "../features/home/pages/HomePage";
 import RulesPage from "../features/rules/pages/RulesPage";
@@ -13,10 +14,10 @@ import CookiesPage from "../features/legal/pages/CookiesPage";
 
 import MasterDashboard from "../features/dashboard/master/pages/MasterDashboard";
 import PlayerDashboard from "../features/dashboard/player/pages/PlayerDashboard";
+import CreateCampaignPage from "../features/dashboard/master/campaign/CreateCampaignPage";
+
 import ProtectedRoute from "./ProtectedRoute";
 import RoleProtectedRoute from "./RoleProtectedRoute";
-import DashboardLayout from "../shared/layouts/DashboardLayout";
-import CreateCampaignPage from "../features/dashboard/master/campaign/CreateCampaignPage";
 
 export default function AppRoutes() {
   return (
@@ -32,18 +33,21 @@ export default function AppRoutes() {
       </Route>
 
       <Route element={<ProtectedRoute />}>
-        <Route element={<RoleProtectedRoute allowedRole="master" />}>
-          <Route
-            path="/dashboard/master/create-campaign"
-            element={<CreateCampaignPage />}
-          />
-          <Route element={<DashboardLayout />}>
+        <Route element={<DashboardLayout />}>
+          <Route element={<RoleProtectedRoute allowedRole="master" />}>
             <Route path="/dashboard/master" element={<MasterDashboard />} />
           </Route>
 
           <Route element={<RoleProtectedRoute allowedRole="player" />}>
             <Route path="/dashboard/player" element={<PlayerDashboard />} />
           </Route>
+        </Route>
+
+        <Route element={<RoleProtectedRoute allowedRole="master" />}>
+          <Route
+            path="/dashboard/master/create-campaign"
+            element={<CreateCampaignPage />}
+          />
         </Route>
       </Route>
     </Routes>

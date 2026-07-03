@@ -1,12 +1,8 @@
 type Props = {
   selected: boolean;
-
   title: string;
-
   description: string;
-
   color: string;
-
   onClick: () => void;
 };
 
@@ -21,25 +17,18 @@ export default function UrgencyCard({
     <button
       type="button"
       onClick={onClick}
-      className={`
-        rounded-2xl
-        border
-        p-6
-        text-center
-        transition-all
-
-        ${
-          selected
-            ? "border-orange-400 bg-orange-500/10"
-            : "border-white/10 bg-[#11162B] hover:border-orange-500/40"
-        }
-      `}
+      className={`relative rounded-xl border px-3 py-4 text-center transition-all duration-200 ${
+        selected
+          ? "scale-[1.03] border-amber-500/60 bg-amber-500/10 text-amber-200 shadow-lg shadow-amber-950/20"
+          : "border-amber-900/30 bg-slate-900/40 text-amber-100/50 hover:border-amber-700/50 hover:text-amber-100/75"
+      }`}
     >
-      <div className={`mx-auto mb-4 h-4 w-4 rounded-full ${color}`} />
-
-      <h3 className="mb-2 font-semibold text-white">{title}</h3>
-
-      <p className="text-sm text-stone-400">{description}</p>
+      <span className={`mx-auto mb-2 block h-3 w-3 rounded-full ${color} ${selected ? "opacity-100" : "opacity-45"}`} />
+      <span className="block text-sm font-semibold">{title}</span>
+      <span className="mt-1 block text-xs leading-snug opacity-80">
+        {description}
+      </span>
+      {selected && <span className="absolute right-2 top-2 h-2 w-2 rounded-full bg-current opacity-80" />}
     </button>
   );
 }

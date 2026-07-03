@@ -1,75 +1,82 @@
-import { Crown, Shield } from "lucide-react";
+import { Crown, Download, Shield } from "lucide-react";
 
-import Section from "../../../shared/components/Layout/Section";
-import Container from "../../../shared/components/Layout/Container";
-
-import RuleSection from "../components/RulesSection";
+import Button from "../../../shared/components/Button/Button";
 import RuleAccordion from "../../../shared/components/Accordion/RuleAccordion";
-import DownloadBook from "../components/DownloadBook";
-
 import { masterRules } from "../data/masterRules";
 import { playerRules } from "../data/playerRules";
 
+function RulesGroup({
+  title,
+  icon,
+  tone,
+  rules,
+}: {
+  title: string;
+  icon: React.ReactNode;
+  tone: "amber" | "rose";
+  rules: { title: string; content: string }[];
+}) {
+  return (
+    <section className="mb-14">
+      <div className="mb-8 flex items-center gap-3">
+        <div className={tone === "amber" ? "text-amber-400" : "text-rose-400"}>
+          {icon}
+        </div>
+        <h2 className="text-3xl font-semibold text-amber-100">{title}</h2>
+      </div>
+
+      <div className={`rounded-xl border bg-slate-900/50 p-6 ${tone === "amber" ? "border-amber-900/30" : "border-rose-900/30"}`}>
+        {rules.map((rule, index) => (
+          <RuleAccordion key={rule.title} title={rule.title} defaultOpen={index === 0}>
+            {rule.content}
+          </RuleAccordion>
+        ))}
+      </div>
+    </section>
+  );
+}
+
 export default function RulesPage() {
   return (
-    <>
-      <Section>
-        <Container>
-          <div className="mx-auto max-w-4xl text-center">
-            <h1
-              className="
-                text-5xl
-                font-bold
-                text-stone-100
-              "
-            >
-              Regras do Jogo
-            </h1>
+    <main className="mx-auto max-w-4xl px-4 pb-20 pt-32 sm:px-6 lg:px-8">
+      <h1 className="mb-4 text-5xl font-semibold text-amber-100">
+        Regras do Jogo
+      </h1>
+      <p className="mb-16 text-lg leading-8 text-amber-100/70">
+        Aprenda tudo sobre o sistema de Voice Of Flower. Aqui você encontra um
+        resumo das principais regras para mestres e jogadores; o livro completo
+        reúne todos os detalhes para campanha.
+      </p>
 
-            <p
-              className="
-                mt-6
-                text-lg
-                leading-8
-                text-stone-400
-              "
-            >
-              Aprenda rapidamente como funciona Voice Of Flower. Aqui você
-              encontra um resumo das principais regras para mestres e jogadores.
-            </p>
-          </div>
-        </Container>
-      </Section>
+      <RulesGroup
+        title="Para Mestres"
+        icon={<Crown className="h-6 w-6" />}
+        tone="amber"
+        rules={masterRules}
+      />
 
-      <Section>
-        <Container className="space-y-24">
-          <RuleSection title="Para Mestres" icon={<Crown size={34} />}>
-            {masterRules.map((rule, index) => (
-              <RuleAccordion
-                key={rule.title}
-                title={rule.title}
-                defaultOpen={index === 0}
-              >
-                {rule.content}
-              </RuleAccordion>
-            ))}
-          </RuleSection>
+      <div className="mb-14 border-t border-amber-900/25" />
 
-          <RuleSection title="Para Jogadores" icon={<Shield size={34} />}>
-            {playerRules.map((rule, index) => (
-              <RuleAccordion
-                key={rule.title}
-                title={rule.title}
-                defaultOpen={index === 0}
-              >
-                {rule.content}
-              </RuleAccordion>
-            ))}
-          </RuleSection>
-        </Container>
-      </Section>
+      <RulesGroup
+        title="Para Jogadores"
+        icon={<Shield className="h-6 w-6" />}
+        tone="rose"
+        rules={playerRules}
+      />
 
-      <DownloadBook />
-    </>
+      <section className="rounded-2xl border border-amber-700/30 bg-gradient-to-r from-amber-900/30 to-rose-900/30 p-10 text-center">
+        <h3 className="mb-3 text-2xl font-semibold text-amber-100">
+          Quer as regras completas?
+        </h3>
+        <p className="mx-auto mb-7 max-w-lg text-amber-100/60">
+          O Livro VOF reúne todas as regras, tabelas, bestiário e lore do
+          universo em um guia completo para mestres e jogadores.
+        </p>
+        <Button size="lg">
+          <Download className="h-5 w-5" />
+          Baixar Livro VOF
+        </Button>
+      </section>
+    </main>
   );
 }

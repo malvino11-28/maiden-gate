@@ -5,18 +5,5 @@ type ModalBodyProps = {
 };
 
 export default function ModalBody({ children }: ModalBodyProps) {
-  return (
-    <div
-      className="
-        flex
-        flex-col
-        gap-6
-
-        px-8
-        py-8
-      "
-    >
-      {children}
-    </div>
-  );
+  return <div className="space-y-5 px-6 py-6">{children}</div>;
 }

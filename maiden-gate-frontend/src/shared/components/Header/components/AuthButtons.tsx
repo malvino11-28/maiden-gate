@@ -8,55 +8,19 @@ export default function AuthButtons({
   onRegisterClick,
 }: AuthButtonsProps) {
   return (
-    <div
-      className="
-                flex
-                items-center
-                gap-3
-            "
-    >
+    <div className="flex items-center gap-3">
       <button
         onClick={onLoginClick}
-        className="
-                    rounded-xl
-                    border
-                    border-stone-600
-                    px-4
-                    py-2
-
-                    text-sm
-                    font-medium
-                    text-stone-200
-
-                    transition-all
-                    duration-200
-
-                    hover:border-amber-400
-                    hover:text-amber-400
-                "
+        className="rounded-lg px-4 py-2 text-sm font-medium text-amber-100/75 transition-colors hover:bg-amber-900/25 hover:text-amber-100"
       >
-        Retornar à Jornada
+        Entrar
       </button>
 
       <button
         onClick={onRegisterClick}
-        className="
-            rounded-xl
-            bg-amber-500
-            px-4
-            py-2
-
-            text-sm
-            font-semibold
-            text-black
-
-            transition-all
-            duration-200
-
-            hover:scale-105
-        "
+        className="rounded-lg bg-gradient-to-r from-amber-500 to-rose-600 px-4 py-2 text-sm font-semibold text-white shadow-lg shadow-amber-950/25 transition-all hover:from-amber-600 hover:to-rose-700 active:scale-95"
       >
-        Forjar Destino
+        Criar Conta
       </button>
     </div>
   );

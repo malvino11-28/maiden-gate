@@ -6,19 +6,13 @@ type FormFieldProps = {
   children: ReactNode;
 };
 
-export default function FormField({
-  label,
-  required = false,
-  children,
-}: FormFieldProps) {
+export default function FormField({ label, required = false, children }: FormFieldProps) {
   return (
     <div className="space-y-2">
-      <label className="block font-medium text-stone-200">
+      <label className="block text-sm font-medium text-amber-100/80">
         {label}
-
-        {required && <span className="ml-1 text-red-400">*</span>}
+        {required && <span className="ml-1 text-rose-400">*</span>}
       </label>
-
       {children}
     </div>
   );

@@ -32,48 +32,14 @@ export default function Header() {
 
   return (
     <>
-      <header
-        className="
-            fixed
-            top-0
-            left-0
-            z-50
-            w-full
-
-            h-16
-
-            border-b
-            border-white/10
-
-            bg-zinc-950/40
-            backdrop-blur-md
-        "
-      >
-        <div
-          className="
-            mx-auto
-            flex
-            h-full
-
-            max-w-7xl
-            items-center
-            justify-between
-
-            px-6
-            lg:px-10
-        "
-        >
+      <header className="fixed left-0 top-0 z-50 w-full border-b border-amber-900/30 bg-black/80 backdrop-blur-md">
+        <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
           <Logo />
-
           <Navigation />
-
           {user ? (
             <UserMenu />
           ) : (
-            <AuthButtons
-              onLoginClick={openLogin}
-              onRegisterClick={openRegister}
-            />
+            <AuthButtons onLoginClick={openLogin} onRegisterClick={openRegister} />
           )}
         </div>
       </header>

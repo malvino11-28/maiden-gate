@@ -1,21 +1,16 @@
 import { Link } from "react-router-dom";
+import type { ReactNode } from "react";
 
 type FooterLinkProps = {
   to: string;
-  children: React.ReactNode;
+  children: ReactNode;
 };
 
 export default function FooterLink({ to, children }: FooterLinkProps) {
   return (
     <Link
       to={to}
-      className="
-        text-stone-400
-        transition-colors
-        duration-300
-
-        hover:text-orange-400
-      "
+      className="block text-sm text-amber-100/50 transition-colors hover:text-amber-300"
     >
       {children}
     </Link>
