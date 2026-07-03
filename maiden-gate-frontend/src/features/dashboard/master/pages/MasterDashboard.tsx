@@ -16,6 +16,7 @@ import Button from "../../../../shared/components/Button/Button";
 
 import { stats, campaigns, quickActions } from "../data/dashboardMock";
 import type { ActiveModal } from "../data/dashboardMock";
+import TransferElementModal from "../components/modals/TransferElementModal";
 
 export default function MasterDashboard() {
   const [activeTab, setActiveTab] = useState<"campaigns" | "profile">(
@@ -101,7 +102,10 @@ export default function MasterDashboard() {
                 icon={action.icon}
                 title={action.title}
                 description={action.description}
-                onClick={() => setActiveModal(action.id)}
+                onClick={() => {
+                  console.log(action.id);
+                  setActiveModal(action.id);
+                }}
               />
             ))}
           </aside>
@@ -130,6 +134,11 @@ export default function MasterDashboard() {
 
       <NpcModal
         isOpen={activeModal === "npc"}
+        onClose={() => setActiveModal(null)}
+      />
+
+      <TransferElementModal
+        isOpen={activeModal === "transfer"}
         onClose={() => setActiveModal(null)}
       />
     </div>

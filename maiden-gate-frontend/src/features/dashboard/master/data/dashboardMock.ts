@@ -66,7 +66,7 @@ export type ActiveModal =
   | "monster"
   | "item"
   | "location"
-  | "duply";
+  | "transfer";
 
 type QuickAction = {
   id: ActiveModal;
@@ -107,9 +107,9 @@ export const quickActions: QuickAction[] = [
     description: "Registre acontecimentos da campanha.",
   },
   {
-    id: "duply",
+    id: "transfer",
     icon: Copy,
     title: "Duplicar Recursos",
-    description: "Reutilize NPCs, locais e monstros.",
+    description: "Reutilize NPCs, locais e mais.",
   },
 ];
