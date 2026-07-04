@@ -15,7 +15,7 @@ export default function Modal({ isOpen, onClose, children }: ModalProps) {
       onClick={onClose}
     >
       <div
-        className="w-full max-w-lg overflow-hidden rounded-2xl border border-amber-900/40 bg-slate-950 shadow-2xl"
+        className="flex max-h-[90vh] w-full max-w-lg flex-col overflow-hidden rounded-2xl border border-amber-900/40 bg-slate-950 shadow-2xl"
         onClick={(e) => e.stopPropagation()}
       >
         {children}
