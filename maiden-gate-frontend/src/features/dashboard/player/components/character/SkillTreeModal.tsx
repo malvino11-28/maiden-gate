@@ -86,9 +86,9 @@ export default function SkillTreeModal({
         className="
           relative
           flex
-          max-h-[92vh]
+          h-[92vh]
           w-full
-          max-w-4xl
+          max-w-7xl
           flex-col
           overflow-hidden
           rounded-2xl
@@ -354,7 +354,7 @@ export default function SkillTreeModal({
           )}
         </nav>
 
-        <main className="flex-1 overflow-y-auto p-6">
+        <main className="flex-1 overflow-y-auto p-5">
           {showCampaignSkills && (
             <div className="mb-4 flex items-start gap-2 rounded-lg border border-violet-800/30 bg-violet-900/20 p-3">
               <Wand2 className="mt-0.5 h-4 w-4 flex-shrink-0 text-violet-400" />
@@ -383,7 +383,7 @@ export default function SkillTreeModal({
               </p>
             </div>
           ) : (
-            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+            <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
               {activeSkills.map((skill) => {
                 const unlocked = skill.desbloqueada && hasRequiredLevel(skill);
                 const equipped = equippedSkills.includes(skill.id);
