@@ -135,6 +135,20 @@ export interface PlayerCampaignElements {
   eventos: PlayerCampaignElementEvent[];
 }
 
+export type PlayerCampaignSessionStatus =
+  | "em_espera"
+  | "concluido"
+  | "cancelado";
+
+export interface PlayerCampaignSession {
+  id: string;
+  title: string;
+  date: string;
+  time: string;
+  description: string;
+  status: PlayerCampaignSessionStatus;
+}
+
 export interface PlayerCampaignData {
   id: string;
   nome: string;
@@ -148,6 +162,7 @@ export interface PlayerCampaignData {
   personagem: PlayerCharacterFull;
   inventario: PlayerInventoryItem[];
   elementos: PlayerCampaignElements;
+  sessoes: PlayerCampaignSession[];
 }
 
 export type PlayerCampaignSectionKey =
@@ -156,6 +171,7 @@ export type PlayerCampaignSectionKey =
   | "membros"
   | "localizacao"
   | "inventario"
+  | "sessoes"
   | "batalha";
 
 export interface CharacterMarkOption {

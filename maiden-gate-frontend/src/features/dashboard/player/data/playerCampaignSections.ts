@@ -1,4 +1,12 @@
-import { Backpack, BookOpen, MapPin, Swords, User, Users } from "lucide-react";
+import {
+  Backpack,
+  BookOpen,
+  CalendarDays,
+  MapPin,
+  Swords,
+  User,
+  Users,
+} from "lucide-react";
 import type { ElementType } from "react";
 import type { PlayerCampaignSectionKey } from "../types/player";
 
@@ -12,5 +20,6 @@ export const playerCampaignSections: {
   { key: "membros", label: "Membros", icon: Users },
   { key: "localizacao", label: "Localização", icon: MapPin },
   { key: "inventario", label: "Inventário", icon: Backpack },
+  { key: "sessoes", label: "Sessões", icon: CalendarDays },
   { key: "batalha", label: "Batalha", icon: Swords },
 ];

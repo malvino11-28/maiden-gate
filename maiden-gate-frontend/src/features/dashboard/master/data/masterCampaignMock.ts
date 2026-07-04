@@ -7,12 +7,41 @@ export const masterCampaignData: Record<string, MasterCampaign> = {
     status: "ativa",
     sessoes: 12,
     ultimaSessao: "22 Jun 2026",
+
+    imagem: "/images/campaigns/flor-abismo.jpg",
+    descricao:
+      "Uma campanha sombria sobre os ecos do Abismo, ruínas antigas e segredos deixados pela Era das Cinzas. O grupo investiga uma torre ancestral enquanto forças antigas começam a despertar.",
+    nivelRecomendado: "Intermediário",
+    jogadores: "3–5",
+
+    agendaSessoes: [
+      {
+        id: "sessao-13",
+        title: "Exploração do quarto andar",
+        date: "2026-07-10",
+        time: "20:00",
+        description:
+          "O grupo deve continuar a exploração da Torre de Valdris e enfrentar os perigos guardados no quarto andar.",
+        status: "em_espera",
+      },
+      {
+        id: "sessao-12",
+        title: "O terceiro andar da torre",
+        date: "2026-06-22",
+        time: "20:00",
+        description:
+          "O grupo descobriu rastros de magia residual e encontrou pistas sobre o Golem de Cristal.",
+        status: "concluido",
+      },
+    ],
+
     localizacaoAtual: {
       nome: "Torre de Valdris",
       tipo: "Ruína",
       descricao:
         "Uma torre de pedra antiga no coração da Floresta Sombria. Seus corredores guardam segredos da Era das Cinzas. O grupo está no terceiro andar — ecos de magia ainda pulsam nas paredes.",
     },
+
     membros: [
       {
         nome: "Kael Sondra",
@@ -81,6 +110,7 @@ export const masterCampaignData: Record<string, MasterCampaign> = {
         ],
       },
     ],
+
     elementos: {
       localizacoes: [
         {
@@ -105,6 +135,7 @@ export const masterCampaignData: Record<string, MasterCampaign> = {
             "Local selado por uma ordem antiga. Rumores de tesouro e perigo extremo.",
         },
       ],
+
       npcs: [
         {
           nome: "Eryn, o Taberneiro",
@@ -122,6 +153,7 @@ export const masterCampaignData: Record<string, MasterCampaign> = {
           segredo: "Fabricou a arma usada no assassinato de um nobre local.",
         },
       ],
+
       monstros: [
         {
           nome: "Golem de Cristal",
@@ -140,6 +172,7 @@ export const masterCampaignData: Record<string, MasterCampaign> = {
             "Resíduo consciente de um mago que morreu dentro da torre.",
         },
       ],
+
       itens: [
         {
           nome: "Fragmento do Núcleo",
@@ -153,6 +186,7 @@ export const masterCampaignData: Record<string, MasterCampaign> = {
           descricao: "Remove confusão e efeitos mentais leves.",
         },
       ],
+
       eventos: [
         {
           titulo: "O Selamento da Torre",
@@ -170,6 +204,7 @@ export const masterCampaignData: Record<string, MasterCampaign> = {
         },
       ],
     },
+
     notas:
       "Sessão 13 planejada: o grupo deve chegar ao 4º andar e enfrentar o Golem. Lord Serath mandou espiões para Arenhal. Revelar na sessão 14.",
   },
@@ -180,20 +215,88 @@ export const masterCampaignData: Record<string, MasterCampaign> = {
     status: "pausada",
     sessoes: 7,
     ultimaSessao: "10 Mai 2026",
+
+    imagem: "",
+    descricao:
+      "Uma campanha política e marítima ambientada no Porto de Vareth, marcada por disputas comerciais, segredos antigos e ameaças vindas do Mar Cinzento.",
+    nivelRecomendado: "Iniciante",
+    jogadores: "3–4",
+
+    agendaSessoes: [
+      {
+        id: "sessao-vareth-7",
+        title: "Negociações no Porto de Vareth",
+        date: "2026-05-10",
+        time: "19:30",
+        description:
+          "Última sessão realizada antes da pausa. O grupo investigou contratos falsificados e movimentações suspeitas no porto.",
+        status: "concluido",
+      },
+      {
+        id: "sessao-vareth-8",
+        title: "Retomada da investigação",
+        date: "2026-07-20",
+        time: "19:30",
+        description:
+          "Sessão ainda sem confirmação. Retomar quando o grupo confirmar disponibilidade.",
+        status: "em_espera",
+      },
+    ],
+
     localizacaoAtual: {
       nome: "Porto de Vareth",
       tipo: "Cidade Portuária",
       descricao:
         "Porto movimentado às margens do Mar Cinzento. A campanha está pausada aqui.",
     },
+
     membros: [],
+
     elementos: {
-      localizacoes: [],
-      npcs: [],
+      localizacoes: [
+        {
+          nome: "Porto de Vareth",
+          tipo: "Cidade Portuária",
+          regiao: "Costa do Mar Cinzento",
+          descricao:
+            "Cidade marcada por comércio intenso, tavernas lotadas, contrabando e disputas entre guildas marítimas.",
+        },
+      ],
+
+      npcs: [
+        {
+          nome: "Capitã Elra Voss",
+          raca: "Humana",
+          ocupacao: "Capitã Mercante",
+          personalidade:
+            "Pragmática, desconfiada e extremamente protetora com sua tripulação.",
+          segredo:
+            "Transportou uma carga proibida sem saber sua verdadeira origem.",
+        },
+      ],
+
       monstros: [],
-      itens: [],
-      eventos: [],
+
+      itens: [
+        {
+          nome: "Contrato Selado",
+          tipo: "Documento",
+          descricao:
+            "Contrato comercial com assinaturas falsas e marcas de uma organização desconhecida.",
+        },
+      ],
+
+      eventos: [
+        {
+          titulo: "A Chegada ao Porto",
+          cronologia: "Sessão 1",
+          data: "02 Abr 2026",
+          descricao:
+            "O grupo chegou ao Porto de Vareth e se envolveu em uma disputa entre comerciantes locais.",
+        },
+      ],
     },
+
     notas:
       "Campanha pausada. Retomar quando o grupo confirmar disponibilidade.",
   },
@@ -204,19 +307,78 @@ export const masterCampaignData: Record<string, MasterCampaign> = {
     status: "encerrada",
     sessoes: 20,
     ultimaSessao: "03 Jan 2026",
+
+    imagem: "",
+    descricao:
+      "Campanha concluída sobre o despertar de uma entidade antiga ligada à Donzela e aos mistérios de um templo perdido.",
+    nivelRecomendado: "Avançado",
+    jogadores: "4–5",
+
+    agendaSessoes: [
+      {
+        id: "sessao-final-donzela",
+        title: "Confronto no Templo da Donzela",
+        date: "2026-01-03",
+        time: "20:00",
+        description:
+          "Sessão final da campanha, marcada pelo confronto contra a ameaça principal e conclusão dos arcos narrativos.",
+        status: "concluido",
+      },
+    ],
+
     localizacaoAtual: {
       nome: "Templo da Donzela",
       tipo: "Templo",
       descricao: "Local do confronto final da campanha. Encerrada com sucesso.",
     },
+
     membros: [],
+
     elementos: {
-      localizacoes: [],
+      localizacoes: [
+        {
+          nome: "Templo da Donzela",
+          tipo: "Templo",
+          regiao: "Vale Antigo",
+          descricao:
+            "Templo sagrado onde ocorreu o confronto final da campanha.",
+        },
+      ],
+
       npcs: [],
-      monstros: [],
-      itens: [],
-      eventos: [],
+
+      monstros: [
+        {
+          nome: "Guardião da Donzela",
+          tipo: "Entidade",
+          ameaca: "8 (extremo)",
+          habilidades:
+            "Barreira sagrada. Julgamento da Donzela. Regeneração parcial.",
+          descricao:
+            "Última defesa do templo, despertada para proteger o selo antigo.",
+        },
+      ],
+
+      itens: [
+        {
+          nome: "Relíquia da Donzela",
+          tipo: "Artefato",
+          descricao:
+            "Objeto central da campanha, utilizado para encerrar o despertar da entidade.",
+        },
+      ],
+
+      eventos: [
+        {
+          titulo: "O Despertar da Donzela",
+          cronologia: "Final da Campanha",
+          data: "03 Jan 2026",
+          descricao:
+            "O grupo enfrentou a ameaça final e impediu que a entidade despertasse completamente.",
+        },
+      ],
     },
+
     notas: "Campanha concluída. Todos os arcos narrativos foram resolvidos.",
   },
 };

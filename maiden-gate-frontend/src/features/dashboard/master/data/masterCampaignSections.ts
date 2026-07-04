@@ -1,4 +1,12 @@
-import { BookOpen, Users, MapPin, PenLine, Swords } from "lucide-react";
+import {
+  BookOpen,
+  CalendarDays,
+  FileText,
+  MapPin,
+  PenLine,
+  Swords,
+  Users,
+} from "lucide-react";
 
 import type { LucideIcon } from "lucide-react";
 import type { SectionKey } from "../types/masterCampaign";
@@ -27,6 +35,16 @@ export const campaignSections: {
     key: "notas",
     label: "Notas",
     icon: PenLine,
+  },
+  {
+    key: "sessoes",
+    label: "Sessões",
+    icon: CalendarDays,
+  },
+  {
+    key: "dados",
+    label: "Dados",
+    icon: FileText,
   },
   {
     key: "batalha",

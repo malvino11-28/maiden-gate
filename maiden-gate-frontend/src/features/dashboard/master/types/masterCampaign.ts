@@ -5,6 +5,8 @@ export type SectionKey =
   | "membros"
   | "localizacao"
   | "notas"
+  | "sessoes"
+  | "dados"
   | "batalha";
 
 export type DiceType = 4 | 6 | 8 | 10 | 12 | 20 | 100;
@@ -88,8 +90,26 @@ export interface MasterCampaign {
   status: CampaignStatus;
   sessoes: number;
   ultimaSessao: string;
+
+  imagem?: string;
+  descricao?: string;
+  nivelRecomendado?: string;
+  jogadores?: string;
+  agendaSessoes?: CampaignSessionNotice[];
+
   localizacaoAtual: CurrentLocation;
   membros: CampaignMember[];
   elementos: CampaignElements;
   notas: string;
+}
+
+export type CampaignSessionStatus = "em_espera" | "concluido" | "cancelado";
+
+export interface CampaignSessionNotice {
+  id: string;
+  title: string;
+  date: string;
+  time: string;
+  description: string;
+  status: CampaignSessionStatus;
 }

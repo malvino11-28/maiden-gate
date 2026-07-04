@@ -11,6 +11,8 @@ import MembersSection from "../components/campaignSession/sections/MembersSectio
 import LocationSection from "../components/campaignSession/sections/LocationSection";
 import NotesSection from "../components/campaignSession/sections/NotesSection";
 import BattleSection from "../components/campaignSession/sections/BattleSection";
+import SessionsSection from "../components/campaignSession/sections/SessionsSection";
+import CampaignDataSection from "../components/campaignSession/sections/CampaignDataSection";
 
 import EventModal from "../components/modals/EventModal";
 import ItemModal from "../components/modals/ItemModal";
@@ -45,6 +47,13 @@ export default function MasterCampaignPage() {
     setActiveModal(elementActionToModal[type]);
   }
 
+  function handleEditCampaign() {
+    console.log("Editar campanha", campaign.id);
+  }
+
+  function handleDeleteCampaign() {
+    console.log("Excluir campanha", campaign.id);
+  }
   return (
     <div className="min-h-screen bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950">
       <main className="mx-auto w-full max-w-7xl px-4 pb-12 pt-8 sm:px-6 lg:px-8">
@@ -77,6 +86,18 @@ export default function MasterCampaignPage() {
 
             {activeSection === "notas" && (
               <NotesSection initialNotes={campaign.notas} />
+            )}
+
+            {activeSection === "sessoes" && (
+              <SessionsSection initialSessions={campaign.agendaSessoes} />
+            )}
+
+            {activeSection === "dados" && (
+              <CampaignDataSection
+                campaign={campaign}
+                onEdit={handleEditCampaign}
+                onDelete={handleDeleteCampaign}
+              />
             )}
 
             {activeSection === "batalha" && (

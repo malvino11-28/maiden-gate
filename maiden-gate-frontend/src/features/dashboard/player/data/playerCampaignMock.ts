@@ -41,6 +41,7 @@ const baseCampaign: PlayerCampaignData = {
       nivel: 5,
     },
   ],
+
   personagem: {
     id: 1,
     nome: "Lirien",
@@ -94,6 +95,26 @@ const baseCampaign: PlayerCampaignData = {
       },
     ],
   },
+  sessoes: [
+    {
+      id: "sessao-13",
+      title: "Exploração do quarto andar",
+      date: "2026-07-10",
+      time: "20:00",
+      description:
+        "O grupo deve continuar a exploração da Torre de Valdris e enfrentar os perigos guardados no quarto andar.",
+      status: "em_espera",
+    },
+    {
+      id: "sessao-12",
+      title: "O terceiro andar da torre",
+      date: "2026-06-22",
+      time: "20:00",
+      description:
+        "O grupo descobriu rastros de magia residual e encontrou pistas sobre o Golem de Cristal.",
+      status: "concluido",
+    },
+  ],
   inventario: [
     {
       nome: "Foco de Respiração",
