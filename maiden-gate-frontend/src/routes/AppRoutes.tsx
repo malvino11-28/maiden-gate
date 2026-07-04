@@ -44,18 +44,6 @@ export default function AppRoutes() {
 
           <Route element={<RoleProtectedRoute allowedRole="player" />}>
             <Route path="/dashboard/player" element={<PlayerDashboard />} />
-            <Route
-              path="/dashboard/player/campaign/:id"
-              element={<PlayerCampaignPage />}
-            />
-            <Route
-              path="/dashboard/player/character/new"
-              element={<CreateCharacterPage />}
-            />
-            <Route
-              path="/dashboard/player/character/:id/edit"
-              element={<EditCharacterPage />}
-            />
           </Route>
         </Route>
 
@@ -67,6 +55,21 @@ export default function AppRoutes() {
           <Route
             path="/dashboard/master/campaign/:id"
             element={<MasterCampaignPage />}
+          />
+        </Route>
+
+        <Route element={<RoleProtectedRoute allowedRole="player" />}>
+          <Route
+            path="/dashboard/player/character/new"
+            element={<CreateCharacterPage />}
+          />
+          <Route
+            path="/dashboard/player/character/:id/edit"
+            element={<EditCharacterPage />}
+          />
+          <Route
+            path="/dashboard/player/campaign/:id"
+            element={<PlayerCampaignPage />}
           />
         </Route>
       </Route>
