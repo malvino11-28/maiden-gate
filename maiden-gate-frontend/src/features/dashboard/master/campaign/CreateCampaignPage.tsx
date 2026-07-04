@@ -1,6 +1,13 @@
 import { useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { BookOpen, CalendarDays, Gem, MapPin, Skull, Users } from "lucide-react";
+import {
+  BookOpen,
+  CalendarDays,
+  Gem,
+  MapPin,
+  Skull,
+  Users,
+} from "lucide-react";
 
 import CampaignHeader from "./components/CreateCampaign/CampaignHeader";
 import CampaignSidebar from "./components/CreateCampaign/CampaignSidebar";
@@ -13,7 +20,17 @@ import EventsSection from "./components/sections/EventsSection";
 import useCampaignForm from "./hooks/useCampaignForm";
 import type { CampaignStep } from "./types/campaignStep";
 
-const steps: CampaignStep[] = ["cover", "locations", "npcs", "monsters", "items", "events"];
+import PremadeCampaignModal from "./modal/PremadeCampaign";
+import type { PremadeCampaign } from "./data/premadeCampaign";
+
+const steps: CampaignStep[] = [
+  "cover",
+  "locations",
+  "npcs",
+  "monsters",
+  "items",
+  "events",
+];
 
 const stepLabels: Record<CampaignStep, string> = {
   cover: "Capa",
@@ -35,12 +52,30 @@ const stepIcons = {
 
 export default function CreateCampaignPage() {
   const navigate = useNavigate();
+  const [isPremadeModalOpen, setIsPremadeModalOpen] = useState(false);
   const [currentStep, setCurrentStep] = useState<CampaignStep>("cover");
   const [saved, setSaved] = useState(false);
   const { campaign, updateField } = useCampaignForm();
 
   const currentIndex = steps.indexOf(currentStep);
-  const progress = useMemo(() => ((currentIndex + 1) / steps.length) * 100, [currentIndex]);
+  const progress = useMemo(
+    () => ((currentIndex + 1) / steps.length) * 100,
+    [currentIndex],
+  );
+
+  function handleUsePremadeCampaign(campaign: PremadeCampaign) {
+    updateField("image", "");
+    updateField("name", campaign.name);
+    updateField("description", campaign.description);
+    updateField("recommendedLevel", campaign.recommendedLevel);
+    updateField("players", campaign.players);
+
+    updateField("locations", campaign.locations);
+    updateField("npcs", campaign.npcs);
+    updateField("monsters", campaign.monsters);
+    updateField("items", campaign.items);
+    updateField("events", campaign.events);
+  }
 
   function goNext() {
     const nextStep = steps[currentIndex + 1];
@@ -68,7 +103,9 @@ export default function CreateCampaignPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950 text-amber-100">
-      <CampaignHeader />
+      <CampaignHeader
+        onOpenPremadeCampaigns={() => setIsPremadeModalOpen(true)}
+      />
 
       <div className="flex">
         <CampaignSidebar currentStep={currentStep} onChange={setCurrentStep} />
@@ -76,11 +113,16 @@ export default function CreateCampaignPage() {
         <main className="min-w-0 flex-1">
           <div className="border-b border-amber-900/25 bg-slate-950/50 px-4 py-4 lg:hidden">
             <div className="mb-3 flex items-center justify-between text-xs text-amber-100/45">
-              <span>Etapa {currentIndex + 1} de {steps.length}</span>
+              <span>
+                Etapa {currentIndex + 1} de {steps.length}
+              </span>
               <span>{stepLabels[currentStep]}</span>
             </div>
             <div className="h-1.5 overflow-hidden rounded-full bg-amber-950/50">
-              <div className="h-full rounded-full bg-gradient-to-r from-amber-500 to-rose-600" style={{ width: `${progress}%` }} />
+              <div
+                className="h-full rounded-full bg-gradient-to-r from-amber-500 to-rose-600"
+                style={{ width: `${progress}%` }}
+              />
             </div>
             <div className="mt-4 grid grid-cols-3 gap-2 sm:grid-cols-6">
               {steps.map((step) => {
@@ -100,45 +142,71 @@ export default function CreateCampaignPage() {
             </div>
           </div>
 
-          <div className="grid min-h-[calc(100vh-4rem)] lg:grid-cols-[1fr_320px]">
+          <div className="grid min-h-[calc(100vh-4rem)] lg:grid-cols-[1fr_180px]">
             <div>
               {currentStep === "cover" && (
-                <CoverSection campaign={campaign} updateField={updateField} onNext={goNext} />
+                <CoverSection
+                  campaign={campaign}
+                  updateField={updateField}
+                  onNext={goNext}
+                />
               )}
 
               {currentStep === "locations" && (
-                <LocationSection campaign={campaign} updateField={updateField} onNext={goNext} onPrevious={goPrevious} />
+                <LocationSection
+                  campaign={campaign}
+                  updateField={updateField}
+                  onNext={goNext}
+                  onPrevious={goPrevious}
+                />
               )}
 
               {currentStep === "npcs" && (
-                <NpcsSection campaign={campaign} updateField={updateField} onNext={goNext} onPrevious={goPrevious} />
+                <NpcsSection
+                  campaign={campaign}
+                  updateField={updateField}
+                  onNext={goNext}
+                  onPrevious={goPrevious}
+                />
               )}
 
               {currentStep === "monsters" && (
-                <MonstersSection campaign={campaign} updateField={updateField} onNext={goNext} onPrevious={goPrevious} />
+                <MonstersSection
+                  campaign={campaign}
+                  updateField={updateField}
+                  onNext={goNext}
+                  onPrevious={goPrevious}
+                />
               )}
 
               {currentStep === "items" && (
-                <ItemsSection campaign={campaign} updateField={updateField} onNext={goNext} onPrevious={goPrevious} />
+                <ItemsSection
+                  campaign={campaign}
+                  updateField={updateField}
+                  onNext={goNext}
+                  onPrevious={goPrevious}
+                />
               )}
 
               {currentStep === "events" && (
-                <EventsSection campaign={campaign} updateField={updateField} onPrevious={goPrevious} onFinish={handleFinish} />
+                <EventsSection
+                  campaign={campaign}
+                  updateField={updateField}
+                  onPrevious={goPrevious}
+                  onFinish={handleFinish}
+                />
               )}
             </div>
 
-            <aside className="hidden border-l border-amber-900/25 bg-slate-950/40 p-6 lg:block">
+            <aside className="hidden border-l border-amber-900/25 bg-slate-950/40 p-4.5 lg:block">
               <div className="sticky top-24 space-y-6">
                 <div>
-                  <h2 className="text-sm font-semibold uppercase tracking-widest text-amber-100/55">
+                  <h2 className="text-[14px] font-semibold uppercase tracking-widest text-amber-100/55 text-center">
                     Resumo
                   </h2>
-                  <p className="mt-2 text-xs leading-5 text-amber-100/35">
-                    A campanha será montada em etapas. Os dados permanecem no formulário enquanto você navega.
-                  </p>
                 </div>
 
-                <div className="rounded-xl border border-amber-900/25 bg-slate-900/50 p-4">
+                <div className="rounded-xl border border-amber-900/25 bg-slate-900/50 p-4 text-center">
                   <p className="mb-1 text-xs uppercase tracking-wider text-amber-100/35">
                     Nome
                   </p>
@@ -146,16 +214,21 @@ export default function CreateCampaignPage() {
                     {campaign.name || "Nova Campanha"}
                   </p>
                   <p className="mt-3 text-xs text-amber-100/45">
-                    {campaign.recommendedLevel} • {campaign.players || "? jogadores"}
+                    {campaign.recommendedLevel} •{" "}
+                    {campaign.players || "? jogadores"}
                   </p>
                 </div>
 
-                <div className="grid grid-cols-2 gap-3">
+                <div className="grid grid-cols-1 gap-3">
                   {summary.map(({ label, value, icon: Icon }) => (
-                    <div key={label} className="rounded-xl border border-amber-900/20 bg-slate-900/45 p-3 text-center">
+                    <div
+                      key={label}
+                      className="rounded-xl border border-amber-900/20 bg-slate-900/45 p-3 text-center"
+                    >
                       <Icon className="mx-auto mb-1 h-4 w-4 text-amber-400/60" />
-                      <p className="text-lg font-semibold text-amber-100">{value}</p>
-                      <p className="text-xs text-amber-100/35">{label}</p>
+                      <p className="text-lg font-semibold text-amber-100">
+                        {value}
+                      </p>
                     </div>
                   ))}
                 </div>
@@ -170,6 +243,11 @@ export default function CreateCampaignPage() {
           </div>
         </main>
       </div>
+      <PremadeCampaignModal
+        isOpen={isPremadeModalOpen}
+        onClose={() => setIsPremadeModalOpen(false)}
+        onUseCampaign={handleUsePremadeCampaign}
+      />
     </div>
   );
 }

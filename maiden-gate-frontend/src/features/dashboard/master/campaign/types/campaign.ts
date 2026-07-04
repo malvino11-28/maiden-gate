@@ -9,7 +9,6 @@ export interface CampaignLocation {
 
 export interface CampaignNpc {
   name: string;
-  species: string;
   occupation: string;
   personality: string;
   secret: string;
