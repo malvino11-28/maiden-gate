@@ -12,21 +12,38 @@ import LocationSection from "../components/campaignSession/sections/LocationSect
 import NotesSection from "../components/campaignSession/sections/NotesSection";
 import BattleSection from "../components/campaignSession/sections/BattleSection";
 
-import ElementModal from "../components/campaignSession/modals/ElementModal";
+import EventModal from "../components/modals/EventModal";
+import ItemModal from "../components/modals/ItemModal";
+import LocationModal from "../components/modals/LocationModal";
+import MonsterModal from "../components/modals/MonsterModal";
+import NpcModal from "../components/modals/NpcModal";
 
 import { masterCampaignData } from "../data/masterCampaignMock";
 
 import type { SectionKey } from "../types/masterCampaign";
-import type { ElementFormKey } from "../data/elementForms";
+import type { ActiveModal } from "../data/dashboardMock";
+
+type ElementActionType = "localizacao" | "npc" | "monstro" | "item" | "evento";
+
+const elementActionToModal: Record<ElementActionType, ActiveModal> = {
+  localizacao: "location",
+  npc: "npc",
+  monstro: "monster",
+  item: "item",
+  evento: "event",
+};
 
 export default function MasterCampaignPage() {
   const { id } = useParams<{ id: string }>();
 
   const [activeSection, setActiveSection] = useState<SectionKey>("elementos");
-
-  const [elementModal, setElementModal] = useState<ElementFormKey | null>(null);
+  const [activeModal, setActiveModal] = useState<ActiveModal | null>(null);
 
   const campaign = masterCampaignData[id ?? "1"] ?? masterCampaignData["1"];
+
+  function handleAddElement(type: ElementActionType) {
+    setActiveModal(elementActionToModal[type]);
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950">
@@ -43,7 +60,7 @@ export default function MasterCampaignPage() {
             {activeSection === "elementos" && (
               <ElementsSection
                 elements={campaign.elementos}
-                onAdd={(type) => setElementModal(type)}
+                onAdd={handleAddElement}
               />
             )}
 
@@ -108,12 +125,30 @@ export default function MasterCampaignPage() {
         </div>
       </main>
 
-      {elementModal && (
-        <ElementModal
-          type={elementModal}
-          onClose={() => setElementModal(null)}
-        />
-      )}
+      <EventModal
+        isOpen={activeModal === "event"}
+        onClose={() => setActiveModal(null)}
+      />
+
+      <ItemModal
+        isOpen={activeModal === "item"}
+        onClose={() => setActiveModal(null)}
+      />
+
+      <LocationModal
+        isOpen={activeModal === "location"}
+        onClose={() => setActiveModal(null)}
+      />
+
+      <MonsterModal
+        isOpen={activeModal === "monster"}
+        onClose={() => setActiveModal(null)}
+      />
+
+      <NpcModal
+        isOpen={activeModal === "npc"}
+        onClose={() => setActiveModal(null)}
+      />
     </div>
   );
 }

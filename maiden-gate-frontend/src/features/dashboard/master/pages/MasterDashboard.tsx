@@ -26,7 +26,7 @@ export default function MasterDashboard() {
   const [activeModal, setActiveModal] = useState<ActiveModal | null>(null);
 
   return (
-    <main className="mx-auto w-full max-w-7xl px-4 pb-16 pt-28 sm:px-6 lg:px-8">
+    <main className="mx-auto w-full max-w-7xl px-4 pb-16 pt-13 sm:px-6 lg:px-8">
       <div className="space-y-10">
         <DashboardHeader name="Aldric Voss" />
 
@@ -105,6 +105,20 @@ export default function MasterDashboard() {
                         <p className="text-sm text-amber-100">{value}</p>
                       </div>
                     ))}
+                    <div className="flex gap-3 border-t border-rose-900/20 pt-4">
+                      <Button
+                        variant="outline"
+                        className="border-rose-500/40 text-rose-400 hover:bg-rose-500/10"
+                      >
+                        Editar Perfil
+                      </Button>
+                      <Button
+                        variant="outline"
+                        className="border-amber-500/40 text-amber-400 hover:bg-amber-500/10"
+                      >
+                        Alterar Senha
+                      </Button>
+                    </div>
                   </div>
                 </div>
               </div>
