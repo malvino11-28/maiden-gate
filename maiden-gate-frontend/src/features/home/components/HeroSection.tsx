@@ -44,7 +44,7 @@ export default function HeroSection() {
 
           bg-gradient-to-b
           from-black/30
-          via-[#08111f]/60
+          via-[#08111f]/60 
           to-[#050816]
         "
       />
