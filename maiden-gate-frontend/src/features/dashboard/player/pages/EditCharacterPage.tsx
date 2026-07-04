@@ -9,6 +9,7 @@ import {
   Swords,
   TreePine,
   Zap,
+  LockKeyhole,
 } from "lucide-react";
 import { GitBranch } from "lucide-react";
 import { useNavigate, useParams } from "react-router-dom";
@@ -16,7 +17,6 @@ import { useNavigate, useParams } from "react-router-dom";
 import CharacterPageShell from "../components/character/CharacterPageShell";
 import CharacterSectionCard from "../components/character/CharacterSectionCard";
 import CharacterImageUpload from "../components/character/CharacterImageUpload";
-import CharacterBrandSelector from "../components/character/CharacterBrandSelector";
 import CharacterAttributesPanel from "../components/character/CharacterAttributesPanel";
 import SkillTreeModal from "../components/character/SkillTreeModal";
 
@@ -229,12 +229,29 @@ export default function EditCharacterPage() {
         </CharacterSectionCard>
 
         <CharacterSectionCard title="Marca" icon={Sparkles}>
-          <CharacterBrandSelector
-            value={form.marca}
-            onChange={(marca) =>
-              setForm((previous) => ({ ...previous, marca }))
-            }
-          />
+          <div className="rounded-2xl border border-amber-900/30 bg-slate-950/50 p-5">
+            <div className="mb-3 flex items-center justify-between gap-3">
+              <div>
+                <p className="text-sm font-semibold text-amber-100">
+                  Marca {form.marca}
+                </p>
+
+                <p className="mt-1 text-xs text-amber-100/40">
+                  A Marca foi definida na criação do personagem.
+                </p>
+              </div>
+
+              <span className="inline-flex items-center gap-1 rounded-full border border-amber-500/25 bg-amber-500/10 px-3 py-1 text-[11px] font-medium text-amber-300/80">
+                <LockKeyhole className="h-3.5 w-3.5" />
+                Bloqueada
+              </span>
+            </div>
+
+            <div className="rounded-xl border border-amber-900/25 bg-slate-900/60 px-4 py-3 text-sm text-amber-100/65">
+              Esta escolha não pode ser alterada depois da criação do
+              personagem.
+            </div>
+          </div>
           <div className="rounded-2xl border border-amber-900/30 bg-slate-900/40 p-6 shadow-xl shadow-black/30">
             <div className="mb-4 flex items-center gap-3">
               <div className="flex h-9 w-9 items-center justify-center rounded-lg border border-amber-500/25 bg-amber-500/15">
