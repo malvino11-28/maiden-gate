@@ -11,6 +11,7 @@ type Props = {
   attributes: Record<AttributeKey, number>;
   onChange: (attributes: Record<AttributeKey, number>) => void;
 
+  minimumAttributes?: Record<AttributeKey, number>;
   pointLimit?: number;
   circleLimit?: number;
 };
@@ -18,19 +19,32 @@ type Props = {
 export default function CharacterAttributesPanel({
   attributes,
   onChange,
+  minimumAttributes,
   pointLimit = extraPoints,
   circleLimit = 50,
 }: Props) {
-  const spentPoints =
-    Object.values(attributes).reduce((sum, value) => sum + value, 0) -
-    characterAttributes.length * baseAttributeValue;
+  const baseAttributes =
+    minimumAttributes ??
+    characterAttributes.reduce(
+      (acc, attribute) => {
+        acc[attribute.key] = baseAttributeValue;
+        return acc;
+      },
+      {} as Record<AttributeKey, number>,
+    );
+
+  const spentPoints = Object.entries(attributes).reduce((sum, [key, value]) => {
+    const attributeKey = key as AttributeKey;
+    return sum + (value - baseAttributes[attributeKey]);
+  }, 0);
 
   const remainingPoints = pointLimit - spentPoints;
 
   function adjustAttribute(key: AttributeKey, delta: number) {
+    const minimumValue = baseAttributes[key];
     const nextValue = attributes[key] + delta;
 
-    if (nextValue < baseAttributeValue) return;
+    if (nextValue < minimumValue) return;
     if (delta > 0 && remainingPoints <= 0) return;
 
     onChange({ ...attributes, [key]: nextValue });
@@ -49,9 +63,10 @@ export default function CharacterAttributesPanel({
       <div className="grid grid-cols-2 gap-4 sm:grid-cols-3">
         {characterAttributes.map(({ key, label, nome, icon: Icon }) => {
           const value = attributes[key];
-          const extras = value - baseAttributeValue;
+          const minimumValue = baseAttributes[key];
+          const extras = value - minimumValue;
+          const canDecrease = value > minimumValue;
           const canIncrease = remainingPoints > 0;
-          const canDecrease = value > baseAttributeValue;
 
           const circleProgress = Math.min(extras / circleLimit, 1);
           const circleLength = 175.93;

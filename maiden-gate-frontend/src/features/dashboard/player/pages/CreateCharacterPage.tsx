@@ -23,6 +23,7 @@ import {
   baseAttributeValue,
   campaignsForCharacter,
   extraPoints,
+  getMinimumAttributesByMark,
 } from "../data/characterFormMock";
 import type { AttributeKey, CharacterMark } from "../types/player";
 
@@ -45,11 +46,12 @@ const initialAttributes: Record<AttributeKey, number> = {
 };
 
 const maxAttributeBonusOnCreation = 5;
-const maxAttributeValueOnCreation =
-  baseAttributeValue + maxAttributeBonusOnCreation;
+// const maxAttributeValueOnCreation =
+//   baseAttributeValue + maxAttributeBonusOnCreation;
 
 export default function CreateCharacterPage() {
   const navigate = useNavigate();
+
   const [showSkillTree, setShowSkillTree] = useState(false);
   const [image, setImage] = useState<string | null>(null);
   const [saved, setSaved] = useState(false);
@@ -61,13 +63,27 @@ export default function CreateCharacterPage() {
     historia: "",
     marca: "",
   });
+  const minimumAttributes = getMinimumAttributesByMark(form.marca);
   const [attributes, setAttributes] =
     useState<Record<AttributeKey, number>>(initialAttributes);
 
-  const spentPoints =
-    Object.values(attributes).reduce((sum, value) => sum + value, 0) -
-    Object.keys(initialAttributes).length * baseAttributeValue;
+  const spentPoints = Object.entries(attributes).reduce((sum, [key, value]) => {
+    const attributeKey = key as AttributeKey;
+    return sum + (value - minimumAttributes[attributeKey]);
+  }, 0);
+
   const remainingPoints = extraPoints - spentPoints;
+
+  function handleMarkChange(marca: CharacterMark) {
+    const minimum = getMinimumAttributesByMark(marca);
+
+    setForm((previous) => ({
+      ...previous,
+      marca,
+    }));
+
+    setAttributes(minimum);
+  }
 
   function handleChange(
     event: ChangeEvent<
@@ -96,10 +112,11 @@ export default function CreateCharacterPage() {
       const limitedAttributes = Object.entries(next).reduce(
         (acc, [key, value]) => {
           const attributeKey = key as AttributeKey;
+          const minimumValue = minimumAttributes[attributeKey];
 
           acc[attributeKey] = Math.min(
-            Math.max(value, baseAttributeValue),
-            maxAttributeValueOnCreation,
+            Math.max(value, minimumValue),
+            minimumValue + maxAttributeBonusOnCreation,
           );
 
           return acc;
@@ -107,12 +124,13 @@ export default function CreateCharacterPage() {
         {} as Record<AttributeKey, number>,
       );
 
-      const totalSpent =
-        Object.values(limitedAttributes).reduce(
-          (sum, value) => sum + value,
-          0,
-        ) -
-        Object.keys(initialAttributes).length * baseAttributeValue;
+      const totalSpent = Object.entries(limitedAttributes).reduce(
+        (sum, [key, value]) => {
+          const attributeKey = key as AttributeKey;
+          return sum + (value - minimumAttributes[attributeKey]);
+        },
+        0,
+      );
 
       if (totalSpent > extraPoints) {
         return previous;
@@ -232,9 +250,7 @@ export default function CreateCharacterPage() {
         >
           <CharacterBrandSelector
             value={form.marca}
-            onChange={(marca) =>
-              setForm((previous) => ({ ...previous, marca }))
-            }
+            onChange={handleMarkChange}
           />
 
           <div className="mt-5 rounded-2xl border border-amber-900/30 bg-slate-900/40 p-5">
@@ -330,6 +346,7 @@ export default function CreateCharacterPage() {
           <CharacterAttributesPanel
             attributes={attributes}
             onChange={handleAttributesChange}
+            minimumAttributes={minimumAttributes}
             pointLimit={extraPoints}
             circleLimit={50}
           />

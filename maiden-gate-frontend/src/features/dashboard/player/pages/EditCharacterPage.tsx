@@ -21,7 +21,10 @@ import CharacterAttributesPanel from "../components/character/CharacterAttribute
 import SkillTreeModal from "../components/character/SkillTreeModal";
 import CharacterBattleResources from "../components/character/CharacterBattleResources";
 
-import { baseAttributeValue, extraPoints } from "../data/characterFormMock";
+import {
+  extraPoints,
+  getMinimumAttributesByMark,
+} from "../data/characterFormMock";
 import { playerCampaignData } from "../data/playerCampaignMock";
 import type {
   AttributeKey,
@@ -39,18 +42,15 @@ type CharacterForm = {
 
 function attributesToRecord(
   attributes: { nome: string; valor: number }[],
+  minimumAttributes: Record<AttributeKey, number>,
 ): Record<AttributeKey, number> {
   const base: Record<AttributeKey, number> = {
-    POD: baseAttributeValue,
-    DES: baseAttributeValue,
-    RES: baseAttributeValue,
-    INT: baseAttributeValue,
-    DET: baseAttributeValue,
-    PRE: baseAttributeValue,
+    ...minimumAttributes,
   };
 
   attributes.forEach((attribute) => {
     const key = attribute.nome as AttributeKey;
+
     if (key in base) {
       base[key] = attribute.valor;
     }
@@ -67,6 +67,7 @@ export default function EditCharacterPage() {
     id === "2" ? playerCampaignData["2"] : playerCampaignData["1"];
   const character = campaign.personagem;
 
+  const minimumAttributes = getMinimumAttributesByMark(character.marca);
   const attributePointLimit = extraPoints + character.nivel * 3;
 
   const [image, setImage] = useState<string | null>(null);
@@ -80,7 +81,7 @@ export default function EditCharacterPage() {
     marca: character.marca,
   });
   const [attributes, setAttributes] = useState<Record<AttributeKey, number>>(
-    attributesToRecord(character.atributos),
+    attributesToRecord(character.atributos, minimumAttributes),
   );
   const [hp, setHp] = useState(character.hp);
   const [equippedSkills, setEquippedSkills] = useState<CharacterSkill[]>(
@@ -307,6 +308,7 @@ export default function EditCharacterPage() {
           <CharacterAttributesPanel
             attributes={attributes}
             onChange={setAttributes}
+            minimumAttributes={minimumAttributes}
             pointLimit={attributePointLimit}
             circleLimit={50}
           />

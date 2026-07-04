@@ -2,6 +2,11 @@ import { Brain, Eye, Flame, Heart, Users, Wind } from "lucide-react";
 
 import type { AttributeDefinition, CharacterMarkOption } from "../types/player";
 
+import type { AttributeKey, CharacterMark } from "../types/player";
+
+export const extraPoints = 18;
+export const baseAttributeValue = 6;
+
 export const campaignsForCharacter = [
   { id: 1, nome: "A Flor do Abismo" },
   { id: 2, nome: "Véu de Cinzas" },
@@ -66,5 +71,73 @@ export const characterAttributes: AttributeDefinition[] = [
   { key: "PRE", label: "PRE", nome: "Presença", icon: Users },
 ];
 
-export const extraPoints = 18;
-export const baseAttributeValue = 6;
+export function createBaseAttributes(): Record<AttributeKey, number> {
+  return {
+    POD: baseAttributeValue,
+    DES: baseAttributeValue,
+    RES: baseAttributeValue,
+    INT: baseAttributeValue,
+    DET: baseAttributeValue,
+    PRE: baseAttributeValue,
+  };
+}
+
+export const markMinimumAttributes: Record<
+  CharacterMark,
+  Record<AttributeKey, number>
+> = {
+  Manifesto: {
+    POD: baseAttributeValue + 1,
+    DES: baseAttributeValue - 1,
+    RES: baseAttributeValue + 1,
+    INT: baseAttributeValue - 1,
+    DET: baseAttributeValue,
+    PRE: baseAttributeValue,
+  },
+
+  Oculto: {
+    POD: baseAttributeValue - 1,
+    DES: baseAttributeValue + 1,
+    RES: baseAttributeValue - 1,
+    INT: baseAttributeValue + 1,
+    DET: baseAttributeValue + 1,
+    PRE: baseAttributeValue - 1,
+  },
+
+  Entoadora: {
+    POD: baseAttributeValue - 1,
+    DES: baseAttributeValue - 1,
+    RES: baseAttributeValue,
+    INT: baseAttributeValue + 1,
+    DET: baseAttributeValue,
+    PRE: baseAttributeValue + 1,
+  },
+
+  Respiração: {
+    POD: baseAttributeValue,
+    DES: baseAttributeValue + 1,
+    RES: baseAttributeValue + 1,
+    INT: baseAttributeValue - 1,
+    DET: baseAttributeValue,
+    PRE: baseAttributeValue - 1,
+  },
+
+  Maso: {
+    POD: baseAttributeValue + 1,
+    DES: baseAttributeValue - 1,
+    RES: baseAttributeValue + 1,
+    INT: baseAttributeValue - 1,
+    DET: baseAttributeValue,
+    PRE: baseAttributeValue,
+  },
+};
+
+export function getMinimumAttributesByMark(
+  mark: CharacterMark | "",
+): Record<AttributeKey, number> {
+  if (!mark) {
+    return createBaseAttributes();
+  }
+
+  return markMinimumAttributes[mark];
+}
