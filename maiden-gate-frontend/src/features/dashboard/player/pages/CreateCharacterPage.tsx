@@ -44,6 +44,10 @@ const initialAttributes: Record<AttributeKey, number> = {
   PRE: baseAttributeValue,
 };
 
+const maxAttributeBonusOnCreation = 5;
+const maxAttributeValueOnCreation =
+  baseAttributeValue + maxAttributeBonusOnCreation;
+
 export default function CreateCharacterPage() {
   const navigate = useNavigate();
   const [showSkillTree, setShowSkillTree] = useState(false);
@@ -74,6 +78,48 @@ export default function CreateCharacterPage() {
       ...previous,
       [event.target.name]: event.target.value,
     }));
+  }
+
+  function handleAttributesChange(
+    nextAttributes:
+      | Record<AttributeKey, number>
+      | ((
+          previous: Record<AttributeKey, number>,
+        ) => Record<AttributeKey, number>),
+  ) {
+    setAttributes((previous) => {
+      const next =
+        typeof nextAttributes === "function"
+          ? nextAttributes(previous)
+          : nextAttributes;
+
+      const limitedAttributes = Object.entries(next).reduce(
+        (acc, [key, value]) => {
+          const attributeKey = key as AttributeKey;
+
+          acc[attributeKey] = Math.min(
+            Math.max(value, baseAttributeValue),
+            maxAttributeValueOnCreation,
+          );
+
+          return acc;
+        },
+        {} as Record<AttributeKey, number>,
+      );
+
+      const totalSpent =
+        Object.values(limitedAttributes).reduce(
+          (sum, value) => sum + value,
+          0,
+        ) -
+        Object.keys(initialAttributes).length * baseAttributeValue;
+
+      if (totalSpent > extraPoints) {
+        return previous;
+      }
+
+      return limitedAttributes;
+    });
   }
 
   function handleSubmit(event: FormEvent) {
@@ -283,7 +329,9 @@ export default function CreateCharacterPage() {
         >
           <CharacterAttributesPanel
             attributes={attributes}
-            onChange={setAttributes}
+            onChange={handleAttributesChange}
+            pointLimit={extraPoints}
+            circleLimit={50}
           />
         </CharacterSectionCard>
 

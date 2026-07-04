@@ -19,8 +19,9 @@ import CharacterSectionCard from "../components/character/CharacterSectionCard";
 import CharacterImageUpload from "../components/character/CharacterImageUpload";
 import CharacterAttributesPanel from "../components/character/CharacterAttributesPanel";
 import SkillTreeModal from "../components/character/SkillTreeModal";
+import CharacterBattleResources from "../components/character/CharacterBattleResources";
 
-import { baseAttributeValue } from "../data/characterFormMock";
+import { baseAttributeValue, extraPoints } from "../data/characterFormMock";
 import { playerCampaignData } from "../data/playerCampaignMock";
 import type {
   AttributeKey,
@@ -66,6 +67,8 @@ export default function EditCharacterPage() {
     id === "2" ? playerCampaignData["2"] : playerCampaignData["1"];
   const character = campaign.personagem;
 
+  const attributePointLimit = extraPoints + character.nivel * 3;
+
   const [image, setImage] = useState<string | null>(null);
   const [saved, setSaved] = useState(false);
   const [showSkillTree, setShowSkillTree] = useState(false);
@@ -80,7 +83,6 @@ export default function EditCharacterPage() {
     attributesToRecord(character.atributos),
   );
   const [hp, setHp] = useState(character.hp);
-  const [mp, setMp] = useState(character.mp);
   const [equippedSkills, setEquippedSkills] = useState<CharacterSkill[]>(
     character.habilidades,
   );
@@ -195,22 +197,10 @@ export default function EditCharacterPage() {
                   </p>
                 </div>
 
-                <div className="rounded-xl border border-sky-900/25 bg-slate-950/50 p-4">
-                  <p className="mb-1 flex items-center gap-1.5 text-xs text-amber-100/45">
-                    <Sparkles className="h-3.5 w-3.5 text-sky-400" /> Energia
-                  </p>
-                  <input
-                    type="number"
-                    value={mp}
-                    onChange={(event) =>
-                      setMp(Number.parseInt(event.target.value, 10) || 0)
-                    }
-                    className="w-full bg-transparent text-xl font-semibold text-amber-100 outline-none"
-                  />
-                  <p className="text-xs text-amber-100/30">
-                    máx. {character.mpMax}
-                  </p>
-                </div>
+                <CharacterBattleResources
+                  paMax={character.paMax}
+                  prMax={character.prMax}
+                />
 
                 <div className="rounded-xl border border-amber-900/25 bg-slate-950/50 p-4">
                   <p className="mb-1 flex items-center gap-1.5 text-xs text-amber-100/45">
@@ -317,6 +307,8 @@ export default function EditCharacterPage() {
           <CharacterAttributesPanel
             attributes={attributes}
             onChange={setAttributes}
+            pointLimit={attributePointLimit}
+            circleLimit={50}
           />
         </CharacterSectionCard>
 

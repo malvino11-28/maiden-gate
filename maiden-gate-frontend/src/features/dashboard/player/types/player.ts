@@ -7,7 +7,12 @@ export type PlayerDashboardTab =
   | "perfil";
 
 export type CampaignStatus = "ativa" | "encerrada";
-export type CharacterMark = "Manifesto" | "Oculto" | "Respiração" | "Entoadora" | "Maso";
+export type CharacterMark =
+  | "Manifesto"
+  | "Oculto"
+  | "Respiração"
+  | "Entoadora"
+  | "Maso";
 
 export type AttributeKey = "POD" | "DES" | "RES" | "INT" | "DET" | "PRE";
 
@@ -71,8 +76,8 @@ export interface PlayerCampaignMember {
 }
 
 export interface PlayerCharacterFull extends PlayerCharacterSummary {
-  mp: number;
-  mpMax: number;
+  paMax: number;
+  prMax: number;
   xp: number;
   xpProximo: number;
   atributos: CharacterAttribute[];
