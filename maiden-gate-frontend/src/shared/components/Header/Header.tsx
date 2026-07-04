@@ -12,6 +12,27 @@ import { useAuth } from "../../../features/auth/hooks/useAuth";
 export default function Header() {
   const { user } = useAuth();
 
+  const navigationLinks = [
+    { label: "Início", path: "/" },
+    { label: "Regras", path: "/rules" },
+    { label: "Ferramentas", path: "/tools" },
+    { label: "Contato", path: "/contact" },
+  ];
+
+  if (user?.type === "master") {
+    navigationLinks.push({
+      label: "Mestre",
+      path: "/dashboard/master",
+    });
+  }
+
+  if (user?.type === "player") {
+    navigationLinks.push({
+      label: "Jogador",
+      path: "/dashboard/player",
+    });
+  }
+
   const [isLoginOpen, setIsLoginOpen] = useState(false);
   const [isRegisterOpen, setIsRegisterOpen] = useState(false);
 
@@ -32,41 +53,10 @@ export default function Header() {
 
   return (
     <>
-      <header
-        className="
-            fixed
-            top-0
-            left-0
-            z-50
-            w-full
-
-            h-16
-
-            border-b
-            border-white/10
-
-            bg-zinc-950/40
-            backdrop-blur-md
-        "
-      >
-        <div
-          className="
-            mx-auto
-            flex
-            h-full
-
-            max-w-7xl
-            items-center
-            justify-between
-
-            px-6
-            lg:px-10
-        "
-        >
+      <header className="fixed left-0 top-0 z-50 w-full border-b border-amber-900/30 bg-black/80 backdrop-blur-md">
+        <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
           <Logo />
-
-          <Navigation />
-
+          <Navigation links={navigationLinks} />
           {user ? (
             <UserMenu />
           ) : (

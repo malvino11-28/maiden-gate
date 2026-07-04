@@ -12,16 +12,11 @@ export default function RoleProtectedRoute({
   const { user } = useAuth();
 
   if (!user) {
-    return <Navigate to="/" replace />;
+    return <Navigate to="/unauthorized" replace />;
   }
 
   if (user.type !== allowedRole) {
-    return (
-      <Navigate
-        to={user.type === "master" ? "/dashboard/master" : "/dashboard/player"}
-        replace
-      />
-    );
+    return <Navigate to="/forbidden" replace />;
   }
 
   return <Outlet />;

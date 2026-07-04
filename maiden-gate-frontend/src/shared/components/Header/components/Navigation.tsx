@@ -1,42 +1,20 @@
 import NavigationItem from "./NavigationItem";
 
-const navigationItems = [
-  {
-    label: "Play VOF",
-    href: "/",
-  },
-  {
-    label: "Rules",
-    href: "/rules",
-  },
-  {
-    label: "Tools",
-    href: "/tools",
-  },
-  {
-    label: "Contact",
-    href: "/contact",
-  },
-];
+type NavigationLink = {
+  label: string;
+  path: string;
+};
 
-export default function Navigation() {
+type NavigationProps = {
+  links: NavigationLink[];
+};
+
+export default function Navigation({ links }: NavigationProps) {
   return (
-    <nav
-      className="
-                hidden
-                items-center
-                gap-10
-
-                lg:flex
-            "
-    >
-      {navigationItems.map(
-        (
-          item, // mapeando todos os itens do array e atribuindo ao componente NavigationItem
-        ) => (
-          <NavigationItem key={item.href} label={item.label} href={item.href} />
-        ),
-      )}
+    <nav className="hidden items-center gap-6 lg:flex">
+      {links.map((link) => (
+        <NavigationItem key={link.path} label={link.label} href={link.path} />
+      ))}
     </nav>
   );
 }

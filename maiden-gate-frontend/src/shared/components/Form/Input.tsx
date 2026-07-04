@@ -1,30 +1,12 @@
 import type { InputHTMLAttributes } from "react";
 
-type InputProps = InputHTMLAttributes<HTMLInputElement>; // fazendo o componente aceitar tudo que um input pode ter
+type InputProps = InputHTMLAttributes<HTMLInputElement>;
 
 export default function Input({ className = "", ...props }: InputProps) {
   return (
     <input
       {...props}
-      className={`
-                w-full
-                rounded-2xl
-                border
-                borde-orange-500/20
-                bg-slate-900/80
-                px-5
-                py-4
-                text-stone-100
-                placeholder:text-stone-500
-                outline-none
-                transition-all
-                duration-200
-                focus:border-amber-400
-                focus:ring-2
-                focus:ring-amber-500/20
-
-                ${className}
-                `}
+      className={`w-full rounded-lg border border-amber-900/40 bg-slate-900/80 px-4 py-3 text-amber-100 placeholder:text-amber-100/25 outline-none transition-colors focus:border-amber-500/70 focus:ring-1 focus:ring-amber-500/30 ${className}`}
     />
   );
 }

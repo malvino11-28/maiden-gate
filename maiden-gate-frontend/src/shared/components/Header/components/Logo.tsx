@@ -1,47 +1,25 @@
-import vofamLogo from "../../../../assets/images/logo.png";
+import Flower2 from "../../../../assets/images/logo.svg";
+import { Link } from "react-router-dom";
 
-export default function logo() {
+export default function Logo() {
   return (
-    <a
-      href="/"
-      className="
-                flex 
-                items-center
-                gap-4
-                select-none
-            "
+    <Link
+      to="/"
+      className="flex select-none items-center gap-3 transition-opacity hover:opacity-85"
     >
-      <img
-        src={vofamLogo}
-        alt="Voice Of Flower logo"
-        className="
-                    h-14
-                    w-14
-                    rounded-xl
-                    object-cover
-                "
-      />
-
-      <div className="leading-tight">
-        <h1
-          className="
-                        text-xl
-                        font-bold
-                        text-stone-100
-                    "
-        >
-          Voice Of Flower
-        </h1>
-
-        <p
-          className="
-                text-sm
-                text-amber-400
-            "
-        >
-          Awakening Of The Maiden
-        </p>
+      {/* <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-gradient-to-br from-amber-400 to-rose-600 shadow-lg shadow-amber-950/30"> */}
+      <div className="flex h-10 w-14 items-center justify-center rounded-lg">
+        <img src={Flower2} alt="" />
       </div>
-    </a>
+
+      <div className="flex flex-col leading-tight">
+        <span className="text-lg font-semibold text-amber-100">
+          Voice Of Flower
+        </span>
+        <span className="text-xs text-amber-400/80">
+          Awakening Of The Maiden
+        </span>
+      </div>
+    </Link>
   );
 }

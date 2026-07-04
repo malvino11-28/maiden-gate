@@ -1,3 +1,6 @@
+import LegalPage from "../components/LegalPage";
+import { privacy } from "../data/privacy";
+
 export default function PrivacyPage() {
-  return <h1>Privacy</h1>;
+  return <LegalPage {...privacy} />;
 }

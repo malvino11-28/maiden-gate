@@ -1,3 +1,5 @@
-export default function CookiePage() {
-  return <h1>Cookie</h1>;
+import LegalPage from "../components/LegalPage";
+import { cookies } from "../data/cookies";
+export default function CookiesPage() {
+  return <LegalPage {...cookies} />;
 }
