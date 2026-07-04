@@ -20,6 +20,11 @@ import EditCharacterPage from "../features/dashboard/player/pages/EditCharacterP
 import CreateCampaignPage from "../features/dashboard/master/campaign/CreateCampaignPage";
 import MasterCampaignPage from "../features/dashboard/master/pages/MasterCampaignPage";
 
+import NotFoundPage from "../features/errors/pages/NotFoundPage";
+import UnauthorizedPage from "../features/errors/pages/UnathorizedPage";
+import ForbiddenPage from "../features/errors/pages/ForbbidenPage";
+import ServerErrorPage from "../features/errors/pages/ServerErrorPage";
+
 import ProtectedRoute from "./ProtectedRoute";
 import RoleProtectedRoute from "./RoleProtectedRoute";
 
@@ -73,6 +78,11 @@ export default function AppRoutes() {
           />
         </Route>
       </Route>
+
+      <Route path="/unauthorized" element={<UnauthorizedPage />} />
+      <Route path="/forbidden" element={<ForbiddenPage />} />
+      <Route path="/server-error" element={<ServerErrorPage />} />
+      <Route path="*" element={<NotFoundPage />} />
     </Routes>
   );
 }
