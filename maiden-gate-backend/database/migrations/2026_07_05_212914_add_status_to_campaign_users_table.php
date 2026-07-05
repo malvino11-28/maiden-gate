@@ -37,7 +37,6 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('campaign_user', function (Blueprint $table) {
-            $table->dropUnique(['campaign_id', 'user_id']);
             $table->dropConstrainedForeignId('character_id');
             $table->dropColumn(['status', 'responded_at', 'response_message']);
         });

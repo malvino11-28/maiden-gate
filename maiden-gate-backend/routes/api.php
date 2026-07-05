@@ -40,7 +40,7 @@ Route::get('/campaigns/available', [CampaignController::class, 'available']);
 Route::get('/campaigns/{campaign}/master-view', [CampaignController::class, 'masterView']);
 Route::get('/campaigns/{campaign}/player-view', [CampaignController::class, 'playerView']);
 
-Route::put('/campaigns/{campaign}/data', [CampaignController::class, 'updateData']);
+Route::put('/campaigns/{campaign}/data', [CampaignController::class, 'update']);
 Route::put('/campaigns/{campaign}/notes', [CampaignController::class, 'updateNotes']);
 Route::put('/campaigns/{campaign}/current-location', [CampaignController::class, 'updateCurrentLocation']);
 
@@ -98,8 +98,8 @@ Route::delete('/inventory/{inventory}', [InventoryController::class, 'destroy'])
 Route::get('/characters/{character}/skills', [CharacterSkillController::class, 'index']);
 Route::post('/characters/{character}/skills', [CharacterSkillController::class, 'store']);
 
-Route::patch('/character-skills/{characterSkill}', [CharacterSkillController::class, 'update']);
-Route::delete('/character-skills/{characterSkill}', [CharacterSkillController::class, 'destroy']);
+Route::patch('/characters/{character}/skills/{skill}', [CharacterSkillController::class, 'update']);
+Route::delete('/characters/{character}/skills/{skill}', [CharacterSkillController::class, 'destroy']);
 
 /*
 |--------------------------------------------------------------------------

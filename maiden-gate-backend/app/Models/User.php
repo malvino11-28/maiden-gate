@@ -40,7 +40,7 @@ class User extends Authenticatable
 
     public function campaigns()
     {
-        return $this->belongsToMany(Campaign::class, 'campaign_users')
+        return $this->belongsToMany(Campaign::class, 'campaign_user')
             ->wherePivot('status', 'accepted')
             ->withPivot(['character_id', 'status', 'responded_at'])
             ->withTimestamps(); 

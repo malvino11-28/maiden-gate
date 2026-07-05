@@ -31,7 +31,13 @@ class Campaign extends Model
     public function users() 
     {
         return $this->belongsToMany(User::class, 'campaign_user')
-            ->withPivot('role')
+            ->withPivot([
+                'role',
+                'character_id',
+                'status',
+                'responded_at',
+                'response_message',
+            ])
             ->withTimestamps();
     }
     
@@ -82,7 +88,7 @@ class Campaign extends Model
 
     public function acceptedUsers()
     {
-        return $this->belongsToMany(User::class, 'campaign_users')
+        return $this->belongsToMany(User::class, 'campaign_user')
             ->wherePivot('status', 'accepted')
             ->withPivot(['character_id', 'status', 'responded_at'])
             ->withTimestamps();

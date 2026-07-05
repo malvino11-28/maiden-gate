@@ -5,34 +5,34 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\CampaignSession;
 use Illuminate\Http\Request;
+use App\Models\Campaign;
 
 class CampaignSessionController extends Controller
 {
     /**
      * Display a listing of the resource for a specific campaign.
      */
-    public function index(string $campaignId)
+    public function index(Campaign $campaign)
     {
-        $sessions = CampaignSession::where('campaign_id', $campaignId)->get();
-
-        return response()->json($sessions);
+        return response()->json(
+            $campaign->sessions()->latest()->get()
+        );
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
+    public function store(Request $request, Campaign $campaign)
     {
         $data = $request->validate([
-            'campaign_id' => 'required|integer|exists:campaigns,id',
-            'title'       => 'required|string|max:255',
-            'date'        => 'required|date',
-            'time'        => 'required|date_format:H:i',
+            'title' => 'required|string|max:255',
+            'date' => 'required|date',
+            'time' => 'required|date_format:H:i',
             'description' => 'nullable|string',
-            'status'      => 'nullable|in:em_espera,concluido,cancelado'
+            'status' => 'nullable|in:em_espera,concluido,cancelado',
         ]);
 
-        $session = CampaignSession::create($data);
+        $session = $campaign->sessions()->create([
+            ...$data,
+            'status' => $data['status'] ?? 'em_espera',
+        ]);
 
         return response()->json($session, 201);
     }
@@ -65,6 +65,17 @@ class CampaignSessionController extends Controller
         $session->update($data);
 
         return response()->json($session);
+    }
+
+    public function updateStatus(Request $request, CampaignSession $campaignSession)
+    {
+        $data = $request->validate([
+            'status' => 'required|in:em_espera,concluido,cancelado',
+        ]);
+
+        $campaignSession->update($data);
+
+        return response()->json($campaignSession);
     }
 
     /**

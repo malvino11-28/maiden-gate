@@ -21,8 +21,8 @@ return new class extends Migration
             $table->string("type")->nullable();
             $table->text("description");
 
-            $table->jsonb("skills");
-            $table->jsonb("stats");
+            $table->jsonb("skills")->nullable();
+            $table->jsonb("stats")->nullable();
             $table->timestamps();
         });
     }
