@@ -12,6 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('npcs', function (Blueprint $table) {
+            $table->id();
             $table->foreignId('campaign_id')->constrained('campaigns')->cascadeOnDelete();
             $table->foreignId('marca_id')->nullable()->constrained('marcas')->nullOnDelete();
 

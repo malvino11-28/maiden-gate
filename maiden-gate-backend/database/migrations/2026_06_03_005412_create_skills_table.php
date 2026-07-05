@@ -12,6 +12,7 @@
         public function up(): void
         {
             Schema::create('skills', function (Blueprint $table) {
+                $table->id();
                 $table->foreignId('marca_id')->nullable()->constrained('marcas')->cascadeOnDelete();
                 $table->foreignId('campaign_id')->nullable()->constrained('campaigns')->cascadeOnDelete();
 
