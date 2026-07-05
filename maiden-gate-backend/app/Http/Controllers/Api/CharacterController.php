@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Models\Character;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\User;
 
 class CharacterController extends Controller
 {
@@ -119,6 +120,16 @@ class CharacterController extends Controller
             'message' => 'personagem atualizado com sucesso', 
             'character' => $character
         ]);
+    }
+
+    public function byUser(User $user)
+    {
+        $characters = $user->characters()
+            ->with(['campaign', 'marca', 'skills', 'inventory.item'])
+            ->latest()
+            ->get();
+
+        return response()->json($characters);
     }
 
     /**
