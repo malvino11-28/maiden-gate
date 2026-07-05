@@ -118,3 +118,16 @@ Route::apiResource('/npcs', NpcsController::class)->except(['index', 'store']);
 Route::apiResource('/items', ItemsController::class)->except(['index', 'store']);
 Route::apiResource('/bestiary', BestiaryController::class)->except(['index', 'store']);
 Route::apiResource('/lore-events', LoreEventsController::class)->except(['index', 'store']);
+
+/*
+|--------------------------------------------------------------------------
+| Invitation System
+|--------------------------------------------------------------------------
+*/
+
+Route::post('/campaigns/{campaign}/join-request', [CampaignUserController::class, 'requestJoin']);
+
+Route::get('/users/{user}/campaign-requests', [CampaignUserController::class, 'pendingForMaster']);
+
+Route::patch('/campaign-requests/{campaignUser}/accept', [CampaignUserController::class, 'accept']);
+Route::patch('/campaign-requests/{campaignUser}/reject', [CampaignUserController::class, 'reject']);

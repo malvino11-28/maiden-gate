@@ -68,5 +68,23 @@ class Campaign extends Model
     public function sessions()
     {
         return $this->hasMany(CampaignSession::class);
-}
+    }
+
+        public function campaignUsers()
+    {
+        return $this->hasMany(CampaignUser::class);
+    }
+
+    public function joinRequests()
+    {
+        return $this->hasMany(CampaignUser::class)->where('status', 'pending');
+    }
+
+    public function acceptedUsers()
+    {
+        return $this->belongsToMany(User::class, 'campaign_users')
+            ->wherePivot('status', 'accepted')
+            ->withPivot(['character_id', 'status', 'responded_at'])
+            ->withTimestamps();
+    }
 }

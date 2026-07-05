@@ -38,9 +38,16 @@ class User extends Authenticatable
         return $this->hasMany(Campaign::class, 'master_id');
     }
 
-    public function campaigns() {
-        return $this->belongsToMany(Campaign::class, 'campaign_user')
-            ->withPivot('role')
-            ->withTimestamps();
+    public function campaigns()
+    {
+        return $this->belongsToMany(Campaign::class, 'campaign_users')
+            ->wherePivot('status', 'accepted')
+            ->withPivot(['character_id', 'status', 'responded_at'])
+            ->withTimestamps(); 
+    }
+
+    public function campaignRequests()
+    {
+        return $this->hasMany(CampaignUser::class);
     }
 }
