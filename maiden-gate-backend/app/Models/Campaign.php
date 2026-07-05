@@ -40,6 +40,11 @@ class Campaign extends Model
         return $this->hasMany(Locations::class);
     }
 
+    public function currentLocation()
+    {
+        return $this->belongsTo(Locations::class, 'current_location_id');
+    }
+
     public function npcs()
     {
         return $this->hasMany(Npcs::class);
