@@ -22,18 +22,21 @@ class SkillsController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate([
-            'marca_id' => 'required|integer|exists:marcas,id',
+            'marca_id' => 'nullable|integer|exists:marcas,id',
+            'campaign_id' => 'nullable|integer|exists:campaigns,id',
             'name' => 'required|string|max:255',
-            'desc' => 'required|string',
-            'categoria' => 'required|string|in:ofensiva,suporte_defensiva,destreza_utilidade,passiva,penalidade,ult',
-            'unlock_level' => 'required|integer|min:1',
-            'resource_cost' => 'required|integer|min:0',
-            'alcance' => 'nullable|string'
+            'description' => 'nullable|string',
+            'type' => 'required|in:ativa,passiva,penalidade,campanha',
+            'branch' => 'nullable|in:ofensivo,suporte,destreza,passivas,penalidade,campanha',
+            'image' => 'nullable|string|max:255',
+            'unlock_level' => 'nullable|integer|min:1',
+            'resource_cost' => 'nullable|integer|min:0',
+            'range' => 'nullable|string|max:255'
         ]);
 
         $skill = Skills::create($data);
 
-        return response()->json($skill);
+        return response()->json($skill, 201);
     }
 
     /**
@@ -54,12 +57,16 @@ class SkillsController extends Controller
         $skill = Skills::findOrFail($id);
 
         $data = $request->validate([
+            'marca_id' => 'sometimes|nullable|integer|exists:marcas,id',
+            'campaign_id' => 'sometimes|nullable|integer|exists:campaigns,id',
             'name' => 'sometimes|string|max:255',
-            'desc' => 'sometimes|string',
-            'categoria' => 'sometimes|string|in:ofensiva,suporte_defensiva,destreza_utilidade,passiva,penalidade,ult',
+            'description' => 'nullable|string',
+            'type' => 'sometimes|required|in:ativa,passiva,penalidade,campanha',
+            'branch' => 'nullable|in:ofensivo,suporte,destreza,passivas,penalidade,campanha',
+            'image' => 'nullable|string|max:255',
             'unlock_level' => 'sometimes|integer|min:1',
             'resource_cost' => 'sometimes|integer|min:0',
-            'alcance' => 'sometimes|string'
+            'range' => 'nullable|string|max:255'
         ]);
 
         $skill->update($data);
@@ -73,7 +80,6 @@ class SkillsController extends Controller
     public function destroy(string $id)
     {
         $skill = Skills::findOrFail($id);
-
         $skill->delete();
 
         return response()->json(['message' => 'habilidade excluida']);

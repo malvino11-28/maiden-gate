@@ -14,8 +14,11 @@ return new class extends Migration
         Schema::create('locations', function (Blueprint $table) {
             $table->id();
             $table->foreignId("campaign_id")->nullable(true)->constrained("campaigns")->onDelete("cascade");
+
+            $table->string("image")->nullable();
             $table->string("name");
-            $table->enum("type", ["city", "raid", "point"]);
+            $table->string("type");
+            $table->string("region")->nullable();
             $table->text("description");
             $table->timestamps();
         });

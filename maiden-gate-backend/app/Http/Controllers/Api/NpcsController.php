@@ -11,35 +11,34 @@ class NpcsController extends Controller
     /**
      * Display a listing of the resource.
      */
-public function index(string $campaignId)
-{
-    $npcs = Npcs::where('campaign_id', $campaignId)
-                ->orWhereNull('campaign_id')
-                ->get();
+    public function index(string $campaignId)
+    {
+        $npcs = Npcs::where('campaign_id', $campaignId)->get();
 
-    return response()->json($npcs);
-}
+        return response()->json($npcs);
+    }
 
     /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
     {
-        $data = $request->validate(
-            [
-            'campaign_id' => 'nullable|integer|exists:campaigns,id',
+        $data = $request->validate([
+            'campaign_id' => 'required|integer|exists:campaigns,id',
             'marca_id' => 'nullable|integer|exists:marcas,id',
             'name' => 'required|string|max:255',
-            'description' => 'required|string',
-
+            'race' => 'nullable|string|max:255',
+            'occupation' => 'nullable|string|max:255',
+            'personality' => 'nullable|string',
+            'secret' => 'nullable|string',
+            'description' => 'nullable|string',
             'skills' => 'nullable|array',
             'stats' => 'nullable|array'
-            ]
-        );
+        ]);
 
         $npc = Npcs::create($data);
         
-        return response()->json($npc);
+        return response()->json($npc, 201);
     }
 
     /**
@@ -59,16 +58,20 @@ public function index(string $campaignId)
     {
         $npc = Npcs::findOrFail($id);
 
-        $data = $request->validate(
-            [
-            'marca_id' => 'sometimes|integer|exists:marcas,id',
-            'name' => 'sometimes|string|max:255',
-            'description' => 'sometimes|string',
+        $data = $request->validate([
+            'campaign_id' => 'sometimes|required|integer|exists:campaigns,id',
+            'marca_id' => 'nullable|integer|exists:marcas,id',
 
-            'skills' => 'sometimes|array',
-            'stats' => 'sometimes|array'
-            ]
-        );
+            'name' => 'sometimes|string|max:255',
+            'race' => 'nullable|string|max:255',
+            'occupation' => 'nullable|string|max:255',
+            'personality' => 'nullable|string',
+            'secret' => 'nullable|string',
+            'description' => 'nullable|string',
+
+            'skills' => 'sometimes|nullable|array',
+            'stats' => 'sometimes|nullable|array'
+        ]);
 
         $npc->update($data);
         
@@ -81,7 +84,6 @@ public function index(string $campaignId)
     public function destroy(string $id)
     {
         $npc = Npcs::findOrFail($id);
-
         $npc->delete();
 
         return response()->json(['message' => 'NPC removido com sucesso.']);

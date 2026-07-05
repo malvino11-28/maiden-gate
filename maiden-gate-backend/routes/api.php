@@ -9,7 +9,6 @@ use App\Http\Controllers\Api\InventoryController;
 use App\Http\Controllers\Api\ItemsController;
 use App\Http\Controllers\Api\LocationsController;
 use App\Http\Controllers\Api\LoreEventsController;
-use App\Http\Controllers\Api\MarcaController;
 use App\Http\Controllers\Api\MarcasController;
 use App\Http\Controllers\Api\NpcsController;
 use App\Http\Controllers\Api\SkillsController;
@@ -27,19 +26,20 @@ Route::get('/teste', function () {
     ]);
 });
 
-Route::post('register', [AuthController::class, 'register']);
-Route::post('login', [AuthController::class, 'login']);
-Route::apiResource('bestiary', BestiaryController::class);
-Route::apiResource('campaign', CampaignController::class);
-Route::apiResource('campaign_user', CampaignUserController::class);
+Route::post('/register', [AuthController::class, 'register']);
+Route::post('/login', [AuthController::class, 'login']);
+
+Route::apiResource('campaigns', CampaignController::class);
 Route::apiResource('characters', CharacterController::class);
-Route::apiResource('inventory', InventoryController::class);
-    Route::get('/characters/{characterId}/inventory', [InventoryController::class, 'index']);
 Route::apiResource('items', ItemsController::class);
 Route::apiResource('locations', LocationsController::class);
-Route::apiResource('lore_events', LoreEventsController::class);
-    Route::get('/campaign/{campaignId}/lore_events', [LoreEventsController::class, 'index']);
 Route::apiResource('marcas', MarcasController::class);
-Route::apiResource('npcs', NpcsController::class);
-    Route::get('/campaign/{campaignId}/npcs', [NpcsController::class, 'index']);
 Route::apiResource('skills', SkillsController::class);
+Route::apiResource('bestiary', BestiaryController::class)->except(['index']);
+Route::apiResource('npcs', NpcsController::class)->except(['index']);
+Route::apiResource('lore-events', LoreEventsController::class)->except(['index']);
+Route::apiResource('inventory', InventoryController::class)->except(['index']);
+
+Route::get('/campaigns/{campaign}/npcs', [NpcsController::class, 'index']);
+Route::get('/campaigns/{campaign}/lore-events', [LoreEventsController::class, 'index']);
+Route::get('/characters/{character}/inventory', [InventoryController::class, 'index']);

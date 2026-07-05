@@ -11,9 +11,13 @@ class BestiaryController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(string $campaignId)
     {
-        return response()->json(Bestiary::all());
+        $monster = Bestiary::where('campaign_id', $campaignId)
+            ->orWhereNull('campaign_id')
+            ->get();
+
+        return response()->json($monster);
     }
 
     /**
@@ -21,10 +25,16 @@ class BestiaryController extends Controller
      */
     public function store(Request $request)
     {
-        $data = $request->validate(['name' => 'required|string|max:255', 
-        'description' => 'required|string',
-        'skills' => 'required|array',
-        'stats' => 'required|array'
+        $data = $request->validate([
+            'campaign_id' => 'nullable|exists:campaigns,id',
+
+            'image' => 'nullable|string|max:255',
+            'name' => 'required|string|max:255',
+            'type' => 'nullable|string|max:255',
+            'description' => 'required|string',
+            'skills' => 'required|array',
+
+            'stats' => 'required|array'
         ]);
 
         $monster = Bestiary::create($data);
@@ -50,9 +60,12 @@ class BestiaryController extends Controller
         $monster = Bestiary::findOrFail($id);
 
         $data = $request->validate([
-            'name' => 'sometimes|string|max:255',
-            'description' => 'sometimes|string',
+            'campaign_id' => 'sometimes|nullable|exists:campaigns,id',
 
+            'image' => 'sometimes|string|max:255',
+            'name' => 'sometimes|string|max:255',
+            'type' => 'sometimes|nullable|string|max:255',
+            'description' => 'sometimes|string',
             'skills' => 'sometimes|array',
             'stats' => 'sometimes|array'
         ]);

@@ -23,8 +23,13 @@ class CampaignController extends Controller
     {
         $data = $request->validate([
             'master_id' => 'required|exists:users,id',
-            'name' => 'required|string',
-            'description' => 'sometimes|nullable|string',
+            'name'=> 'required|string|max:255',
+            'description' => 'nullable|string',
+            'image' => 'nullable|string|max:255',
+            'recommended_level' => 'nullable|in:Iniciante,Intermediário,Avançado',
+            'players' => 'nullable|string|max:255',
+            'status' => 'nullable|in:ativa,pausada,encerrada',
+            'notes' => 'nullable|string',
         ]);
 
         $campaign = Campaign::create($data);
@@ -49,8 +54,13 @@ class CampaignController extends Controller
     {
         $data = $request->validate([
             'master_id' => 'sometimes|required|exists:users,id',
-            'name' => 'sometimes|required|string',
-            'description' => 'sometimes|nullable|string',
+            'name' => 'sometimes|required|string|max:255',
+            'description' => 'nullable|string',
+            'image' => 'nullable|string|max:255',
+            'recommended_level' => 'sometimes|required|in:Iniciante,Intermediário,Avançado',
+            'players' => 'nullable|string|max:255',
+            'status' => 'sometimes|required|in:ativa,pausada,encerrada',
+            'notes' => 'nullable|string',
         ]);
 
         $campaign->update($data);

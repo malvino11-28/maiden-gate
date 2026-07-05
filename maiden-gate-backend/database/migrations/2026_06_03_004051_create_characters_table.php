@@ -24,14 +24,18 @@ return new class extends Migration
             $table->foreignId("marca_id")->constrained("marcas")->onDelete("cascade");
 
             $table->string("name");
-            $table->text("lore");
+            $table->string("surname")->nullable();
+            $table->string("origin")->nullable();
+            $table->text("lore")->nullable();
+            $table->string("image")->nullable();
+
             $table->integer("level")->default(1);
             $table->integer("exp")->default(0);
             
             $table->integer("pod")->default(0);
             $table->integer("res")->default(0);
             $table->integer("des")->default(0);
-            $table->integer("intelec")->default(0);
+            $table->integer("int")->default(0);
             $table->integer("det")->default(0);
             $table->integer("pre")->default(0);
 
@@ -40,8 +44,8 @@ return new class extends Migration
 
             $table->string("effect")->nullable();
 
-            $table->integer("pt")->default(0);
-            $table->integer("pr")->default(1);
+            $table->integer("pa_max")->default(1);
+            $table->integer("pr_max")->default(1);
         
             $table->timestamps();
         });

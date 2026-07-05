@@ -25,6 +25,7 @@ class MarcasController extends Controller
             // 'name' => 'required|string|unique:marcas,name',
             'name' => 'required|string|in:Manifesto,Oculto,Respiração,Entoadora,Maso|unique:marcas,name',
             'description' => 'required|string',
+            'image' => 'nullable|string|max:255'
         ]); // validando
 
         $marca = Marcas::create($data);
@@ -48,6 +49,7 @@ class MarcasController extends Controller
         $data = $request->validate([
             'name' => 'sometimes|string|in:Manifesto,Oculto,Respiração,Entoadora,Maso|unique:marcas,name' . $marca->id,
             'description' => 'sometimes|required|string',
+            'image' => 'sometimes|string|max:255'
         ]);
 
         $marca->update($data);

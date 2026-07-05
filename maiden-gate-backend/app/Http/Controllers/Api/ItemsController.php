@@ -11,10 +11,15 @@ class ItemsController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
-    {
-        return response()->json(Items::all());
-    }
+public function index(string $campaignId)
+{
+    $items = Items::where('campaign_id', $campaignId)
+                ->orWhereNull('campaign_id')
+                ->get();
+
+    return response()->json($items);
+}
+
 
     /**
      * Store a newly created resource in storage.
@@ -22,6 +27,7 @@ class ItemsController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate([
+            'campaign_id' => 'nullable|exists:campaigns,id',
             'name' => 'required|string|max:255',
             'description' => 'required|string',
             'type' => 'nullable|string'

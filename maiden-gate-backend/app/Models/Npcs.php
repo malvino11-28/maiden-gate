@@ -6,25 +6,32 @@ use Illuminate\Database\Eloquent\Model;
 
 class Npcs extends Model
 {
+
     protected $fillable = [
-    'campaign_id',
-    'marca_id',
-    'name',
-    'description',
-    'skills',
-    'stats',
+        'campaign_id',
+        'marca_id',
+        'name',
+        'race',
+        'occupation',
+        'personality',
+        'secret',
+        'description',
+        'skills',
+        'stats',
     ];
 
     protected $casts = [
-    'skills' => 'array',
-    'stats' => 'array',
+        'skills' => 'array',
+        'stats' => 'array',
     ];
 
-    public function campaign() {
+    public function campaign() 
+    {
         return $this->belongsTo(Campaign::class);
     }
 
-    public function marca() {
-        return $this->belongsTo(Marcas::class);
+    public function marca() 
+    {
+        return $this->belongsTo(Marcas::class, 'marca_id');
     }
 }

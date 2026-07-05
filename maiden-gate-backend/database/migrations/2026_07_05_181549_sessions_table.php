@@ -4,6 +4,8 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
+use function Laravel\Prompts\table;
+
 return new class extends Migration
 {
     /**
@@ -11,15 +13,20 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('items', function (Blueprint $table) {
+        Schema::create('sessions', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('campaign_id')->nullable()->constrained('campaigns')->cascadeOnDelete();
+            $table->foreignId('campaign_id')->constrained('campaigns')->cascadeOnDelete();
 
-            $table->string("name");
+            $table->string("title");
+            $table->date("date");
+            $table->time("time");
+
             $table->text("description")->nullable();
-            $table->string("type")->nullable();
+            $table->enum("status", ['em_espera', 'concluido', 'cancelado'])->default('em_espera');
+
             $table->timestamps();
         });
+
     }
 
     /**
@@ -27,6 +34,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('items');
+        Schema::dropIfExists('sessions');
     }
 };

@@ -9,6 +9,7 @@ class Marcas extends Model
     protected $fillable = [
     'name',
     'description',
+    'image'
     ];
     // $table->id();
     //         $table->enum("name", ["Manifesto", "Oculto", "Respiração", "Entoadora", "Maso"])->unique();

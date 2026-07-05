@@ -9,7 +9,11 @@ class Bestiary extends Model
     protected $table = 'bestiary';
 
     protected $fillable = [
+        'campaign_id',
+
+        'image',
         'name',
+        'type',
         'description',
         'skills',
         'stats',
