@@ -25,6 +25,8 @@ return new class extends Migration
 
             $table->enum("status", ["ativa", "pausada", "encerrada"])->default("ativa");
 
+            $table->foreignId('current_location_id')->nullable();
+
             $table->text("notes")->nullable();
 
             $table->timestamps();

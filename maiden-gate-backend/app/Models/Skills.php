@@ -28,4 +28,12 @@ class Skills extends Model
     {
         return $this->belongsTo(Campaign::class);
     }
+
+    public function characters()
+    {
+        return $this->belongsToMany(Character::class, 'character_skills')
+            ->using(CharacterSkill::class)
+            ->withPivot('unlocked', 'equipped')
+            ->withTimestamps();
+    }
 }

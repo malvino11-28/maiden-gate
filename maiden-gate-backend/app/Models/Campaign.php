@@ -8,6 +8,7 @@ class Campaign extends Model
 {
     protected $fillable = [
         'master_id',
+        'current_location_id',
         'name',
         'description',
         'image',
@@ -33,4 +34,34 @@ class Campaign extends Model
             ->withPivot('role')
             ->withTimestamps();
     }
+    
+    public function locations()
+    {
+        return $this->hasMany(Locations::class);
+    }
+
+    public function npcs()
+    {
+        return $this->hasMany(Npcs::class);
+    }
+
+    public function items()
+    {
+        return $this->hasMany(Items::class);
+    }
+
+    public function bestiary()
+    {
+        return $this->hasMany(Bestiary::class);
+    }
+
+    public function loreEvents()
+    {
+        return $this->hasMany(LoreEvents::class);
+    }
+
+    public function sessions()
+    {
+        return $this->hasMany(CampaignSession::class);
+}
 }

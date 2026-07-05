@@ -14,6 +14,7 @@ class Bestiary extends Model
         'image',
         'name',
         'type',
+        'threat',
         'description',
         'skills',
         'stats',
@@ -23,4 +24,9 @@ class Bestiary extends Model
         'skills' => 'array',
         'stats' => 'array',
     ];
+
+    public function campaign()
+{
+    return $this->belongsTo(Campaign::class);
+}
 }

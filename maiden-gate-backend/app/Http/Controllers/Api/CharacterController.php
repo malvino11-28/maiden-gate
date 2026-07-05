@@ -31,7 +31,7 @@ class CharacterController extends Controller
             'origin' => 'nullable|string|max:255',
             'lore' => 'nullable|string',
             'image' => 'nullable|string|max:255',
-            
+
             'pod' => 'required|integer|min:0',
             'des' => 'required|integer|min:0',
             'res' => 'required|integer|min:0',
@@ -76,7 +76,6 @@ class CharacterController extends Controller
         $character = Character::findOrFail($id);
         
         $data = $request->validate([
-            'campaign_id' => 'sometimes|nullable|exists:campaigns,id',
 
             'name' => 'sometimes|string|max:255',
             'surname' => 'nullable|string|max:255',

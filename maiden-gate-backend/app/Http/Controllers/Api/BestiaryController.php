@@ -30,6 +30,7 @@ class BestiaryController extends Controller
 
             'image' => 'nullable|string|max:255',
             'name' => 'required|string|max:255',
+            'threat' => 'nullable|string|max:255',
             'type' => 'nullable|string|max:255',
             'description' => 'required|string',
             'skills' => 'required|array',

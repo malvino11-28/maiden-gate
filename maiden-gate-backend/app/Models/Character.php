@@ -51,9 +51,16 @@ class Character extends Model
         return $this->belongsTo(Marcas::class, 'marca_id');
     }
 
-    public function skills() {
-    return $this->belongsToMany(Skills::class, 'character_skills')
-                ->withPivot('unlocked', 'equipped')
-                ->withTimestamps();
-}
+    public function inventory()
+    {
+        return $this->hasMany(Inventory::class);
+    }
+
+    public function skills()
+    {
+        return $this->belongsToMany(Skills::class, 'character_skills')
+            ->using(CharacterSkill::class)
+            ->withPivot('unlocked', 'equipped')
+            ->withTimestamps();
+    }
 }

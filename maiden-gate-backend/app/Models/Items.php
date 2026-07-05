@@ -16,4 +16,9 @@ class Items extends Model
     public function inventories() {
         return $this->hasMany(Inventory::class, 'item_id');
     }
+
+    public function campaign()
+{
+    return $this->belongsTo(Campaign::class);
+}
 }

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Models\Session;
+use App\Models\CampaignSession;
 use Illuminate\Http\Request;
 
 class SessionController extends Controller
@@ -13,7 +13,7 @@ class SessionController extends Controller
      */
     public function index(string $campaignId)
     {
-        $sessions = Session::where('campaign_id', $campaignId)->get();
+        $sessions = CampaignSession::where('campaign_id', $campaignId)->get();
 
         return response()->json($sessions);
     }
@@ -27,12 +27,12 @@ class SessionController extends Controller
             'campaign_id' => 'required|integer|exists:campaigns,id',
             'title'       => 'required|string|max:255',
             'date'        => 'required|date',
-            'time'        => 'required|date_format:H:i:s,H:i', // Aceita com ou sem segundos
+            'time'        => 'required|date_format:H:i',
             'description' => 'nullable|string',
             'status'      => 'nullable|in:em_espera,concluido,cancelado'
         ]);
 
-        $session = Session::create($data);
+        $session = CampaignSession::create($data);
 
         return response()->json($session, 201);
     }
@@ -42,7 +42,7 @@ class SessionController extends Controller
      */
     public function show(string $id)
     {
-        $session = Session::with('campaign')->findOrFail($id);
+        $session = CampaignSession::with('campaign')->findOrFail($id);
 
         return response()->json($session);
     }
@@ -52,12 +52,12 @@ class SessionController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $session = Session::findOrFail($id);
+        $session = CampaignSession::findOrFail($id);
 
         $data = $request->validate([
             'title'       => 'sometimes|required|string|max:255',
             'date'        => 'sometimes|required|date',
-            'time'        => 'sometimes|required|date_format:H:i:s,H:i',
+            'time'        => 'sometimes|required|date_format:H:i',
             'description' => 'nullable|string',
             'status'      => 'sometimes|required|in:em_espera,concluido,cancelado'
         ]);
@@ -72,7 +72,7 @@ class SessionController extends Controller
      */
     public function destroy(string $id)
     {
-        $session = Session::findOrFail($id);
+        $session = CampaignSession::findOrFail($id);
         $session->delete();
 
         return response()->json([

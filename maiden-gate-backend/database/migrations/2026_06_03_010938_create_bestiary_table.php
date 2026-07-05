@@ -17,6 +17,7 @@ return new class extends Migration
 
             $table->string("image")->nullable();
             $table->string("name");
+            $table->string('threat')->nullable();
             $table->string("type")->nullable();
             $table->text("description");
 
