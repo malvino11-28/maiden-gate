@@ -10,6 +10,7 @@ import CampaignSelect from "../forms/CampaignSelect";
 import Input from "../../../../../shared/components/Form/Input";
 import TextArea from "../../../../../shared/components/Form/TextArea";
 import Button from "../../../../../shared/components/Button/Button";
+import ImageInput from "../forms/ImageField";
 
 interface LocationModalProps {
   isOpen: boolean;
@@ -18,9 +19,15 @@ interface LocationModalProps {
 
 export default function LocationModal({ isOpen, onClose }: LocationModalProps) {
   const [campaign, setCampaign] = useState("");
+  const [imageFile, setImageFile] = useState<File | null>(null); // Guarda o arquivo para o envio
   const [name, setName] = useState("");
   const [type, setType] = useState("");
   const [description, setDescription] = useState("");
+
+  const handleSubmit = () => {
+    // Aqui você faz o envio do formulário
+    console.log({ campaign, imageFile, name, type, description });
+  };
 
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
@@ -33,6 +40,11 @@ export default function LocationModal({ isOpen, onClose }: LocationModalProps) {
       <ModalBody>
         <FormField label="Campanha" required>
           <CampaignSelect value={campaign} onChange={setCampaign} />
+        </FormField>
+
+        <FormField label="Imagem do Local">
+          {/* REPARO AQUI: Removido o value={imageFile} que quebrava o TypeScript */}
+          <ImageInput onChange={(file) => setImageFile(file)} />
         </FormField>
 
         <FormField label="Nome" required>
@@ -57,7 +69,7 @@ export default function LocationModal({ isOpen, onClose }: LocationModalProps) {
           Cancelar
         </Button>
 
-        <Button>Criar Localização</Button>
+        <Button onClick={handleSubmit}>Criar Localização</Button>
       </ModalFooter>
     </Modal>
   );
