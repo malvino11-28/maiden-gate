@@ -12,7 +12,7 @@ class CampaignSessionController extends Controller
     /**
      * Display a listing of the resource for a specific campaign.
      */
-    public function index(Campaign $campaign)
+    public function index(Campaign $campaign) //
     {
         return response()->json(
             $campaign->sessions()->latest()->get()

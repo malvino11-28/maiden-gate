@@ -5,35 +5,37 @@ namespace App\Http\Controllers\Api;
 use App\Models\Items;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Campaign;
 
 class ItemsController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-public function index(string $campaignId)
+public function index(Campaign $campaign)
 {
-    $items = Items::where('campaign_id', $campaignId)
-                ->orWhereNull('campaign_id')
-                ->get();
-
-    return response()->json($items);
+    return response()->json(
+        $campaign->items()->latest()->get()
+    );
 }
 
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(Request $request, Campaign $campaign)
     {
         $data = $request->validate([
-            'campaign_id' => 'nullable|exists:campaigns,id',
             'name' => 'required|string|max:255',
             'description' => 'required|string',
             'type' => 'nullable|string'
         ]);
 
-        $items = Items::create($data);
+        $items = $campaign->items()->create([
+            'name' => $data['name'],
+            'description' => $data['description'],
+            'type' => $data['type'] ?? null
+        ]);
 
         return response()->json($items, 201);
     }

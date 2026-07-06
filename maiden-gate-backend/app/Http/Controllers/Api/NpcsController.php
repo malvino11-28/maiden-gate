@@ -5,26 +5,26 @@ namespace App\Http\Controllers\Api;
 use App\Models\Npcs;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Campaign;
 
 class NpcsController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index(string $campaignId)
+    public function index(Campaign $campaign)
     {
-        $npcs = Npcs::where('campaign_id', $campaignId)->get();
-
-        return response()->json($npcs);
+        return response()->json(
+            $campaign->npcs()->latest()->get()
+        );
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(Request $request, Campaign $campaign)
     {
         $data = $request->validate([
-            'campaign_id' => 'required|integer|exists:campaigns,id',
             'marca_id' => 'nullable|integer|exists:marcas,id',
             'name' => 'required|string|max:255',
             'race' => 'nullable|string|max:255',
@@ -36,7 +36,17 @@ class NpcsController extends Controller
             'stats' => 'nullable|array'
         ]);
 
-        $npc = Npcs::create($data);
+        $npc = $campaign->npcs()->create([
+            'marca_id' => $data['marca_id'] ?? null,
+            'name' => $data['name'],
+            'race' => $data['race'] ?? null,
+            'occupation' => $data['occupation'] ?? null,
+            'personality' => $data['personality'] ?? null,
+            'secret' => $data['secret'] ?? null,
+            'description' => $data['description'] ?? null,
+            'skills' => $data['skills'] ?? [],
+            'stats' => $data['stats'] ?? []
+        ]);
         
         return response()->json($npc, 201);
     }
