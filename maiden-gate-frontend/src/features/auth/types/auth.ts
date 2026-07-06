@@ -8,3 +8,7 @@ export interface LoginResponse {
   message: string;
   user: User;
 }
+
+export interface RegisterResponse {
+  message: string;
+}

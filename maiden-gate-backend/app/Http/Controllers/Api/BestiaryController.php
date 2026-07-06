@@ -2,38 +2,53 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Models\Bestiary;
 use App\Http\Controllers\Controller;
+use App\Models\Bestiary;
+use App\Models\Campaign;
 use Illuminate\Http\Request;
 
 class BestiaryController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display a listing of monsters from a specific campaign.
      */
-    public function index()
+    public function index(Campaign $campaign)
     {
-        return response()->json(Bestiary::all());
+        return response()->json(
+            $campaign->bestiary()->latest()->get()
+        );
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a newly created monster in a specific campaign.
      */
-    public function store(Request $request)
+    public function store(Request $request, Campaign $campaign)
     {
-        $data = $request->validate(['name' => 'required|string|max:255', 
-        'description' => 'required|string',
-        'skills' => 'required|array',
-        'stats' => 'required|array'
+        $data = $request->validate([
+            'image' => 'nullable|string|max:255',
+            'name' => 'required|string|max:255',
+            'threat' => 'nullable|string|max:255',
+            'type' => 'nullable|string|max:255',
+            'description' => 'required|string',
+            'skills' => 'nullable|array',
+            'stats' => 'nullable|array',
         ]);
 
-        $monster = Bestiary::create($data);
+        $monster = $campaign->bestiary()->create([
+            'image' => $data['image'] ?? null,
+            'name' => $data['name'],
+            'threat' => $data['threat'] ?? null,
+            'type' => $data['type'] ?? null,
+            'description' => $data['description'],
+            'skills' => $data['skills'] ?? [],
+            'stats' => $data['stats'] ?? [],
+        ]);
 
         return response()->json($monster, 201);
     }
 
     /**
-     * Display the specified resource.
+     * Display the specified monster.
      */
     public function show(string $id)
     {
@@ -43,18 +58,20 @@ class BestiaryController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update the specified monster.
      */
     public function update(Request $request, string $id)
     {
         $monster = Bestiary::findOrFail($id);
 
         $data = $request->validate([
+            'image' => 'sometimes|nullable|string|max:255',
             'name' => 'sometimes|string|max:255',
+            'threat' => 'sometimes|nullable|string|max:255',
+            'type' => 'sometimes|nullable|string|max:255',
             'description' => 'sometimes|string',
-
-            'skills' => 'sometimes|array',
-            'stats' => 'sometimes|array'
+            'skills' => 'sometimes|nullable|array',
+            'stats' => 'sometimes|nullable|array',
         ]);
 
         $monster->update($data);
@@ -63,7 +80,7 @@ class BestiaryController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Remove the specified monster.
      */
     public function destroy(string $id)
     {
@@ -72,7 +89,7 @@ class BestiaryController extends Controller
         $monster->delete();
 
         return response()->json([
-            'message' => 'Monstro removido com sucesso.'
+            'message' => 'Monstro removido com sucesso.',
         ]);
     }
 }

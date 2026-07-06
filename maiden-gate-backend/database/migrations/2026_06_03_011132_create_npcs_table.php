@@ -13,12 +13,19 @@ return new class extends Migration
     {
         Schema::create('npcs', function (Blueprint $table) {
             $table->id();
-            $table->foreignId("campaign_id")->nullable()->constrained("campaigns")->nullOnDelete();
-            $table->foreignId("marca_id")->nullable()->constrained("marcas")->nullOnDelete();
-            $table->string("name");
-            $table->text("description");
-            $table->jsonb("skills")->nullable();
-            $table->jsonb("stats")->nullable();
+            $table->foreignId('campaign_id')->constrained('campaigns')->cascadeOnDelete();
+            $table->foreignId('marca_id')->nullable()->constrained('marcas')->nullOnDelete();
+
+            $table->string('name');
+            $table->string('race')->nullable();
+            $table->string('occupation')->nullable();
+            $table->text('personality')->nullable();
+            $table->text('secret')->nullable();
+
+            $table->text('description')->nullable();
+            $table->json('skills')->nullable();
+            $table->json('stats')->nullable();
+
             $table->timestamps();
         });
     }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Models\Character;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\User;
 
 class CharacterController extends Controller
 {
@@ -27,12 +28,15 @@ class CharacterController extends Controller
             'marca_id' => 'required|exists:marcas,id',
 
             'name' => 'required|string|max:255',
+            'surname' => 'nullable|string|max:255',
+            'origin' => 'nullable|string|max:255',
             'lore' => 'nullable|string',
+            'image' => 'nullable|string|max:255',
 
             'pod' => 'required|integer|min:0',
             'des' => 'required|integer|min:0',
             'res' => 'required|integer|min:0',
-            'intelec' => 'required|integer|min:0',
+            'int' => 'required|integer|min:0',
             'det' => 'required|integer|min:0',
             'pre' => 'required|integer|min:0',
         ]);
@@ -42,14 +46,13 @@ class CharacterController extends Controller
         $data['exp'] = 0;
         $data['hp_max'] = (int) floor($data['res'] * 1.5);
         $data['hp_current'] = $data['hp_max'];
-        // $data['effect'] vem como null
-        // garante que o pt mínimo seja sempre 1, mesmo com penalidades externas
-        $calculo_pt = 4 + floor($data['intelec'] * 0.6) + floor($data['des'] * 0.2);
-        $data['pt'] = max(1, $calculo_pt); 
+        
+        // Cálculos de PT e PR Máximos baseados nos atributos recebidos
+        $calculo_pa = 4 + floor($data['int'] * 0.6) + floor($data['des'] * 0.2);
+        $data['pa_max'] = max(1, $calculo_pa); 
 
-        // garante que o pr mínimo seja sempre 1, mesmo com penalidades externas
         $calculo_pr = 1 + floor($data['des'] * 0.25) + floor($data['det'] * 0.1);
-        $data['pr'] = max(1, $calculo_pr);
+        $data['pr_max'] = max(1, $calculo_pr);
 
         $character = Character::create($data);
 
@@ -74,40 +77,59 @@ class CharacterController extends Controller
         $character = Character::findOrFail($id);
         
         $data = $request->validate([
+
             'name' => 'sometimes|string|max:255',
-            'lore' => 'sometimes|string',
+            'surname' => 'nullable|string|max:255',
+            'origin' => 'nullable|string|max:255',
+            'lore' => 'nullable|string',
+            'image' => 'nullable|string|max:255',
+
+            'level' => 'sometimes|integer|min:1',
+            'exp' => 'sometimes|integer|min:0',
 
             'pod' => 'sometimes|integer|min:0',
             'des' => 'sometimes|integer|min:0',
             'res' => 'sometimes|integer|min:0',
-            'intelec' => 'sometimes|integer|min:0',
+            'int' => 'sometimes|integer|min:0',
             'det' => 'sometimes|integer|min:0',
             'pre' => 'sometimes|integer|min:0',
-            'hp_current' => 'sometimes|integer|min:1'
+            'hp_current' => 'sometimes|integer|min:0',
+            'effect' => 'nullable|string'
         ]);
 
         $character->update($data);
 
+        // Recálculo de HP dinâmico pós-update
         if ($character->hp_current == $character->hp_max) {
             $character->hp_max = (int) floor($character->res * 1.5);
             $character->hp_current = $character->hp_max;
-        } 
-        else {
+        } else {
             $character->hp_max = (int) floor($character->res * 1.5);
         }
 
-        // garante que o pt mínimo seja sempre 1, mesmo com penalidades externas
-        $calculo_pt = 4 + floor($character->intelec * 0.6) + floor($character->des * 0.2);
-        $character->pt = max(1, $calculo_pt);
+        // Recálculo de PT Máximo e PR Máximo pós-update
+        $calculo_pa = 4 + floor($character->int * 0.6) + floor($character->des * 0.2);
+        $character->pa_max = max(1, $calculo_pa);
 
-        // garante que o pr mínimo seja sempre 1, mesmo com penalidades externas
         $calculo_pr = 1 + floor($character->des * 0.25) + floor($character->det * 0.1);
-        $character->pr = max(1, $calculo_pr);
-
+        $character->pr_max = max(1, $calculo_pr);
 
         $character->save();
 
-        return response()->json(['message' => 'personagem atualizado com sucesso', 'character' => $character]);
+        return response()->json([
+            'message' => 'personagem atualizado com sucesso', 
+            'character' => $character
+        ]);
+    }
+
+    public function byUser(User $user)
+    {
+        $characters = $user->characters()
+            ->with(['campaign', 'marca', 'skills', 'inventory.item'])
+            ->latest()
+            ->get();
+
+        return response()->json($characters);
     }
 
     /**
@@ -116,7 +138,6 @@ class CharacterController extends Controller
     public function destroy(string $id)
     {
         $character = Character::findOrFail($id);
-
         $character->delete();
 
         return response()->json(['message' => 'personagem apagado com sucesso']);

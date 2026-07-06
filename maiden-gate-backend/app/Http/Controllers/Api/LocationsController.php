@@ -11,9 +11,13 @@ class LocationsController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(string $campaignId)
     {
-        return response()->json(Locations::all());
+        $locations = Locations::where('campaign_id', $campaignId)
+            ->orWhereNull('campaign_id')
+            ->get();
+
+        return response()->json($locations);
     }
 
     /**
@@ -23,8 +27,11 @@ class LocationsController extends Controller
     {
         $data = $request->validate([
             'campaign_id' => 'nullable|exists:campaigns,id',
+
+            'image' => 'nullable|string|max:255',
             'name' => 'required|string|max:255',
             'type' => 'required|string',
+            'region' => 'nullable|string|max:255',
             'description' => 'required|string'
         ]);
 
@@ -51,8 +58,10 @@ class LocationsController extends Controller
         $location = Locations::findOrFail($id);
 
         $data = $request->validate([
+            'image' => 'sometimes|string|max:255',
             'name' => 'sometimes|string|max:255',
             'type' => 'sometimes|string',
+            'region' => 'sometimes|string|max:255',
             'description' => 'sometimes|string'
         ]);
 

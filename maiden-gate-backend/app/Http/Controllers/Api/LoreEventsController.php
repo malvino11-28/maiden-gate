@@ -5,33 +5,38 @@ namespace App\Http\Controllers\Api;
 use App\Models\LoreEvents;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Campaign;
 
 class LoreEventsController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index(string $campaignId)
+    public function index(Campaign $campaign)
     {
-        $lore = LoreEvents::where('campaign_id', $campaignId)->get();
-
-        return response()->json($lore);
+        return response()->json(
+            $campaign->loreEvents()->latest()->get()
+        );
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(Request $request, Campaign $campaign)
     {
         $data = $request->validate([
-            'campaign_id' => 'nullable|exists:campaigns,id',
             'title' => 'required|string|max:255',
             'description' => 'required|string',
             'chronology' => 'required|string|max:255',
             'event_date' => 'nullable|string|max:255'
         ]);
 
-        $lore = LoreEvents::create($data);
+        $lore = $campaign->loreEvents()->create([
+            'title' => $data['title'],
+            'description' => $data['description'],
+            'chronology' => $data['chronology'],
+            'event_date' => $data['event_date'] ?? null
+        ]);
 
         return response()->json($lore, 201);
     }

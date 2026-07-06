@@ -15,6 +15,8 @@ return new class extends Migration
             $table->id();
             $table->enum("name", ["Manifesto", "Oculto", "Respiração", "Entoadora", "Maso"])->unique();
             $table->text("description");
+            $table->string("image")->nullable();
+            
             $table->timestamps();
         });
     }

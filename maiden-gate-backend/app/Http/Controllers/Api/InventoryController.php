@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Models\Inventory;
 use App\Http\Controllers\Controller;
+use App\Models\Character;
+use App\Models\Inventory;
+use App\Models\Items;
 use Illuminate\Http\Request;
 
 class InventoryController extends Controller
@@ -11,41 +13,55 @@ class InventoryController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(string $characterId)
+    public function index(Character $character)
     {
-        $inventory = Inventory::with('item')
-            ->where('character_id', $characterId)
-            ->get();
-        
-        return response()->json($inventory);
+        return response()->json(
+            $character->inventory()->with('item')->latest()->get()
+        );  
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
-    {
-        $data = $request->validate([
-            'character_id' => 'required|exists:characters,id',
-            'item_id' => 'required|exists:items,id',
-            'quantity' => 'required|integer|min:1'
-        ]);
 
-        $item = Inventory::where('character_id', $data['character_id'])
-            ->where('item_id', $data['item_id'])
-            ->first();
 
-        if ($item) {
-            $item->increment('quantity', $data['quantity']);
-            
-            return response()->json($item);
-        }
+public function store(Request $request, Character $character)
+{
+    $data = $request->validate([
+        'item_id' => 'required|exists:items,id',
+        'quantity' => 'required|integer|min:1',
+    ]);
 
-        $inventory = Inventory::create($data);
+    $item = Items::findOrFail($data['item_id']);
 
-        return response()->json($inventory, 201);
-
+    if (
+        $item->campaign_id !== null &&
+        $character->campaign_id !== null &&
+        $item->campaign_id !== $character->campaign_id
+    ) {
+        return response()->json([
+            'message' => 'Este item não pertence à campanha do personagem.',
+        ], 422);
     }
+
+    $inventory = Inventory::where('character_id', $character->id)
+        ->where('item_id', $data['item_id'])
+        ->first();
+
+    if ($inventory) {
+        $inventory->increment('quantity', $data['quantity']);
+
+        return response()->json($inventory->fresh());
+    }
+
+    $inventory = Inventory::create([
+        'character_id' => $character->id,
+        'item_id' => $data['item_id'],
+        'quantity' => $data['quantity'],
+    ]);
+
+    return response()->json($inventory, 201);
+}
     /**
      * Display the specified resource.
      */
@@ -73,7 +89,7 @@ class InventoryController extends Controller
             $inventory->delete(); 
         }
 
-        return response()->json($inventory);
+        return response()->json($inventory->fresh()->load('item'));
     }
 
     /**

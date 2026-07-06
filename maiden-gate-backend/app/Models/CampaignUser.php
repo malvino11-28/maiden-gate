@@ -9,16 +9,31 @@ class CampaignUser extends Model
     protected $table = 'campaign_user';
 
     protected $fillable = [
-    'campaign_id',
-    'user_id',
-    'role',
+        'campaign_id',
+        'user_id',
+        'role',
+        'character_id',
+        'status',
+        'responded_at',
+        'response_message',
     ];
 
-    public function campaign() {
+    protected $casts = [
+        'responded_at' => 'datetime',
+    ];
+
+    public function campaign()
+    {
         return $this->belongsTo(Campaign::class);
     }
 
-    public function user() {
+    public function user()
+    {
         return $this->belongsTo(User::class);
+    }
+
+    public function character()
+    {
+        return $this->belongsTo(Character::class);
     }
 }

@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('inventory', function (Blueprint $table) {
             $table->id();
             $table->foreignId("character_id")->constrained("characters")->onDelete("cascade");
-            $table->foreignId("item_id")->constrained("items");
+            $table->foreignId("item_id")->constrained("items")->onDelete("cascade");
             $table->integer("quantity")->default(1);
             $table->unique(["character_id", "item_id"]); // evitando inventário clonado e item clonado   
             $table->timestamps();

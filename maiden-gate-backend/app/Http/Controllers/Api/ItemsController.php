@@ -5,21 +5,25 @@ namespace App\Http\Controllers\Api;
 use App\Models\Items;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Campaign;
 
 class ItemsController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
-    {
-        return response()->json(Items::all());
-    }
+public function index(Campaign $campaign)
+{
+    return response()->json(
+        $campaign->items()->latest()->get()
+    );
+}
+
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(Request $request, Campaign $campaign)
     {
         $data = $request->validate([
             'name' => 'required|string|max:255',
@@ -27,7 +31,11 @@ class ItemsController extends Controller
             'type' => 'nullable|string'
         ]);
 
-        $items = Items::create($data);
+        $items = $campaign->items()->create([
+            'name' => $data['name'],
+            'description' => $data['description'],
+            'type' => $data['type'] ?? null
+        ]);
 
         return response()->json($items, 201);
     }

@@ -9,9 +9,11 @@ class Locations extends Model
     protected $fillable = [
     'campaign_id',
 
+    'image',
     'name',
     'type',
-    'description'
+    'description',
+    'region'
     ];
 
     public function campaign() {

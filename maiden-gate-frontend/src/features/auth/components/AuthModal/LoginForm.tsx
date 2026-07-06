@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { login } from "../../services/authService";
+import { login } from "../../services/AuthService";
 
 import Modal from "../../../../shared/components/Modal/Modal";
 import ModalBody from "../../../../shared/components/Modal/ModalBody";

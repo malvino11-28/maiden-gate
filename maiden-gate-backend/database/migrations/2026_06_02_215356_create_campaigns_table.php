@@ -14,8 +14,19 @@ return new class extends Migration
         Schema::create('campaigns', function (Blueprint $table) {
             $table->id();
             $table->foreignId('master_id')->constrained("users")->onDelete("cascade");
+            
             $table->string("name");
-            $table->text("description");
+            $table->text("description")->nullable();
+            $table->string("image")->nullable();
+            
+            $table->enum("recommended_level", ["Iniciante", "Intermediário", "Avançado"])->default("Iniciante");
+
+            $table->string("players")->nullable();
+
+            $table->enum("status", ["ativa", "pausada", "encerrada"])->default("ativa");
+
+            $table->text("notes")->nullable();
+
             $table->timestamps();
         });
     }
