@@ -12,6 +12,8 @@ import TextArea from "../../../../../shared/components/Form/TextArea";
 import Button from "../../../../../shared/components/Button/Button";
 import ImageInput from "../forms/ImageField";
 
+import { createLocation } from "../../services/masterElementService";
+
 interface LocationModalProps {
   isOpen: boolean;
   onClose: () => void;
@@ -19,14 +21,43 @@ interface LocationModalProps {
 
 export default function LocationModal({ isOpen, onClose }: LocationModalProps) {
   const [campaign, setCampaign] = useState("");
-  const [imageFile, setImageFile] = useState<File | null>(null); // Guarda o arquivo para o envio
+  const [image, setImage] = useState<File | null>(null);
   const [name, setName] = useState("");
   const [type, setType] = useState("");
   const [description, setDescription] = useState("");
 
-  const handleSubmit = () => {
-    // Aqui você faz o envio do formulário
-    console.log({ campaign, imageFile, name, type, description });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const handleSubmit = async () => {
+    if (!campaign || !name || !type || !description) {
+      setError("Preencha todos os campos obrigatórios.");
+      return;
+    }
+
+    try {
+      setIsSubmitting(true);
+      setError(null);
+
+      await createLocation(Number(campaign), {
+        image,
+        name,
+        type,
+        description,
+      });
+
+      setCampaign("");
+      setImage(null);
+      setName("");
+      setType("");
+      setDescription("");
+
+      onClose();
+    } catch {
+      setError("Não foi possível criar a localização.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -43,8 +74,7 @@ export default function LocationModal({ isOpen, onClose }: LocationModalProps) {
         </FormField>
 
         <FormField label="Imagem do Local">
-          {/* REPARO AQUI: Removido o value={imageFile} que quebrava o TypeScript */}
-          <ImageInput onChange={(file) => setImageFile(file)} />
+          <ImageInput value={null} onChange={setImage} />
         </FormField>
 
         <FormField label="Nome" required>
@@ -52,7 +82,7 @@ export default function LocationModal({ isOpen, onClose }: LocationModalProps) {
         </FormField>
 
         <FormField label="Tipo" required>
-          <CampaignSelect value={type} onChange={setType} />
+          <Input value={type} onChange={(e) => setType(e.target.value)} />
         </FormField>
 
         <FormField label="Descrição" required>
@@ -64,12 +94,16 @@ export default function LocationModal({ isOpen, onClose }: LocationModalProps) {
         </FormField>
       </ModalBody>
 
+      {error && <p className="text-sm text-rose-400">{error}</p>}
+
       <ModalFooter>
         <Button variant="ghost" onClick={onClose}>
           Cancelar
         </Button>
 
-        <Button onClick={handleSubmit}>Criar Localização</Button>
+        <Button onClick={handleSubmit} disabled={isSubmitting}>
+          {isSubmitting ? "Criando..." : "Criar Localização"}
+        </Button>
       </ModalFooter>
     </Modal>
   );

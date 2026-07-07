@@ -5,37 +5,46 @@ namespace App\Http\Controllers\Api;
 use App\Models\Locations;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Campaign;
 
 class LocationsController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index(string $campaignId)
+    public function index(Campaign $campaign)
     {
-        $locations = Locations::where('campaign_id', $campaignId)
-            ->orWhereNull('campaign_id')
-            ->get();
-
-        return response()->json($locations);
+        return response()->json(
+            $campaign->locations()->latest()->get()
+        );
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(Request $request, Campaign $campaign)
     {
         $data = $request->validate([
-            'campaign_id' => 'nullable|exists:campaigns,id',
-
-            'image' => 'nullable|string|max:255',
+            'image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
             'name' => 'required|string|max:255',
-            'type' => 'required|string',
+            'type' => 'required|string|max:255',
             'region' => 'nullable|string|max:255',
-            'description' => 'required|string'
+            'description' => 'required|string',
         ]);
 
-        $location = Locations::create($data);
+        $imagePath = null;
+
+        if ($request->hasFile('image')) {
+            $imagePath = $request->file('image')->store('locations', 'public');
+        }
+
+        $location = $campaign->locations()->create([
+            'image' => $imagePath,
+            'name' => $data['name'],
+            'type' => $data['type'],
+            'region' => $data['region'] ?? null,
+            'description' => $data['description'],
+        ]);
 
         return response()->json($location, 201);
     }

@@ -7,7 +7,6 @@ type ImageInputProps = {
 };
 
 export default function ImageInput({ value, onChange }: ImageInputProps) {
-  // O preview começa com o valor que veio do banco (se houver)
   const [preview, setPreview] = useState<string | null>(value || null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -15,10 +14,10 @@ export default function ImageInput({ value, onChange }: ImageInputProps) {
     if (file && file.type.startsWith("image/")) {
       const reader = new FileReader();
       reader.onloadend = () => {
-        setPreview(reader.result as string); // Atualiza para o preview local da nova imagem
+        setPreview(reader.result as string); // atualiza para o preview local da nova imagem
       };
       reader.readAsDataURL(file);
-      onChange(file); // Passa o File para o formulário enviar pro backend
+      onChange(file); // passa o File para o formulário enviar pro backend
     } else {
       setPreview(null);
       onChange(null);
