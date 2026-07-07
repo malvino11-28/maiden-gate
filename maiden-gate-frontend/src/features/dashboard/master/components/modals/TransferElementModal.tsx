@@ -12,6 +12,8 @@ import ElementSelect from "../forms/ElementSelect";
 
 import Button from "../../../../../shared/components/Button/Button";
 
+import { transferElement } from "../../services/masterElementService";
+
 const availableElements = [
   {
     id: 1,
@@ -48,13 +50,48 @@ export default function TransferElementModal({
   const [selectedElement, setSelectedElement] = useState("");
   const [destinationCampaign, setDestinationCampaign] = useState("");
 
-  const canSubmit =
+  const canSubmit = Boolean(
     originCampaign &&
     selectedElement &&
     destinationCampaign &&
-    originCampaign !== destinationCampaign;
+    originCampaign !== destinationCampaign,
+  );
 
-  console.log(isOpen);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const handleSubmit = async () => {
+    const element = availableElements.find(
+      (item) => String(item.id) === selectedElement,
+    );
+
+    if (!canSubmit || !element) {
+      setError("Selecione todos os campos corretamente.");
+      return;
+    }
+
+    try {
+      setIsLoading(true);
+      setError(null);
+
+      await transferElement({
+        origin_campaign_id: Number(originCampaign),
+        destination_campaign_id: Number(destinationCampaign),
+        element_id: element.id,
+        element_type: element.type,
+      });
+
+      setOriginCampaign("");
+      setSelectedElement("");
+      setDestinationCampaign("");
+
+      onClose();
+    } catch {
+      setError("Não foi possível copiar o elemento.");
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
@@ -90,6 +127,8 @@ export default function TransferElementModal({
             />
           </FormField>
         </div>
+
+        {error && <p className="text-sm text-rose-400">{error}</p>}
       </ModalBody>
 
       <ModalFooter>
@@ -97,7 +136,9 @@ export default function TransferElementModal({
           Cancelar
         </Button>
 
-        <Button disabled={!canSubmit}>Confirmar Cópia</Button>
+        <Button disabled={!canSubmit || isLoading} onClick={handleSubmit}>
+          {isLoading ? "Copiando..." : "Confirmar Cópia"}
+        </Button>
       </ModalFooter>
     </Modal>
   );

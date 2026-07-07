@@ -10,10 +10,13 @@ import FormField from "../forms/FormField";
 import CampaignSelect from "../forms/CampaignSelect";
 import SkillSelector from "../forms/SkillSelector";
 import StatusEditor from "../forms/StatusEditor";
+import ImageInput from "../forms/ImageField";
 
 import Input from "../../../../../shared/components/Form/Input";
 import TextArea from "../../../../../shared/components/Form/TextArea";
 import Button from "../../../../../shared/components/Button/Button";
+
+import { createNpc } from "../../services/masterElementService";
 
 interface NpcModalProps {
   isOpen: boolean;
@@ -22,13 +25,10 @@ interface NpcModalProps {
 
 export default function NpcModal({ isOpen, onClose }: NpcModalProps) {
   const [campaign, setCampaign] = useState("");
-
   const [name, setName] = useState("");
-
+  const [image, setImage] = useState<File | null>(null);
   const [brand, setBrand] = useState("");
-
   const [description, setDescription] = useState("");
-
   const [skills, setSkills] = useState<string[]>([]);
 
   const [status, setStatus] = useState({
@@ -39,6 +39,39 @@ export default function NpcModal({ isOpen, onClose }: NpcModalProps) {
     def: 10,
     speed: 10,
   });
+
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const handleSubmit = async () => {
+    if (!campaign || !name || !description) {
+      setError("Preencha todos os campos obrigatórios.");
+      return;
+    }
+
+    try {
+      setIsLoading(false);
+      setError(null);
+
+      await createNpc(Number(campaign), {
+        image,
+        name,
+        brand: brand || null,
+        description,
+        skills,
+        status,
+      });
+
+      setImage(null);
+      setName("");
+      setDescription("");
+      setSkills([]);
+    } catch {
+      setError("Não foi possível criar o NPC");
+    } finally {
+      setIsLoading(true);
+    }
+  };
 
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
@@ -53,6 +86,10 @@ export default function NpcModal({ isOpen, onClose }: NpcModalProps) {
         <div className="space-y-5">
           <FormField label="Campanha" required>
             <CampaignSelect value={campaign} onChange={setCampaign} />
+          </FormField>
+
+          <FormField label="Imagem">
+            <ImageInput onChange={setImage} />
           </FormField>
 
           <FormField label="Nome" required>
@@ -100,6 +137,8 @@ export default function NpcModal({ isOpen, onClose }: NpcModalProps) {
             <StatusEditor value={status} onChange={setStatus} />
           </FormField>
         </div>
+
+        {error && <p className="text-sm text-rose-400">{error}</p>}
       </ModalBody>
 
       <ModalFooter>
@@ -107,7 +146,9 @@ export default function NpcModal({ isOpen, onClose }: NpcModalProps) {
           Cancelar
         </Button>
 
-        <Button>Criar NPC</Button>
+        <Button onClick={handleSubmit} disabled={isLoading}>
+          {isLoading ? "Criando..." : "Criar NPC"}
+        </Button>
       </ModalFooter>
     </Modal>
   );
