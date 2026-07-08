@@ -1,5 +1,6 @@
 export type PremadeLocation = {
   name: string;
+  image: string | null;
   type: string;
   region: string;
   description: string;
@@ -8,10 +9,13 @@ export type PremadeLocation = {
 export type PremadeNpc = {
   name: string;
   image: string;
+  brand: string | null;
   race: string;
   occupation: string;
   personality: string;
   secret: string;
+  description: string;
+  skills: string;
 };
 
 export type PremadeMonster = {
@@ -67,6 +71,7 @@ export const premadeCampaigns: PremadeCampaign[] = [
     locations: [
       {
         name: "Cidade Catedral",
+        image: flower,
         type: "Cidade",
         region: "Nascente da Flor",
         description:
@@ -74,6 +79,7 @@ export const premadeCampaigns: PremadeCampaign[] = [
       },
       {
         name: "Caminho da Cidade Catedral",
+        image: "",
         type: "Estrada",
         region: "Sul da Ilha da Flor",
         description:
@@ -81,6 +87,7 @@ export const premadeCampaigns: PremadeCampaign[] = [
       },
       {
         name: "Songbird",
+        image: "",
         type: "Cidade",
         region: "Sul da Ilha da Flor",
         description:
@@ -88,6 +95,7 @@ export const premadeCampaigns: PremadeCampaign[] = [
       },
       {
         name: "Cratera",
+        image: "",
         type: "Raid",
         region: "Norte da Ilha da Flor",
         description:
@@ -98,29 +106,36 @@ export const premadeCampaigns: PremadeCampaign[] = [
     npcs: [
       {
         name: "Eleanor, a Donzela",
-        image: "/",
+        image: flower,
+        brand: "Manifesto",
         race: "Humana",
         occupation: "Futura Rainha",
         personality:
           "Determinada e inconsequente. Só quer acabar com a guerra entre os dois reinos.",
         secret:
           "Possuí duas marcas, a da sua família (Manifesto) e de seus maiores inimigos (Oculto). A do Manifesto está em seu pescoço, a do Oculto está em seu ombro esquerdo.",
+        description:
+          "Eleanor é uma figura central da tensão política entre Manifesto e Oculto.",
+        skills: "Autoridade Real. Dupla Marca. Resistência ao Miasma",
       },
       {
         name: "Vasil, o Astuto",
         image: "",
+        brand: "Maso",
         race: "Maso (Pássaro)",
         occupation: "Guia da Cidade",
         personality:
           "Carismático e eloquente. Faz de tudo pelo Manifesto, mesmo que eles repudiem sua espécie.",
         secret: "É o melhor espião do Sindicato das Sombras.",
+        description: "",
+        skills: "",
       },
     ],
 
     monsters: [
       {
         name: "Bandido",
-        image: "",
+        image: flower,
         type: "Humano",
         threat: "1",
         skills: "Bomba de Fumaça. Corte Rápido.",

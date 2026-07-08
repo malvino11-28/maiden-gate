@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useMemo, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   BookOpen,
@@ -22,6 +22,9 @@ import type { CampaignStep } from "./types/campaignStep";
 
 import PremadeCampaignModal from "./modal/PremadeCampaign";
 import type { PremadeCampaign } from "./data/premadeCampaign";
+
+import { getMarks } from "./service/markService";
+import type { MarkOption } from "./service/markService";
 
 import { useAuth } from "../../../auth/hooks/useAuth";
 import { createCampaign } from "./service/createCampaignService";
@@ -55,6 +58,18 @@ const stepIcons = {
 
 export default function CreateCampaignPage() {
   const navigate = useNavigate();
+
+  const [marks, setMarks] = useState<MarkOption[]>([]);
+
+  useEffect(() => {
+    async function loadBrands() {
+      const data = await getMarks();
+      setMarks(data);
+    }
+
+    loadBrands();
+  }, []);
+
   const [isPremadeModalOpen, setIsPremadeModalOpen] = useState(false);
   const [currentStep, setCurrentStep] = useState<CampaignStep>("cover");
   const [saved, setSaved] = useState(false);
@@ -70,6 +85,14 @@ export default function CreateCampaignPage() {
     [currentIndex],
   );
 
+  function findMarkId(markName: string) {
+    const mark = marks.find(
+      (item) => item.name.toLowerCase() === markName.toLowerCase(),
+    );
+
+    return mark ? String(mark.id) : "";
+  }
+
   function handleUsePremadeCampaign(campaign: PremadeCampaign) {
     updateField("image", campaign.image);
     updateField("name", campaign.name);
@@ -77,19 +100,33 @@ export default function CreateCampaignPage() {
     updateField("recommendedLevel", campaign.recommendedLevel);
     updateField("players", campaign.players);
 
-    updateField("locations", campaign.locations);
+    updateField(
+      "locations",
+      campaign.locations.map((location) => ({
+        image: location.image,
+        name: location.name,
+        type: location.type,
+        region: location.region,
+        description: location.description,
+      })),
+    );
     updateField(
       "npcs",
       campaign.npcs.map((npc) => ({
         image: npc.image,
         name: npc.name,
-        brand: "",
+        marca_id: findMarkId(npc.brand),
         race: npc.race,
         occupation: npc.occupation,
         personality: npc.personality,
         secret: npc.secret,
-        description: "",
-        skills: [],
+        description: npc.description,
+        skills: npc.skills
+          ? npc.skills
+              .split(".")
+              .map((skill) => skill.trim())
+              .filter(Boolean)
+          : [],
         stats: {
           level: 1,
           hp: 100,
@@ -166,10 +203,10 @@ export default function CreateCampaignPage() {
 
         locations: campaign.locations,
 
-        npcs: campaign.npcs.map((npc) => ({
+        npc: campaign.npcs.map((npc) => ({
           image: npc.image,
           name: npc.name,
-          brand: npc.brand || null,
+          brand: npc.marca_id || null,
           race: npc.race || null,
           occupation: npc.occupation || null,
           personality: npc.personality || null,
@@ -276,6 +313,7 @@ export default function CreateCampaignPage() {
                 <NpcsSection
                   campaign={campaign}
                   updateField={updateField}
+                  marks={marks}
                   onNext={goNext}
                   onPrevious={goPrevious}
                 />

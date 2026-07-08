@@ -11,8 +11,12 @@ import CampaignStepNavigation from "../CreateCampaign/CampaignStepNavigation";
 type Field<T> = {
   name: keyof T;
   label: string;
-  placeholder: string;
-  type?: "text" | "textarea" | "image" | "skills" | "status";
+  placeholder?: string;
+  type?: "text" | "textarea" | "image" | "skills" | "status" | "select";
+  options?: {
+    value: string;
+    label: string;
+  }[];
 };
 
 type EditableListSectionProps<T extends object> = {
@@ -98,8 +102,29 @@ function EntryCard<T extends object>({
               <label className="mb-1 block text-xs font-medium text-amber-100/50">
                 {field.label}
               </label>
-              {field.type === "image" ? (
+              {field.type === "select" ? (
+                <select
+                  value={String(item[field.name] ?? "")}
+                  onChange={(e) =>
+                    onUpdate(index, {
+                      [field.name]: e.target.value,
+                    } as Partial<T>)
+                  }
+                  className={inputClass()}
+                >
+                  <option value="">
+                    {field.placeholder ?? "Selecione uma opção"}
+                  </option>
+
+                  {field.options?.map((option) => (
+                    <option key={option.value} value={option.value}>
+                      {option.label}
+                    </option>
+                  ))}
+                </select>
+              ) : field.type === "image" ? (
                 <ImageInput
+                  value={item[field.name] as string | File | null}
                   onChange={(file) =>
                     onUpdate(index, { [field.name]: file } as Partial<T>)
                   }
@@ -158,7 +183,7 @@ function EntryCard<T extends object>({
                   }
                   className={inputClass()}
                 />
-              )}
+              )}{" "}
             </div>
           ))}
         </div>

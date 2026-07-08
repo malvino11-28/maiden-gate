@@ -1,23 +1,39 @@
-import { useState, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import type { ChangeEvent, DragEvent } from "react";
 
 type ImageInputProps = {
-  value?: string | null;
+  value?: string | File | null;
   onChange: (file: File | null) => void;
 };
 
 export default function ImageInput({ value, onChange }: ImageInputProps) {
-  const [preview, setPreview] = useState<string | null>(value || null);
+  const [preview, setPreview] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    if (!value) {
+      setPreview(null);
+      return;
+    }
+
+    if (typeof value === "string") {
+      setPreview(value);
+      return;
+    }
+
+    const objectUrl = URL.createObjectURL(value);
+    setPreview(objectUrl);
+
+    return () => {
+      URL.revokeObjectURL(objectUrl);
+    };
+  }, [value]);
 
   const handleFileChange = (file: File | null) => {
     if (file && file.type.startsWith("image/")) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setPreview(reader.result as string); // atualiza para o preview local da nova imagem
-      };
-      reader.readAsDataURL(file);
-      onChange(file); // passa o File para o formulário enviar pro backend
+      const objectUrl = URL.createObjectURL(file);
+      setPreview(objectUrl);
+      onChange(file);
     } else {
       setPreview(null);
       onChange(null);
@@ -44,7 +60,7 @@ export default function ImageInput({ value, onChange }: ImageInputProps) {
       onDragOver={handleDragOver}
       onDrop={handleDrop}
       onClick={triggerSelect}
-      className="border-2 border-dashed border-amber-100/30 hover:border-amber-100/60 transition rounded-lg p-4 flex flex-col items-center justify-center cursor-pointer bg-amber-100/5 min-h-[150px]"
+      className="flex min-h-[150px] cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-dashed border-amber-100/30 bg-amber-100/5 p-4 transition hover:border-amber-100/60"
     >
       <input
         type="file"
@@ -55,17 +71,17 @@ export default function ImageInput({ value, onChange }: ImageInputProps) {
       />
 
       {preview ? (
-        <div className="relative w-full max-h-48 flex justify-center">
+        <div className="relative flex max-h-48 w-full justify-center">
           <img
             src={preview}
             alt="Preview"
-            className="max-h-44 object-contain rounded-md"
+            className="max-h-44 rounded-md object-contain"
           />
         </div>
       ) : (
         <div className="text-center text-sm text-amber-100/60">
           <p className="font-semibold">Clique para enviar</p>
-          <p className="text-xs mt-1">ou arraste e solte a imagem aqui</p>
+          <p className="mt-1 text-xs">ou arraste e solte a imagem aqui</p>
         </div>
       )}
     </div>

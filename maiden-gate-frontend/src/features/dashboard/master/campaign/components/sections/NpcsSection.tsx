@@ -7,9 +7,15 @@ import type {
   UpdateCampaignField,
 } from "../../types/campaign";
 
+type markOption = {
+  id: number;
+  name: string;
+};
+
 type Props = {
   campaign: CampaignData;
   updateField: UpdateCampaignField;
+  marks: markOption[];
   onNext: () => void;
   onPrevious: () => void;
 };
@@ -17,7 +23,7 @@ type Props = {
 const emptyNpc = (): CampaignNpc => ({
   image: null,
   name: "",
-  brand: "",
+  marca_id: "",
   race: "",
   occupation: "",
   personality: "",
@@ -37,6 +43,7 @@ const emptyNpc = (): CampaignNpc => ({
 export default function NpcsSection({
   campaign,
   updateField,
+  marks,
   onNext,
   onPrevious,
 }: Props) {
@@ -58,9 +65,14 @@ export default function NpcsSection({
         { name: "image", label: "Imagem", type: "image", placeholder: "" },
         { name: "name", label: "Nome", placeholder: "Ex: Eryn, o Taberneiro" },
         {
-          name: "brand",
+          name: "marca_id",
           label: "Marca",
-          placeholder: "Ex: Manifesto, Oculto...",
+          type: "select",
+          placeholder: "Selecione uma marca",
+          options: marks.map((mark) => ({
+            value: String(mark.id),
+            label: mark.name,
+          })),
         },
         {
           name: "race",

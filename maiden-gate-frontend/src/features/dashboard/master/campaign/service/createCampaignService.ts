@@ -17,6 +17,21 @@ type CreateCampaignData = {
   events: CampaignData["events"];
 };
 
+function appendImage(
+  formData: FormData,
+  key: string,
+  image: string | File | null | undefined,
+) {
+  if (image instanceof File) {
+    formData.append(key, image);
+    return;
+  }
+
+  if (image) {
+    formData.append(key, image);
+  }
+}
+
 export async function createCampaign(data: CreateCampaignData) {
   const formData = new FormData();
 
@@ -28,13 +43,11 @@ export async function createCampaign(data: CreateCampaignData) {
   formData.append("status", data.status);
   formData.append("notes", data.notes ?? "");
 
-  if (data.image instanceof File) {
-    formData.append("image", data.image);
-  } else if (data.image) {
-    formData.append("image", data.image);
-  }
+  appendImage(formData, "image", data.image);
 
   data.locations.forEach((location, index) => {
+    appendImage(formData, `locations[${index}][image]`, location.image);
+
     formData.append(`locations[${index}][name]`, location.name);
     formData.append(`locations[${index}][type]`, location.type ?? "");
     formData.append(`locations[${index}][region]`, location.region ?? "");
@@ -45,12 +58,10 @@ export async function createCampaign(data: CreateCampaignData) {
   });
 
   data.npcs.forEach((npc, index) => {
-    if (npc.image instanceof File) {
-      formData.append(`npcs[${index}][image]`, npc.image);
-    }
+    appendImage(formData, `npcs[${index}][image]`, npc.image);
 
     formData.append(`npcs[${index}][name]`, npc.name);
-    formData.append(`npcs[${index}][brand]`, npc.brand ?? "");
+    formData.append(`npcs[${index}][marca_id]`, npc.marca_id ?? "");
     formData.append(`npcs[${index}][race]`, npc.race ?? "");
     formData.append(`npcs[${index}][occupation]`, npc.occupation ?? "");
     formData.append(`npcs[${index}][personality]`, npc.personality ?? "");

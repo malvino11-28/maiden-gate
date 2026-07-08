@@ -1,6 +1,7 @@
 export type RecommendedLevel = "Iniciante" | "Intermediário" | "Avançado";
 
 export interface CampaignLocation {
+  image: File | null | string;
   name: string;
   type: string;
   region: string;
@@ -17,9 +18,9 @@ type StatusData = {
 };
 
 export interface CampaignNpc {
-  image: File | null;
+  image: string | null | File;
   name: string;
-  brand: string;
+  marca_id: string;
   race: string;
   occupation: string;
   personality: string;
@@ -30,7 +31,7 @@ export interface CampaignNpc {
 }
 
 export interface CampaignMonster {
-  image: File | null;
+  image: File | null | string;
   name: string;
   type: string;
   threat: string;
