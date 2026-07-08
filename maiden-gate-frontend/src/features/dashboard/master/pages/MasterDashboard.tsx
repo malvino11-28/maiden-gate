@@ -325,7 +325,7 @@ export default function MasterDashboard() {
                           ),
                         ),
                       },
-                      { label: "X", value: "X" },
+                      { label: "CAMPANHAS ENCERRADAS", value: "0" },
                       { label: "Status", value: "Ativo" },
                     ].map(({ label, value }) => (
                       <div key={label}>
@@ -335,7 +335,7 @@ export default function MasterDashboard() {
                         <p className="text-sm text-amber-100">{value}</p>
                       </div>
                     ))}
-                    <div className="flex gap-3 border-t border-rose-900/20 pt-4">
+                    <div className="flex gap-3 border-t border-rose-900/20 pt-4 hidden">
                       <Button
                         variant="outline"
                         className="border-rose-500/40 text-rose-400 hover:bg-rose-500/10"
