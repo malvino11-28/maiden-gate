@@ -140,6 +140,9 @@ export default function MasterCampaignPage() {
 
             imagem: npc.imagem ?? npc.image ?? null,
             image: npc.image ?? npc.imagem ?? null,
+
+            status: npc.status ?? npc.stats ?? {},
+            stats: npc.stats ?? npc.status ?? {},
           })),
 
           monstros: (data.bestiary ?? []).map((monster: any) => ({
@@ -169,6 +172,9 @@ export default function MasterCampaignPage() {
                       : "",
 
             skills: monster.skills ?? monster.habilidades ?? "",
+
+            status: monster.status ?? monster.stats ?? {},
+            stats: monster.stats ?? monster.status ?? {},
 
             descricao: monster.descricao ?? monster.description ?? "",
             description: monster.description ?? monster.descricao ?? "",

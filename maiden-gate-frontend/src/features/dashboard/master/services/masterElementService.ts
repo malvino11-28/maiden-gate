@@ -91,7 +91,7 @@ export async function createMonster(
   });
 
   Object.entries(data.status).forEach(([key, value]) => {
-    formData.append(`status[${key}]`, String(value));
+    formData.append(`stats[${key}]`, String(value));
   });
 
   if (data.image) {
@@ -126,7 +126,7 @@ export async function createNpc(campaignId: number, data: CreateNpcData) {
   });
 
   Object.entries(data.status).forEach(([key, value]) => {
-    formData.append(`status[${key}]`, String(value));
+    formData.append(`stats[${key}]`, String(value));
   });
 
   if (data.image) {

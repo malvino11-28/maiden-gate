@@ -43,6 +43,15 @@ export interface CampaignLocation {
   descricao: string;
 }
 
+export type status = {
+  level?: number;
+  hp?: number;
+  mana?: number;
+  atk?: number;
+  def?: number;
+  speed?: number;
+};
+
 export interface CampaignNpc {
   id?: string | number;
   imagem?: string | null;
@@ -51,6 +60,7 @@ export interface CampaignNpc {
   ocupacao: string;
   personalidade: string;
   segredo: string;
+  status: status;
 }
 
 export interface CampaignMonster {
@@ -61,6 +71,7 @@ export interface CampaignMonster {
   ameaca: string;
   habilidades: string;
   descricao: string;
+  status: status;
 }
 
 export interface CampaignItem {
