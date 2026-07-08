@@ -16,6 +16,7 @@ return new class extends Migration
             $table->foreignId('campaign_id')->constrained('campaigns')->cascadeOnDelete();
             $table->foreignId('marca_id')->nullable()->constrained('marcas')->nullOnDelete();
 
+            $table->string('image')->nullable();
             $table->string('name');
             $table->string('race')->nullable();
             $table->string('occupation')->nullable();

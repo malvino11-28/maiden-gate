@@ -10,6 +10,7 @@ class Npcs extends Model
     protected $fillable = [
         'campaign_id',
         'marca_id',
+        'image',
         'name',
         'race',
         'occupation',

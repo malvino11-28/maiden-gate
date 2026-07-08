@@ -27,6 +27,8 @@ export default function MonsterModal({ isOpen, onClose }: MonsterModalProps) {
   const [campaign, setCampaign] = useState("");
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
+  const [type, setType] = useState("");
+  const [threat, setThreat] = useState("");
   const [image, setImage] = useState<File | null>(null);
   const [skills, setSkills] = useState<string[]>([]);
 
@@ -55,6 +57,8 @@ export default function MonsterModal({ isOpen, onClose }: MonsterModalProps) {
       await createMonster(Number(campaign), {
         image,
         name,
+        type,
+        threat,
         description,
         skills,
         status,
@@ -62,6 +66,8 @@ export default function MonsterModal({ isOpen, onClose }: MonsterModalProps) {
 
       setCampaign("");
       setName("");
+      setType("");
+      setType("");
       setImage(null);
       setDescription("");
       setSkills([]);
@@ -103,6 +109,14 @@ export default function MonsterModal({ isOpen, onClose }: MonsterModalProps) {
               value={description}
               onChange={(e) => setDescription(e.target.value)}
             />
+          </FormField>
+
+          <FormField label="Tipo">
+            <Input value={type} onChange={(e) => setType(e.target.value)} />
+          </FormField>
+
+          <FormField label="Nível de Ameaça">
+            <Input value={threat} onChange={(e) => setThreat(e.target.value)} />
           </FormField>
 
           <FormField label="Habilidades" required>

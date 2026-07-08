@@ -23,6 +23,9 @@ import type { CampaignStep } from "./types/campaignStep";
 import PremadeCampaignModal from "./modal/PremadeCampaign";
 import type { PremadeCampaign } from "./data/premadeCampaign";
 
+import { useAuth } from "../../../auth/hooks/useAuth";
+import { createCampaign } from "./service/createCampaignService";
+
 const steps: CampaignStep[] = [
   "cover",
   "locations",
@@ -57,6 +60,10 @@ export default function CreateCampaignPage() {
   const [saved, setSaved] = useState(false);
   const { campaign, updateField } = useCampaignForm();
 
+  const { user } = useAuth();
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
   const currentIndex = steps.indexOf(currentStep);
   const progress = useMemo(
     () => ((currentIndex + 1) / steps.length) * 100,
@@ -64,15 +71,60 @@ export default function CreateCampaignPage() {
   );
 
   function handleUsePremadeCampaign(campaign: PremadeCampaign) {
-    updateField("image", "");
+    updateField("image", campaign.image);
     updateField("name", campaign.name);
     updateField("description", campaign.description);
     updateField("recommendedLevel", campaign.recommendedLevel);
     updateField("players", campaign.players);
 
     updateField("locations", campaign.locations);
-    updateField("npcs", campaign.npcs);
-    updateField("monsters", campaign.monsters);
+    updateField(
+      "npcs",
+      campaign.npcs.map((npc) => ({
+        image: npc.image,
+        name: npc.name,
+        brand: "",
+        race: npc.race,
+        occupation: npc.occupation,
+        personality: npc.personality,
+        secret: npc.secret,
+        description: "",
+        skills: [],
+        stats: {
+          level: 1,
+          hp: 100,
+          mana: 50,
+          atk: 10,
+          def: 10,
+          speed: 10,
+        },
+      })),
+    );
+
+    updateField(
+      "monsters",
+      campaign.monsters.map((monster) => ({
+        image: monster.image,
+        name: monster.name,
+        type: monster.type,
+        threat: monster.threat,
+        description: monster.description,
+        skills: monster.skills
+          ? monster.skills
+              .split(".")
+              .map((skill) => skill.trim())
+              .filter(Boolean)
+          : [],
+        stats: {
+          level: 1,
+          hp: 100,
+          mana: 50,
+          atk: 10,
+          def: 10,
+          speed: 10,
+        },
+      })),
+    );
     updateField("items", campaign.items);
     updateField("events", campaign.events);
   }
@@ -87,10 +139,69 @@ export default function CreateCampaignPage() {
     if (previousStep) setCurrentStep(previousStep);
   }
 
-  function handleFinish() {
-    console.log("Criar campanha", campaign);
-    setSaved(true);
-    setTimeout(() => navigate("/dashboard/master"), 900);
+  async function handleFinish() {
+    if (!user) {
+      setError("Você precisa estar logado para criar uma campanha.");
+      return;
+    }
+
+    if (!campaign.name || !campaign.recommendedLevel) {
+      setError("Preencha os dados principais da campanha.");
+      return;
+    }
+
+    try {
+      setIsLoading(true);
+      setError(null);
+
+      const createdCampaign = await createCampaign({
+        master_id: user.id,
+        name: campaign.name,
+        description: campaign.description || null,
+        image: campaign.image || null,
+        recommended_level: campaign.recommendedLevel,
+        players: campaign.players || null,
+        status: "ativa",
+        notes: campaign.note || null,
+
+        locations: campaign.locations,
+
+        npcs: campaign.npcs.map((npc) => ({
+          image: npc.image,
+          name: npc.name,
+          brand: npc.brand || null,
+          race: npc.race || null,
+          occupation: npc.occupation || null,
+          personality: npc.personality || null,
+          secret: npc.secret || null,
+          description: npc.description || null,
+          skills: npc.skills,
+          stats: npc.stats,
+        })),
+
+        monsters: campaign.monsters.map((monster) => ({
+          image: monster.image,
+          name: monster.name,
+          type: monster.type || null,
+          threat: monster.threat || null,
+          description: monster.description || null,
+          skills: monster.skills,
+          stats: monster.stats,
+        })),
+
+        items: campaign.items,
+        events: campaign.events,
+      });
+      setSaved(true);
+
+      setTimeout(() => {
+        navigate(`/dashboard/master/campaign/${createdCampaign.id}`);
+      }, 900);
+    } catch {
+      setError("Não foi possível criar a campanha.");
+    } finally {
+      setIsLoading(false);
+    }
   }
 
   const summary = [
@@ -232,6 +343,12 @@ export default function CreateCampaignPage() {
                     </div>
                   ))}
                 </div>
+
+                {error && (
+                  <div className="rounded-xl border border-rose-500/30 bg-rose-500/10 p-4 text-sm text-rose-200">
+                    {error}
+                  </div>
+                )}
 
                 {saved && (
                   <div className="rounded-xl border border-emerald-500/30 bg-emerald-500/10 p-4 text-sm text-emerald-200">

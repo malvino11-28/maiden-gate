@@ -8,6 +8,7 @@ import {
   Skull,
   Users,
   Zap,
+  ImageIcon,
 } from "lucide-react";
 
 import { useState } from "react";
@@ -19,6 +20,36 @@ type Props = {
   elements: CampaignElements;
   onAdd: (type: ElementFormKey) => void;
 };
+
+function getImageSrc(image?: string | null) {
+  if (!image) return "";
+
+  if (image.startsWith("http") || image.startsWith("/")) {
+    return image;
+  }
+
+  return `http://127.0.0.1:8000/storage/${image}`;
+}
+
+function ElementImage({ image, alt }: { image?: string | null; alt: string }) {
+  const imageSrc = getImageSrc(image);
+
+  if (!imageSrc) {
+    return (
+      <div className="flex h-24 w-24 flex-shrink-0 items-center justify-center rounded-lg border border-amber-900/20 bg-slate-950/50 text-amber-100/20">
+        <ImageIcon className="h-6 w-6" />
+      </div>
+    );
+  }
+
+  return (
+    <img
+      src={imageSrc}
+      alt={alt}
+      className="h-24 w-24 flex-shrink-0 rounded-lg object-cover"
+    />
+  );
+}
 
 export default function ElementsSection({ elements, onAdd }: Props) {
   const [openGroup, setOpenGroup] = useState<string | null>("localizacoes");
@@ -34,15 +65,19 @@ export default function ElementsSection({ elements, onAdd }: Props) {
       render: (item: CampaignElements["localizacoes"][number]) => (
         <div
           key={item.nome}
-          className="rounded-xl border border-amber-900/20 bg-slate-900/60 px-4 py-3"
+          className="flex gap-4 rounded-xl border border-amber-900/20 bg-slate-900/60 px-4 py-3"
         >
-          <p className="text-sm font-medium text-amber-100">{item.nome}</p>
-          <p className="mt-0.5 text-xs text-amber-100/40">
-            {item.tipo} · {item.regiao}
-          </p>
-          <p className="mt-2 text-xs leading-relaxed text-amber-100/55">
-            {item.descricao}
-          </p>
+          <ElementImage image={item.imagem} alt={item.nome} />
+
+          <div className="min-w-0">
+            <p className="text-sm font-medium text-amber-100">{item.nome}</p>
+            <p className="mt-0.5 text-xs text-amber-100/40">
+              {item.tipo} · {item.regiao}
+            </p>
+            <p className="mt-2 text-xs leading-relaxed text-amber-100/55">
+              {item.descricao}
+            </p>
+          </div>
         </div>
       ),
     },
@@ -56,24 +91,32 @@ export default function ElementsSection({ elements, onAdd }: Props) {
       render: (item: CampaignElements["npcs"][number]) => (
         <div
           key={item.nome}
-          className="rounded-xl border border-amber-900/20 bg-slate-900/60 px-4 py-3"
+          className="flex gap-4 rounded-xl border border-amber-900/20 bg-slate-900/60 px-4 py-3"
         >
-          <p className="text-sm font-medium text-amber-100">{item.nome}</p>
-          <p className="mt-0.5 text-xs text-amber-100/40">
-            {item.raca} · {item.ocupacao}
-          </p>
-          <p className="mt-2 text-xs text-amber-100/55">{item.personalidade}</p>
+          <ElementImage image={item.imagem ?? item.image} alt={item.nome} />
 
-          {item.segredo && (
-            <div className="mt-2 rounded-lg border border-rose-900/25 bg-rose-900/15 px-3 py-2">
-              <p className="flex items-center gap-1.5 text-xs text-rose-300/70">
-                <Zap className="h-3 w-3" />
-                Segredo visível apenas ao Mestre
-              </p>
+          <div className="min-w-0 flex-1">
+            <p className="text-sm font-medium text-amber-100">{item.nome}</p>
+            <p className="mt-0.5 text-xs text-amber-100/40">
+              {item.raca} · {item.ocupacao}
+            </p>
+            <p className="mt-2 text-xs text-amber-100/55">
+              {item.personalidade}
+            </p>
 
-              <p className="mt-0.5 text-xs text-amber-100/50">{item.segredo}</p>
-            </div>
-          )}
+            {item.segredo && (
+              <div className="mt-2 rounded-lg border border-rose-900/25 bg-rose-900/15 px-3 py-2">
+                <p className="flex items-center gap-1.5 text-xs text-rose-300/70">
+                  <Zap className="h-3 w-3" />
+                  Segredo visível apenas ao Mestre
+                </p>
+
+                <p className="mt-0.5 text-xs text-amber-100/50">
+                  {item.segredo}
+                </p>
+              </div>
+            )}
+          </div>
         </div>
       ),
     },
@@ -87,16 +130,20 @@ export default function ElementsSection({ elements, onAdd }: Props) {
       render: (item: CampaignElements["monstros"][number]) => (
         <div
           key={item.nome}
-          className="rounded-xl border border-amber-900/20 bg-slate-900/60 px-4 py-3"
+          className="flex gap-4 rounded-xl border border-amber-900/20 bg-slate-900/60 px-4 py-3"
         >
-          <p className="text-sm font-medium text-amber-100">{item.nome}</p>
-          <p className="mt-0.5 text-xs text-amber-100/40">
-            {item.tipo} · Ameaça {item.ameaca}
-          </p>
-          <p className="mt-1 text-xs text-amber-100/55">{item.habilidades}</p>
-          <p className="mt-1 text-xs leading-relaxed text-amber-100/45">
-            {item.descricao}
-          </p>
+          <ElementImage image={item.imagem ?? item.image} alt={item.nome} />
+
+          <div className="min-w-0">
+            <p className="text-sm font-medium text-amber-100">{item.nome}</p>
+            <p className="mt-0.5 text-xs text-amber-100/40">
+              {item.tipo} · Ameaça {item.ameaca}
+            </p>
+            <p className="mt-1 text-xs text-amber-100/55">{item.habilidades}</p>
+            <p className="mt-1 text-xs leading-relaxed text-amber-100/45">
+              {item.descricao}
+            </p>
+          </div>
         </div>
       ),
     },

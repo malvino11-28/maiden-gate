@@ -43,6 +43,11 @@ export default function NpcModal({ isOpen, onClose }: NpcModalProps) {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
+  const [race, setRace] = useState("");
+  const [occupation, setOccupation] = useState("");
+  const [personality, setPersonality] = useState("");
+  const [secret, setSecret] = useState("");
+
   const handleSubmit = async () => {
     if (!campaign || !name || !description) {
       setError("Preencha todos os campos obrigatórios.");
@@ -50,26 +55,46 @@ export default function NpcModal({ isOpen, onClose }: NpcModalProps) {
     }
 
     try {
-      setIsLoading(false);
+      setIsLoading(true);
       setError(null);
 
       await createNpc(Number(campaign), {
         image,
         name,
         brand: brand || null,
+        race,
+        occupation,
+        personality,
+        secret,
         description,
         skills,
         status,
       });
 
+      setCampaign("");
       setImage(null);
       setName("");
+      setBrand("");
+      setRace("");
+      setOccupation("");
+      setPersonality("");
+      setSecret("");
       setDescription("");
       setSkills([]);
+      setStatus({
+        level: 1,
+        hp: 100,
+        mana: 50,
+        atk: 10,
+        def: 10,
+        speed: 10,
+      });
+
+      onClose();
     } catch {
-      setError("Não foi possível criar o NPC");
+      setError("Não foi possível criar o NPC.");
     } finally {
-      setIsLoading(true);
+      setIsLoading(false);
     }
   };
 
@@ -119,6 +144,33 @@ export default function NpcModal({ isOpen, onClose }: NpcModalProps) {
               <option value="Respiração">Respiração</option>
               <option value="Flor">Flor</option>
             </select>
+          </FormField>
+
+          <FormField label="Raça / Espécie">
+            <Input value={race} onChange={(e) => setRace(e.target.value)} />
+          </FormField>
+
+          <FormField label="Ocupação">
+            <Input
+              value={occupation}
+              onChange={(e) => setOccupation(e.target.value)}
+            />
+          </FormField>
+
+          <FormField label="Personalidade">
+            <TextArea
+              rows={3}
+              value={personality}
+              onChange={(e) => setPersonality(e.target.value)}
+            />
+          </FormField>
+
+          <FormField label="Segredo">
+            <TextArea
+              rows={3}
+              value={secret}
+              onChange={(e) => setSecret(e.target.value)}
+            />
           </FormField>
 
           <FormField label="Descrição" required>

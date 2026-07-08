@@ -32,6 +32,8 @@ export type StatusData = {
 export type CreateMonsterData = {
   image: File | null;
   name: string;
+  threat?: string | null;
+  type?: string | null;
   description: string;
   skills: string[];
   status: StatusData;
@@ -40,7 +42,11 @@ export type CreateMonsterData = {
 export type CreateNpcData = {
   image: File | null;
   name: string;
+  race?: string | null;
   brand?: string | null;
+  occupation?: string | null;
+  personality?: string | null;
+  secret?: string | null;
   description: string;
   skills: string[];
   status: StatusData;
@@ -77,6 +83,9 @@ export async function createMonster(
   formData.append("name", data.name);
   formData.append("description", data.description);
 
+  formData.append("type", data.type ?? "");
+  formData.append("threat", data.threat ?? "");
+
   data.skills.forEach((skill) => {
     formData.append("skills[]", skill);
   });
@@ -102,6 +111,11 @@ export async function createNpc(campaignId: number, data: CreateNpcData) {
 
   formData.append("name", data.name);
   formData.append("description", data.description);
+
+  formData.append("race", data.race ?? "");
+  formData.append("occupation", data.occupation ?? "");
+  formData.append("personality", data.personality ?? "");
+  formData.append("secret", data.secret ?? "");
 
   if (data.brand) {
     formData.append("brand", data.brand);

@@ -74,6 +74,10 @@ class CampaignController extends Controller
             'events.*.chronology' => 'nullable|string|max:255',
             'events.*.date' => 'nullable|string|max:255',
             'events.*.description' => 'nullable|string',
+
+            'image' => 'nullable',
+            'npcs.*.image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
+            'monsters.*.image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
         ]);
 
         $campaign = DB::transaction(function () use ($data) {
@@ -108,6 +112,9 @@ class CampaignController extends Controller
                     'description' => $npc['description'] ?? null,
                     'skills' => $npc['skills'] ?? null,
                     'stats' => $npc['stats'] ?? null,
+                    'image' => isset($npc['image'])
+                    ? $npc['image']->store('npcs', 'public')
+                    : null,
                 ]);
             }
 
@@ -121,6 +128,9 @@ class CampaignController extends Controller
                         ? $monster['skills']
                         : ['summary' => $monster['skills'] ?? null],
                     'stats' => $monster['stats'] ?? null,
+                    'image' => isset($monster['image'])
+                    ? $monster['image']->store('bestiary', 'public')
+                    : null,
                 ]);
             }
 
@@ -173,14 +183,19 @@ class CampaignController extends Controller
      */
     public function update(Request $request, Campaign $campaign)
     {
+
         $data = $request->validate([
             'name' => 'sometimes|required|string|max:255',
             'description' => 'nullable|string',
-            'image' => 'nullable|string|max:255',
+            'image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
             'recommended_level' => 'sometimes|required|in:Iniciante,Intermediário,Avançado',
             'players' => 'nullable|string|max:255',
             'status' => 'sometimes|required|in:ativa,pausada,encerrada',
         ]);
+
+        if ($request->hasFile('image')) {
+            $data['image'] = $request->file('image')->store('campaigns', 'public');
+        }
 
         $campaign->update($data);
 

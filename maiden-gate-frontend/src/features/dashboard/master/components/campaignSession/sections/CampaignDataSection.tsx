@@ -3,15 +3,18 @@ import { CheckCircle2, Edit3, ImageIcon, Trash2, Users, X } from "lucide-react";
 
 import type { MasterCampaign } from "../../../types/masterCampaign";
 
+import ImageInput from "../../forms/ImageField";
+
 type Props = {
   campaign: MasterCampaign;
-  onEdit: () => void;
-  onDelete: () => void;
+  onEdit: (data: CampaignDataForm) => Promise<void>;
+  onDelete: () => Promise<void>;
 };
 
 type CampaignDataForm = {
   nome: string;
   imagem: string;
+  imageFile: File | null;
   descricao: string;
   nivelRecomendado: string;
   jogadores: string;
@@ -27,17 +30,31 @@ export default function CampaignDataSection({
   const [data, setData] = useState<CampaignDataForm>({
     nome: campaign.nome,
     imagem: campaign.imagem ?? "",
+    imageFile: null,
     descricao: campaign.descricao ?? "",
     nivelRecomendado: campaign.nivelRecomendado ?? "",
     jogadores: campaign.jogadores ?? "",
   });
 
+  function getImageSrc(image?: string | null) {
+    if (!image) return "";
+
+    if (image.startsWith("http") || image.startsWith("/")) {
+      return image;
+    }
+
+    return `http://127.0.0.1:8000/storage/${image}`;
+  }
+
   const [form, setForm] = useState<CampaignDataForm>(data);
+
+  const [isSaving, setIsSaving] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   function handleStartEdit() {
     setForm(data);
     setIsEditing(true);
-    onEdit();
   }
 
   function handleCancelEdit() {
@@ -45,9 +62,37 @@ export default function CampaignDataSection({
     setIsEditing(false);
   }
 
-  function handleSaveEdit() {
-    setData(form);
-    setIsEditing(false);
+  async function handleSaveEdit() {
+    try {
+      setIsSaving(true);
+      setError(null);
+
+      await onEdit(form);
+
+      setData(form);
+      setIsEditing(false);
+    } catch {
+      setError("Não foi possível salvar as alterações.");
+    } finally {
+      setIsSaving(false);
+      setData({
+        ...form,
+        imageFile: null,
+      });
+    }
+  }
+
+  async function handleDelete() {
+    try {
+      setIsDeleting(true);
+      setError(null);
+
+      await onDelete();
+    } catch {
+      setError("Não foi possível excluir a campanha.");
+    } finally {
+      setIsDeleting(false);
+    }
   }
 
   function updateFormField<K extends keyof CampaignDataForm>(
@@ -61,13 +106,28 @@ export default function CampaignDataSection({
   }
 
   const visibleData = isEditing ? form : data;
+  const visibleImage = getImageSrc(visibleData.imagem);
 
   return (
     <section className="overflow-hidden rounded-2xl border border-amber-900/25 bg-slate-900/60">
       <div className="relative h-64 border-b border-amber-900/25 bg-slate-950">
-        {visibleData.imagem ? (
+        {isEditing ? (
+          <div className="flex h-full items-center justify-center p-5">
+            <div className="w-full max-w-xl">
+              <ImageInput
+                value={visibleImage}
+                onChange={(file) =>
+                  setForm((previous) => ({
+                    ...previous,
+                    imageFile: file,
+                  }))
+                }
+              />
+            </div>
+          </div>
+        ) : visibleImage ? (
           <img
-            src={visibleData.imagem}
+            src={visibleImage}
             alt={visibleData.nome}
             className="h-full w-full object-cover"
           />
@@ -78,7 +138,9 @@ export default function CampaignDataSection({
           </div>
         )}
 
-        <div className="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-950/20 to-transparent" />
+        {!isEditing && (
+          <div className="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-950/20 to-transparent" />
+        )}
 
         <div className="absolute bottom-5 left-5 right-5">
           <span className="mb-3 inline-flex rounded-full border border-amber-500/25 bg-amber-500/10 px-3 py-1 text-xs font-medium text-amber-300">
@@ -218,16 +280,19 @@ export default function CampaignDataSection({
           </>
         )}
 
+        {error && <p className="text-sm text-rose-400">{error}</p>}
+
         <div className="flex flex-col gap-3 border-t border-amber-900/20 pt-6 sm:flex-row sm:justify-end">
           {isEditing ? (
             <>
               <button
                 type="button"
                 onClick={handleSaveEdit}
-                className="flex items-center justify-center gap-2 rounded-xl border border-emerald-500/30 bg-emerald-500/10 px-5 py-3 text-sm font-semibold text-emerald-300 transition-all hover:border-emerald-400/50 hover:bg-emerald-500/20 hover:text-emerald-200"
+                disabled={isSaving}
+                className="flex items-center justify-center gap-2 rounded-xl border border-emerald-500/30 bg-emerald-500/10 px-5 py-3 text-sm font-semibold text-emerald-300 transition-all hover:border-emerald-400/50 hover:bg-emerald-500/20 hover:text-emerald-200 disabled:cursor-not-allowed disabled:opacity-60"
               >
                 <CheckCircle2 className="h-4 w-4" />
-                Salvar
+                {isSaving ? "Salvando..." : "Salvar"}
               </button>
 
               <button
@@ -252,11 +317,12 @@ export default function CampaignDataSection({
 
               <button
                 type="button"
-                onClick={onDelete}
-                className="flex items-center justify-center gap-2 rounded-xl border border-rose-500/30 bg-rose-500/10 px-5 py-3 text-sm font-semibold text-rose-300 transition-all hover:border-rose-400/50 hover:bg-rose-500/20 hover:text-rose-200"
+                onClick={handleDelete}
+                disabled={isDeleting}
+                className="flex items-center justify-center gap-2 rounded-xl border border-rose-500/30 bg-rose-500/10 px-5 py-3 text-sm font-semibold text-rose-300 transition-all hover:border-rose-400/50 hover:bg-rose-500/20 hover:text-rose-200 disabled:cursor-not-allowed disabled:opacity-60"
               >
                 <Trash2 className="h-4 w-4" />
-                Excluir Campanha
+                {isDeleting ? "Excluindo..." : "Excluir Campanha"}
               </button>
             </>
           )}

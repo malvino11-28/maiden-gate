@@ -35,6 +35,8 @@ export interface CampaignMember {
 }
 
 export interface CampaignLocation {
+  id?: string | number;
+  imagem?: string | null;
   nome: string;
   tipo: string;
   regiao: string;
@@ -42,6 +44,8 @@ export interface CampaignLocation {
 }
 
 export interface CampaignNpc {
+  id?: string | number;
+  imagem?: string | null;
   nome: string;
   raca: string;
   ocupacao: string;
@@ -50,6 +54,8 @@ export interface CampaignNpc {
 }
 
 export interface CampaignMonster {
+  id?: string | number;
+  imagem?: string | null;
   nome: string;
   tipo: string;
   ameaca: string;
@@ -79,6 +85,8 @@ export interface CampaignElements {
 }
 
 export interface CurrentLocation {
+  id?: string | null;
+  imagem?: string | null;
   nome: string;
   tipo: string;
   descricao: string;

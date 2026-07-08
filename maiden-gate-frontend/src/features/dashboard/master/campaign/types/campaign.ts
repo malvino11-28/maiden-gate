@@ -7,18 +7,35 @@ export interface CampaignLocation {
   description: string;
 }
 
+type StatusData = {
+  level: number;
+  hp: number;
+  mana: number;
+  atk: number;
+  def: number;
+  speed: number;
+};
+
 export interface CampaignNpc {
+  image: File | null;
   name: string;
+  brand: string;
+  race: string;
   occupation: string;
   personality: string;
   secret: string;
+  description: string;
+  skills: string[];
+  stats: StatusData;
 }
 
 export interface CampaignMonster {
+  image: File | null;
   name: string;
   type: string;
   threat: string;
-  skills: string;
+  skills: string[];
+  stats: StatusData;
   description: string;
 }
 

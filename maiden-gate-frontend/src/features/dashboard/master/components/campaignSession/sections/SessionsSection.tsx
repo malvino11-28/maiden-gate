@@ -1,4 +1,8 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import {
+  createCampaignSession,
+  updateCampaignSessionStatus,
+} from "../../../services/campaignPageService";
 import type { FormEvent } from "react";
 import { CalendarDays, CheckCircle2, Clock, XCircle } from "lucide-react";
 
@@ -8,6 +12,7 @@ import type {
 } from "../../../types/masterCampaign";
 
 type Props = {
+  campaignId: number;
   initialSessions?: CampaignSessionNotice[];
 };
 
@@ -23,7 +28,10 @@ const statusClass: Record<CampaignSessionStatus, string> = {
   cancelado: "border-rose-500/30 bg-rose-500/10 text-rose-300",
 };
 
-export default function SessionsSection({ initialSessions = [] }: Props) {
+export default function SessionsSection({
+  campaignId,
+  initialSessions = [],
+}: Props) {
   const [sessions, setSessions] =
     useState<CampaignSessionNotice[]>(initialSessions);
 
@@ -34,42 +42,87 @@ export default function SessionsSection({ initialSessions = [] }: Props) {
     description: "",
   });
 
-  function handleSubmit(event: FormEvent) {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [updatingSessionId, setUpdatingSessionId] = useState<string | null>(
+    null,
+  );
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    setSessions(initialSessions);
+  }, [initialSessions]);
+
+  async function handleSubmit(event: FormEvent) {
     event.preventDefault();
 
     if (!form.title.trim() || !form.date.trim() || !form.time.trim()) {
       return;
     }
 
-    const newSession: CampaignSessionNotice = {
-      id: crypto.randomUUID(),
-      title: form.title,
-      date: form.date,
-      time: form.time,
-      description: form.description,
-      status: "em_espera",
-    };
+    try {
+      setIsSubmitting(true);
+      setError(null);
 
-    setSessions((previous) => [newSession, ...previous]);
+      const createdSession = await createCampaignSession(campaignId, {
+        title: form.title,
+        date: form.date,
+        time: form.time,
+        description: form.description || null,
+        status: "em_espera",
+      });
 
-    setForm({
-      title: "",
-      date: "",
-      time: "",
-      description: "",
-    });
+      setSessions((previous) => [
+        {
+          id: String(createdSession.id),
+          title: createdSession.title,
+          date: createdSession.date,
+          time: createdSession.time,
+          description: createdSession.description ?? "",
+          status: createdSession.status,
+        },
+        ...previous,
+      ]);
+
+      setForm({
+        title: "",
+        date: "",
+        time: "",
+        description: "",
+      });
+    } catch {
+      setError("Não foi possível criar a sessão.");
+    } finally {
+      setIsSubmitting(false);
+    }
   }
 
-  function updateStatus(id: string, status: CampaignSessionStatus) {
-    setSessions((previous) =>
-      previous.map((session) =>
-        session.id === id ? { ...session, status } : session,
-      ),
-    );
+  async function updateStatus(id: string, status: CampaignSessionStatus) {
+    try {
+      setUpdatingSessionId(id);
+      setError(null);
+
+      const updatedSession = await updateCampaignSessionStatus(id, status);
+
+      setSessions((previous) =>
+        previous.map((session) =>
+          session.id === id
+            ? {
+                ...session,
+                status: updatedSession.status,
+              }
+            : session,
+        ),
+      );
+    } catch {
+      setError("Não foi possível atualizar a sessão.");
+    } finally {
+      setUpdatingSessionId(null);
+    }
   }
 
   return (
     <section className="rounded-2xl border border-amber-900/25 bg-slate-900/60 p-6">
+      {error && <p className="mb-4 text-sm text-rose-400">{error}</p>}
       <div className="mb-6 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <h2 className="flex items-center gap-2 text-xl font-semibold text-amber-100">
@@ -165,9 +218,10 @@ export default function SessionsSection({ initialSessions = [] }: Props) {
         <div className="mt-4 flex justify-end">
           <button
             type="submit"
-            className="rounded-xl bg-gradient-to-r from-amber-500 to-rose-600 px-5 py-2.5 text-sm font-semibold text-white shadow-lg shadow-amber-900/20 transition-all hover:scale-[1.02] hover:from-amber-400 hover:to-rose-500 active:scale-95"
+            disabled={isSubmitting}
+            className="rounded-xl bg-gradient-to-r from-amber-500 to-rose-600 px-5 py-2.5 text-sm font-semibold text-white shadow-lg shadow-amber-900/20 transition-all hover:scale-[1.02] hover:from-amber-400 hover:to-rose-500 active:scale-95 disabled:cursor-not-allowed disabled:opacity-60"
           >
-            Criar sessão
+            {isSubmitting ? "Criando..." : "Criar sessão"}
           </button>
         </div>
       </form>
@@ -214,16 +268,18 @@ export default function SessionsSection({ initialSessions = [] }: Props) {
               <div className="flex flex-wrap gap-2">
                 <button
                   type="button"
+                  disabled={updatingSessionId === session.id}
                   onClick={() => updateStatus(session.id, "em_espera")}
-                  className="rounded-lg border border-amber-500/25 bg-amber-500/10 px-3 py-1.5 text-xs font-medium text-amber-300 transition hover:bg-amber-500/20"
+                  className="rounded-lg border border-amber-500/25 bg-amber-500/10 px-3 py-1.5 text-xs font-medium text-amber-300 transition hover:bg-amber-500/20 disabled:cursor-not-allowed disabled:opacity-60"
                 >
                   Em espera
                 </button>
 
                 <button
                   type="button"
+                  disabled={updatingSessionId === session.id}
                   onClick={() => updateStatus(session.id, "concluido")}
-                  className="flex items-center gap-1.5 rounded-lg border border-emerald-500/25 bg-emerald-500/10 px-3 py-1.5 text-xs font-medium text-emerald-300 transition hover:bg-emerald-500/20"
+                  className="flex items-center gap-1.5 rounded-lg border border-emerald-500/25 bg-emerald-500/10 px-3 py-1.5 text-xs font-medium text-emerald-300 transition hover:bg-emerald-500/20 disabled:cursor-not-allowed disabled:opacity-60"
                 >
                   <CheckCircle2 className="h-3.5 w-3.5" />
                   Concluído
@@ -231,8 +287,9 @@ export default function SessionsSection({ initialSessions = [] }: Props) {
 
                 <button
                   type="button"
+                  disabled={updatingSessionId === session.id}
                   onClick={() => updateStatus(session.id, "cancelado")}
-                  className="flex items-center gap-1.5 rounded-lg border border-rose-500/25 bg-rose-500/10 px-3 py-1.5 text-xs font-medium text-rose-300 transition hover:bg-rose-500/20"
+                  className="flex items-center gap-1.5 rounded-lg border border-rose-500/25 bg-rose-500/10 px-3 py-1.5 text-xs font-medium text-rose-300 transition hover:bg-rose-500/20 disabled:cursor-not-allowed disabled:opacity-60"
                 >
                   <XCircle className="h-3.5 w-3.5" />
                   Cancelado

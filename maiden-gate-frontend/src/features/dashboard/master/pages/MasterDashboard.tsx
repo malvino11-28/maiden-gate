@@ -201,7 +201,7 @@ export default function MasterDashboard() {
                   masterCampaigns.map((campaign) => (
                     <CampaignCard
                       key={campaign.id}
-                      title={campaign.title}
+                      title={campaign.name}
                       description={
                         campaign.description ?? "Sem descrição cadastrada."
                       }
