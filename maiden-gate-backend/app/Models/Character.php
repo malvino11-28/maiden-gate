@@ -16,6 +16,8 @@ class Character extends Model
         'origin',
         'lore',
         'image',
+        'icon_image',
+        'full_image',
 
         'level',
         'exp',
