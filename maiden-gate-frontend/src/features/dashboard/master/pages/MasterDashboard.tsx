@@ -93,12 +93,14 @@ export default function MasterDashboard() {
     // buscando campanhas
     if (!user) return;
 
+    const userId = user.id;
+
     async function loadCampaigns() {
       try {
         setIsLoading(true);
         setError(null);
 
-        const data = await getMasterCampaigns(user.id);
+        const data = await getMasterCampaigns(userId);
 
         setMasterCampaigns(data);
       } catch {

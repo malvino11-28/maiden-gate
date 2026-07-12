@@ -20,11 +20,13 @@ export default function CampaignSelect({
   useEffect(() => {
     if (!user) return;
 
+    const userId = user.id;
+
     async function loadCampaigns() {
       try {
         setIsLoading(true);
 
-        const data = await getMasterCampaigns(user.id);
+        const data = await getMasterCampaigns(userId);
 
         setCampaigns(data);
       } finally {

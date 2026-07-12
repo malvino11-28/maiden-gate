@@ -85,9 +85,12 @@ export default function CreateCampaignPage() {
     [currentIndex],
   );
 
-  function findMarkId(markName: string) {
+  function findMarkId(markName?: string | null) {
+    if (!markName) return "";
+
+    const normalizedMarkName = markName.trim().toLowerCase();
     const mark = marks.find(
-      (item) => item.name.toLowerCase() === markName.toLowerCase(),
+      (item) => item.name.trim().toLowerCase() === normalizedMarkName,
     );
 
     return mark ? String(mark.id) : "";
@@ -206,12 +209,12 @@ export default function CreateCampaignPage() {
         npcs: campaign.npcs.map((npc) => ({
           image: npc.image,
           name: npc.name,
-          marca_id: npc.marca_id || null,
-          race: npc.race || null,
-          occupation: npc.occupation || null,
-          personality: npc.personality || null,
-          secret: npc.secret || null,
-          description: npc.description || null,
+          marca_id: npc.marca_id || "",
+          race: npc.race || "",
+          occupation: npc.occupation || "",
+          personality: npc.personality || "",
+          secret: npc.secret || "",
+          description: npc.description || "",
           skills: npc.skills,
           stats: npc.stats,
         })),
@@ -219,9 +222,9 @@ export default function CreateCampaignPage() {
         monsters: campaign.monsters.map((monster) => ({
           image: monster.image,
           name: monster.name,
-          type: monster.type || null,
-          threat: monster.threat || null,
-          description: monster.description || null,
+          type: monster.type || "",
+          threat: monster.threat || "",
+          description: monster.description || "",
           skills: monster.skills,
           stats: monster.stats,
         })),
