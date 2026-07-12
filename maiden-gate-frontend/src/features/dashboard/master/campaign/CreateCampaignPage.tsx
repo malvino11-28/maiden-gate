@@ -76,7 +76,7 @@ export default function CreateCampaignPage() {
   const { campaign, updateField } = useCampaignForm();
 
   const { user } = useAuth();
-  const [isLoading, setIsLoading] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   const currentIndex = steps.indexOf(currentStep);
@@ -188,7 +188,7 @@ export default function CreateCampaignPage() {
     }
 
     try {
-      setIsLoading(true);
+      setIsSaving(true);
       setError(null);
 
       const createdCampaign = await createCampaign({
@@ -199,14 +199,14 @@ export default function CreateCampaignPage() {
         recommended_level: campaign.recommendedLevel,
         players: campaign.players || null,
         status: "ativa",
-        notes: campaign.note || null,
+        notes: campaign.notes ?? null,
 
         locations: campaign.locations,
 
-        npc: campaign.npcs.map((npc) => ({
+        npcs: campaign.npcs.map((npc) => ({
           image: npc.image,
           name: npc.name,
-          brand: npc.marca_id || null,
+          marca_id: npc.marca_id || null,
           race: npc.race || null,
           occupation: npc.occupation || null,
           personality: npc.personality || null,
@@ -237,7 +237,7 @@ export default function CreateCampaignPage() {
     } catch {
       setError("Não foi possível criar a campanha.");
     } finally {
-      setIsLoading(false);
+      setIsSaving(false);
     }
   }
 
@@ -385,6 +385,12 @@ export default function CreateCampaignPage() {
                 {error && (
                   <div className="rounded-xl border border-rose-500/30 bg-rose-500/10 p-4 text-sm text-rose-200">
                     {error}
+                  </div>
+                )}
+
+                {isSaving && (
+                  <div className="rounded-xl border border-amber-500/30 bg-amber-500/10 p-4 text-sm text-amber-200">
+                    Salvando campanha...
                   </div>
                 )}
 
