@@ -7,7 +7,7 @@ import PlayerCampaignTabs from "../components/campaignSession/PlayerCampaignTabs
 import PlayerDiceChat from "../components/campaignSession/PlayerDiceChat";
 
 import PlayerElementsSection from "../components/campaignSession/sections/PlayerElementsSection";
-import PlayerCharacterSection from "../components/campaignSession/sections/PlayerCharacterSection";
+import PlayerCharacterSection from "../components/campaignSession/sections/PlayerCharacterSection (1)";
 import PlayerMembersSection from "../components/campaignSession/sections/PlayerMembersSection";
 import PlayerLocationSection from "../components/campaignSession/sections/PlayerLocationSection";
 import PlayerInventorySection from "../components/campaignSession/sections/PlayerInventorySection";
@@ -66,7 +66,10 @@ export default function PlayerCampaignPage() {
               campaignId={id ?? "1"}
               characterName={characterName}
               playerName={playerName}
-              emoji={campaign.personagem.marcaEmoji ?? campaign.personagem.nome.charAt(0)}
+              emoji={
+                campaign.personagem.marcaEmoji ??
+                campaign.personagem.nome.charAt(0)
+              }
               currentLocation={campaign.localizacaoAtual.nome}
               skills={campaign.personagem.habilidades}
             />

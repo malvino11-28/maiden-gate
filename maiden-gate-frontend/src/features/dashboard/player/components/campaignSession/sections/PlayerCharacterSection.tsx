@@ -49,6 +49,16 @@ export default function PlayerCharacterSection({ character }: Props) {
           </div>
         </div>
 
+        {character.fullImage && (
+          <div className="border-b border-amber-900/15 bg-slate-950/35 p-5">
+            <img
+              src={getImageSrc(character.fullImage)}
+              alt={`${character.nome} ${character.sobrenome ?? ""}`.trim()}
+              className="mx-auto max-h-[420px] rounded-2xl object-contain"
+            />
+          </div>
+        )}
+
         <div className="grid gap-4 p-5 md:grid-cols-3">
           <div className="rounded-xl border border-rose-900/25 bg-slate-950/40 p-4">
             <p className="mb-2 flex items-center gap-1.5 text-xs text-amber-100/45">
