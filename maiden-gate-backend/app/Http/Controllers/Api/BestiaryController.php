@@ -49,6 +49,8 @@ class BestiaryController extends Controller
             'skills' => $data['skills'] ?? null,
             'stats' => $data['stats'] ?? null,
         ]);
+
+        return response()->json($monster, 201);
     }
 
     /**

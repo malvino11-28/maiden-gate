@@ -85,8 +85,10 @@ public function store(Request $request, Character $character)
 
         $inventory->update($data);
 
-        if ($inventory->quantity == 0) { 
-            $inventory->delete(); 
+        if ($inventory->quantity == 0) {
+            $inventory->delete();
+
+            return response()->json(['message' => 'item removido do inventário']);
         }
 
         return response()->json($inventory->fresh()->load('item'));

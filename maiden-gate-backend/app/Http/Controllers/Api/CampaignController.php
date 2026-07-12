@@ -43,6 +43,7 @@ class CampaignController extends Controller
             'locations.*.name' => 'required|string|max:255',
             'locations.*.type' => 'nullable|string|max:255',
             'locations.*.region' => 'nullable|string|max:255',
+            'locations.*.image' => 'nullable',
             'locations.*.description' => 'nullable|string',
 
             'npcs' => 'sometimes|array',
@@ -76,11 +77,11 @@ class CampaignController extends Controller
             'events.*.description' => 'nullable|string',
 
             'image' => 'nullable',
-            'npcs.*.image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
-            'monsters.*.image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
+            'npcs.*.image' => 'nullable',
+            'monsters.*.image' => 'nullable',
         ]);
 
-        $campaign = DB::transaction(function () use ($data) {
+        $campaign = DB::transaction(function () use ($data, $request) {
             $campaign = Campaign::create([
                 'master_id' => $data['master_id'],
                 'name' => $data['name'],
@@ -92,8 +93,15 @@ class CampaignController extends Controller
                 'notes' => $data['notes'] ?? null,
             ]);
 
-            foreach ($data['locations'] ?? [] as $location) {
+            foreach ($data['locations'] ?? [] as $index => $location) {
+                $image = $location['image'] ?? null;
+
+                if ($request->hasFile("locations.$index.image")) {
+                    $image = $request->file("locations.$index.image")->store('locations', 'public');
+                }
+
                 $campaign->locations()->create([
+                    'image' => $image,
                     'name' => $location['name'],
                     'type' => $location['type'] ?? '',
                     'region' => $location['region'] ?? null,
@@ -101,7 +109,13 @@ class CampaignController extends Controller
                 ]);
             }
 
-            foreach ($data['npcs'] ?? [] as $npc) {
+            foreach ($data['npcs'] ?? [] as $index => $npc) {
+                $image = $npc['image'] ?? null;
+
+                if ($request->hasFile("npcs.$index.image")) {
+                    $image = $request->file("npcs.$index.image")->store('npcs', 'public');
+                }
+
                 $campaign->npcs()->create([
                     'marca_id' => $npc['marca_id'] ?? null,
                     'name' => $npc['name'],
@@ -112,13 +126,17 @@ class CampaignController extends Controller
                     'description' => $npc['description'] ?? null,
                     'skills' => $npc['skills'] ?? null,
                     'stats' => $npc['stats'] ?? null,
-                    'image' => isset($npc['image'])
-                    ? $npc['image']->store('npcs', 'public')
-                    : null,
+                    'image' => $image,
                 ]);
             }
 
-            foreach ($data['monsters'] ?? [] as $monster) {
+            foreach ($data['monsters'] ?? [] as $index => $monster) {
+                $image = $monster['image'] ?? null;
+
+                if ($request->hasFile("monsters.$index.image")) {
+                    $image = $request->file("monsters.$index.image")->store('bestiary', 'public');
+                }
+
                 $campaign->bestiary()->create([
                     'name' => $monster['name'],
                     'type' => $monster['type'] ?? null,
@@ -128,9 +146,7 @@ class CampaignController extends Controller
                         ? $monster['skills']
                         : ['summary' => $monster['skills'] ?? null],
                     'stats' => $monster['stats'] ?? null,
-                    'image' => isset($monster['image'])
-                    ? $monster['image']->store('bestiary', 'public')
-                    : null,
+                    'image' => $image,
                 ]);
             }
 
@@ -249,6 +265,7 @@ class CampaignController extends Controller
             $userId = (int) $request->user_id;
 
             $query
+                ->where('master_id', '!=', $userId)
                 ->whereDoesntHave('campaignUsers', function ($query) use ($userId) {
                     $query
                         ->where('user_id', $userId)
@@ -282,27 +299,32 @@ class CampaignController extends Controller
     {
         $campaign->load([
             'master',
-            'users',
+            'acceptedUsers',
             'locations',
-            'npcs',
+            'npcs.marca',
             'items',
             'bestiary',
             'loreEvents',
-            'sessions',
+            'sessions' => function ($query) {
+                $query->orderBy('date')->orderBy('time');
+            },
             'currentLocation',
         ]);
 
-        if ($request->filled('character_id')) {
-            $campaign->load([
-                'characters' => function ($query) use ($request) {
-                    $query
-                        ->where('id', $request->character_id)
-                        ->with(['marca', 'skills', 'inventory.item']);
-                },
-            ]);
-        } else {
-            $campaign->load(['characters.marca']);
-        }
+        $campaign->load([
+            'characters' => function ($query) use ($request) {
+                if ($request->filled('character_id')) {
+                    $query->where('id', $request->character_id);
+                }
+
+                $query->with([
+                    'user',
+                    'marca',
+                    'skills',
+                    'inventory.item',
+                ]);
+            },
+        ]);
 
         return response()->json($campaign);
     }
