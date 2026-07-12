@@ -25,7 +25,9 @@ import {
   extraPoints,
   getMinimumAttributesByMark,
 } from "../data/characterFormMock";
+
 import { playerCampaignData } from "../data/playerCampaignMock";
+
 import type {
   AttributeKey,
   CharacterMark,
@@ -70,12 +72,12 @@ export default function EditCharacterPage() {
   const minimumAttributes = getMinimumAttributesByMark(character.marca);
   const attributePointLimit = extraPoints + character.nivel * 3;
 
-  const [image, setImage] = useState<string | null>(null);
+  const [image, setImage] = useState<File | null>(null);
   const [saved, setSaved] = useState(false);
   const [showSkillTree, setShowSkillTree] = useState(false);
   const [form, setForm] = useState<CharacterForm>({
     nome: character.nome,
-    sobrenome: character.sobrenome,
+    sobrenome: character.sobrenome ?? "",
     origem: character.origem ?? "",
     historia: character.historia ?? "",
     marca: character.marca,
@@ -115,7 +117,7 @@ export default function EditCharacterPage() {
       return;
     }
 
-    if (equippedSkills.length >= 4) {
+    if (equippedSkills.length >= 6) {
       return;
     }
 
@@ -329,7 +331,7 @@ export default function EditCharacterPage() {
         >
           <div className="mb-4 flex items-center justify-between text-xs text-amber-100/40">
             <span>Habilidades equipadas</span>
-            <span>{equippedSkills.length} / 4</span>
+            <span>{equippedSkills.length} / 6</span>
           </div>
 
           <div className="grid gap-3 md:grid-cols-2">
