@@ -60,7 +60,7 @@ class Character extends Model
 
     public function skills()
     {
-        return $this->belongsToMany(Skills::class, 'character_skills')
+        return $this->belongsToMany(Skills::class, 'character_skills', 'character_id', 'skill_id')
             ->using(CharacterSkill::class)
             ->withPivot('unlocked', 'equipped')
             ->withTimestamps();

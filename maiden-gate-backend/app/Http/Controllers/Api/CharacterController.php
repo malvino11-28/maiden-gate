@@ -127,6 +127,9 @@ class CharacterController extends Controller
             'pre' => 'sometimes|integer|min:0',
             'hp_current' => 'sometimes|integer|min:0',
             'effect' => 'nullable|string',
+
+            'skills' => 'nullable|array|max:6',
+            'skills.*' => 'integer|exists:skills,id',
         ]);
 
         if ($request->hasFile('icon_image')) {
@@ -137,12 +140,27 @@ class CharacterController extends Controller
             $data['full_image'] = $request->file('full_image')->store('characters/full', 'public');
         }
 
+        if (!empty($data['full_image'])) {
+            $data['image'] = $data['full_image'];
+        }
+
+        $skillIds = collect($data['skills'] ?? [])
+            ->unique()
+            ->take(6)
+            ->values()
+            ->all();
+
+        unset($data['skills']);
+
+        $requestedHpCurrent = $data['hp_current'] ?? null;
         $wasFullHp = $character->hp_current == $character->hp_max;
 
         $character->update($data);
 
         $character->hp_max = (int) floor($character->res * 1.5);
-        if ($wasFullHp) {
+        if ($requestedHpCurrent !== null) {
+            $character->hp_current = min((int) $requestedHpCurrent, $character->hp_max);
+        } elseif ($wasFullHp) {
             $character->hp_current = $character->hp_max;
         }
 
@@ -150,6 +168,12 @@ class CharacterController extends Controller
         $character->pr_max = max(1, 1 + floor($character->des * 0.25) + floor($character->det * 0.1));
 
         $character->save();
+
+        $syncPayload = collect($skillIds)->mapWithKeys(function ($skillId) {
+            return [$skillId => ['unlocked' => true, 'equipped' => true]];
+        })->all();
+
+        $character->skills()->sync($syncPayload);
 
         return response()->json([
             'message' => 'personagem atualizado com sucesso',
@@ -170,7 +194,7 @@ class CharacterController extends Controller
     private function charactersForUser(User $user)
     {
         return $user->characters()
-            ->with(['campaign', 'marca', 'skills', 'inventory.item'])
+            ->with(['campaign', 'marca'])
             ->latest()
             ->get();
     }
