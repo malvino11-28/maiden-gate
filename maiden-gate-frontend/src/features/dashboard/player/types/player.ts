@@ -6,7 +6,7 @@ export type PlayerDashboardTab =
   | "campanhas-disponiveis"
   | "perfil";
 
-export type CampaignStatus = "ativa" | "encerrada";
+export type CampaignStatus = "ativa" | "pausada" | "encerrada";
 export type CharacterMark =
   | "Manifesto"
   | "Oculto"
@@ -177,6 +177,7 @@ export type PlayerCampaignSectionKey =
   | "batalha";
 
 export interface CharacterMarkOption {
+  id?: number;
   value: CharacterMark;
   emoji: string;
   gradiente: string;
@@ -184,6 +185,7 @@ export interface CharacterMarkOption {
   texto: string;
   ativo: string;
   descricao: string;
+  image?: string | null;
 }
 
 export interface AttributeDefinition {
