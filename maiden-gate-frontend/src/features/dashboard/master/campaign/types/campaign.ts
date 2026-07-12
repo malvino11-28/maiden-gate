@@ -59,6 +59,7 @@ export interface CampaignData {
   description: string;
   recommendedLevel: RecommendedLevel;
   players: string;
+  notes?: string;
   locations: CampaignLocation[];
   npcs: CampaignNpc[];
   monsters: CampaignMonster[];
