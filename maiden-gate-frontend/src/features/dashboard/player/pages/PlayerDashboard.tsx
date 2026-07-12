@@ -1,5 +1,5 @@
-import { useState, useEffect, useMemo } from "react";
-import { HeartPulse, Plus, ScrollText, Star, Users } from "lucide-react";
+import { useEffect, useMemo, useState } from "react";
+import { Globe, Plus, ScrollText, Star, Users } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 import Button from "../../../../shared/components/Button/Button";
@@ -13,53 +13,74 @@ import MyCampaignCard from "../components/dashboard/MyCampaignCard";
 import AvailableCampaignCard from "../components/dashboard/AvailableCampaignCard";
 import PlayerProfileCard from "../components/dashboard/PlayerProfileCard";
 
-import {
-  availableCampaigns,
-  myCampaigns,
-  playerName,
-} from "../data/playerDashboardMock";
-import type { PlayerDashboardTab } from "../types/player";
+import { playerName } from "../data/playerDashboardMock";
+import type {
+  AvailableCampaign,
+  PlayerCampaignSummary,
+  PlayerCharacterSummary,
+  PlayerDashboardTab,
+} from "../types/player";
 
 import { useAuth } from "../../../auth/hooks/useAuth";
-import { getPlayerCharacters } from "../../services/playerDashboardService";
-import type { PlayerCharacterSummary } from "../types/player";
+import {
+  getAvailableCampaigns,
+  getPlayerCampaigns,
+  getPlayerCharacters,
+  requestCampaignEntry,
+} from "../../services/playerDashboardService";
 
 export default function PlayerDashboard() {
   const [tab, setTab] = useState<PlayerDashboardTab>("personagens");
   const { user } = useAuth();
   const [characters, setCharacters] = useState<PlayerCharacterSummary[]>([]);
+  const [myCampaigns, setMyCampaigns] = useState<PlayerCampaignSummary[]>([]);
+  const [availableCampaigns, setAvailableCampaigns] = useState<AvailableCampaign[]>([]);
   const [isLoadingCharacters, setIsLoadingCharacters] = useState(false);
+  const [isLoadingCampaigns, setIsLoadingCampaigns] = useState(false);
   const [charactersError, setCharactersError] = useState<string | null>(null);
+  const [campaignsError, setCampaignsError] = useState<string | null>(null);
+  const [requestingCampaignId, setRequestingCampaignId] = useState<number | null>(null);
+  const [requestMessage, setRequestMessage] = useState<string | null>(null);
   const navigate = useNavigate();
 
   useEffect(() => {
     if (!user) return;
 
-    async function loadCharacters() {
+    const userId = user.id;
+
+    async function loadDashboardData() {
       try {
         setIsLoadingCharacters(true);
+        setIsLoadingCampaigns(true);
         setCharactersError(null);
+        setCampaignsError(null);
 
-        const data = await getPlayerCharacters(user.id);
-        setCharacters(data);
+        const [charactersData, myCampaignsData, availableCampaignsData] =
+          await Promise.all([
+            getPlayerCharacters(userId),
+            getPlayerCampaigns(userId),
+            getAvailableCampaigns(userId),
+          ]);
+
+        setCharacters(charactersData);
+        setMyCampaigns(myCampaignsData);
+        setAvailableCampaigns(availableCampaignsData);
       } catch {
         setCharactersError("Não foi possível carregar seus personagens.");
+        setCampaignsError("Não foi possível carregar suas campanhas.");
       } finally {
         setIsLoadingCharacters(false);
+        setIsLoadingCampaigns(false);
       }
     }
 
-    loadCharacters();
+    loadDashboardData();
   }, [user]);
 
   const playerStats = useMemo(() => {
-    const campaignNames = new Set(
-      characters
-        .map((character) => character.campanha)
-        .filter(
-          (campaignName) => campaignName && campaignName !== "Sem campanha",
-        ),
-    );
+    const activeCampaigns = myCampaigns.filter(
+      (campaign) => campaign.status === "ativa",
+    ).length;
 
     const averageLevel =
       characters.length > 0
@@ -71,17 +92,6 @@ export default function PlayerDashboard() {
           )
         : 0;
 
-    const averageHpPercent =
-      characters.length > 0
-        ? Math.round(
-            characters.reduce((total, character) => {
-              if (!character.hpMax) return total;
-
-              return total + (character.hp / character.hpMax) * 100;
-            }, 0) / characters.length,
-          )
-        : 0;
-
     return [
       {
         label: "Personagens",
@@ -89,22 +99,44 @@ export default function PlayerDashboard() {
         icon: Users,
       },
       {
-        label: "Campanhas",
-        value: campaignNames.size,
+        label: "Campanhas Ativas",
+        value: activeCampaigns,
         icon: ScrollText,
+      },
+      {
+        label: "Disponíveis",
+        value: availableCampaigns.length,
+        icon: Globe,
       },
       {
         label: "Nível Médio",
         value: averageLevel,
         icon: Star,
       },
-      {
-        label: "Vida Média",
-        value: `${averageHpPercent}%`,
-        icon: HeartPulse,
-      },
     ];
-  }, [characters]);
+  }, [availableCampaigns.length, characters, myCampaigns]);
+
+  async function handleRequestCampaign(campaignId: number) {
+    if (!user) return;
+
+    try {
+      setRequestingCampaignId(campaignId);
+      setRequestMessage(null);
+      await requestCampaignEntry(campaignId, user.id);
+
+      setAvailableCampaigns((currentCampaigns) =>
+        currentCampaigns.filter((campaign) => campaign.id !== campaignId),
+      );
+      setRequestMessage("Solicitação enviada ao mestre.");
+    } catch (error: any) {
+      setRequestMessage(
+        error?.response?.data?.message ??
+          "Não foi possível solicitar entrada nesta campanha.",
+      );
+    } finally {
+      setRequestingCampaignId(null);
+    }
+  }
 
   return (
     <main className="mx-auto w-full max-w-7xl px-4 pb-16 pt-8 sm:px-6 lg:px-8">
@@ -167,11 +199,27 @@ export default function PlayerDashboard() {
             Minhas Campanhas
           </h2>
 
-          <div className="space-y-3">
-            {myCampaigns.map((campaign) => (
-              <MyCampaignCard key={campaign.id} campaign={campaign} />
-            ))}
-          </div>
+          {isLoadingCampaigns && (
+            <p className="text-sm text-amber-100/45">Carregando campanhas...</p>
+          )}
+
+          {campaignsError && (
+            <p className="text-sm text-rose-300">{campaignsError}</p>
+          )}
+
+          {!isLoadingCampaigns && !campaignsError && myCampaigns.length === 0 && (
+            <p className="rounded-xl border border-amber-900/20 bg-slate-900/40 px-4 py-5 text-sm text-amber-100/45">
+              Você ainda não participa de nenhuma campanha.
+            </p>
+          )}
+
+          {!isLoadingCampaigns && !campaignsError && myCampaigns.length > 0 && (
+            <div className="space-y-3">
+              {myCampaigns.map((campaign) => (
+                <MyCampaignCard key={campaign.id} campaign={campaign} />
+              ))}
+            </div>
+          )}
         </section>
       )}
 
@@ -184,17 +232,52 @@ export default function PlayerDashboard() {
             Encontre campanhas abertas para novos aventureiros.
           </p>
 
-          <div className="space-y-4">
-            {availableCampaigns.map((campaign) => (
-              <AvailableCampaignCard key={campaign.id} campaign={campaign} />
-            ))}
-          </div>
+          {requestMessage && (
+            <div className="mb-4 rounded-xl border border-emerald-500/30 bg-emerald-500/10 px-4 py-3 text-sm text-emerald-200">
+              {requestMessage}
+            </div>
+          )}
+
+          {isLoadingCampaigns && (
+            <p className="text-sm text-amber-100/45">Carregando campanhas...</p>
+          )}
+
+          {campaignsError && (
+            <p className="text-sm text-rose-300">{campaignsError}</p>
+          )}
+
+          {!isLoadingCampaigns &&
+            !campaignsError &&
+            availableCampaigns.length === 0 && (
+              <p className="rounded-xl border border-amber-900/20 bg-slate-900/40 px-4 py-5 text-sm text-amber-100/45">
+                Nenhuma campanha disponível no momento.
+              </p>
+            )}
+
+          {!isLoadingCampaigns &&
+            !campaignsError &&
+            availableCampaigns.length > 0 && (
+              <div className="space-y-4">
+                {availableCampaigns.map((campaign) => (
+                  <AvailableCampaignCard
+                    key={campaign.id}
+                    campaign={campaign}
+                    isRequesting={requestingCampaignId === campaign.id}
+                    onRequest={() => handleRequestCampaign(campaign.id)}
+                  />
+                ))}
+              </div>
+            )}
         </section>
       )}
 
       {tab === "perfil" && (
         <PlayerProfileCard
           playerName={user?.name ?? playerName}
+          charactersCount={characters.length}
+          activeCampaignsCount={
+            myCampaigns.filter((campaign) => campaign.status === "ativa").length
+          }
           onChangeTab={setTab}
         />
       )}
