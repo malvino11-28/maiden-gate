@@ -48,8 +48,6 @@ Route::put('/campaigns/{campaign}/current-location', [CampaignController::class,
 
 /* Player */
 
-Route::get('/users/{user}/characters', [CharacterController::class, 'playerCharacters']);
-
 /*
 |--------------------------------------------------------------------------
 | Campaign sessions
