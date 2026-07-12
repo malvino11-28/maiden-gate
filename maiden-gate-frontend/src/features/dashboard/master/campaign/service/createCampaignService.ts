@@ -78,9 +78,7 @@ export async function createCampaign(data: CreateCampaignData) {
   });
 
   data.monsters.forEach((monster, index) => {
-    if (monster.image instanceof File) {
-      formData.append(`monsters[${index}][image]`, monster.image);
-    }
+    appendImage(formData, `monsters[${index}][image]`, monster.image);
 
     formData.append(`monsters[${index}][name]`, monster.name);
     formData.append(`monsters[${index}][type]`, monster.type ?? "");
