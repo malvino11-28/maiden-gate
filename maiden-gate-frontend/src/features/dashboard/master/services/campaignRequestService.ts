@@ -27,7 +27,7 @@ export async function getMasterCampaignRequests(userId: number) {
 }
 
 export async function acceptCampaignRequest(requestId: number) {
-  const response = await api.patch(`/campaign-request/${requestId}/accept`);
+  const response = await api.patch(`/campaign-requests/${requestId}/accept`);
 
   return response.data;
 }
