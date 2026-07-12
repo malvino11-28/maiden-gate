@@ -215,21 +215,48 @@ class CampaignController extends Controller
     public function playerCampaigns(User $user)
     {
         $campaigns = $user->campaigns()
-            ->with(['master', 'sessions'])
-            ->latest()
+            ->with([
+                'master',
+                'sessions' => function ($query) {
+                    $query->orderBy('date')->orderBy('time');
+                },
+                'characters' => function ($query) use ($user) {
+                    $query
+                        ->where('user_id', $user->id)
+                        ->with('marca');
+                },
+            ])
+            ->withCount('acceptedUsers')
+            ->latest('campaigns.created_at')
             ->get();
 
         return response()->json($campaigns);
     }
 
-    public function available()
+    public function available(Request $request)
     {
-        $campaigns = Campaign::where('status', 'ativa')
-            ->with('master')
-            ->latest()
-            ->get();
+        $query = Campaign::where('status', 'ativa')
+            ->with([
+                'master',
+                'sessions' => function ($query) {
+                    $query->orderBy('date')->orderBy('time');
+                },
+            ])
+            ->withCount('acceptedUsers')
+            ->latest();
 
-        return response()->json($campaigns);
+        if ($request->filled('user_id')) {
+            $userId = (int) $request->user_id;
+
+            $query
+                ->whereDoesntHave('campaignUsers', function ($query) use ($userId) {
+                    $query
+                        ->where('user_id', $userId)
+                        ->whereIn('status', ['pending', 'accepted']);
+                });
+        }
+
+        return response()->json($query->get());
     }
 
     public function masterView(Campaign $campaign)
