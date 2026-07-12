@@ -1,4 +1,5 @@
-import { useState } from "react";
+/* eslint-disable react-hooks/set-state-in-effect */
+import { useEffect, useState } from "react";
 import { BookOpen, Lock, Save, Unlock, Wand2, X } from "lucide-react";
 
 import {
@@ -9,38 +10,105 @@ import {
   MAX_EQUIPPED_SKILLS,
   skillBranches,
 } from "../../data/skillTreeMock";
+import { getSkillsByMark } from "../../../services/characterCreationService";
 
-import type { CharacterSkill, SkillBranchKey } from "../../data/skillTreeMock";
+import type {
+  CharacterSkill,
+  SkillBranchKey,
+  SkillTree,
+} from "../../data/skillTreeMock";
 
 type Props = {
   mark: string;
+  markId?: number;
+  campaignId?: number | null;
   level: number;
   characterName: string;
   campaign?: string;
+  equippedSkillIds?: string[];
+  onSaveEquippedSkills?: (skillIds: string[]) => void;
   onClose: () => void;
 };
 
 export default function SkillTreeModal({
   mark,
+  markId,
+  campaignId,
   level,
   characterName,
   campaign,
+  equippedSkillIds,
+  onSaveEquippedSkills,
   onClose,
 }: Props) {
   const meta = getMarkMeta(mark);
-  const tree = getSkillTreeByMark(mark);
 
+  const [tree, setTree] = useState<SkillTree>(() => getSkillTreeByMark(mark));
   const [branch, setBranch] = useState<SkillBranchKey>("ofensivo");
   const [showCampaignSkills, setShowCampaignSkills] = useState(false);
   const [hoveredSkill, setHoveredSkill] = useState<string | null>(null);
+  const [isLoadingSkills, setIsLoadingSkills] = useState(false);
+  const [skillsError, setSkillsError] = useState<string | null>(null);
 
-  const initialEquipped = getInitialEquippedSkills(tree);
+  const initialEquipped = equippedSkillIds ?? getInitialEquippedSkills(tree);
 
   const [equippedSkills, setEquippedSkills] =
     useState<string[]>(initialEquipped);
 
   const [savedEquippedSkills, setSavedEquippedSkills] =
     useState<string[]>(initialEquipped);
+
+  useEffect(() => {
+    let active = true;
+
+    setTree(getSkillTreeByMark(mark));
+    setBranch("ofensivo");
+    setShowCampaignSkills(false);
+
+    if (!markId) {
+      setSkillsError(null);
+      setIsLoadingSkills(false);
+      return;
+    }
+
+    const currentMarkId = markId;
+
+    async function loadSkills() {
+      try {
+        setIsLoadingSkills(true);
+        setSkillsError(null);
+
+        const data = await getSkillsByMark(currentMarkId, campaignId);
+
+        if (active) {
+          setTree(data);
+        }
+      } catch {
+        if (active) {
+          setSkillsError(
+            "Não foi possível carregar as habilidades desta Marca.",
+          );
+        }
+      } finally {
+        if (active) {
+          setIsLoadingSkills(false);
+        }
+      }
+    }
+
+    loadSkills();
+
+    return () => {
+      active = false;
+    };
+  }, [mark, markId, campaignId]);
+
+  useEffect(() => {
+    const nextEquipped =
+      equippedSkillIds ?? (markId ? [] : getInitialEquippedSkills(tree));
+    setEquippedSkills(nextEquipped);
+    setSavedEquippedSkills(nextEquipped);
+  }, [tree, equippedSkillIds, markId]);
 
   const changed =
     JSON.stringify(equippedSkills) !== JSON.stringify(savedEquippedSkills);
@@ -69,6 +137,7 @@ export default function SkillTreeModal({
 
   function saveEquippedSkills() {
     setSavedEquippedSkills([...equippedSkills]);
+    onSaveEquippedSkills?.([...equippedSkills]);
   }
 
   return (
@@ -372,7 +441,17 @@ export default function SkillTreeModal({
             </div>
           )}
 
-          {activeSkills.length === 0 ? (
+          {isLoadingSkills ? (
+            <div className="flex flex-col items-center justify-center py-16 text-amber-100/30">
+              <BookOpen className="mb-3 h-10 w-10 animate-pulse" />
+              <p className="text-sm">Carregando habilidades...</p>
+            </div>
+          ) : skillsError ? (
+            <div className="flex flex-col items-center justify-center py-16 text-rose-300/70">
+              <BookOpen className="mb-3 h-10 w-10" />
+              <p className="text-sm">{skillsError}</p>
+            </div>
+          ) : activeSkills.length === 0 ? (
             <div className="flex flex-col items-center justify-center py-16 text-amber-100/20">
               <BookOpen className="mb-3 h-10 w-10" />
 
