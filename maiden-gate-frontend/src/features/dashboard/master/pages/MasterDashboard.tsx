@@ -29,7 +29,7 @@ import CampaignCard from "../components/CampaignCard";
 import QuickActionCard from "../components/QuickActionCard";
 import Button from "../../../../shared/components/Button/Button";
 
-import { stats, campaigns, quickActions } from "../data/dashboardMock";
+import { quickActions } from "../data/dashboardMock";
 import type { ActiveModal } from "../data/dashboardMock";
 
 export default function MasterDashboard() {
@@ -201,6 +201,7 @@ export default function MasterDashboard() {
                   masterCampaigns.map((campaign) => (
                     <CampaignCard
                       key={campaign.id}
+                      id={String(campaign.id)}
                       title={campaign.name}
                       description={
                         campaign.description ?? "Sem descrição cadastrada."
@@ -208,6 +209,7 @@ export default function MasterDashboard() {
                       status={campaign.status}
                       sessions={campaign.sessions_count ?? 0}
                       players={campaign.characters_count ?? 0}
+                      lastSession="—"
                       to={`/dashboard/master/campaign/${campaign.id}`}
                     />
                   ))}

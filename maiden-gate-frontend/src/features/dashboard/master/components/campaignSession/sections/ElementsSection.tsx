@@ -13,8 +13,12 @@ import {
 
 import { useState } from "react";
 
-import type { status, CampaignElements } from "../../../types/masterCampaign";
-import type { ElementFormKey } from "../../../data/elementForms";
+import type {
+  CampaignElementStatus,
+  CampaignElements,
+} from "../../../types/masterCampaign";
+
+type ElementFormKey = "localizacao" | "npc" | "monstro" | "item" | "evento";
 
 type Props = {
   elements: CampaignElements;
@@ -51,7 +55,7 @@ function ElementImage({ image, alt }: { image?: string | null; alt: string }) {
   );
 }
 
-function getStatusEntries(status?: status | null) {
+function getStatusEntries(status?: CampaignElementStatus | null) {
   if (!status) return [];
 
   const labels: Record<string, string> = {
@@ -71,7 +75,7 @@ function getStatusEntries(status?: status | null) {
     }));
 }
 
-function StatusPanel({ status }: { status?: status | null }) {
+function StatusPanel({ status }: { status?: CampaignElementStatus | null }) {
   const entries = getStatusEntries(status);
 
   if (entries.length === 0) {
@@ -222,9 +226,7 @@ export default function ElementsSection({ elements, onAdd }: Props) {
                 {item.descricao}
               </p>
 
-              {isStatusOpen && (
-                <StatusPanel status={item.status ?? item.stats} />
-              )}
+              {isStatusOpen && <StatusPanel status={item.status} />}
             </div>
           </div>
         );
