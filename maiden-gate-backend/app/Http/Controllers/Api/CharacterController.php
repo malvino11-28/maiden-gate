@@ -122,6 +122,15 @@ class CharacterController extends Controller
         ]);
     }
 
+    public function playerCharacters(User $user)
+    {
+        $characters = Character::with(['marca', 'campaign'])
+            ->where('user_id', $user->id)
+            ->get();
+
+        return response()->json($characters);
+    }
+
     public function byUser(User $user)
     {
         $characters = $user->characters()

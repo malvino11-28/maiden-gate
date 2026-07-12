@@ -19,14 +19,15 @@ export type AttributeKey = "POD" | "DES" | "RES" | "INT" | "DET" | "PRE";
 export interface PlayerCharacterSummary {
   id: number;
   nome: string;
-  sobrenome: string;
+  sobrenome?: string;
   marca: CharacterMark;
   nivel: number;
   hp: number;
   hpMax: number;
   campanha: string;
   marcaCor: string;
-  marcaEmoji: string;
+  iconImage?: string | null;
+  fullImage?: string | null;
 }
 
 export interface PlayerCampaignSummary {

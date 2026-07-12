@@ -32,6 +32,8 @@ Route::post('/login', [AuthController::class, 'login']);
 |--------------------------------------------------------------------------
 */
 
+/* Master*/
+
 Route::get('/users/{user}/master-campaigns', [CampaignController::class, 'masterCampaigns']);
 Route::get('/users/{user}/player-campaigns', [CampaignController::class, 'playerCampaigns']);
 Route::get('/users/{user}/characters', [CharacterController::class, 'byUser']);
@@ -43,6 +45,10 @@ Route::get('/campaigns/{campaign}/player-view', [CampaignController::class, 'pla
 Route::put('/campaigns/{campaign}/data', [CampaignController::class, 'update']);
 Route::put('/campaigns/{campaign}/notes', [CampaignController::class, 'updateNotes']);
 Route::put('/campaigns/{campaign}/current-location', [CampaignController::class, 'updateCurrentLocation']);
+
+/* Player */
+
+Route::get('/users/{user}/characters', [CharacterController::class, 'playerCharacters']);
 
 /*
 |--------------------------------------------------------------------------
