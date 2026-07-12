@@ -26,6 +26,7 @@ export interface PlayerCharacterSummary {
   hpMax: number;
   campanha: string;
   marcaCor: string;
+  marcaEmoji?: string;
   iconImage?: string | null;
   fullImage?: string | null;
 }

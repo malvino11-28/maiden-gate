@@ -8,6 +8,16 @@ type Props = {
   character: PlayerCharacterFull;
 };
 
+function getImageSrc(image?: string | null) {
+  if (!image) return "";
+
+  if (image.startsWith("http") || image.startsWith("/")) {
+    return image;
+  }
+
+  return `http://127.0.0.1:8000/storage/${image}`;
+}
+
 export default function PlayerCharacterSection({ character }: Props) {
   const hpPercent = Math.round((character.hp / character.hpMax) * 100);
   const xpPercent = Math.round((character.xp / character.xpProximo) * 100);
@@ -17,7 +27,17 @@ export default function PlayerCharacterSection({ character }: Props) {
       <div className="overflow-hidden rounded-2xl border border-amber-900/25 bg-slate-900/50">
         <div className={`bg-gradient-to-r ${character.marcaCor} px-5 py-5`}>
           <div className="flex items-center gap-4">
-            <span className="text-5xl">{character.marcaEmoji}</span>
+            <div className="flex h-20 w-20 flex-shrink-0 items-center justify-center overflow-hidden rounded-2xl bg-slate-950/30 text-3xl text-white/80">
+              {character.iconImage ? (
+                <img
+                  src={getImageSrc(character.iconImage)}
+                  alt={character.nome}
+                  className="h-full w-full object-cover"
+                />
+              ) : (
+                <span>{character.marcaEmoji ?? character.nome.charAt(0)}</span>
+              )}
+            </div>
             <div>
               <h2 className="text-2xl font-bold text-white">
                 {character.nome} {character.sobrenome}

@@ -19,17 +19,18 @@ export async function getPlayerCharacters(
 ): Promise<PlayerCharacterSummary[]> {
   const response = await api.get(`/users/${userId}/characters`);
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   return response.data.map((character: any) => ({
     id: character.id,
     nome: character.name,
     sobrenome: "",
-    marca: character.marca?.name ?? character.marca?.nome ?? "Manifesto",
-    nível: character.level ?? 1,
+    marca: character.marca?.name ?? "Manifesto",
+    nivel: character.level ?? 1,
     hp: character.hp_current ?? 0,
     hpMax: character.hp_max ?? 1,
     campanha: character.campaign?.name ?? "Sem campanha",
-    marcaCor: getMarcaColor(character.marca?.name ?? character.marca?.nome),
-    iconImage: character.icon_image ?? character.iconImage ?? null,
-    fullImage: character.full_image ?? character.fullImage ?? null,
+    marcaCor: getMarcaColor(character.marca?.name),
+    iconImage: character.icon_image ?? null,
+    fullImage: character.full_image ?? null,
   }));
 }

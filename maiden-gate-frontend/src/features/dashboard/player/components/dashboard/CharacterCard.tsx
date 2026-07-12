@@ -45,6 +45,16 @@ export default function CharacterCard({ character }: Props) {
               </span>
             )}
           </div>
+
+          <div>
+            <p className="font-semibold text-amber-100">
+              {character.nome}
+              {character.sobrenome ? ` ${character.sobrenome}` : ""}
+            </p>
+            <p className="mt-0.5 text-xs text-amber-100/50">
+              Marca {character.marca} · Nível {character.nivel}
+            </p>
+          </div>
         </div>
 
         <ChevronRight className="mt-1 h-4 w-4 flex-shrink-0 text-amber-100/25 transition-colors group-hover:text-amber-400" />

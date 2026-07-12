@@ -66,7 +66,7 @@ export default function PlayerCampaignPage() {
               campaignId={id ?? "1"}
               characterName={characterName}
               playerName={playerName}
-              emoji={campaign.personagem.marcaEmoji}
+              emoji={campaign.personagem.marcaEmoji ?? campaign.personagem.nome.charAt(0)}
               currentLocation={campaign.localizacaoAtual.nome}
               skills={campaign.personagem.habilidades}
             />
