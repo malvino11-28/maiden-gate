@@ -4,6 +4,7 @@ import { Crown, Dice1, Hash, RefreshCw, Trash2, UserRound } from "lucide-react";
 import {
   createCampaignDiceRoll,
   getCampaignDiceRolls,
+  clearDiceRollHistory,
   type DiceRollEntry,
   type DiceType,
 } from "../../../services/diceRollService";
@@ -94,6 +95,29 @@ export default function DiceChat({ campaignId, masterName, userId }: Props) {
 
     if (!Number.isNaN(number)) {
       setModifier(number);
+    }
+  }
+
+  async function handleClearHistory() {
+    if (!userId) {
+      setError("Não foi possível identificar o mestre.");
+      return;
+    }
+
+    const confirmed = window.confirm(
+      "Tem certeza que deseja apagar todo o histórico de rolagens desta campanha?",
+    );
+
+    if (!confirmed) return;
+
+    try {
+      setError(null);
+
+      await clearDiceRollHistory(Number(campaignId), userId);
+
+      setHistory([]);
+    } catch {
+      setError("Não foi possível limpar o histórico de rolagens.");
     }
   }
 
@@ -307,11 +331,11 @@ export default function DiceChat({ campaignId, masterName, userId }: Props) {
 
           {history.length > 0 && (
             <button
-              onClick={() => setHistory([])}
+              onClick={handleClearHistory}
               className="flex w-full items-center justify-center gap-1.5 py-1 text-xs text-amber-100/30 transition hover:text-rose-400"
             >
               <Trash2 className="h-3 w-3" />
-              Ocultar local
+              Limpar histórico
             </button>
           )}
         </div>
