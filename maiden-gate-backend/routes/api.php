@@ -90,6 +90,7 @@ Route::post('/campaigns/{campaign}/lore-events', [LoreEventsController::class, '
 
 Route::get('/campaigns/{campaign}/dice-rolls', [DiceRollController::class, 'index']);
 Route::post('/campaigns/{campaign}/dice-rolls', [DiceRollController::class, 'store']);
+Route::delete('/campaigns/{campaign}/dice-rolls', [DiceRollController::class, 'destroy']);
 
 /*
 |--------------------------------------------------------------------------

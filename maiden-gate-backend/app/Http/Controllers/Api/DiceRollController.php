@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Campaign;
+use App\Models\DiceRoll;
 use Illuminate\Http\Request;
 
 class DiceRollController extends Controller
@@ -60,5 +61,23 @@ class DiceRollController extends Controller
         ]);
 
         return response()->json($roll->load(['user', 'character']), 201);
+    }
+
+    public function destroy(Request $request, Campaign $campaign) {
+        $data = $request->validate([
+            'user_id' => 'required|exists:users,id',
+        ]);
+
+        if ((int) $campaign->master_id !== (int) $data['user_id']) {
+            return response()->json([
+                'message' => 'Apenas mestres podem limpar o histórico de rolagens.',
+            ], 403);
+        }
+
+        DiceRoll::where('campaign_id', $campaign->id)->delete();
+
+        return response()->json([
+            'message' => 'Histórico de rolagens limpo com sucesso.',
+        ]);
     }
 }
