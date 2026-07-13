@@ -4,39 +4,41 @@ import { Link } from "react-router-dom";
 type CampaignCardProps = {
   id: string;
   title: string;
+  description: string;
   players: number;
   sessions: number;
   lastSession: string;
-  status: "active" | "paused" | "closed";
+  status: "ativa" | "pausada" | "encerrada";
+  to: string;
 };
 
 const statusMap = {
-  active: {
+  ativa: {
     label: "Ativa",
     className: "border-emerald-500/30 bg-emerald-500/15 text-emerald-300",
   },
-  paused: {
+  pausada: {
     label: "Pausada",
     className: "border-amber-500/30 bg-amber-500/15 text-amber-300",
   },
-  closed: {
+  encerrada: {
     label: "Encerrada",
     className: "border-slate-500/30 bg-slate-500/15 text-slate-400",
   },
 };
 
 export default function CampaignCard({
-  id,
   title,
   players,
   sessions,
   lastSession,
   status,
+  to,
 }: CampaignCardProps) {
   const currentStatus = statusMap[status];
 
   return (
-    <Link to={`/dashboard/master/campaign/${id}`} className="block">
+    <Link to={to} className="block">
       <button className="group flex w-full items-center justify-between gap-4 rounded-xl border border-amber-900/25 bg-slate-900/50 px-5 py-4 text-left transition-colors hover:border-amber-700/40">
         <div className="flex min-w-0 items-center gap-4">
           <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg bg-gradient-to-br from-amber-500/15 to-rose-600/15">

@@ -8,6 +8,7 @@ use App\Http\Controllers\Api\CampaignController;
 use App\Http\Controllers\Api\CampaignUserController;
 use App\Http\Controllers\Api\CharacterController;
 use App\Http\Controllers\Api\CharacterSkillController;
+use App\Http\Controllers\Api\DiceRollController;
 use App\Http\Controllers\Api\CampaignSessionController;
 use App\Http\Controllers\Api\InventoryController;
 use App\Http\Controllers\Api\ItemsController;
@@ -32,6 +33,8 @@ Route::post('/login', [AuthController::class, 'login']);
 |--------------------------------------------------------------------------
 */
 
+/* Master*/
+
 Route::get('/users/{user}/master-campaigns', [CampaignController::class, 'masterCampaigns']);
 Route::get('/users/{user}/player-campaigns', [CampaignController::class, 'playerCampaigns']);
 Route::get('/users/{user}/characters', [CharacterController::class, 'byUser']);
@@ -43,6 +46,8 @@ Route::get('/campaigns/{campaign}/player-view', [CampaignController::class, 'pla
 Route::put('/campaigns/{campaign}/data', [CampaignController::class, 'update']);
 Route::put('/campaigns/{campaign}/notes', [CampaignController::class, 'updateNotes']);
 Route::put('/campaigns/{campaign}/current-location', [CampaignController::class, 'updateCurrentLocation']);
+
+/* Player */
 
 /*
 |--------------------------------------------------------------------------
@@ -76,6 +81,16 @@ Route::post('/campaigns/{campaign}/bestiary', [BestiaryController::class, 'store
 
 Route::get('/campaigns/{campaign}/lore-events', [LoreEventsController::class, 'index']);
 Route::post('/campaigns/{campaign}/lore-events', [LoreEventsController::class, 'store']);
+
+/*
+|--------------------------------------------------------------------------
+| Shared dice rolls
+|--------------------------------------------------------------------------
+*/
+
+Route::get('/campaigns/{campaign}/dice-rolls', [DiceRollController::class, 'index']);
+Route::post('/campaigns/{campaign}/dice-rolls', [DiceRollController::class, 'store']);
+Route::delete('/campaigns/{campaign}/dice-rolls', [DiceRollController::class, 'destroy']);
 
 /*
 |--------------------------------------------------------------------------

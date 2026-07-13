@@ -1,39 +1,61 @@
-import { useEffect, useRef, useState } from "react";
-import { Crown, Dice1, Hash, Trash2 } from "lucide-react";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { Crown, Dice1, Hash, RefreshCw, Trash2, UserRound } from "lucide-react";
 
-import type { DiceType } from "../../types/masterCampaign";
-
-interface RollEntry {
-  id: number;
-  dado: DiceType;
-  quantidade: number;
-  modificador: number;
-  resultados: number[];
-  total: number;
-  critico?: boolean;
-  falha?: boolean;
-  hora: string;
-  autor: string;
-}
+import {
+  createCampaignDiceRoll,
+  getCampaignDiceRolls,
+  clearDiceRollHistory,
+  type DiceRollEntry,
+  type DiceType,
+} from "../../../services/diceRollService";
 
 type Props = {
+  campaignId: number | string;
   masterName: string;
+  userId?: number | null;
 };
 
-function rollDice(faces: DiceType): number {
-  return Math.floor(Math.random() * faces) + 1;
-}
-
-export default function DiceChat({ masterName }: Props) {
-  const [history, setHistory] = useState<RollEntry[]>([]);
+export default function DiceChat({ campaignId, masterName, userId }: Props) {
+  const [history, setHistory] = useState<DiceRollEntry[]>([]);
   const [quantity, setQuantity] = useState(1);
   const [modifier, setModifier] = useState(0);
   const [inputModifier, setInputModifier] = useState("0");
+  const [isRolling, setIsRolling] = useState(false);
+  const [isLoadingHistory, setIsLoadingHistory] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   const chatRef = useRef<HTMLDivElement>(null);
-  const idRef = useRef(0);
 
   const diceOptions: DiceType[] = [4, 6, 8, 10, 12, 20, 100];
+
+  const loadHistory = useCallback(async () => {
+    try {
+      setError(null);
+      const rolls = await getCampaignDiceRolls(campaignId);
+      setHistory(rolls);
+    } catch {
+      setError("Não foi possível atualizar o histórico de dados.");
+    }
+  }, [campaignId]);
+
+  useEffect(() => {
+    async function loadInitialHistory() {
+      try {
+        setIsLoadingHistory(true);
+        await loadHistory();
+      } finally {
+        setIsLoadingHistory(false);
+      }
+    }
+
+    loadInitialHistory();
+
+    const intervalId = window.setInterval(() => {
+      loadHistory();
+    }, 3000);
+
+    return () => window.clearInterval(intervalId);
+  }, [loadHistory]);
 
   useEffect(() => {
     if (chatRef.current) {
@@ -41,35 +63,29 @@ export default function DiceChat({ masterName }: Props) {
     }
   }, [history]);
 
-  function handleRoll(dice: DiceType) {
-    const results = Array.from({ length: quantity }, () => rollDice(dice));
-    const total = results.reduce((sum, result) => sum + result, 0) + modifier;
+  async function handleRoll(dice: DiceType) {
+    try {
+      setIsRolling(true);
+      setError(null);
 
-    const critical = dice === 20 && results.includes(20);
-    const failure = dice === 20 && results.includes(1);
+      const newRoll = await createCampaignDiceRoll(campaignId, {
+        user_id: userId ?? null,
+        author_name: masterName,
+        author_type: "master",
+        dice,
+        quantity,
+        modifier,
+      });
 
-    const hour = new Date().toLocaleTimeString("pt-BR", {
-      hour: "2-digit",
-      minute: "2-digit",
-    });
-
-    idRef.current += 1;
-
-    setHistory((previous) => [
-      ...previous,
-      {
-        id: idRef.current,
-        dado: dice,
-        quantidade: quantity,
-        modificador: modifier,
-        resultados: results,
-        total,
-        critico: critical,
-        falha: failure,
-        hora: hour,
-        autor: masterName,
-      },
-    ]);
+      setHistory((previous) => [
+        ...previous.filter((entry) => entry.id !== newRoll.id),
+        newRoll,
+      ]);
+    } catch {
+      setError("Não foi possível registrar a rolagem.");
+    } finally {
+      setIsRolling(false);
+    }
   }
 
   function handleModifier(value: string) {
@@ -79,6 +95,23 @@ export default function DiceChat({ masterName }: Props) {
 
     if (!Number.isNaN(number)) {
       setModifier(number);
+    }
+  }
+
+  async function handleClearHistory() {
+    if (!userId) {
+      setError("Não foi possível identificar o mestre.");
+      return;
+    }
+
+    try {
+      setError(null);
+
+      await clearDiceRollHistory(Number(campaignId), userId);
+
+      setHistory([]);
+    } catch {
+      setError("Não foi possível limpar o histórico de rolagens.");
     }
   }
 
@@ -93,95 +126,107 @@ export default function DiceChat({ masterName }: Props) {
             <Dice1 className="h-10 w-10 text-amber-900/40" />
 
             <p className="text-sm text-amber-100/30">
-              Nenhuma rolagem ainda.
+              {isLoadingHistory
+                ? "Carregando histórico..."
+                : "Nenhuma rolagem ainda."}
               <br />
               Selecione um dado abaixo.
             </p>
           </div>
         )}
 
-        {history.map((entry) => (
-          <div
-            key={entry.id}
-            className={`
-              rounded-xl
-              border
-              px-3
-              py-2.5
-              text-sm
+        {history.map((entry) => {
+          const AuthorIcon = entry.tipoAutor === "master" ? Crown : UserRound;
 
-              ${
-                entry.critico
-                  ? "border-amber-500/40 bg-amber-500/10"
-                  : entry.falha
-                    ? "border-rose-700/30 bg-rose-900/20"
-                    : "border-amber-900/20 bg-slate-900/60"
-              }
-            `}
-          >
-            <div className="mb-1 flex items-center justify-between">
-              <span className="flex items-center gap-1 text-xs font-medium text-amber-400/70">
-                <Crown className="h-3 w-3" />
-                {entry.autor}
-              </span>
+          return (
+            <div
+              key={entry.id}
+              className={`
+                rounded-xl
+                border
+                px-3
+                py-2.5
+                text-sm
 
-              <span className="text-xs text-amber-100/30">{entry.hora}</span>
-            </div>
+                ${
+                  entry.critico
+                    ? "border-amber-500/40 bg-amber-500/10"
+                    : entry.falha
+                      ? "border-rose-700/30 bg-rose-900/20"
+                      : "border-amber-900/20 bg-slate-900/60"
+                }
+              `}
+            >
+              <div className="mb-1 flex items-center justify-between">
+                <span className="flex items-center gap-1 text-xs font-medium text-amber-400/70">
+                  <AuthorIcon className="h-3 w-3" />
+                  {entry.autor}
+                </span>
 
-            <div className="flex flex-wrap items-baseline gap-2">
-              <span className="text-xs text-amber-100/70">
-                {entry.quantidade}d{entry.dado}
-                {entry.modificador !== 0 && (
-                  <span
-                    className={
-                      entry.modificador > 0
-                        ? "text-emerald-400"
-                        : "text-rose-400"
+                <span className="text-xs text-amber-100/30">{entry.hora}</span>
+              </div>
+
+              <div className="flex flex-wrap items-baseline gap-2">
+                <span className="text-xs text-amber-100/70">
+                  {entry.quantidade}d{entry.dado}
+                  {entry.modificador !== 0 && (
+                    <span
+                      className={
+                        entry.modificador > 0
+                          ? "text-emerald-400"
+                          : "text-rose-400"
+                      }
+                    >
+                      {entry.modificador > 0 ? "+" : ""}
+                      {entry.modificador}
+                    </span>
+                  )}
+                </span>
+
+                <span className="text-xs text-amber-100/40">
+                  → [{entry.resultados.join(", ")}]
+                </span>
+
+                <span
+                  className={`
+                    ml-auto
+                    text-lg
+                    font-bold
+
+                    ${
+                      entry.critico
+                        ? "text-amber-300"
+                        : entry.falha
+                          ? "text-rose-400"
+                          : "text-amber-100"
                     }
-                  >
-                    {entry.modificador > 0 ? "+" : ""}
-                    {entry.modificador}
-                  </span>
-                )}
-              </span>
+                  `}
+                >
+                  {entry.total}
+                </span>
+              </div>
 
-              <span className="text-xs text-amber-100/40">
-                → [{entry.resultados.join(", ")}]
-              </span>
+              {entry.critico && (
+                <p className="mt-0.5 text-xs font-semibold text-amber-400">
+                  ⚡ Acerto crítico!
+                </p>
+              )}
 
-              <span
-                className={`
-                  ml-auto
-                  text-lg
-                  font-bold
-
-                  ${
-                    entry.critico
-                      ? "text-amber-300"
-                      : entry.falha
-                        ? "text-rose-400"
-                        : "text-amber-100"
-                  }
-                `}
-              >
-                {entry.total}
-              </span>
+              {entry.falha && !entry.critico && (
+                <p className="mt-0.5 text-xs font-semibold text-rose-400">
+                  💀 Falha crítica!
+                </p>
+              )}
             </div>
-
-            {entry.critico && (
-              <p className="mt-0.5 text-xs font-semibold text-amber-400">
-                ⚡ Acerto crítico!
-              </p>
-            )}
-
-            {entry.falha && !entry.critico && (
-              <p className="mt-0.5 text-xs font-semibold text-rose-400">
-                💀 Falha crítica!
-              </p>
-            )}
-          </div>
-        ))}
+          );
+        })}
       </div>
+
+      {error && (
+        <p className="mt-2 rounded-lg border border-rose-500/25 bg-rose-500/10 px-3 py-2 text-xs text-rose-200">
+          {error}
+        </p>
+      )}
 
       <div className="mt-3 flex-shrink-0 space-y-3 border-t border-amber-900/20 pt-3">
         <div className="grid grid-cols-2 gap-2">
@@ -244,6 +289,7 @@ export default function DiceChat({ masterName }: Props) {
           {diceOptions.map((dice) => (
             <button
               key={dice}
+              disabled={isRolling}
               onClick={() => handleRoll(dice)}
               className="
                 rounded-lg
@@ -259,6 +305,8 @@ export default function DiceChat({ masterName }: Props) {
                 hover:bg-amber-500/15
                 hover:text-amber-300
                 active:scale-95
+                disabled:cursor-not-allowed
+                disabled:opacity-50
               "
             >
               d{dice}
@@ -266,26 +314,25 @@ export default function DiceChat({ masterName }: Props) {
           ))}
         </div>
 
-        {history.length > 0 && (
+        <div className="grid grid-cols-2 gap-2">
           <button
-            onClick={() => setHistory([])}
-            className="
-              flex
-              w-full
-              items-center
-              justify-center
-              gap-1.5
-              py-1
-              text-xs
-              text-amber-100/30
-              transition
-              hover:text-rose-400
-            "
+            onClick={loadHistory}
+            className="flex w-full items-center justify-center gap-1.5 py-1 text-xs text-amber-100/30 transition hover:text-amber-400"
           >
-            <Trash2 className="h-3 w-3" />
-            Limpar histórico
+            <RefreshCw className="h-3 w-3" />
+            Atualizar
           </button>
-        )}
+
+          {history.length > 0 && (
+            <button
+              onClick={handleClearHistory}
+              className="flex w-full items-center justify-center gap-1.5 py-1 text-xs text-amber-100/30 transition hover:text-rose-400"
+            >
+              <Trash2 className="h-3 w-3" />
+              Limpar histórico
+            </button>
+          )}
+        </div>
       </div>
     </div>
   );

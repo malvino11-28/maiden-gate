@@ -25,23 +25,29 @@ class BestiaryController extends Controller
     public function store(Request $request, Campaign $campaign)
     {
         $data = $request->validate([
-            'image' => 'nullable|string|max:255',
+            'image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
             'name' => 'required|string|max:255',
-            'threat' => 'nullable|string|max:255',
             'type' => 'nullable|string|max:255',
-            'description' => 'required|string',
+            'threat' => 'nullable|string|max:255',
+            'description' => 'nullable|string',
             'skills' => 'nullable|array',
             'stats' => 'nullable|array',
         ]);
 
+        $imagePath = null;
+
+        if ($request->hasFile('image')) {
+            $imagePath = $request->file('image')->store('bestiary', 'public');
+        }
+
         $monster = $campaign->bestiary()->create([
-            'image' => $data['image'] ?? null,
+            'image' => $imagePath,
             'name' => $data['name'],
-            'threat' => $data['threat'] ?? null,
             'type' => $data['type'] ?? null,
-            'description' => $data['description'],
-            'skills' => $data['skills'] ?? [],
-            'stats' => $data['stats'] ?? [],
+            'threat' => $data['threat'] ?? null,
+            'description' => $data['description'] ?? null,
+            'skills' => $data['skills'] ?? null,
+            'stats' => $data['stats'] ?? null,
         ]);
 
         return response()->json($monster, 201);

@@ -10,6 +10,8 @@ import Input from "../../../../../shared/components/Form/Input";
 import TextArea from "../../../../../shared/components/Form/TextArea";
 import Button from "../../../../../shared/components/Button/Button";
 
+import { createItem } from "../../services/masterElementService";
+
 interface ItemModalProps {
   isOpen: boolean;
   onClose: () => void;
@@ -20,6 +22,37 @@ export default function ItemModal({ isOpen, onClose }: ItemModalProps) {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [type, setType] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const handleSubmit = async () => {
+    if (!campaign || !name || !description || !type) {
+      setError("Preencha todos os campos obrigatórios.");
+      return;
+    }
+
+    try {
+      setIsLoading(true);
+      setError(null);
+
+      await createItem(Number(campaign), {
+        name,
+        description,
+        type,
+      });
+
+      setCampaign("");
+      setName("");
+      setDescription("");
+      setType("");
+
+      onClose();
+    } catch {
+      setError("Não foi possível criar o item.");
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
@@ -45,6 +78,8 @@ export default function ItemModal({ isOpen, onClose }: ItemModalProps) {
         <FormField label="Tipo" required>
           <Input value={type} onChange={(e) => setType(e.target.value)} />
         </FormField>
+
+        {error && <p className="text-sm text-rose-400">{error}</p>}
       </ModalBody>
 
       <ModalFooter>
@@ -52,7 +87,9 @@ export default function ItemModal({ isOpen, onClose }: ItemModalProps) {
           Cancelar
         </Button>
 
-        <Button>Criar Item</Button>
+        <Button onClick={handleSubmit} disabled={isLoading}>
+          {isLoading ? "Criando..." : "Criar Item"}
+        </Button>
       </ModalFooter>
     </Modal>
   );

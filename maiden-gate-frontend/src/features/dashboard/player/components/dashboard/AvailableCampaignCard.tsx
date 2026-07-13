@@ -5,9 +5,15 @@ import type { AvailableCampaign } from "../../types/player";
 
 type Props = {
   campaign: AvailableCampaign;
+  isRequesting?: boolean;
+  onRequest?: () => void;
 };
 
-export default function AvailableCampaignCard({ campaign }: Props) {
+export default function AvailableCampaignCard({
+  campaign,
+  isRequesting = false,
+  onRequest,
+}: Props) {
   return (
     <div className="flex flex-col justify-between gap-4 rounded-xl border border-amber-900/25 bg-slate-900/50 px-5 py-5 transition-colors hover:border-amber-700/40 sm:flex-row sm:items-center">
       <div className="flex min-w-0 items-start gap-4">
@@ -29,14 +35,19 @@ export default function AvailableCampaignCard({ campaign }: Props) {
               Marca: {campaign.marca}
             </span>
             <span className="rounded-full border border-emerald-500/30 bg-emerald-500/10 px-2 py-0.5 text-xs text-emerald-300">
-              {campaign.vagas} vaga{campaign.vagas > 1 ? "s" : ""}
+              {campaign.vagas} vaga{campaign.vagas === 1 ? "" : "s"}
             </span>
           </div>
         </div>
       </div>
 
-      <Button size="sm" className="self-start text-xs sm:self-center">
-        Solicitar Entrada
+      <Button
+        size="sm"
+        className="self-start text-xs sm:self-center"
+        disabled={isRequesting}
+        onClick={onRequest}
+      >
+        {isRequesting ? "Solicitando..." : "Solicitar Entrada"}
       </Button>
     </div>
   );

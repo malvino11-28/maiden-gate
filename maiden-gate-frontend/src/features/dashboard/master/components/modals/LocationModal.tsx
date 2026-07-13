@@ -10,6 +10,9 @@ import CampaignSelect from "../forms/CampaignSelect";
 import Input from "../../../../../shared/components/Form/Input";
 import TextArea from "../../../../../shared/components/Form/TextArea";
 import Button from "../../../../../shared/components/Button/Button";
+import ImageInput from "../forms/ImageField";
+
+import { createLocation } from "../../services/masterElementService";
 
 interface LocationModalProps {
   isOpen: boolean;
@@ -18,9 +21,44 @@ interface LocationModalProps {
 
 export default function LocationModal({ isOpen, onClose }: LocationModalProps) {
   const [campaign, setCampaign] = useState("");
+  const [image, setImage] = useState<File | null>(null);
   const [name, setName] = useState("");
   const [type, setType] = useState("");
   const [description, setDescription] = useState("");
+
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const handleSubmit = async () => {
+    if (!campaign || !name || !type || !description) {
+      setError("Preencha todos os campos obrigatórios.");
+      return;
+    }
+
+    try {
+      setIsSubmitting(true);
+      setError(null);
+
+      await createLocation(Number(campaign), {
+        image,
+        name,
+        type,
+        description,
+      });
+
+      setCampaign("");
+      setImage(null);
+      setName("");
+      setType("");
+      setDescription("");
+
+      onClose();
+    } catch {
+      setError("Não foi possível criar a localização.");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
@@ -35,12 +73,16 @@ export default function LocationModal({ isOpen, onClose }: LocationModalProps) {
           <CampaignSelect value={campaign} onChange={setCampaign} />
         </FormField>
 
+        <FormField label="Imagem do Local">
+          <ImageInput value={null} onChange={setImage} />
+        </FormField>
+
         <FormField label="Nome" required>
           <Input value={name} onChange={(e) => setName(e.target.value)} />
         </FormField>
 
         <FormField label="Tipo" required>
-          <CampaignSelect value={type} onChange={setType} />
+          <Input value={type} onChange={(e) => setType(e.target.value)} />
         </FormField>
 
         <FormField label="Descrição" required>
@@ -52,12 +94,16 @@ export default function LocationModal({ isOpen, onClose }: LocationModalProps) {
         </FormField>
       </ModalBody>
 
+      {error && <p className="text-sm text-rose-400">{error}</p>}
+
       <ModalFooter>
         <Button variant="ghost" onClick={onClose}>
           Cancelar
         </Button>
 
-        <Button>Criar Localização</Button>
+        <Button onClick={handleSubmit} disabled={isSubmitting}>
+          {isSubmitting ? "Criando..." : "Criar Localização"}
+        </Button>
       </ModalFooter>
     </Modal>
   );

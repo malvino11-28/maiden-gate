@@ -1,6 +1,19 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Plus, Swords, User, Crown } from "lucide-react";
+
+import { useAuth } from "../../../auth/hooks/useAuth";
+import {
+  getMasterCampaigns,
+  type MasterCampaignApi,
+} from "../services/dashboardService";
+
+import {
+  acceptCampaignRequest,
+  getMasterCampaignRequests,
+  rejectCampaignRequest,
+  type CampaignRequestApi,
+} from "../services/campaignRequestService";
 
 import EventModal from "../components/modals/EventModal";
 import ItemModal from "../components/modals/ItemModal";
@@ -16,22 +29,133 @@ import CampaignCard from "../components/CampaignCard";
 import QuickActionCard from "../components/QuickActionCard";
 import Button from "../../../../shared/components/Button/Button";
 
-import { stats, campaigns, quickActions } from "../data/dashboardMock";
+import { quickActions } from "../data/dashboardMock";
 import type { ActiveModal } from "../data/dashboardMock";
 
 export default function MasterDashboard() {
-  const [activeTab, setActiveTab] = useState<"campaigns" | "profile">(
-    "campaigns",
-  );
+  const { user } = useAuth();
+
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  const [activeTab, setActiveTab] = useState<
+    "campaigns" | "request" | "profile"
+  >("campaigns");
   const [activeModal, setActiveModal] = useState<ActiveModal | null>(null);
+
+  const [requests, setRequests] = useState<CampaignRequestApi[]>([]);
+  const [isLoadingRequests, setIsLoadingRequests] = useState(false);
+  const [requestError, setRequestError] = useState<string | null>(null);
+
+  useEffect(() => {
+    // buscando solicitações
+    async function loadRequests() {
+      if (!user) return;
+
+      try {
+        setIsLoading(true);
+        setRequestError(null);
+
+        const data = await getMasterCampaignRequests(user.id);
+
+        setRequests(data);
+      } catch {
+        setRequestError("Não foi possível carregar as solicitações");
+      } finally {
+        setIsLoadingRequests(false);
+      }
+    }
+
+    loadRequests();
+  }, [activeTab, user]);
+
+  async function handleAcceptRequest(requestId: number) {
+    await acceptCampaignRequest(requestId);
+
+    setRequests((currentRequests) =>
+      currentRequests.filter((request) => request.id !== requestId),
+    );
+  }
+
+  async function handleRejectRequest(requestId: number) {
+    await rejectCampaignRequest(requestId);
+
+    setRequests((currentRequests) =>
+      currentRequests.filter((request) => request.id !== requestId),
+    );
+  }
+
+  const [masterCampaigns, setMasterCampaigns] = useState<MasterCampaignApi[]>(
+    [],
+  );
+
+  useEffect(() => {
+    // buscando campanhas
+    if (!user) return;
+
+    const userId = user.id;
+
+    async function loadCampaigns() {
+      try {
+        setIsLoading(true);
+        setError(null);
+
+        const data = await getMasterCampaigns(userId);
+
+        setMasterCampaigns(data);
+      } catch {
+        setError("Não foi possível carregar suas campanhas.");
+      } finally {
+        setIsLoading(false);
+      }
+    }
+
+    loadCampaigns();
+  }, [user]);
+
+  const dashboardStats = [
+    {
+      icon: Crown,
+      value: String(masterCampaigns.length),
+      label: "Campanhas",
+    },
+    {
+      icon: Swords,
+      value: String(
+        masterCampaigns.reduce(
+          (total, campaign) => total + (campaign.sessions_count ?? 0),
+          0,
+        ),
+      ),
+      label: "Sessões",
+    },
+    {
+      icon: User,
+      value: String(
+        masterCampaigns.reduce(
+          (total, campaign) => total + (campaign.characters_count ?? 0),
+          0,
+        ),
+      ),
+      label: "Jogadores",
+    },
+    {
+      icon: Plus,
+      value: String(
+        masterCampaigns.filter((campaign) => campaign.status === "ativa")
+          .length,
+      ),
+      label: "Ativas",
+    },
+  ];
 
   return (
     <main className="mx-auto w-full max-w-7xl px-4 pb-16 pt-13 sm:px-6 lg:px-8">
       <div className="space-y-10">
-        <DashboardHeader name="Aldric Voss" />
+        <DashboardHeader name={user?.name ?? "Mestre"} />
 
         <section className="grid grid-cols-2 gap-4 sm:grid-cols-4">
-          {stats.map((stat) => (
+          {dashboardStats.map((stat) => (
             <StatCard
               key={stat.label}
               icon={stat.icon}
@@ -60,9 +184,110 @@ export default function MasterDashboard() {
                   </Link>
                 </div>
 
-                {campaigns.map((campaign) => (
-                  <CampaignCard key={campaign.title} {...campaign} />
-                ))}
+                {isLoading && (
+                  <p className="text-sm text-amber-100/50">
+                    Carregando campanhas...
+                  </p>
+                )}
+
+                {error && <p className="text-sm text-rose-400">{error}</p>}
+
+                {!isLoading && !error && masterCampaigns.length === 0 && (
+                  <p className="text-sm text-amber-100/50">
+                    Você ainda não criou nenhuma campanha
+                  </p>
+                )}
+
+                {!isLoading &&
+                  !error &&
+                  masterCampaigns.map((campaign) => (
+                    <CampaignCard
+                      key={campaign.id}
+                      id={String(campaign.id)}
+                      title={campaign.name}
+                      description={
+                        campaign.description ?? "Sem descrição cadastrada."
+                      }
+                      status={campaign.status}
+                      sessions={campaign.sessions_count ?? 0}
+                      players={campaign.characters_count ?? 0}
+                      lastSession="—"
+                      to={`/dashboard/master/campaign/${campaign.id}`}
+                    />
+                  ))}
+              </div>
+            )}
+
+            {activeTab === "request" && (
+              <div className="space-y-4">
+                <div className="mb-2 flex items-center justify-between">
+                  <h2 className="text-lg font-semibold text-amber-100">
+                    Requisições
+                  </h2>
+                </div>
+
+                {isLoadingRequests && (
+                  <p className="text-sm text-amber-100/50">
+                    Carregando solicitações...
+                  </p>
+                )}
+
+                {requestError && (
+                  <p className="text-sm text-rose-400">{requestError}</p>
+                )}
+
+                {!isLoadingRequests &&
+                  !requestError &&
+                  requests.length === 0 && (
+                    <p className="text-sm text-amber-100/50">
+                      Nenhuma solicitação pendente no momento.
+                    </p>
+                  )}
+
+                {!isLoadingRequests &&
+                  !requestError &&
+                  requests.map((request) => (
+                    <div
+                      key={request.id}
+                      className="rounded-xl border border-amber-900/25 bg-slate-900/50 p-5"
+                    >
+                      <p className="text-sm text-amber-100">
+                        <span className="font-semibold">
+                          {request.user.name}
+                        </span>{" "}
+                        pediu para entrar na campanha{" "}
+                        <span className="font-semibold text-amber-300">
+                          {request.campaign.name}
+                        </span>
+                        .
+                      </p>
+
+                      {request.character && (
+                        <p className="mt-1 text-xs text-amber-100/45">
+                          Personagem: {request.character.name}{" "}
+                          {request.character.surname ?? ""}
+                        </p>
+                      )}
+
+                      <div className="mt-4 flex gap-3">
+                        <Button
+                          size="sm"
+                          onClick={() => handleAcceptRequest(request.id)}
+                        >
+                          Aceitar
+                        </Button>
+
+                        <Button
+                          size="sm"
+                          variant="outline"
+                          className="border-rose-500/40 text-rose-400 hover:bg-rose-500/10"
+                          onClick={() => handleRejectRequest(request.id)}
+                        >
+                          Recusar
+                        </Button>
+                      </div>
+                    </div>
+                  ))}
               </div>
             )}
 
@@ -78,7 +303,7 @@ export default function MasterDashboard() {
                     </div>
                     <div>
                       <p className="text-lg font-semibold text-amber-100">
-                        Aldric Voss
+                        {user?.name ?? "Master"}
                       </p>
                       <span className="mt-1 inline-flex items-center gap-1.5 rounded-full border border-amber-500/30 bg-amber-500/10 px-2.5 py-1 text-xs text-amber-300">
                         <Crown className="h-3 w-3" /> Mestre
@@ -88,14 +313,23 @@ export default function MasterDashboard() {
 
                   <div className="grid gap-4 border-t border-amber-900/20 pt-4 sm:grid-cols-2">
                     {[
-                      { label: "Nome", value: "Aldric Voss" },
+                      { label: "Nome", value: user?.name ?? "Mestre" },
                       { label: "Tipo de conta", value: "Mestre" },
                       {
                         label: "Campanhas criadas",
-                        value: String(campaigns.length),
+                        value: String(masterCampaigns.length),
                       },
-                      { label: "Sessões narradas", value: "39" },
-                      { label: "Membro desde", value: "Jan 2026" },
+                      {
+                        label: "Sessões narradas",
+                        value: String(
+                          masterCampaigns.reduce(
+                            (total, campaign) =>
+                              total + (campaign.sessions_count ?? 0),
+                            0,
+                          ),
+                        ),
+                      },
+                      { label: "CAMPANHAS ENCERRADAS", value: "0" },
                       { label: "Status", value: "Ativo" },
                     ].map(({ label, value }) => (
                       <div key={label}>
@@ -105,7 +339,7 @@ export default function MasterDashboard() {
                         <p className="text-sm text-amber-100">{value}</p>
                       </div>
                     ))}
-                    <div className="flex gap-3 border-t border-rose-900/20 pt-4">
+                    <div className="flex gap-3 border-t border-rose-900/20 pt-4 hidden">
                       <Button
                         variant="outline"
                         className="border-rose-500/40 text-rose-400 hover:bg-rose-500/10"

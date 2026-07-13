@@ -31,7 +31,7 @@ export type CharacterSkill = {
 
 export type SkillTree = Record<SkillBranchKey, CharacterSkill[]>;
 
-export const MAX_EQUIPPED_SKILLS = 4;
+export const MAX_EQUIPPED_SKILLS = 6;
 
 export const skillBranches: {
   key: SkillBranchKey;

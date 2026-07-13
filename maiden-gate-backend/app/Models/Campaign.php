@@ -76,7 +76,12 @@ class Campaign extends Model
         return $this->hasMany(CampaignSession::class);
     }
 
-        public function campaignUsers()
+    public function diceRolls()
+    {
+        return $this->hasMany(DiceRoll::class);
+    }
+
+    public function campaignUsers()
     {
         return $this->hasMany(CampaignUser::class);
     }

@@ -6,7 +6,7 @@ export type PlayerDashboardTab =
   | "campanhas-disponiveis"
   | "perfil";
 
-export type CampaignStatus = "ativa" | "encerrada";
+export type CampaignStatus = "ativa" | "pausada" | "encerrada";
 export type CharacterMark =
   | "Manifesto"
   | "Oculto"
@@ -19,14 +19,16 @@ export type AttributeKey = "POD" | "DES" | "RES" | "INT" | "DET" | "PRE";
 export interface PlayerCharacterSummary {
   id: number;
   nome: string;
-  sobrenome: string;
+  sobrenome?: string;
   marca: CharacterMark;
   nivel: number;
   hp: number;
   hpMax: number;
   campanha: string;
   marcaCor: string;
-  marcaEmoji: string;
+  marcaEmoji?: string;
+  iconImage?: string | null;
+  fullImage?: string | null;
 }
 
 export interface PlayerCampaignSummary {
@@ -61,21 +63,26 @@ export interface CharacterAttribute {
 }
 
 export interface CharacterSkill {
+  id?: string;
   nome: string;
   descricao: string;
   tipo: "Ativa" | "Passiva" | "Reação";
 }
 
 export interface PlayerCampaignMember {
+  id?: number;
   nome: string;
   personagem: string;
   marca: CharacterMark;
   emoji: string;
+  iconImage?: string | null;
   nivel: number;
   voce?: boolean;
 }
 
 export interface PlayerCharacterFull extends PlayerCharacterSummary {
+  marcaId?: number;
+  campaignId?: number | null;
   paMax: number;
   prMax: number;
   xp: number;
@@ -87,13 +94,28 @@ export interface PlayerCharacterFull extends PlayerCharacterSummary {
 }
 
 export interface PlayerInventoryItem {
+  id?: number;
+  inventoryId?: number;
+  itemId?: number;
   nome: string;
   tipo: string;
   quantidade: number;
   descricao: string;
 }
 
+export type PlayerElementStatus = {
+  level?: number;
+  hp?: number;
+  mana?: number;
+  atk?: number;
+  def?: number;
+  speed?: number;
+  [key: string]: number | undefined;
+};
+
 export interface PlayerCampaignElementLocation {
+  id?: number;
+  imagem?: string | null;
   nome: string;
   tipo: string;
   regiao: string;
@@ -101,26 +123,40 @@ export interface PlayerCampaignElementLocation {
 }
 
 export interface PlayerCampaignElementNpc {
+  id?: number;
+  imagem?: string | null;
   nome: string;
+  marca?: CharacterMark;
   raca: string;
   ocupacao: string;
   personalidade: string;
+  descricao?: string;
+  habilidades?: string;
+  status?: PlayerElementStatus | null;
+  stats?: PlayerElementStatus | null;
 }
 
 export interface PlayerCampaignElementMonster {
+  id?: number;
+  imagem?: string | null;
   nome: string;
   tipo: string;
   ameaca: string;
   habilidades: string;
+  descricao?: string;
+  status?: PlayerElementStatus | null;
+  stats?: PlayerElementStatus | null;
 }
 
 export interface PlayerCampaignElementItem {
+  id?: number;
   nome: string;
   tipo: string;
   descricao: string;
 }
 
 export interface PlayerCampaignElementEvent {
+  id?: number;
   titulo: string;
   cronologia: string;
   data: string;
@@ -154,13 +190,17 @@ export interface PlayerCampaignData {
   nome: string;
   mestre: string;
   localizacaoAtual: {
+    id?: number;
+    imagem?: string | null;
     nome: string;
     descricao: string;
     tipo: string;
+    regiao?: string;
   };
   membros: PlayerCampaignMember[];
   personagem: PlayerCharacterFull;
   inventario: PlayerInventoryItem[];
+  itensDaCampanha?: PlayerCampaignElementItem[];
   elementos: PlayerCampaignElements;
   sessoes: PlayerCampaignSession[];
 }
@@ -175,6 +215,7 @@ export type PlayerCampaignSectionKey =
   | "batalha";
 
 export interface CharacterMarkOption {
+  id?: number;
   value: CharacterMark;
   emoji: string;
   gradiente: string;
@@ -182,6 +223,7 @@ export interface CharacterMarkOption {
   texto: string;
   ativo: string;
   descricao: string;
+  image?: string | null;
 }
 
 export interface AttributeDefinition {

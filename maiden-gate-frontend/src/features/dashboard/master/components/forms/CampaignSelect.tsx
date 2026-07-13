@@ -1,8 +1,7 @@
-const campaigns = [
-  "A Flor do Abismo",
-  "Crônicas de Vareth",
-  "O Despertar da Donzela",
-];
+import { useEffect, useState } from "react";
+import { useAuth } from "../../../../auth/hooks/useAuth";
+import { getMasterCampaigns } from "../../services/dashboardService";
+import type { MasterCampaignApi } from "../../services/dashboardService";
 
 type CampaignSelectProps = {
   value: string;
@@ -13,6 +12,31 @@ export default function CampaignSelect({
   value,
   onChange,
 }: CampaignSelectProps) {
+  const { user } = useAuth();
+
+  const [campaigns, setCampaigns] = useState<MasterCampaignApi[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    if (!user) return;
+
+    const userId = user.id;
+
+    async function loadCampaigns() {
+      try {
+        setIsLoading(true);
+
+        const data = await getMasterCampaigns(userId);
+
+        setCampaigns(data);
+      } finally {
+        setIsLoading(false);
+      }
+    }
+
+    loadCampaigns();
+  }, [user]);
+
   return (
     <select
       value={value}
@@ -31,11 +55,13 @@ export default function CampaignSelect({
         focus:outline-none
       "
     >
-      <option value="">— Selecione uma campanha —</option>
+      <option value="">
+        {isLoading ? "Carregando campanhas..." : "Selecione uma campanha"}
+      </option>
 
       {campaigns.map((campaign) => (
-        <option key={campaign} value={campaign}>
-          {campaign}
+        <option key={campaign.id} value={campaign.id}>
+          {campaign.name}
         </option>
       ))}
     </select>

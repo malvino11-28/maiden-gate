@@ -1,24 +1,42 @@
 export type RecommendedLevel = "Iniciante" | "Intermediário" | "Avançado";
 
 export interface CampaignLocation {
+  image: File | null | string;
   name: string;
   type: string;
   region: string;
   description: string;
 }
 
+type StatusData = {
+  level: number;
+  hp: number;
+  mana: number;
+  atk: number;
+  def: number;
+  speed: number;
+};
+
 export interface CampaignNpc {
+  image: string | null | File;
   name: string;
+  marca_id: string;
+  race: string;
   occupation: string;
   personality: string;
   secret: string;
+  description: string;
+  skills: string[];
+  stats: StatusData;
 }
 
 export interface CampaignMonster {
+  image: File | null | string;
   name: string;
   type: string;
   threat: string;
-  skills: string;
+  skills: string[];
+  stats: StatusData;
   description: string;
 }
 
@@ -41,6 +59,7 @@ export interface CampaignData {
   description: string;
   recommendedLevel: RecommendedLevel;
   players: string;
+  notes?: string;
   locations: CampaignLocation[];
   npcs: CampaignNpc[];
   monsters: CampaignMonster[];

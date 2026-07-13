@@ -2,13 +2,21 @@ import { useState } from "react";
 import { ChevronDown, ChevronUp, Plus, Trash2 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 
+import ImageInput from "../../../components/forms/ImageField";
+import SkillSelector from "../../../components/forms/SkillSelector";
+import StatusEditor from "../../../components/forms/StatusEditor";
+
 import CampaignStepNavigation from "../CreateCampaign/CampaignStepNavigation";
 
 type Field<T> = {
   name: keyof T;
   label: string;
-  placeholder: string;
-  type?: "text" | "textarea";
+  placeholder?: string;
+  type?: "text" | "textarea" | "image" | "skills" | "status" | "select";
+  options?: {
+    value: string;
+    label: string;
+  }[];
 };
 
 type EditableListSectionProps<T extends object> = {
@@ -57,11 +65,15 @@ function EntryCard<T extends object>({
         onClick={() => setOpen((value) => !value)}
       >
         <div className="flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-md border border-amber-700/30 bg-amber-900/30">
-          <span className="font-mono text-xs text-amber-400/70">{index + 1}</span>
+          <span className="font-mono text-xs text-amber-400/70">
+            {index + 1}
+          </span>
         </div>
 
         <p className="flex-1 truncate text-sm text-amber-100/80">
-          {title || <span className="italic text-amber-100/30">sem título</span>}
+          {title || (
+            <span className="italic text-amber-100/30">sem título</span>
+          )}
         </p>
 
         <div className="flex items-center gap-2">
@@ -75,7 +87,11 @@ function EntryCard<T extends object>({
           >
             <Trash2 className="h-3.5 w-3.5" />
           </button>
-          {open ? <ChevronUp className="h-4 w-4 text-amber-100/30" /> : <ChevronDown className="h-4 w-4 text-amber-100/30" />}
+          {open ? (
+            <ChevronUp className="h-4 w-4 text-amber-100/30" />
+          ) : (
+            <ChevronDown className="h-4 w-4 text-amber-100/30" />
+          )}
         </div>
       </div>
 
@@ -86,12 +102,73 @@ function EntryCard<T extends object>({
               <label className="mb-1 block text-xs font-medium text-amber-100/50">
                 {field.label}
               </label>
-              {field.type === "textarea" ? (
+              {field.type === "select" ? (
+                <select
+                  value={String(item[field.name] ?? "")}
+                  onChange={(e) =>
+                    onUpdate(index, {
+                      [field.name]: e.target.value,
+                    } as Partial<T>)
+                  }
+                  className={inputClass()}
+                >
+                  <option value="">
+                    {field.placeholder ?? "Selecione uma opção"}
+                  </option>
+
+                  {field.options?.map((option) => (
+                    <option key={option.value} value={option.value}>
+                      {option.label}
+                    </option>
+                  ))}
+                </select>
+              ) : field.type === "image" ? (
+                <ImageInput
+                  value={item[field.name] as string | File | null}
+                  onChange={(file) =>
+                    onUpdate(index, { [field.name]: file } as Partial<T>)
+                  }
+                />
+              ) : field.type === "skills" ? (
+                <SkillSelector
+                  selected={(item[field.name] as string[]) ?? []}
+                  onChange={(skills) =>
+                    onUpdate(index, { [field.name]: skills } as Partial<T>)
+                  }
+                />
+              ) : field.type === "status" ? (
+                <StatusEditor
+                  value={
+                    (item[field.name] as {
+                      level: number;
+                      hp: number;
+                      mana: number;
+                      atk: number;
+                      def: number;
+                      speed: number;
+                    }) ?? {
+                      level: 1,
+                      hp: 100,
+                      mana: 50,
+                      atk: 10,
+                      def: 10,
+                      speed: 10,
+                    }
+                  }
+                  onChange={(status) =>
+                    onUpdate(index, { [field.name]: status } as Partial<T>)
+                  }
+                />
+              ) : field.type === "textarea" ? (
                 <textarea
                   rows={3}
                   placeholder={field.placeholder}
                   value={String(item[field.name] ?? "")}
-                  onChange={(e) => onUpdate(index, { [field.name]: e.target.value } as Partial<T>)}
+                  onChange={(e) =>
+                    onUpdate(index, {
+                      [field.name]: e.target.value,
+                    } as Partial<T>)
+                  }
                   className={inputClass("resize-none leading-relaxed")}
                 />
               ) : (
@@ -99,10 +176,14 @@ function EntryCard<T extends object>({
                   type="text"
                   placeholder={field.placeholder}
                   value={String(item[field.name] ?? "")}
-                  onChange={(e) => onUpdate(index, { [field.name]: e.target.value } as Partial<T>)}
+                  onChange={(e) =>
+                    onUpdate(index, {
+                      [field.name]: e.target.value,
+                    } as Partial<T>)
+                  }
                   className={inputClass()}
                 />
-              )}
+              )}{" "}
             </div>
           ))}
         </div>
@@ -132,7 +213,11 @@ export default function EditableListSection<T extends object>({
   }
 
   function updateItem(index: number, updates: Partial<T>) {
-    onChange(items.map((item, itemIndex) => (itemIndex === index ? { ...item, ...updates } : item)));
+    onChange(
+      items.map((item, itemIndex) =>
+        itemIndex === index ? { ...item, ...updates } : item,
+      ),
+    );
   }
 
   function deleteItem(index: number) {

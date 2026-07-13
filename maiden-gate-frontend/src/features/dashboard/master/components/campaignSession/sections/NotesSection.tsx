@@ -1,18 +1,35 @@
 import { CheckCircle2, PenLine } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 type Props = {
   initialNotes: string;
+  onSave: (notes: string) => Promise<void>;
 };
 
-export default function NotesSection({ initialNotes }: Props) {
+export default function NotesSection({ initialNotes, onSave }: Props) {
   const [notes, setNotes] = useState(initialNotes);
   const [saved, setSaved] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
-  function handleSave() {
-    setSaved(true);
+  useEffect(() => {
+    setNotes(initialNotes);
+  }, [initialNotes]);
 
-    setTimeout(() => setSaved(false), 1800);
+  async function handleSave() {
+    try {
+      setIsSaving(true);
+      setError(null);
+
+      await onSave(notes);
+
+      setSaved(true);
+      setTimeout(() => setSaved(false), 1800);
+    } catch {
+      setError("Não foi possível salvar as notas.");
+    } finally {
+      setIsSaving(false);
+    }
   }
 
   return (
@@ -36,45 +53,17 @@ export default function NotesSection({ initialNotes }: Props) {
         value={notes}
         onChange={(event) => setNotes(event.target.value)}
         placeholder="Anote planos de sessão, reviravoltas, segredos, lembretes..."
-        className="
-          w-full
-          resize-none
-          rounded-xl
-          border
-          border-amber-900/30
-          bg-slate-900/60
-          px-4
-          py-3
-          text-sm
-          leading-relaxed
-          text-amber-100/80
-          placeholder:text-amber-100/20
-          outline-none
-          transition
-          focus:border-amber-500/50
-          focus:ring-1
-          focus:ring-amber-500/20
-        "
+        className="w-full resize-none rounded-xl border border-amber-900/30 bg-slate-900/60 px-4 py-3 text-sm leading-relaxed text-amber-100/80 placeholder:text-amber-100/20 outline-none transition focus:border-amber-500/50 focus:ring-1 focus:ring-amber-500/20"
       />
+
+      {error && <p className="text-sm text-rose-400">{error}</p>}
 
       <button
         onClick={handleSave}
-        className="
-          rounded-xl
-          bg-gradient-to-r
-          from-amber-500
-          to-rose-600
-          px-5
-          py-2.5
-          text-sm
-          font-semibold
-          text-white
-          transition
-          hover:from-amber-600
-          hover:to-rose-700
-        "
+        disabled={isSaving}
+        className="rounded-xl bg-gradient-to-r from-amber-500 to-rose-600 px-5 py-2.5 text-sm font-semibold text-white transition hover:from-amber-600 hover:to-rose-700 disabled:cursor-not-allowed disabled:opacity-60"
       >
-        Salvar Notas
+        {isSaving ? "Salvando..." : "Salvar Notas"}
       </button>
     </div>
   );

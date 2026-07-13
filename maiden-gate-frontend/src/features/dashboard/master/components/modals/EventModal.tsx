@@ -10,6 +10,8 @@ import Input from "../../../../../shared/components/Form/Input";
 import TextArea from "../../../../../shared/components/Form/TextArea";
 import Button from "../../../../../shared/components/Button/Button";
 
+import { createLoreEvent } from "../../services/masterElementService";
+
 interface EventModalProps {
   isOpen: boolean;
   onClose: () => void;
@@ -21,6 +23,40 @@ export default function EventModal({ isOpen, onClose }: EventModalProps) {
   const [description, setDescription] = useState("");
   const [chronology, setChronology] = useState("");
   const [date, setDate] = useState("");
+
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const handleSubmit = async () => {
+    if (!campaign || !title || !description || !chronology) {
+      setError("Preencha todos os campos obrigatórios.");
+      return;
+    }
+
+    try {
+      setIsLoading(true);
+      setError(null);
+
+      await createLoreEvent(Number(campaign), {
+        title,
+        description,
+        chronology,
+        date: date || null,
+      });
+
+      setCampaign("");
+      setTitle("");
+      setDescription("");
+      setChronology("");
+      setDate("");
+
+      onClose();
+    } catch {
+      setError("Não foi possível criar o evento.");
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
@@ -53,6 +89,8 @@ export default function EventModal({ isOpen, onClose }: EventModalProps) {
         <FormField label="Data do Evento">
           <Input value={date} onChange={(e) => setDate(e.target.value)} />
         </FormField>
+
+        {error && <p className="text-sm text-rose-400">{error}</p>}
       </ModalBody>
 
       <ModalFooter>
@@ -60,7 +98,9 @@ export default function EventModal({ isOpen, onClose }: EventModalProps) {
           Cancelar
         </Button>
 
-        <Button>Criar Evento</Button>
+        <Button onClick={handleSubmit} disabled={isLoading}>
+          {isLoading ? "Criando..." : "Criar Evento"}
+        </Button>
       </ModalFooter>
     </Modal>
   );

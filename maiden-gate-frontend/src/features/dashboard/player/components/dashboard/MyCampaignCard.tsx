@@ -1,7 +1,10 @@
 import { Calendar, ChevronRight } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
-import { campaignStatusLabel, campaignStatusStyle } from "../../data/playerDashboardMock";
+import {
+  campaignStatusLabel,
+  campaignStatusStyle,
+} from "../../data/playerDashboardMock";
 import type { PlayerCampaignSummary } from "../../types/player";
 
 type Props = {
@@ -22,16 +25,21 @@ export default function MyCampaignCard({ campaign }: Props) {
         </div>
 
         <div className="min-w-0">
-          <p className="truncate font-medium text-amber-100">{campaign.campanha}</p>
+          <p className="truncate font-medium text-amber-100">
+            {campaign.campanha}
+          </p>
           <p className="mt-0.5 text-xs text-amber-100/50">
             Mestre: {campaign.mestre} · Personagem: {campaign.personagem}
-            {campaign.proximaSessao !== "—" && ` · Próxima sessão: ${campaign.proximaSessao}`}
+            {campaign.proximaSessao !== "—" &&
+              ` · Próxima sessão: ${campaign.proximaSessao}`}
           </p>
         </div>
       </div>
 
       <div className="flex flex-shrink-0 items-center gap-3">
-        <span className={`rounded-full border px-2.5 py-1 text-xs ${campaignStatusStyle[campaign.status]}`}>
+        <span
+          className={`rounded-full border px-2.5 py-1 text-xs ${campaignStatusStyle[campaign.status]}`}
+        >
           {campaignStatusLabel[campaign.status]}
         </span>
         <ChevronRight className="h-4 w-4 text-amber-100/30 transition-colors group-hover:text-amber-400" />

@@ -11,9 +11,29 @@ class SkillsController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        return response()->json(Skills::all());
+        $query = Skills::query()->with(['marca', 'campaign']);
+
+        if ($request->filled('marca_id')) {
+            $query->where('marca_id', $request->integer('marca_id'));
+        }
+
+        if ($request->filled('campaign_id')) {
+            $query->where(function ($currentQuery) use ($request) {
+                $currentQuery
+                    ->whereNull('campaign_id')
+                    ->orWhere('campaign_id', $request->integer('campaign_id'));
+            });
+        }
+
+        return response()->json(
+            $query
+                ->orderByRaw("CASE WHEN branch = 'penalidade' THEN 1 ELSE 0 END")
+                ->orderBy('unlock_level')
+                ->orderBy('name')
+                ->get()
+        );
     }
 
     /**

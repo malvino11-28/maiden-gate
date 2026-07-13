@@ -1,11 +1,5 @@
-const mockSkills = [
-  "Ataque Pesado",
-  "Bola de Fogo",
-  "Cura",
-  "Escudo Arcano",
-  "Teleporte",
-  "Golpe Sombrio",
-];
+import { Plus, X } from "lucide-react";
+import { useState } from "react";
 
 type SkillSelectorProps = {
   selected: string[];
@@ -16,47 +10,107 @@ export default function SkillSelector({
   selected,
   onChange,
 }: SkillSelectorProps) {
-  function toggleSkill(skill: string) {
-    if (selected.includes(skill)) {
-      onChange(selected.filter((s) => s !== skill));
-      return;
-    }
+  const [skillText, setSkillText] = useState("");
 
-    onChange([...selected, skill]);
+  function addSkill() {
+    const trimmedSkill = skillText.trim();
+
+    if (!trimmedSkill) return;
+
+    onChange([...selected, trimmedSkill]);
+    setSkillText("");
+  }
+
+  function removeSkill(skillIndex: number) {
+    onChange(selected.filter((_, index) => index !== skillIndex));
   }
 
   return (
-    <div
-      className="
-        grid
-        gap-3
-        sm:grid-cols-2
-      "
-    >
-      {mockSkills.map((skill) => (
-        <label
-          key={skill}
+    <div className="space-y-3">
+      <div className="flex gap-2">
+        <input
+          value={skillText}
+          onChange={(event) => setSkillText(event.target.value)}
+          onKeyDown={(event) => {
+            if (event.key === "Enter") {
+              event.preventDefault();
+              addSkill();
+            }
+          }}
+          placeholder="Ex: Bola de Fogo -> Causa dano de fogo com chance de queimadura"
+          className="
+            w-full
+            rounded-xl
+            border
+            border-orange-500/20
+            bg-[#11162B]
+            px-4
+            py-3
+            text-sm
+            text-stone-200
+            placeholder:text-stone-500
+            focus:border-orange-400
+            focus:outline-none
+          "
+        />
+
+        <button
+          type="button"
+          onClick={addSkill}
           className="
             flex
             items-center
-            gap-3
+            gap-1.5
             rounded-xl
             border
-            border-white/10
-            bg-[#11162B]
-            p-3
-            cursor-pointer
+            border-amber-500/30
+            bg-amber-500/10
+            px-4
+            py-3
+            text-sm
+            font-semibold
+            text-amber-300
+            transition
+            hover:bg-amber-500/20
           "
         >
-          <input
-            type="checkbox"
-            checked={selected.includes(skill)}
-            onChange={() => toggleSkill(skill)}
-          />
+          <Plus className="h-4 w-4" />
+          Adicionar
+        </button>
+      </div>
 
-          {skill}
-        </label>
-      ))}
+      {selected.length > 0 && (
+        <div className="flex flex-wrap gap-2 rounded-xl border border-amber-900/20 bg-slate-950/40 p-3">
+          {selected.map((skill, index) => (
+            <div
+              key={`${skill}-${index}`}
+              className="
+                flex
+                items-center
+                gap-2
+                rounded-full
+                border
+                border-amber-500/30
+                bg-amber-500/10
+                px-3
+                py-1.5
+                text-xs
+                text-amber-100
+              "
+            >
+              <span>{skill}</span>
+
+              <button
+                type="button"
+                onClick={() => removeSkill(index)}
+                className="text-amber-100/45 transition hover:text-rose-300"
+              >
+                <X className="h-3.5 w-3.5" />
+              </button>
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 }

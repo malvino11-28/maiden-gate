@@ -8,20 +8,104 @@ import {
   Skull,
   Users,
   Zap,
+  ImageIcon,
 } from "lucide-react";
 
 import { useState } from "react";
 
-import type { CampaignElements } from "../../../types/masterCampaign";
-import type { ElementFormKey } from "../../../data/elementForms";
+import type {
+  CampaignElementStatus,
+  CampaignElements,
+} from "../../../types/masterCampaign";
+
+type ElementFormKey = "localizacao" | "npc" | "monstro" | "item" | "evento";
 
 type Props = {
   elements: CampaignElements;
   onAdd: (type: ElementFormKey) => void;
 };
 
+function getImageSrc(image?: string | null) {
+  if (!image) return "";
+
+  if (image.startsWith("http") || image.startsWith("/")) {
+    return image;
+  }
+
+  return `http://127.0.0.1:8000/storage/${image}`;
+}
+
+function ElementImage({ image, alt }: { image?: string | null; alt: string }) {
+  const imageSrc = getImageSrc(image);
+
+  if (!imageSrc) {
+    return (
+      <div className="flex h-24 w-24 flex-shrink-0 items-center justify-center rounded-lg border border-amber-900/20 bg-slate-950/50 text-amber-100/20">
+        <ImageIcon className="h-6 w-6" />
+      </div>
+    );
+  }
+
+  return (
+    <img
+      src={imageSrc}
+      alt={alt}
+      className="h-24 w-24 flex-shrink-0 rounded-lg object-cover"
+    />
+  );
+}
+
+function getStatusEntries(status?: CampaignElementStatus | null) {
+  if (!status) return [];
+
+  const labels: Record<string, string> = {
+    level: "Nível",
+    hp: "HP",
+    mana: "Mana",
+    atk: "ATK",
+    def: "DEF",
+    speed: "Velocidade",
+  };
+
+  return Object.entries(status)
+    .filter(([, value]) => value !== null && value !== undefined)
+    .map(([key, value]) => ({
+      label: labels[key] ?? key,
+      value: Number(value),
+    }));
+}
+
+function StatusPanel({ status }: { status?: CampaignElementStatus | null }) {
+  const entries = getStatusEntries(status);
+
+  if (entries.length === 0) {
+    return (
+      <div className="mt-3 rounded-lg border border-amber-900/20 bg-slate-950/40 px-3 py-2 text-xs text-amber-100/35">
+        Nenhum status cadastrado.
+      </div>
+    );
+  }
+
+  return (
+    <div className="mt-3 grid grid-cols-2 gap-2 rounded-lg border border-violet-500/20 bg-violet-500/5 p-3 sm:grid-cols-3">
+      {entries.map((entry) => (
+        <div
+          key={entry.label}
+          className="rounded-md border border-amber-900/20 bg-slate-950/50 px-3 py-2"
+        >
+          <p className="text-[10px] uppercase tracking-wider text-amber-100/35">
+            {entry.label}
+          </p>
+          <p className="text-sm font-semibold text-amber-100">{entry.value}</p>
+        </div>
+      ))}
+    </div>
+  );
+}
+
 export default function ElementsSection({ elements, onAdd }: Props) {
   const [openGroup, setOpenGroup] = useState<string | null>("localizacoes");
+  const [openStatusId, setOpenStatusId] = useState<string | null>(null);
 
   const groups = [
     {
@@ -34,15 +118,19 @@ export default function ElementsSection({ elements, onAdd }: Props) {
       render: (item: CampaignElements["localizacoes"][number]) => (
         <div
           key={item.nome}
-          className="rounded-xl border border-amber-900/20 bg-slate-900/60 px-4 py-3"
+          className="flex gap-4 rounded-xl border border-amber-900/20 bg-slate-900/60 px-4 py-3"
         >
-          <p className="text-sm font-medium text-amber-100">{item.nome}</p>
-          <p className="mt-0.5 text-xs text-amber-100/40">
-            {item.tipo} · {item.regiao}
-          </p>
-          <p className="mt-2 text-xs leading-relaxed text-amber-100/55">
-            {item.descricao}
-          </p>
+          <ElementImage image={item.imagem} alt={item.nome} />
+
+          <div className="min-w-0">
+            <p className="text-sm font-medium text-amber-100">{item.nome}</p>
+            <p className="mt-0.5 text-xs text-amber-100/40">
+              {item.tipo} · {item.regiao}
+            </p>
+            <p className="mt-2 text-xs leading-relaxed text-amber-100/55">
+              {item.descricao}
+            </p>
+          </div>
         </div>
       ),
     },
@@ -53,29 +141,52 @@ export default function ElementsSection({ elements, onAdd }: Props) {
       color: "text-violet-400",
       formKey: "npc" as ElementFormKey,
       items: elements.npcs,
-      render: (item: CampaignElements["npcs"][number]) => (
-        <div
-          key={item.nome}
-          className="rounded-xl border border-amber-900/20 bg-slate-900/60 px-4 py-3"
-        >
-          <p className="text-sm font-medium text-amber-100">{item.nome}</p>
-          <p className="mt-0.5 text-xs text-amber-100/40">
-            {item.raca} · {item.ocupacao}
-          </p>
-          <p className="mt-2 text-xs text-amber-100/55">{item.personalidade}</p>
+      render: (item: CampaignElements["npcs"][number]) => {
+        const statusId = `npc-${item.id ?? item.name}`;
+        const isStatusOpen = openStatusId === statusId;
 
-          {item.segredo && (
-            <div className="mt-2 rounded-lg border border-rose-900/25 bg-rose-900/15 px-3 py-2">
-              <p className="flex items-center gap-1.5 text-xs text-rose-300/70">
-                <Zap className="h-3 w-3" />
-                Segredo visível apenas ao Mestre
+        return (
+          <div
+            key={item.name}
+            className="relative flex gap-4 rounded-xl border border-amber-900/20 bg-slate-900/60 px-4 py-3"
+          >
+            <button
+              type="button"
+              onClick={() => setOpenStatusId(isStatusOpen ? null : statusId)}
+              className="absolute right-2 top-2 z-10 rounded-md border border-violet-500/30 bg-slate-950/80 px-1.5 py-0.5 text-[10px] font-medium text-violet-400 transition-all hover:border-violet-400/50 hover:bg-violet-500/10 hover:text-violet-300"
+            >
+              {isStatusOpen ? "Ocultar Status" : "Ver Status"}
+            </button>
+
+            <ElementImage image={item.image} alt={item.name} />
+
+            <div className="min-w-0 flex-1 pr-20">
+              <p className="text-sm font-medium text-amber-100">{item.name}</p>
+              <p className="mt-0.5 text-xs text-amber-100/40">
+                {item.race} · {item.occupation}
+              </p>
+              <p className="mt-2 text-xs text-amber-100/55">
+                {item.personality}
               </p>
 
-              <p className="mt-0.5 text-xs text-amber-100/50">{item.segredo}</p>
+              {isStatusOpen && <StatusPanel status={item.stats} />}
+
+              {item.secret && (
+                <div className="mt-2 rounded-lg border border-rose-900/25 bg-rose-900/15 px-3 py-2">
+                  <p className="flex items-center gap-1.5 text-xs text-rose-300/70">
+                    <Zap className="h-3 w-3" />
+                    Segredo visível apenas ao Mestre
+                  </p>
+
+                  <p className="mt-0.5 text-xs text-amber-100/50">
+                    {item.secret}
+                  </p>
+                </div>
+              )}
             </div>
-          )}
-        </div>
-      ),
+          </div>
+        );
+      },
     },
     {
       key: "monstros",
@@ -84,21 +195,40 @@ export default function ElementsSection({ elements, onAdd }: Props) {
       color: "text-rose-400",
       formKey: "monstro" as ElementFormKey,
       items: elements.monstros,
-      render: (item: CampaignElements["monstros"][number]) => (
-        <div
-          key={item.nome}
-          className="rounded-xl border border-amber-900/20 bg-slate-900/60 px-4 py-3"
-        >
-          <p className="text-sm font-medium text-amber-100">{item.nome}</p>
-          <p className="mt-0.5 text-xs text-amber-100/40">
-            {item.tipo} · Ameaça {item.ameaca}
-          </p>
-          <p className="mt-1 text-xs text-amber-100/55">{item.habilidades}</p>
-          <p className="mt-1 text-xs leading-relaxed text-amber-100/45">
-            {item.descricao}
-          </p>
-        </div>
-      ),
+      render: (item: CampaignElements["monstros"][number]) => {
+        const statusId = `monster-${item.id ?? item.name}`;
+        const isStatusOpen = openStatusId === statusId;
+
+        return (
+          <div
+            key={item.nome}
+            className="relative flex gap-4 rounded-xl border border-amber-900/20 bg-slate-900/60 px-4 py-3"
+          >
+            <button
+              type="button"
+              onClick={() => setOpenStatusId(isStatusOpen ? null : statusId)}
+              className="absolute right-2 top-2 z-10 rounded-md border border-violet-500/30 bg-slate-950/80 px-1.5 py-0.5 text-[10px] font-medium text-violet-400 transition-all hover:border-violet-400/50 hover:bg-violet-500/10 hover:text-violet-300"
+            >
+              {isStatusOpen ? "Ocultar Status" : "Ver Status"}
+            </button>
+
+            <ElementImage image={item.image} alt={item.name} />
+
+            <div className="min-w-0 pr-20">
+              <p className="text-sm font-medium text-amber-100">{item.name}</p>
+              <p className="mt-0.5 text-xs text-amber-100/40">
+                {item.type} · Ameaça {item.threat}
+              </p>
+              <p className="mt-1 text-xs text-amber-100/55">{item.skills}</p>
+              <p className="mt-1 text-xs leading-relaxed text-amber-100/45">
+                {item.description}
+              </p>
+
+              {isStatusOpen && <StatusPanel status={item.stats} />}
+            </div>
+          </div>
+        );
+      },
     },
     {
       key: "itens",

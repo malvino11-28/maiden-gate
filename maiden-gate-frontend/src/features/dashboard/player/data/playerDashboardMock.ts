@@ -1,4 +1,15 @@
-import { BarChart2, Backpack, Calendar, Globe, Lock, Scroll, Shield, Star, Swords, User } from "lucide-react";
+import {
+  BarChart2,
+  Backpack,
+  Calendar,
+  Globe,
+  Lock,
+  Scroll,
+  Shield,
+  Star,
+  Swords,
+  User,
+} from "lucide-react";
 
 import type {
   AvailableCampaign,
@@ -86,12 +97,13 @@ export const availableCampaigns: AvailableCampaign[] = [
   },
 ];
 
-export const playerDashboardTabs: { key: PlayerDashboardTab; label: string }[] = [
-  { key: "personagens", label: "Personagens" },
-  { key: "minhas-campanhas", label: "Minhas Campanhas" },
-  { key: "campanhas-disponiveis", label: "Campanhas Disponíveis" },
-  { key: "perfil", label: "Perfil" },
-];
+export const playerDashboardTabs: { key: PlayerDashboardTab; label: string }[] =
+  [
+    { key: "personagens", label: "Personagens" },
+    { key: "minhas-campanhas", label: "Minhas Campanhas" },
+    { key: "campanhas-disponiveis", label: "Campanhas Disponíveis" },
+    { key: "perfil", label: "Perfil" },
+  ];
 
 export const campaignStatusStyle = {
   ativa: "bg-emerald-500/15 text-emerald-300 border-emerald-500/30",
@@ -108,10 +120,15 @@ export function getPlayerStats(): PlayerStat[] {
     { label: "Personagens", value: playerCharacters.length, icon: User },
     {
       label: "Campanhas ativas",
-      value: myCampaigns.filter((campaign) => campaign.status === "ativa").length,
+      value: myCampaigns.filter((campaign) => campaign.status === "ativa")
+        .length,
       icon: Scroll,
     },
-    { label: "Campanhas disponíveis", value: availableCampaigns.length, icon: Globe },
+    {
+      label: "Campanhas disponíveis",
+      value: availableCampaigns.length,
+      icon: Globe,
+    },
     { label: "Tipo de conta", value: "Jogador", icon: Shield },
   ];
 }

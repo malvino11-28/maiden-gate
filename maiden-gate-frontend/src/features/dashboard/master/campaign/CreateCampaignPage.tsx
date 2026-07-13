@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useMemo, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   BookOpen,
@@ -22,6 +22,12 @@ import type { CampaignStep } from "./types/campaignStep";
 
 import PremadeCampaignModal from "./modal/PremadeCampaign";
 import type { PremadeCampaign } from "./data/premadeCampaign";
+
+import { getMarks } from "./service/markService";
+import type { MarkOption } from "./service/markService";
+
+import { useAuth } from "../../../auth/hooks/useAuth";
+import { createCampaign } from "./service/createCampaignService";
 
 const steps: CampaignStep[] = [
   "cover",
@@ -52,10 +58,26 @@ const stepIcons = {
 
 export default function CreateCampaignPage() {
   const navigate = useNavigate();
+
+  const [marks, setMarks] = useState<MarkOption[]>([]);
+
+  useEffect(() => {
+    async function loadBrands() {
+      const data = await getMarks();
+      setMarks(data);
+    }
+
+    loadBrands();
+  }, []);
+
   const [isPremadeModalOpen, setIsPremadeModalOpen] = useState(false);
   const [currentStep, setCurrentStep] = useState<CampaignStep>("cover");
   const [saved, setSaved] = useState(false);
   const { campaign, updateField } = useCampaignForm();
+
+  const { user } = useAuth();
+  const [isSaving, setIsSaving] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   const currentIndex = steps.indexOf(currentStep);
   const progress = useMemo(
@@ -63,16 +85,86 @@ export default function CreateCampaignPage() {
     [currentIndex],
   );
 
+  function findMarkId(markName?: string | null) {
+    if (!markName) return "";
+
+    const normalizedMarkName = markName.trim().toLowerCase();
+    const mark = marks.find(
+      (item) => item.name.trim().toLowerCase() === normalizedMarkName,
+    );
+
+    return mark ? String(mark.id) : "";
+  }
+
   function handleUsePremadeCampaign(campaign: PremadeCampaign) {
-    updateField("image", "");
+    updateField("image", campaign.image);
     updateField("name", campaign.name);
     updateField("description", campaign.description);
     updateField("recommendedLevel", campaign.recommendedLevel);
     updateField("players", campaign.players);
 
-    updateField("locations", campaign.locations);
-    updateField("npcs", campaign.npcs);
-    updateField("monsters", campaign.monsters);
+    updateField(
+      "locations",
+      campaign.locations.map((location) => ({
+        image: location.image,
+        name: location.name,
+        type: location.type,
+        region: location.region,
+        description: location.description,
+      })),
+    );
+    updateField(
+      "npcs",
+      campaign.npcs.map((npc) => ({
+        image: npc.image,
+        name: npc.name,
+        marca_id: findMarkId(npc.brand),
+        race: npc.race,
+        occupation: npc.occupation,
+        personality: npc.personality,
+        secret: npc.secret,
+        description: npc.description,
+        skills: npc.skills
+          ? npc.skills
+              .split(".")
+              .map((skill) => skill.trim())
+              .filter(Boolean)
+          : [],
+        stats: {
+          level: 1,
+          hp: 100,
+          mana: 50,
+          atk: 10,
+          def: 10,
+          speed: 10,
+        },
+      })),
+    );
+
+    updateField(
+      "monsters",
+      campaign.monsters.map((monster) => ({
+        image: monster.image,
+        name: monster.name,
+        type: monster.type,
+        threat: monster.threat,
+        description: monster.description,
+        skills: monster.skills
+          ? monster.skills
+              .split(".")
+              .map((skill) => skill.trim())
+              .filter(Boolean)
+          : [],
+        stats: {
+          level: 1,
+          hp: 100,
+          mana: 50,
+          atk: 10,
+          def: 10,
+          speed: 10,
+        },
+      })),
+    );
     updateField("items", campaign.items);
     updateField("events", campaign.events);
   }
@@ -87,10 +179,69 @@ export default function CreateCampaignPage() {
     if (previousStep) setCurrentStep(previousStep);
   }
 
-  function handleFinish() {
-    console.log("Criar campanha", campaign);
-    setSaved(true);
-    setTimeout(() => navigate("/dashboard/master"), 900);
+  async function handleFinish() {
+    if (!user) {
+      setError("Você precisa estar logado para criar uma campanha.");
+      return;
+    }
+
+    if (!campaign.name || !campaign.recommendedLevel) {
+      setError("Preencha os dados principais da campanha.");
+      return;
+    }
+
+    try {
+      setIsSaving(true);
+      setError(null);
+
+      const createdCampaign = await createCampaign({
+        master_id: user.id,
+        name: campaign.name,
+        description: campaign.description || null,
+        image: campaign.image || null,
+        recommended_level: campaign.recommendedLevel,
+        players: campaign.players || null,
+        status: "ativa",
+        notes: campaign.notes ?? null,
+
+        locations: campaign.locations,
+
+        npcs: campaign.npcs.map((npc) => ({
+          image: npc.image,
+          name: npc.name,
+          marca_id: npc.marca_id || "",
+          race: npc.race || "",
+          occupation: npc.occupation || "",
+          personality: npc.personality || "",
+          secret: npc.secret || "",
+          description: npc.description || "",
+          skills: npc.skills,
+          stats: npc.stats,
+        })),
+
+        monsters: campaign.monsters.map((monster) => ({
+          image: monster.image,
+          name: monster.name,
+          type: monster.type || "",
+          threat: monster.threat || "",
+          description: monster.description || "",
+          skills: monster.skills,
+          stats: monster.stats,
+        })),
+
+        items: campaign.items,
+        events: campaign.events,
+      });
+      setSaved(true);
+
+      setTimeout(() => {
+        navigate(`/dashboard/master/campaign/${createdCampaign.id}`);
+      }, 900);
+    } catch {
+      setError("Não foi possível criar a campanha.");
+    } finally {
+      setIsSaving(false);
+    }
   }
 
   const summary = [
@@ -165,6 +316,7 @@ export default function CreateCampaignPage() {
                 <NpcsSection
                   campaign={campaign}
                   updateField={updateField}
+                  marks={marks}
                   onNext={goNext}
                   onPrevious={goPrevious}
                 />
@@ -232,6 +384,18 @@ export default function CreateCampaignPage() {
                     </div>
                   ))}
                 </div>
+
+                {error && (
+                  <div className="rounded-xl border border-rose-500/30 bg-rose-500/10 p-4 text-sm text-rose-200">
+                    {error}
+                  </div>
+                )}
+
+                {isSaving && (
+                  <div className="rounded-xl border border-amber-500/30 bg-amber-500/10 p-4 text-sm text-amber-200">
+                    Salvando campanha...
+                  </div>
+                )}
 
                 {saved && (
                   <div className="rounded-xl border border-emerald-500/30 bg-emerald-500/10 p-4 text-sm text-emerald-200">

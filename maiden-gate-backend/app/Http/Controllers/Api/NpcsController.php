@@ -36,8 +36,15 @@ class NpcsController extends Controller
             'stats' => 'nullable|array'
         ]);
 
+        $imagePath = null;
+
+        if ($request->hasFile('image')) {
+            $imagePath = $request->file('image')->store('npc', 'public');
+        }
+
         $npc = $campaign->npcs()->create([
             'marca_id' => $data['marca_id'] ?? null,
+            'image' => $imagePath,
             'name' => $data['name'],
             'race' => $data['race'] ?? null,
             'occupation' => $data['occupation'] ?? null,

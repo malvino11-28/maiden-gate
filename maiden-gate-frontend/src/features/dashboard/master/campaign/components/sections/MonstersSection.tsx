@@ -1,7 +1,11 @@
 import { Skull } from "lucide-react";
 
 import EditableListSection from "./EditableListSection";
-import type { CampaignData, CampaignMonster, UpdateCampaignField } from "../../types/campaign";
+import type {
+  CampaignData,
+  CampaignMonster,
+  UpdateCampaignField,
+} from "../../types/campaign";
 
 type Props = {
   campaign: CampaignData;
@@ -11,14 +15,28 @@ type Props = {
 };
 
 const emptyMonster = (): CampaignMonster => ({
+  image: null,
   name: "",
   type: "",
   threat: "",
-  skills: "",
+  skills: [],
+  stats: {
+    level: 1,
+    hp: 100,
+    mana: 50,
+    atk: 10,
+    def: 10,
+    speed: 10,
+  },
   description: "",
 });
 
-export default function MonstersSection({ campaign, updateField, onNext, onPrevious }: Props) {
+export default function MonstersSection({
+  campaign,
+  updateField,
+  onNext,
+  onPrevious,
+}: Props) {
   return (
     <EditableListSection<CampaignMonster>
       title="Bestiário"
@@ -34,11 +52,31 @@ export default function MonstersSection({ campaign, updateField, onNext, onPrevi
       onPrevious={onPrevious}
       nextLabel="Próximo: Itens"
       fields={[
+        { name: "image", label: "Imagem", type: "image", placeholder: "" },
         { name: "name", label: "Nome", placeholder: "Ex: Golem de Cristal" },
-        { name: "type", label: "Tipo", placeholder: "Ex: Constructo, Morto-vivo, Besta…" },
-        { name: "threat", label: "Nível de Ameaça", placeholder: "Ex: 4 (médio)" },
-        { name: "skills", label: "Habilidades Especiais", placeholder: "Ex: Regeneração, Voo, Veneno…" },
-        { name: "description", label: "Descrição & Comportamento", placeholder: "Aparência, habitat e tática de combate…", type: "textarea" },
+        {
+          name: "type",
+          label: "Tipo",
+          placeholder: "Ex: Constructo, Morto-vivo...",
+        },
+        {
+          name: "threat",
+          label: "Nível de Ameaça",
+          placeholder: "Ex: 4 (médio)",
+        },
+        {
+          name: "description",
+          label: "Descrição",
+          placeholder: "Aparência, habitat e comportamento...",
+          type: "textarea",
+        },
+        {
+          name: "skills",
+          label: "Habilidades Especiais",
+          type: "skills",
+          placeholder: "",
+        },
+        { name: "stats", label: "Status", type: "status", placeholder: "" },
       ]}
     />
   );

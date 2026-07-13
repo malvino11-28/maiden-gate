@@ -1,5 +1,6 @@
 export type PremadeLocation = {
   name: string;
+  image: string | null;
   type: string;
   region: string;
   description: string;
@@ -7,14 +8,19 @@ export type PremadeLocation = {
 
 export type PremadeNpc = {
   name: string;
+  image: string;
+  brand: string | null;
   race: string;
   occupation: string;
   personality: string;
   secret: string;
+  description: string;
+  skills: string;
 };
 
 export type PremadeMonster = {
   name: string;
+  image: string;
   type: string;
   threat: string;
   skills: string;
@@ -37,6 +43,7 @@ export type PremadeEvent = {
 export type PremadeCampaign = {
   id: string;
   name: string;
+  image: string;
   genre: string;
   tone: string;
   recommendedLevel: "Iniciante" | "Intermediário" | "Avançado";
@@ -48,110 +55,132 @@ export type PremadeCampaign = {
   items: PremadeItem[];
   events: PremadeEvent[];
 };
-
+import flower from "../../../../../assets/images/logo.png";
 export const premadeCampaigns: PremadeCampaign[] = [
   {
-    id: "flor-negra",
-    name: "A Flor Negra",
-    genre: "Mistério & Horror",
+    id: "awakening",
+    image: flower,
+    name: "O Despertar da Donzela",
+    genre: "Mistério & Suspense",
     tone: "Sombrio",
-    recommendedLevel: "Intermediário",
-    players: "3–5",
+    recommendedLevel: "Avançado",
+    players: "3–8",
     description:
-      "Um culto secreto dedica-se a despertar uma entidade adormecida no coração do reino. Rumores de desaparecimentos, rituais noturnos e flores negras brotando em lugares impossíveis chegam aos ouvidos dos aventureiros. O tempo é curto — a próxima lua cheia é a data marcada para o ritual final.",
+      "A tensão política está a tona, o Sindicato das Sombras e a Ordem da Luz estão prestes a iniciar uma nova guerra mundial. Como protesto, Eleanor, filha da rainha do Manifesto decide revelar seu segredo para o mundo... Muitos olharam para ela como a 'mêssias', outros como um sinal do apocalipse",
 
     locations: [
       {
-        name: "Aldeia de Mirren",
+        name: "Cidade Catedral",
+        image: flower,
         type: "Cidade",
-        region: "Vale Central",
+        region: "Nascente da Flor",
         description:
-          "Aldeia assombrada onde os primeiros desaparecimentos ocorreram. Seus habitantes vivem em medo silencioso.",
+          "Cidade ainda em construção em volta da Flor, com o castelo da família real. Residem nela apenas cidadões de alta classe.",
       },
       {
-        name: "Catedral das Sombras",
-        type: "Masmorra",
-        region: "Floresta de Cinzas",
+        name: "Caminho da Cidade Catedral",
+        image: "",
+        type: "Estrada",
+        region: "Sul da Ilha da Flor",
         description:
-          "Ruína de uma antiga catedral convertida em templo do culto. Cheia de armadilhas e guardiões.",
+          "Estrada estreita, cheias de montanhas em volta. Apenas pescadores e cidadões nobres passam por aqui.",
       },
       {
-        name: "Caverna do Primeiro Grito",
-        type: "Masmorra",
-        region: "Montanhas do Esquecimento",
+        name: "Songbird",
+        image: "",
+        type: "Cidade",
+        region: "Sul da Ilha da Flor",
         description:
-          "Local onde a entidade foi originalmente selada. O ritual final deve acontecer aqui.",
+          "Cidade, escolas e um castelo das Entoadoras. Próximo as montanhas.",
+      },
+      {
+        name: "Cratera",
+        image: "",
+        type: "Raid",
+        region: "Norte da Ilha da Flor",
+        description:
+          "Uma grande cortina de Miasma cobre a cratera. Estranhamente, há um caminho de Miasma que leva há outra raid.",
       },
     ],
 
     npcs: [
       {
-        name: "Lira, a Sobrevivente",
+        name: "Eleanor, a Donzela",
+        image: flower,
+        brand: "Manifesto",
         race: "Humana",
-        occupation: "Testemunha",
+        occupation: "Futura Rainha",
         personality:
-          "Traumatizada mas determinada. A única que escapou de um ritual e pode guiar o grupo.",
-        secret: "Foi marcada pelo culto e começa a ouvir a voz da entidade.",
+          "Determinada e inconsequente. Só quer acabar com a guerra entre os dois reinos.",
+        secret:
+          "Possuí duas marcas, a da sua família (Manifesto) e de seus maiores inimigos (Oculto). A do Manifesto está em seu pescoço, a do Oculto está em seu ombro esquerdo.",
+        description:
+          "Eleanor é uma figura central da tensão política entre Manifesto e Oculto.",
+        skills: "Autoridade Real. Dupla Marca. Resistência ao Miasma",
       },
       {
-        name: "Arquimaestro Venn",
-        race: "Humano",
-        occupation: "Líder do Culto",
+        name: "Vasil, o Astuto",
+        image: "",
+        brand: "Maso",
+        race: "Maso (Pássaro)",
+        occupation: "Guia da Cidade",
         personality:
-          "Carismático e eloquente. Acredita genuinamente que está salvando o mundo.",
-        secret: "Sua filha foi a primeira vítima. Ele não consegue parar.",
+          "Carismático e eloquente. Faz de tudo pelo Manifesto, mesmo que eles repudiem sua espécie.",
+        secret: "É o melhor espião do Sindicato das Sombras.",
+        description: "",
+        skills: "",
       },
     ],
 
     monsters: [
       {
-        name: "Devoto Corrompido",
-        type: "Humanoide",
-        threat: "2",
-        skills: "Resistência a Magia Sagrada. Grito do Vazio.",
-        description:
-          "Membros do culto transformados pelo contato com a entidade.",
+        name: "Bandido",
+        image: flower,
+        type: "Humano",
+        threat: "1",
+        skills: "Bomba de Fumaça. Corte Rápido.",
+        description: "Bandido comum, querendo apenas roubar e ir embora.",
       },
       {
-        name: "Sombra-Flor",
+        name: "Consciência Coletiva",
+        image: "",
         type: "Aberração",
         threat: "5",
         skills:
-          "Incorporal. Drenar Esperança: reduz d6 de um atributo por turno.",
-        description:
-          "Manifestação parcial da entidade adormecida. Forma de flor negra gigante com tentáculos de sombra.",
+          "Incorporal. Copiar. Drenar Esperança: reduz d6 de um atributo por turno.",
+        description: "Um vírus consciente. Se espalha por contato de sangue.",
       },
     ],
 
     items: [
       {
-        name: "Pétalas da Entidade",
+        name: "Fragmento de Pétala",
         type: "Artefato",
         description:
-          "Flor negra preservada que pulsa com vida própria. Causa pesadelos ao portador mas concede visões do passado.",
+          "Um fragmento da pétala da Flor. Parece emitir um brilho fraco. Concede sorte ao portador (+5 de modificador), mas com um uso ela se desfaz.",
       },
       {
-        name: "Diário de Venn",
-        type: "Misc",
+        name: "Fragmento da Raiz da Flor",
+        type: "Consumível",
         description:
-          "Registra toda a história do culto. Chave para entender o ritual e como revertê-lo.",
+          "Algumas partes da raiz da Flor flutuaram até a superfície do oceano. Concede 10 de cura por nível do usuário.",
       },
     ],
 
     events: [
       {
-        title: "Os Primeiros Desaparecimentos",
+        title: "O Desaparecimento de Elio",
         chronology: "3 meses antes",
-        date: "Início da Campanha",
+        date: "Antes da Campanha",
         description:
-          "Seis aldeões desapareceram. As autoridades ignoram. As famílias estão desesperadas.",
+          "O rei do Manifesto, Elio, desapareceu. Há suspeitas de que Velen esteja envolvido, atualmente está foragido.",
       },
       {
-        title: "A Lua de Sangue",
-        chronology: "Clímax",
-        date: "Fim da Campanha",
+        title: "A Revelação",
+        chronology: "Inicio da Campanha",
+        date: "Inicio da Campanha",
         description:
-          "A entidade desperta parcialmente se o ritual não for impedido. O mundo começa a sangrar.",
+          "No Festival da Flor, com todos os tipos de pessoas presentes, Eleanor sobe até o palco da cantora e revela seu ombro para o mundo...",
       },
     ],
   },

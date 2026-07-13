@@ -10,10 +10,13 @@ import FormField from "../forms/FormField";
 import CampaignSelect from "../forms/CampaignSelect";
 import SkillSelector from "../forms/SkillSelector";
 import StatusEditor from "../forms/StatusEditor";
+import ImageInput from "../forms/ImageField";
 
 import Input from "../../../../../shared/components/Form/Input";
 import TextArea from "../../../../../shared/components/Form/TextArea";
 import Button from "../../../../../shared/components/Button/Button";
+
+import { createMonster } from "../../services/masterElementService";
 
 interface MonsterModalProps {
   isOpen: boolean;
@@ -24,7 +27,9 @@ export default function MonsterModal({ isOpen, onClose }: MonsterModalProps) {
   const [campaign, setCampaign] = useState("");
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
-
+  const [type, setType] = useState("");
+  const [threat, setThreat] = useState("");
+  const [image, setImage] = useState<File | null>(null);
   const [skills, setSkills] = useState<string[]>([]);
 
   const [status, setStatus] = useState({
@@ -35,6 +40,45 @@ export default function MonsterModal({ isOpen, onClose }: MonsterModalProps) {
     def: 10,
     speed: 10,
   });
+
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const handleSubmit = async () => {
+    if (!campaign || !name || !description || skills.length === 0) {
+      setError("Preencha todos os campos obrigatórios.");
+      return;
+    }
+
+    try {
+      setIsLoading(true);
+      setError(null);
+
+      await createMonster(Number(campaign), {
+        image,
+        name,
+        type,
+        threat,
+        description,
+        skills,
+        status,
+      });
+
+      setCampaign("");
+      setName("");
+      setType("");
+      setType("");
+      setImage(null);
+      setDescription("");
+      setSkills([]);
+
+      onClose();
+    } catch {
+      setError("Não foi possível criar o monstro.");
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
@@ -51,6 +95,10 @@ export default function MonsterModal({ isOpen, onClose }: MonsterModalProps) {
             <CampaignSelect value={campaign} onChange={setCampaign} />
           </FormField>
 
+          <FormField label="Imagem">
+            <ImageInput onChange={setImage} />
+          </FormField>
+
           <FormField label="Nome" required>
             <Input value={name} onChange={(e) => setName(e.target.value)} />
           </FormField>
@@ -63,6 +111,14 @@ export default function MonsterModal({ isOpen, onClose }: MonsterModalProps) {
             />
           </FormField>
 
+          <FormField label="Tipo">
+            <Input value={type} onChange={(e) => setType(e.target.value)} />
+          </FormField>
+
+          <FormField label="Nível de Ameaça">
+            <Input value={threat} onChange={(e) => setThreat(e.target.value)} />
+          </FormField>
+
           <FormField label="Habilidades" required>
             <SkillSelector selected={skills} onChange={setSkills} />
           </FormField>
@@ -71,6 +127,8 @@ export default function MonsterModal({ isOpen, onClose }: MonsterModalProps) {
             <StatusEditor value={status} onChange={setStatus} />
           </FormField>
         </div>
+
+        {error && <p className="text-sm text-rose-400">{error}</p>}
       </ModalBody>
 
       <ModalFooter>
@@ -78,7 +136,9 @@ export default function MonsterModal({ isOpen, onClose }: MonsterModalProps) {
           Cancelar
         </Button>
 
-        <Button>Criar Monstro</Button>
+        <Button onClick={handleSubmit} disabled={isLoading}>
+          {isLoading ? "Criando..." : "Criar Monstro"}
+        </Button>
       </ModalFooter>
     </Modal>
   );

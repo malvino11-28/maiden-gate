@@ -1,7 +1,11 @@
 import { MapPin } from "lucide-react";
 
 import EditableListSection from "./EditableListSection";
-import type { CampaignData, CampaignLocation, UpdateCampaignField } from "../../types/campaign";
+import type {
+  CampaignData,
+  CampaignLocation,
+  UpdateCampaignField,
+} from "../../types/campaign";
 
 type Props = {
   campaign: CampaignData;
@@ -11,13 +15,19 @@ type Props = {
 };
 
 const emptyLocation = (): CampaignLocation => ({
+  image: null,
   name: "",
   type: "",
   region: "",
   description: "",
 });
 
-export default function LocationSection({ campaign, updateField, onNext, onPrevious }: Props) {
+export default function LocationSection({
+  campaign,
+  updateField,
+  onNext,
+  onPrevious,
+}: Props) {
   return (
     <EditableListSection<CampaignLocation>
       title="Localizações"
@@ -33,10 +43,24 @@ export default function LocationSection({ campaign, updateField, onNext, onPrevi
       onPrevious={onPrevious}
       nextLabel="Próximo: NPCs"
       fields={[
+        { name: "image", label: "Imagem", type: "image", placeholder: "" },
         { name: "name", label: "Nome", placeholder: "Ex: Torre de Valdris" },
-        { name: "type", label: "Tipo", placeholder: "Ex: Cidade, Masmorra, Floresta…" },
-        { name: "region", label: "Região", placeholder: "Em qual região do mapa fica?" },
-        { name: "description", label: "Descrição", placeholder: "História, clima, pontos de interesse…", type: "textarea" },
+        {
+          name: "type",
+          label: "Tipo",
+          placeholder: "Ex: Cidade, Masmorra, Floresta…",
+        },
+        {
+          name: "region",
+          label: "Região",
+          placeholder: "Em qual região do mapa fica?",
+        },
+        {
+          name: "description",
+          label: "Descrição",
+          placeholder: "História, clima, pontos de interesse…",
+          type: "textarea",
+        },
       ]}
     />
   );
