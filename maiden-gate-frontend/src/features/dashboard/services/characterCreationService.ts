@@ -5,6 +5,7 @@ import type {
   AttributeKey,
   CharacterMark,
   CharacterMarkOption,
+  CharacterSkill as PlayerCharacterSkill,
 } from "../player/types/player";
 
 import type {
@@ -245,4 +246,134 @@ export async function createCharacter(payload: CreateCharacterPayload) {
   const response = await api.post("/characters", formData);
 
   return response.data;
+}
+
+
+export type EditableCharacterData = {
+  id: number;
+  nome: string;
+  sobrenome: string;
+  origem: string;
+  historia: string;
+  marca: CharacterMark;
+  marcaId: number;
+  campaignId: number | null;
+  campanha: string;
+  nivel: number;
+  hp: number;
+  hpMax: number;
+  paMax: number;
+  prMax: number;
+  iconImage: string | null;
+  fullImage: string | null;
+  attributes: Record<AttributeKey, number>;
+  habilidades: PlayerCharacterSkill[];
+  equippedSkillIds: string[];
+};
+
+export type UpdateCharacterPayload = {
+  nome: string;
+  sobrenome: string;
+  origem: string;
+  historia: string;
+  iconImage: File | null;
+  fullImage: File | null;
+  hpCurrent: number;
+  attributes: Record<AttributeKey, number>;
+  equippedSkillIds: string[];
+};
+
+function normalizePlayerSkillType(type?: string | null): PlayerCharacterSkill["tipo"] {
+  if (type === "passiva") return "Passiva";
+  if (type === "reacao" || type === "reação") return "Reação";
+  return "Ativa";
+}
+
+export function mapEditableCharacter(character: any): EditableCharacterData {
+  const mark = normalizeMarkName(character?.marca?.name ?? character?.marca?.nome);
+
+  const attributes: Record<AttributeKey, number> = {
+    POD: Number(character?.pod ?? 0),
+    DES: Number(character?.des ?? 0),
+    RES: Number(character?.res ?? 0),
+    INT: Number(character?.int ?? 0),
+    DET: Number(character?.det ?? 0),
+    PRE: Number(character?.pre ?? 0),
+  };
+
+  const habilidades: PlayerCharacterSkill[] = (character?.skills ?? [])
+    .filter((skill: any) => skill?.pivot?.equipped ?? true)
+    .map((skill: any) => ({
+      id: String(skill.id),
+      nome: skill.name ?? skill.nome ?? "Habilidade sem nome",
+      descricao: skill.description ?? skill.descricao ?? "Sem descrição.",
+      tipo: normalizePlayerSkillType(skill.type ?? skill.tipo),
+    }));
+
+  return {
+    id: Number(character?.id ?? 0),
+    nome: character?.name ?? "",
+    sobrenome: character?.surname ?? "",
+    origem: character?.origin ?? "",
+    historia: character?.lore ?? "",
+    marca: mark,
+    marcaId: Number(character?.marca_id ?? character?.marca?.id ?? 0),
+    campaignId: character?.campaign_id ? Number(character.campaign_id) : null,
+    campanha: character?.campaign?.name ?? character?.campaign?.nome ?? "Sem campanha",
+    nivel: Number(character?.level ?? 1),
+    hp: Number(character?.hp_current ?? 0),
+    hpMax: Math.max(Number(character?.hp_max ?? 1), 1),
+    paMax: Number(character?.pa_max ?? 0),
+    prMax: Number(character?.pr_max ?? 0),
+    iconImage: character?.icon_image ?? character?.iconImage ?? null,
+    fullImage: character?.full_image ?? character?.fullImage ?? character?.image ?? null,
+    attributes,
+    habilidades,
+    equippedSkillIds: habilidades.map((skill) => skill.id).filter(Boolean) as string[],
+  };
+}
+
+export async function getCharacterById(characterId: string | number) {
+  const response = await api.get(`/characters/${characterId}`);
+  return mapEditableCharacter(response.data);
+}
+
+export async function updateCharacter(
+  characterId: string | number,
+  payload: UpdateCharacterPayload,
+) {
+  const formData = new FormData();
+
+  formData.append("name", payload.nome);
+  formData.append("surname", payload.sobrenome);
+  formData.append("origin", payload.origem);
+  formData.append("lore", payload.historia);
+  formData.append("hp_current", String(payload.hpCurrent));
+
+  if (payload.iconImage) {
+    formData.append("icon_image", payload.iconImage);
+  }
+
+  if (payload.fullImage) {
+    formData.append("full_image", payload.fullImage);
+  }
+
+  formData.append("pod", String(payload.attributes.POD));
+  formData.append("des", String(payload.attributes.DES));
+  formData.append("res", String(payload.attributes.RES));
+  formData.append("int", String(payload.attributes.INT));
+  formData.append("det", String(payload.attributes.DET));
+  formData.append("pre", String(payload.attributes.PRE));
+
+  payload.equippedSkillIds.slice(0, 6).forEach((skillId, index) => {
+    formData.append(`skills[${index}]`, skillId);
+  });
+
+  const response = await api.post(`/characters/${characterId}`, formData, {
+    headers: {
+      "X-HTTP-Method-Override": "PUT",
+    },
+  });
+
+  return mapEditableCharacter(response.data.character ?? response.data);
 }

@@ -120,6 +120,7 @@ function mapCharacter(character: any, campaignName: string) {
   const skills = (character?.skills ?? [])
     .filter((skill: any) => skill?.pivot?.equipped ?? true)
     .map((skill: any) => ({
+      id: String(skill.id),
       nome: skill.name ?? skill.nome ?? "Habilidade sem nome",
       descricao: skill.description ?? skill.descricao ?? "Sem descrição.",
       tipo: getSkillType(skill.type ?? skill.tipo),
@@ -130,6 +131,8 @@ function mapCharacter(character: any, campaignName: string) {
     nome: character?.name ?? "Personagem",
     sobrenome: character?.surname ?? "",
     marca: mark,
+    marcaId: character?.marca_id ? Number(character.marca_id) : undefined,
+    campaignId: character?.campaign_id ? Number(character.campaign_id) : null,
     nivel: getNumber(character?.level, 1),
     hp: getNumber(character?.hp_current, 0),
     hpMax: getNumber(character?.hp_max, 1),

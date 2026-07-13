@@ -63,6 +63,7 @@ export interface CharacterAttribute {
 }
 
 export interface CharacterSkill {
+  id?: string;
   nome: string;
   descricao: string;
   tipo: "Ativa" | "Passiva" | "Reação";
@@ -80,6 +81,8 @@ export interface PlayerCampaignMember {
 }
 
 export interface PlayerCharacterFull extends PlayerCharacterSummary {
+  marcaId?: number;
+  campaignId?: number | null;
   paMax: number;
   prMax: number;
   xp: number;

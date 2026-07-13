@@ -1,17 +1,19 @@
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import type { ChangeEvent, FormEvent } from "react";
 import {
+  AlertCircle,
   CheckCircle2,
+  GitBranch,
   Heart,
+  Loader2,
+  LockKeyhole,
   Scroll,
   Shield,
   Sparkles,
   Swords,
   TreePine,
   Zap,
-  LockKeyhole,
 } from "lucide-react";
-import { GitBranch } from "lucide-react";
 import { useNavigate, useParams } from "react-router-dom";
 
 import CharacterPageShell from "../components/character/CharacterPageShell";
@@ -26,69 +28,143 @@ import {
   getMinimumAttributesByMark,
 } from "../data/characterFormMock";
 
-import { playerCampaignData } from "../data/playerCampaignMock";
+import {
+  getCharacterById,
+  getSkillsByMark,
+  updateCharacter,
+  type EditableCharacterData,
+} from "../../services/characterCreationService";
 
-import type {
-  AttributeKey,
-  CharacterMark,
-  CharacterSkill,
-} from "../types/player";
+import type { AttributeKey, CharacterSkill } from "../types/player";
+import type { SkillTree } from "../data/skillTreeMock";
 
 type CharacterForm = {
   nome: string;
   sobrenome: string;
   origem: string;
   historia: string;
-  marca: CharacterMark | "";
 };
 
-function attributesToRecord(
-  attributes: { nome: string; valor: number }[],
-  minimumAttributes: Record<AttributeKey, number>,
-): Record<AttributeKey, number> {
-  const base: Record<AttributeKey, number> = {
-    ...minimumAttributes,
-  };
+const emptyAttributes: Record<AttributeKey, number> = {
+  POD: 0,
+  DES: 0,
+  RES: 0,
+  INT: 0,
+  DET: 0,
+  PRE: 0,
+};
 
-  attributes.forEach((attribute) => {
-    const key = attribute.nome as AttributeKey;
+function getSkillType(type?: string | null): CharacterSkill["tipo"] {
+  if (type === "passiva") return "Passiva";
+  if (type === "reacao" || type === "reação") return "Reação";
+  return "Ativa";
+}
 
-    if (key in base) {
-      base[key] = attribute.valor;
-    }
-  });
-
-  return base;
+function flattenSkillTree(tree: SkillTree): CharacterSkill[] {
+  return Object.values(tree)
+    .flat()
+    .map((skill) => ({
+      id: String(skill.id),
+      nome: skill.nome,
+      descricao: skill.descricao,
+      tipo: getSkillType(skill.tipo),
+    }));
 }
 
 export default function EditCharacterPage() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
 
-  const campaign =
-    id === "2" ? playerCampaignData["2"] : playerCampaignData["1"];
-  const character = campaign.personagem;
+  const [character, setCharacter] = useState<EditableCharacterData | null>(null);
+  const [form, setForm] = useState<CharacterForm>({
+    nome: "",
+    sobrenome: "",
+    origem: "",
+    historia: "",
+  });
+  const [attributes, setAttributes] =
+    useState<Record<AttributeKey, number>>(emptyAttributes);
+  const [hp, setHp] = useState(0);
+  const [iconImage, setIconImage] = useState<File | null>(null);
+  const [fullImage, setFullImage] = useState<File | null>(null);
+  const [existingIconImage, setExistingIconImage] = useState<string | null>(null);
+  const [existingFullImage, setExistingFullImage] = useState<string | null>(null);
+  const [availableSkills, setAvailableSkills] = useState<CharacterSkill[]>([]);
+  const [equippedSkillIds, setEquippedSkillIds] = useState<string[]>([]);
 
-  const minimumAttributes = getMinimumAttributesByMark(character.marca);
-  const attributePointLimit = extraPoints + character.nivel * 3;
-
-  const [image, setImage] = useState<File | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [isSaving, setIsSaving] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const [saved, setSaved] = useState(false);
   const [showSkillTree, setShowSkillTree] = useState(false);
-  const [form, setForm] = useState<CharacterForm>({
-    nome: character.nome,
-    sobrenome: character.sobrenome ?? "",
-    origem: character.origem ?? "",
-    historia: character.historia ?? "",
-    marca: character.marca,
-  });
-  const [attributes, setAttributes] = useState<Record<AttributeKey, number>>(
-    attributesToRecord(character.atributos, minimumAttributes),
-  );
-  const [hp, setHp] = useState(character.hp);
-  const [equippedSkills, setEquippedSkills] = useState<CharacterSkill[]>(
-    character.habilidades,
-  );
+
+  useEffect(() => {
+    if (!id) return;
+
+    let active = true;
+
+    async function loadCharacter() {
+      try {
+        setIsLoading(true);
+        setError(null);
+
+        const data = await getCharacterById(id);
+        let skills = data.habilidades;
+
+        if (data.marcaId) {
+          try {
+            const tree = await getSkillsByMark(data.marcaId, data.campaignId);
+            skills = flattenSkillTree(tree);
+          } catch {
+            skills = data.habilidades;
+          }
+        }
+
+        if (!active) return;
+
+        setCharacter(data);
+        setForm({
+          nome: data.nome,
+          sobrenome: data.sobrenome,
+          origem: data.origem,
+          historia: data.historia,
+        });
+        setAttributes(data.attributes);
+        setHp(data.hp);
+        setExistingIconImage(data.iconImage);
+        setExistingFullImage(data.fullImage);
+        setEquippedSkillIds(data.equippedSkillIds);
+        setAvailableSkills(skills);
+      } catch {
+        if (active) {
+          setError("Não foi possível carregar este personagem.");
+        }
+      } finally {
+        if (active) {
+          setIsLoading(false);
+        }
+      }
+    }
+
+    loadCharacter();
+
+    return () => {
+      active = false;
+    };
+  }, [id]);
+
+  const minimumAttributes = getMinimumAttributesByMark(character?.marca ?? "");
+  const attributePointLimit = character
+    ? extraPoints + character.nivel * 3
+    : extraPoints;
+
+  const equippedSkills = useMemo(() => {
+    const source = availableSkills.length > 0 ? availableSkills : character?.habilidades ?? [];
+
+    return source.filter(
+      (skill) => skill.id && equippedSkillIds.includes(String(skill.id)),
+    );
+  }, [availableSkills, character, equippedSkillIds]);
 
   function handleChange(
     event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -99,29 +175,83 @@ export default function EditCharacterPage() {
     }));
   }
 
-  function handleSubmit(event: FormEvent) {
+  async function handleSubmit(event: FormEvent) {
     event.preventDefault();
-    setSaved(true);
-    setTimeout(() => setSaved(false), 1200);
+
+    if (!id || !character) return;
+
+    try {
+      setIsSaving(true);
+      setError(null);
+
+      const updated = await updateCharacter(id, {
+        nome: form.nome.trim(),
+        sobrenome: form.sobrenome.trim(),
+        origem: form.origem.trim(),
+        historia: form.historia.trim(),
+        iconImage,
+        fullImage,
+        hpCurrent: hp,
+        attributes,
+        equippedSkillIds,
+      });
+
+      setCharacter(updated);
+      setExistingIconImage(updated.iconImage);
+      setExistingFullImage(updated.fullImage);
+      setIconImage(null);
+      setFullImage(null);
+      setHp(updated.hp);
+      setEquippedSkillIds(updated.equippedSkillIds);
+      setSaved(true);
+      setTimeout(() => setSaved(false), 1200);
+    } catch {
+      setError("Não foi possível salvar as alterações do personagem.");
+    } finally {
+      setIsSaving(false);
+    }
   }
 
-  function toggleSkill(skill: CharacterSkill) {
-    const alreadyEquipped = equippedSkills.some(
-      (item) => item.nome === skill.nome,
+  if (isLoading) {
+    return (
+      <CharacterPageShell
+        title="Editar Personagem"
+        subtitle="Carregando ficha do personagem."
+        badge="Ficha"
+        submitLabel="Salvar Alterações"
+        savedLabel="Alterações salvas!"
+        saved={false}
+        formId="form-editar-personagem"
+      >
+        <div className="flex min-h-[420px] items-center justify-center px-6 py-8">
+          <div className="flex items-center gap-3 rounded-2xl border border-amber-900/25 bg-slate-900/60 px-5 py-4 text-amber-100/60">
+            <Loader2 className="h-5 w-5 animate-spin text-amber-400" />
+            Carregando personagem...
+          </div>
+        </div>
+      </CharacterPageShell>
     );
+  }
 
-    if (alreadyEquipped) {
-      setEquippedSkills((previous) =>
-        previous.filter((item) => item.nome !== skill.nome),
-      );
-      return;
-    }
-
-    if (equippedSkills.length >= 6) {
-      return;
-    }
-
-    setEquippedSkills((previous) => [...previous, skill]);
+  if (!character) {
+    return (
+      <CharacterPageShell
+        title="Editar Personagem"
+        subtitle="Não foi possível abrir esta ficha."
+        badge="Erro"
+        submitLabel="Salvar Alterações"
+        savedLabel="Alterações salvas!"
+        saved={false}
+        formId="form-editar-personagem"
+      >
+        <div className="mx-auto max-w-xl px-6 py-8">
+          <div className="rounded-2xl border border-rose-500/30 bg-rose-500/10 p-6 text-center text-rose-200">
+            <AlertCircle className="mx-auto mb-3 h-8 w-8" />
+            {error ?? "Personagem não encontrado."}
+          </div>
+        </div>
+      </CharacterPageShell>
+    );
   }
 
   return (
@@ -139,9 +269,31 @@ export default function EditCharacterPage() {
         onSubmit={handleSubmit}
         className="mx-auto max-w-5xl space-y-6 px-6 py-8"
       >
+        {error && (
+          <div className="flex items-start gap-2 rounded-xl border border-rose-500/30 bg-rose-500/10 px-4 py-3 text-sm text-rose-200">
+            <AlertCircle className="mt-0.5 h-4 w-4 flex-shrink-0" />
+            {error}
+          </div>
+        )}
+
         <CharacterSectionCard title="Identidade" icon={Scroll}>
-          <div className="grid grid-cols-1 gap-8 md:grid-cols-[220px_1fr]">
-            <CharacterImageUpload image={image} onChange={setImage} />
+          <div className="grid grid-cols-1 gap-8 md:grid-cols-[260px_1fr]">
+            <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-1">
+              <CharacterImageUpload
+                image={iconImage ?? existingIconImage}
+                onChange={setIconImage}
+                label="Imagem do Ícone"
+                helper="Imagem pequena do card"
+                aspectClassName="aspect-square"
+              />
+
+              <CharacterImageUpload
+                image={fullImage ?? existingFullImage}
+                onChange={setFullImage}
+                label="Imagem"
+                helper="Corpo inteiro / retrato"
+              />
+            </div>
 
             <div className="space-y-5">
               <div className="grid gap-4 sm:grid-cols-2">
@@ -226,7 +378,7 @@ export default function EditCharacterPage() {
             <div className="mb-3 flex items-center justify-between gap-3">
               <div>
                 <p className="text-sm font-semibold text-amber-100">
-                  Marca {form.marca}
+                  Marca {character.marca}
                 </p>
 
                 <p className="mt-1 text-xs text-amber-100/40">
@@ -241,11 +393,11 @@ export default function EditCharacterPage() {
             </div>
 
             <div className="rounded-xl border border-amber-900/25 bg-slate-900/60 px-4 py-3 text-sm text-amber-100/65">
-              Esta escolha não pode ser alterada depois da criação do
-              personagem.
+              Esta escolha não pode ser alterada depois da criação do personagem.
             </div>
           </div>
-          <div className="rounded-2xl border border-amber-900/30 bg-slate-900/40 p-6 shadow-xl shadow-black/30">
+
+          <div className="mt-5 rounded-2xl border border-amber-900/30 bg-slate-900/40 p-6 shadow-xl shadow-black/30">
             <div className="mb-4 flex items-center gap-3">
               <div className="flex h-9 w-9 items-center justify-center rounded-lg border border-amber-500/25 bg-amber-500/15">
                 <GitBranch className="h-4 w-4 text-amber-400" />
@@ -257,8 +409,7 @@ export default function EditCharacterPage() {
                 </h2>
 
                 <p className="mt-1 text-xs text-amber-100/40">
-                  Visualize habilidades desbloqueadas, bloqueadas, passivas,
-                  penalidades e skills exclusivas da campanha.
+                  Gerencie até 6 habilidades equipadas para o personagem.
                 </p>
               </div>
             </div>
@@ -266,26 +417,7 @@ export default function EditCharacterPage() {
             <button
               type="button"
               onClick={() => setShowSkillTree(true)}
-              className="
-                flex
-                w-full
-                items-center
-                justify-center
-                gap-2.5
-                rounded-xl
-                border
-                border-amber-500/30
-                bg-amber-500/10
-                px-5
-                py-3
-                text-sm
-                font-semibold
-                text-amber-300
-                transition-all
-                hover:border-amber-400/50
-                hover:bg-amber-500/20
-                hover:text-amber-200
-              "
+              className="flex w-full items-center justify-center gap-2.5 rounded-xl border border-amber-500/30 bg-amber-500/10 px-5 py-3 text-sm font-semibold text-amber-300 transition-all hover:border-amber-400/50 hover:bg-amber-500/20 hover:text-amber-200"
             >
               <GitBranch className="h-4 w-4" />
               Ver Árvore de Habilidades
@@ -331,28 +463,24 @@ export default function EditCharacterPage() {
         >
           <div className="mb-4 flex items-center justify-between text-xs text-amber-100/40">
             <span>Habilidades equipadas</span>
-            <span>{equippedSkills.length} / 6</span>
+            <span>{equippedSkillIds.length} / 6</span>
           </div>
 
-          <div className="grid gap-3 md:grid-cols-2">
-            {character.habilidades.map((skill) => {
-              const equipped = equippedSkills.some(
-                (item) => item.nome === skill.nome,
-              );
-
-              return (
-                <button
-                  key={skill.nome}
-                  type="button"
-                  onClick={() => toggleSkill(skill)}
-                  className={`rounded-xl border p-4 text-left transition-all ${equipped ? "border-amber-500/45 bg-amber-500/10" : "border-amber-900/25 bg-slate-950/50 hover:border-amber-700/40"}`}
+          {equippedSkills.length === 0 ? (
+            <p className="rounded-xl border border-amber-900/20 bg-slate-950/40 px-4 py-5 text-sm text-amber-100/35">
+              Nenhuma habilidade equipada. Abra a árvore para escolher até 6.
+            </p>
+          ) : (
+            <div className="grid gap-3 md:grid-cols-2">
+              {equippedSkills.map((skill) => (
+                <div
+                  key={skill.id ?? skill.nome}
+                  className="rounded-xl border border-amber-500/45 bg-amber-500/10 p-4 text-left"
                 >
                   <div className="mb-2 flex items-center gap-2">
                     <Zap className="h-4 w-4 text-amber-400" />
                     <p className="font-semibold text-amber-100">{skill.nome}</p>
-                    {equipped && (
-                      <CheckCircle2 className="ml-auto h-4 w-4 text-emerald-400" />
-                    )}
+                    <CheckCircle2 className="ml-auto h-4 w-4 text-emerald-400" />
                   </div>
                   <p className="text-xs leading-relaxed text-amber-100/50">
                     {skill.descricao}
@@ -360,10 +488,10 @@ export default function EditCharacterPage() {
                   <p className="mt-2 text-xs text-amber-100/35">
                     Tipo: {skill.tipo}
                   </p>
-                </button>
-              );
-            })}
-          </div>
+                </div>
+              ))}
+            </div>
+          )}
         </CharacterSectionCard>
 
         <div className="flex flex-col items-center justify-between gap-4 pb-8 pt-2 sm:flex-row">
@@ -377,8 +505,12 @@ export default function EditCharacterPage() {
 
           <button
             type="submit"
-            disabled={saved}
-            className={`flex items-center gap-2.5 rounded-xl px-8 py-3 text-base font-semibold shadow-lg transition-all ${saved ? "scale-95 bg-emerald-600/80 text-emerald-100 shadow-emerald-900/30" : "bg-gradient-to-r from-amber-500 to-rose-600 text-white shadow-amber-900/30 hover:scale-[1.02] hover:from-amber-400 hover:to-rose-500 hover:shadow-amber-800/40 active:scale-95"}`}
+            disabled={saved || isSaving}
+            className={`flex items-center gap-2.5 rounded-xl px-8 py-3 text-base font-semibold shadow-lg transition-all ${
+              saved
+                ? "scale-95 bg-emerald-600/80 text-emerald-100 shadow-emerald-900/30"
+                : "bg-gradient-to-r from-amber-500 to-rose-600 text-white shadow-amber-900/30 hover:scale-[1.02] hover:from-amber-400 hover:to-rose-500 hover:shadow-amber-800/40 active:scale-95 disabled:cursor-not-allowed disabled:opacity-60"
+            }`}
           >
             {saved ? (
               <>
@@ -386,7 +518,8 @@ export default function EditCharacterPage() {
               </>
             ) : (
               <>
-                <Sparkles className="h-5 w-5" /> Salvar Alterações
+                <Sparkles className="h-5 w-5" />
+                {isSaving ? "Salvando..." : "Salvar Alterações"}
               </>
             )}
           </button>
@@ -396,9 +529,13 @@ export default function EditCharacterPage() {
       {showSkillTree && (
         <SkillTreeModal
           mark={character.marca}
+          markId={character.marcaId}
+          campaignId={character.campaignId}
           level={character.nivel}
           characterName={character.nome}
           campaign={character.campanha}
+          equippedSkillIds={equippedSkillIds}
+          onSaveEquippedSkills={setEquippedSkillIds}
           onClose={() => setShowSkillTree(false)}
         />
       )}
