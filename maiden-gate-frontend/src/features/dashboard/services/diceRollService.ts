@@ -108,7 +108,7 @@ export async function clearDiceRollHistory(
   campaignId: number | string,
   userId: string,
 ) {
-  const response = await api.delete(`/campaign/${campaignId}/dice-rolls`, {
+  const response = await api.delete(`/campaigns/${campaignId}/dice-rolls`, {
     data: {
       user_id: userId,
     },

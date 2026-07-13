@@ -104,12 +104,6 @@ export default function DiceChat({ campaignId, masterName, userId }: Props) {
       return;
     }
 
-    const confirmed = window.confirm(
-      "Tem certeza que deseja apagar todo o histórico de rolagens desta campanha?",
-    );
-
-    if (!confirmed) return;
-
     try {
       setError(null);
 
