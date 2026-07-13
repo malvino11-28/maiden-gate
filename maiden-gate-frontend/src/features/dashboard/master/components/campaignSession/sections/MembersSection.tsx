@@ -7,6 +7,16 @@ type Props = {
   members: CampaignMember[];
 };
 
+function getImageSrc(image?: string | null) {
+  if (!image) return "";
+
+  if (image.startsWith("http") || image.startsWith("/")) {
+    return image;
+  }
+
+  return `http://127.0.0.1:8000/storage/${image}`;
+}
+
 export default function MembersSection({ members }: Props) {
   const [expanded, setExpanded] = useState<string | null>(null);
 
@@ -21,20 +31,33 @@ export default function MembersSection({ members }: Props) {
   return (
     <div className="space-y-3">
       {members.map((member) => {
-        const hpPercent = Math.round((member.hp / member.hpMax) * 100);
-        const isOpen = expanded === member.nome;
+        const hpMax = Math.max(member.hpMax || 1, 1);
+        const hpPercent = Math.round((member.hp / hpMax) * 100);
+        const isOpen = expanded === String(member.id ?? member.nome);
+        const iconSrc = getImageSrc(member.iconImage);
 
         return (
           <div
-            key={member.nome}
+            key={member.id ?? member.nome}
             className="overflow-hidden rounded-xl border border-amber-900/25 bg-slate-900/50"
           >
             <button
+              type="button"
               className="flex w-full items-center gap-4 px-5 py-4 text-left"
-              onClick={() => setExpanded(isOpen ? null : member.nome)}
+              onClick={() =>
+                setExpanded(isOpen ? null : String(member.id ?? member.nome))
+              }
             >
-              <div className="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-slate-700 to-slate-800 text-2xl">
-                {member.emoji}
+              <div className="flex h-11 w-11 flex-shrink-0 items-center justify-center overflow-hidden rounded-xl bg-gradient-to-br from-slate-700 to-slate-800 text-2xl">
+                {iconSrc ? (
+                  <img
+                    src={iconSrc}
+                    alt={member.personagem}
+                    className="h-full w-full object-cover"
+                  />
+                ) : (
+                  member.emoji ?? member.personagem.charAt(0)
+                )}
               </div>
 
               <div className="min-w-0 flex-1">
@@ -49,24 +72,19 @@ export default function MembersSection({ members }: Props) {
                 <div className="mt-1.5 flex items-center gap-2">
                   <div className="h-1.5 flex-1 overflow-hidden rounded-full bg-slate-800">
                     <div
-                      className={`
-                        h-full
-                        rounded-full
-
-                        ${
-                          hpPercent > 60
-                            ? "bg-emerald-500"
-                            : hpPercent > 30
-                              ? "bg-amber-500"
-                              : "bg-rose-500"
-                        }
-                      `}
-                      style={{ width: `${hpPercent}%` }}
+                      className={`h-full rounded-full ${
+                        hpPercent > 60
+                          ? "bg-emerald-500"
+                          : hpPercent > 30
+                            ? "bg-amber-500"
+                            : "bg-rose-500"
+                      }`}
+                      style={{ width: `${Math.min(hpPercent, 100)}%` }}
                     />
                   </div>
 
                   <span className="whitespace-nowrap text-xs text-amber-100/35">
-                    {member.hp}/{member.hpMax} HP
+                    {member.hp}/{hpMax} HP
                   </span>
                 </div>
               </div>
@@ -85,7 +103,7 @@ export default function MembersSection({ members }: Props) {
                     Atributos
                   </p>
 
-                  <div className="grid grid-cols-6 gap-2">
+                  <div className="grid grid-cols-3 gap-2 sm:grid-cols-6">
                     {member.atributos.map((attribute) => (
                       <div
                         key={attribute.nome}
@@ -100,15 +118,11 @@ export default function MembersSection({ members }: Props) {
                         </p>
 
                         <p
-                          className={`
-                            text-xs
-
-                            ${
-                              attribute.mod >= 0
-                                ? "text-emerald-400"
-                                : "text-rose-400"
-                            }
-                          `}
+                          className={`text-xs ${
+                            attribute.mod >= 0
+                              ? "text-emerald-400"
+                              : "text-rose-400"
+                          }`}
                         >
                           {attribute.mod >= 0 ? "+" : ""}
                           {attribute.mod}
@@ -123,28 +137,28 @@ export default function MembersSection({ members }: Props) {
                     Habilidades
                   </p>
 
-                  <div className="flex flex-wrap gap-2">
-                    {member.habilidades.map((skill) => (
-                      <span
-                        key={skill.nome}
-                        className={`
-                          rounded-full
-                          border
-                          px-2.5
-                          py-1
-                          text-xs
-
-                          ${
+                  {member.habilidades.length === 0 ? (
+                    <p className="text-xs text-amber-100/30">
+                      Nenhuma habilidade equipada.
+                    </p>
+                  ) : (
+                    <div className="flex flex-wrap gap-2">
+                      {member.habilidades.map((skill) => (
+                        <span
+                          key={skill.nome}
+                          className={`rounded-full border px-2.5 py-1 text-xs ${
                             skill.tipo === "Ativa"
                               ? "border-amber-500/30 bg-amber-500/10 text-amber-300"
-                              : "border-slate-500/30 bg-slate-500/15 text-slate-400"
-                          }
-                        `}
-                      >
-                        {skill.nome} · {skill.tipo}
-                      </span>
-                    ))}
-                  </div>
+                              : skill.tipo === "Passiva"
+                                ? "border-slate-500/30 bg-slate-500/15 text-slate-400"
+                                : "border-violet-500/30 bg-violet-500/10 text-violet-300"
+                          }`}
+                        >
+                          {skill.nome} · {skill.tipo}
+                        </span>
+                      ))}
+                    </div>
+                  )}
                 </div>
               </div>
             )}

@@ -42,6 +42,72 @@ const elementActionToModal: Record<ElementActionType, ActiveModal> = {
   evento: "event",
 };
 
+const markEmojis: Record<string, string> = {
+  Manifesto: "⚔️",
+  Oculto: "🌒",
+  Respiração: "🌬️",
+  Entoadora: "🎶",
+  Maso: "🩸",
+};
+
+function getNumber(value: unknown, fallback = 0) {
+  const parsed = Number(value);
+  return Number.isFinite(parsed) ? parsed : fallback;
+}
+
+function getAttributeMod(value: number) {
+  return Math.floor((value - 10) / 2);
+}
+
+function getSkillType(type?: string | null) {
+  if (type === "passiva") return "Passiva" as const;
+  if (type === "reacao" || type === "reação") return "Reação" as const;
+  return "Ativa" as const;
+}
+
+function getMarkName(mark: any) {
+  return mark?.name ?? mark?.nome ?? mark ?? "Sem marca";
+}
+
+function mapCampaignMember(character: any) {
+  const user = character.user ?? {};
+  const markName = getMarkName(character.marca);
+  const fullName = [character.name, character.surname].filter(Boolean).join(" ");
+
+  const attributes = [
+    { nome: "POD", valor: getNumber(character.pod, 0) },
+    { nome: "DES", valor: getNumber(character.des, 0) },
+    { nome: "RES", valor: getNumber(character.res, 0) },
+    { nome: "INT", valor: getNumber(character.int, 0) },
+    { nome: "DET", valor: getNumber(character.det, 0) },
+    { nome: "PRE", valor: getNumber(character.pre, 0) },
+  ].map((attribute) => ({
+    ...attribute,
+    mod: getAttributeMod(attribute.valor),
+  }));
+
+  const skills = (character.skills ?? [])
+    .filter((skill: any) => skill?.pivot?.equipped ?? true)
+    .map((skill: any) => ({
+      nome: skill.name ?? skill.nome ?? "Habilidade sem nome",
+      tipo: getSkillType(skill.type ?? skill.tipo),
+    }));
+
+  return {
+    id: character.id,
+    nome: user.name ?? "Jogador",
+    personagem: fullName || "Personagem sem nome",
+    marca: markName,
+    emoji: markEmojis[markName] ?? "✦",
+    iconImage: character.icon_image ?? character.iconImage ?? null,
+    nivel: getNumber(character.level, 1),
+    hp: getNumber(character.hp_current, 0),
+    hpMax: Math.max(getNumber(character.hp_max, 1), 1),
+    atributos: attributes,
+    habilidades: skills,
+  };
+}
+
 export default function MasterCampaignPage() {
   const { id } = useParams<{ id: string }>();
 
@@ -80,7 +146,7 @@ export default function MasterCampaignPage() {
         status: data.status,
         notas: data.notes ?? "",
 
-        membros: data.characters ?? data.users ?? [],
+        membros: (data.characters ?? []).map(mapCampaignMember),
         agendaSessoes: data.sessions ?? [],
 
         localizacaoAtual: currentLocation

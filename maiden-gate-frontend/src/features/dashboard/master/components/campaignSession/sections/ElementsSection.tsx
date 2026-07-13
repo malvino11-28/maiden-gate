@@ -71,7 +71,7 @@ function getStatusEntries(status?: CampaignElementStatus | null) {
     .filter(([, value]) => value !== null && value !== undefined)
     .map(([key, value]) => ({
       label: labels[key] ?? key,
-      value,
+      value: Number(value),
     }));
 }
 
@@ -142,12 +142,12 @@ export default function ElementsSection({ elements, onAdd }: Props) {
       formKey: "npc" as ElementFormKey,
       items: elements.npcs,
       render: (item: CampaignElements["npcs"][number]) => {
-        const statusId = `npc-${item.id ?? item.nome}`;
+        const statusId = `npc-${item.id ?? item.name}`;
         const isStatusOpen = openStatusId === statusId;
 
         return (
           <div
-            key={item.nome}
+            key={item.name}
             className="relative flex gap-4 rounded-xl border border-amber-900/20 bg-slate-900/60 px-4 py-3"
           >
             <button
@@ -158,20 +158,20 @@ export default function ElementsSection({ elements, onAdd }: Props) {
               {isStatusOpen ? "Ocultar Status" : "Ver Status"}
             </button>
 
-            <ElementImage image={item.imagem} alt={item.nome} />
+            <ElementImage image={item.image} alt={item.name} />
 
             <div className="min-w-0 flex-1 pr-20">
-              <p className="text-sm font-medium text-amber-100">{item.nome}</p>
+              <p className="text-sm font-medium text-amber-100">{item.name}</p>
               <p className="mt-0.5 text-xs text-amber-100/40">
-                {item.raca} · {item.ocupacao}
+                {item.race} · {item.occupation}
               </p>
               <p className="mt-2 text-xs text-amber-100/55">
-                {item.personalidade}
+                {item.personality}
               </p>
 
-              {isStatusOpen && <StatusPanel status={item.status} />}
+              {isStatusOpen && <StatusPanel status={item.stats} />}
 
-              {item.segredo && (
+              {item.secret && (
                 <div className="mt-2 rounded-lg border border-rose-900/25 bg-rose-900/15 px-3 py-2">
                   <p className="flex items-center gap-1.5 text-xs text-rose-300/70">
                     <Zap className="h-3 w-3" />
@@ -179,7 +179,7 @@ export default function ElementsSection({ elements, onAdd }: Props) {
                   </p>
 
                   <p className="mt-0.5 text-xs text-amber-100/50">
-                    {item.segredo}
+                    {item.secret}
                   </p>
                 </div>
               )}
@@ -196,7 +196,7 @@ export default function ElementsSection({ elements, onAdd }: Props) {
       formKey: "monstro" as ElementFormKey,
       items: elements.monstros,
       render: (item: CampaignElements["monstros"][number]) => {
-        const statusId = `monster-${item.id ?? item.nome}`;
+        const statusId = `monster-${item.id ?? item.name}`;
         const isStatusOpen = openStatusId === statusId;
 
         return (
@@ -212,21 +212,19 @@ export default function ElementsSection({ elements, onAdd }: Props) {
               {isStatusOpen ? "Ocultar Status" : "Ver Status"}
             </button>
 
-            <ElementImage image={item.imagem} alt={item.nome} />
+            <ElementImage image={item.image} alt={item.name} />
 
             <div className="min-w-0 pr-20">
-              <p className="text-sm font-medium text-amber-100">{item.nome}</p>
+              <p className="text-sm font-medium text-amber-100">{item.name}</p>
               <p className="mt-0.5 text-xs text-amber-100/40">
-                {item.tipo} · Ameaça {item.ameaca}
+                {item.type} · Ameaça {item.threat}
               </p>
-              <p className="mt-1 text-xs text-amber-100/55">
-                {item.habilidades}
-              </p>
+              <p className="mt-1 text-xs text-amber-100/55">{item.skills}</p>
               <p className="mt-1 text-xs leading-relaxed text-amber-100/45">
-                {item.descricao}
+                {item.description}
               </p>
 
-              {isStatusOpen && <StatusPanel status={item.status} />}
+              {isStatusOpen && <StatusPanel status={item.stats} />}
             </div>
           </div>
         );

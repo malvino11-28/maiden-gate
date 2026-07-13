@@ -19,14 +19,16 @@ export interface CampaignAttribute {
 
 export interface CampaignSkill {
   nome: string;
-  tipo: "Ativa" | "Passiva";
+  tipo: "Ativa" | "Passiva" | "Reação";
 }
 
 export interface CampaignMember {
+  id?: string | number;
   nome: string;
   personagem: string;
   marca: string;
-  emoji: string;
+  emoji?: string;
+  iconImage?: string | null;
   nivel: number;
   hp: number;
   hpMax: number;
@@ -37,50 +39,61 @@ export interface CampaignMember {
 export interface CampaignLocation {
   id?: string | number;
   imagem?: string | null;
+  image?: string | null;
   nome: string;
+  name?: string;
   tipo: string;
-  regiao: string;
+  type?: string;
+  regiao?: string;
+  region?: string;
   descricao: string;
+  description?: string;
 }
 
-export type status = {
+export type CampaignElementStatus = {
   level?: number;
   hp?: number;
   mana?: number;
   atk?: number;
   def?: number;
   speed?: number;
+  [key: string]: number | undefined;
 };
 
 export interface CampaignNpc {
   id?: string | number;
-  imagem?: string | null;
-  nome: string;
-  raca: string;
-  ocupacao: string;
-  personalidade: string;
-  segredo: string;
-  status: status;
+  image?: string | null;
+  name: string;
+  race: string;
+  occupation: string;
+  personality: string;
+  secret: string;
+  description?: string;
+  skills?: string | string[];
+  stats?: CampaignElementStatus | null;
 }
 
 export interface CampaignMonster {
   id?: string | number;
-  imagem?: string | null;
-  nome: string;
-  tipo: string;
-  ameaca: string;
+  image?: string | null;
+  name?: string;
+  type?: string;
+  threat?: string;
   habilidades: string;
-  descricao: string;
-  status: status;
+  skills?: string | string[];
+  description?: string;
+  stats?: CampaignElementStatus | null;
 }
 
 export interface CampaignItem {
+  id?: string | number;
   nome: string;
   tipo: string;
   descricao: string;
 }
 
 export interface CampaignEvent {
+  id?: string | number;
   titulo: string;
   cronologia: string;
   data: string;
@@ -96,11 +109,17 @@ export interface CampaignElements {
 }
 
 export interface CurrentLocation {
-  id?: string | null;
+  id?: string | number | null;
   imagem?: string | null;
+  image?: string | null;
   nome: string;
-  tipo: string;
-  descricao: string;
+  name?: string;
+  tipo?: string;
+  type?: string;
+  regiao?: string;
+  region?: string;
+  descricao?: string;
+  description?: string;
 }
 
 export interface MasterCampaign {
