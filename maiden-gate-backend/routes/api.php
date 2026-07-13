@@ -8,6 +8,7 @@ use App\Http\Controllers\Api\CampaignController;
 use App\Http\Controllers\Api\CampaignUserController;
 use App\Http\Controllers\Api\CharacterController;
 use App\Http\Controllers\Api\CharacterSkillController;
+use App\Http\Controllers\Api\DiceRollController;
 use App\Http\Controllers\Api\CampaignSessionController;
 use App\Http\Controllers\Api\InventoryController;
 use App\Http\Controllers\Api\ItemsController;
@@ -80,6 +81,15 @@ Route::post('/campaigns/{campaign}/bestiary', [BestiaryController::class, 'store
 
 Route::get('/campaigns/{campaign}/lore-events', [LoreEventsController::class, 'index']);
 Route::post('/campaigns/{campaign}/lore-events', [LoreEventsController::class, 'store']);
+
+/*
+|--------------------------------------------------------------------------
+| Shared dice rolls
+|--------------------------------------------------------------------------
+*/
+
+Route::get('/campaigns/{campaign}/dice-rolls', [DiceRollController::class, 'index']);
+Route::post('/campaigns/{campaign}/dice-rolls', [DiceRollController::class, 'store']);
 
 /*
 |--------------------------------------------------------------------------
