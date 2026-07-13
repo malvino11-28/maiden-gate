@@ -1,7 +1,10 @@
+/* eslint-disable react-hooks/set-state-in-effect */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Crown, Dice1 } from "lucide-react";
+
+import { useAuth } from "../../../auth/hooks/useAuth";
 
 import CampaignTitleBar from "../components/campaignSession/CampaignTitleBar";
 import CampaignSectionTabs from "../components/campaignSession/CampaignSectionTabs";
@@ -72,7 +75,9 @@ function getMarkName(mark: any) {
 function mapCampaignMember(character: any) {
   const user = character.user ?? {};
   const markName = getMarkName(character.marca);
-  const fullName = [character.name, character.surname].filter(Boolean).join(" ");
+  const fullName = [character.name, character.surname]
+    .filter(Boolean)
+    .join(" ");
 
   const attributes = [
     { nome: "POD", valor: getNumber(character.pod, 0) },
@@ -114,6 +119,7 @@ export default function MasterCampaignPage() {
   const [activeSection, setActiveSection] = useState<SectionKey>("elementos");
   const [activeModal, setActiveModal] = useState<ActiveModal | null>(null);
   const navigate = useNavigate();
+  const { user } = useAuth();
 
   // eslint-disable-all-line @typescript-eslint/no-explicit-any
   const [campaign, setCampaign] = useState<any>(null);
@@ -499,7 +505,11 @@ export default function MasterCampaignPage() {
               </span>
             </div>
 
-            <DiceChat masterName={campaign.masterName} />
+            <DiceChat
+              campaignId={campaign.id}
+              masterName={campaign.masterName}
+              userId={user?.id}
+            />
           </aside>
         </div>
       </main>
