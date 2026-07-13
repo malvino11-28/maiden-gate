@@ -21,6 +21,7 @@ import type {
   PlayerCampaignData,
   PlayerCampaignSectionKey,
 } from "../types/player";
+
 import {
   addInventoryItem,
   deleteInventoryItem,
@@ -182,7 +183,12 @@ export default function PlayerCampaignPage() {
             </span>
           </div>
 
-          <PlayerDiceChat characterName={campaign.personagem.nome} />
+          <PlayerDiceChat
+            campaignId={campaign.id}
+            characterId={campaign.personagem.id}
+            characterName={campaign.personagem.nome}
+            userId={user?.id}
+          />
         </aside>
       </div>
     </main>
