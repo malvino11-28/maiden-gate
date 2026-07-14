@@ -53,7 +53,7 @@ export default function MasterDashboard() {
       if (!user) return;
 
       try {
-        setIsLoading(true);
+        setIsLoadingRequests(true);
         setRequestError(null);
 
         const data = await getMasterCampaignRequests(user.id);
