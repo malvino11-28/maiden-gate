@@ -1,9 +1,9 @@
-import { Crown, Download, Shield } from "lucide-react";
+import { Crown, Shield } from "lucide-react";
 
-import Button from "../../../shared/components/Button/Button";
 import RuleAccordion from "../../../shared/components/Accordion/RuleAccordion";
 import { masterRules } from "../data/masterRules";
 import { playerRules } from "../data/playerRules";
+import DownloadBook from "../components/DownloadBook";
 
 function RulesGroup({
   title,
@@ -25,9 +25,15 @@ function RulesGroup({
         <h2 className="text-3xl font-semibold text-amber-100">{title}</h2>
       </div>
 
-      <div className={`rounded-xl border bg-slate-900/50 p-6 ${tone === "amber" ? "border-amber-900/30" : "border-rose-900/30"}`}>
+      <div
+        className={`rounded-xl border bg-slate-900/50 p-6 ${tone === "amber" ? "border-amber-900/30" : "border-rose-900/30"}`}
+      >
         {rules.map((rule, index) => (
-          <RuleAccordion key={rule.title} title={rule.title} defaultOpen={index === 0}>
+          <RuleAccordion
+            key={rule.title}
+            title={rule.title}
+            defaultOpen={index === 0}
+          >
             {rule.content}
           </RuleAccordion>
         ))}
@@ -64,19 +70,7 @@ export default function RulesPage() {
         rules={playerRules}
       />
 
-      <section className="rounded-2xl border border-amber-700/30 bg-gradient-to-r from-amber-900/30 to-rose-900/30 p-10 text-center">
-        <h3 className="mb-3 text-2xl font-semibold text-amber-100">
-          Quer as regras completas?
-        </h3>
-        <p className="mx-auto mb-7 max-w-lg text-amber-100/60">
-          O Livro VOF reúne todas as regras, tabelas, bestiário e lore do
-          universo em um guia completo para mestres e jogadores.
-        </p>
-        <Button size="lg">
-          <Download className="h-5 w-5" />
-          Baixar Livro VOF
-        </Button>
-      </section>
+      <DownloadBook />
     </main>
   );
 }

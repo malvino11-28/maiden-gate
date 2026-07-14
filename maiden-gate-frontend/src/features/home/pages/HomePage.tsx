@@ -146,7 +146,7 @@ export default function HomePage() {
 
         <div className="relative mx-auto flex h-full max-w-7xl items-center justify-center px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl text-center">
-            <h1 className="mb-6 bg-gradient-to-r from-amber-200 via-amber-400 to-rose-400 bg-clip-text text-5xl font-bold leading-tight text-transparent md:text-7xl">
+            <h1 className="mb-6 bg-gradient-to-r from-amber-200 via-amber-400 to-rose-400 bg-clip-text font-bold leading-tight whitespace-nowrap text-transparent md:text-7xl text-5xl">
               Voice Of Flower
             </h1>
             <p className="mb-4 text-xl text-amber-100/90 md:text-2xl">

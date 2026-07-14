@@ -11,7 +11,7 @@ export default function UnauthorizedPage() {
       icon={LockKeyhole}
       primaryAction={{
         label: "Fazer login",
-        to: "/login",
+        to: "/",
       }}
       secondaryAction={{
         label: "Voltar ao início",
