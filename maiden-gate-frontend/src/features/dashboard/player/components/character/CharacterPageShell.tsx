@@ -14,6 +14,12 @@ type Props = {
   children: React.ReactNode;
 };
 
+function getMobileSubmitLabel(label: string) {
+  if (label.toLowerCase().includes("salvar")) return "Salvar";
+  if (label.toLowerCase().includes("criar")) return "Criar";
+  return label;
+}
+
 export default function CharacterPageShell({
   title,
   subtitle,
@@ -43,16 +49,17 @@ export default function CharacterPageShell({
       />
 
       <header className="sticky top-0 z-40 border-b border-amber-900/30 bg-slate-950/90 backdrop-blur-md">
-        <div className="mx-auto flex h-14 max-w-5xl items-center justify-between px-6">
+        <div className="mx-auto flex min-h-14 max-w-5xl items-center justify-between gap-2 px-3 py-2 sm:px-6 sm:py-0">
           <button
             onClick={() => navigate("/dashboard/player")}
-            className="group flex items-center gap-2 text-sm text-amber-100/60 transition-colors hover:text-amber-200"
+            className="group flex min-w-0 flex-shrink-0 items-center gap-1.5 text-sm text-amber-100/60 transition-colors hover:text-amber-200 sm:gap-2"
           >
             <ArrowLeft className="h-4 w-4 transition-transform group-hover:-translate-x-0.5" />
-            Voltar ao painel
+            <span className="sm:hidden">Voltar</span>
+            <span className="hidden sm:inline">Voltar ao painel</span>
           </button>
 
-          <div className="flex items-center gap-2">
+          <div className="hidden items-center gap-2 sm:flex">
             <Sparkles className="h-4 w-4 text-rose-400/70" />
             <span className="text-xs font-medium uppercase tracking-[0.2em] text-amber-100/40">
               Voice of Flower
@@ -64,7 +71,7 @@ export default function CharacterPageShell({
             type="submit"
             form={formId}
             disabled={saved}
-            className={`flex items-center gap-2 rounded-lg px-5 py-2 text-sm font-semibold transition-all ${
+            className={`flex flex-shrink-0 items-center gap-1.5 rounded-lg px-3 py-2 text-xs font-semibold transition-all sm:gap-2 sm:px-5 sm:text-sm ${
               saved
                 ? "scale-95 bg-emerald-600/80 text-emerald-100"
                 : "bg-gradient-to-r from-amber-500 to-rose-600 text-white shadow-lg shadow-amber-900/30 hover:from-amber-400 hover:to-rose-500 hover:shadow-amber-800/40"
@@ -72,11 +79,15 @@ export default function CharacterPageShell({
           >
             {saved ? (
               <>
-                <CheckCircle2 className="h-4 w-4" /> {savedLabel}
+                <CheckCircle2 className="h-4 w-4" />
+                <span className="hidden sm:inline">{savedLabel}</span>
+                <span className="sm:hidden">Salvo!</span>
               </>
             ) : (
               <>
-                <Sparkles className="h-4 w-4" /> {submitLabel}
+                <Sparkles className="h-4 w-4" />
+                <span className="hidden sm:inline">{submitLabel}</span>
+                <span className="sm:hidden">{getMobileSubmitLabel(submitLabel)}</span>
               </>
             )}
           </button>

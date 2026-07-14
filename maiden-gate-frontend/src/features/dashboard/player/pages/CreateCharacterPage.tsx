@@ -277,16 +277,17 @@ export default function CreateCharacterPage() {
         )}
 
         <CharacterSectionCard title="Identidade" icon={Scroll}>
-          <div className="grid grid-cols-1 gap-8 md:grid-cols-[260px_1fr]">
-            <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-1">
-              <CharacterImageUpload
-                image={iconImage}
-                onChange={setIconImage}
-                label="Imagem do Ícone"
-                helper="Imagem pequena do card"
-                aspectClassName="aspect-square"
-              />
-
+          <div className="grid grid-cols-1 gap-6 lg:grid-cols-[390px_1fr]">
+            <div className="grid grid-cols-2 gap-4">
+              <div className="mt-7 mx-2 lg:mx-6 lg:mt-12.5">
+                <CharacterImageUpload
+                  image={iconImage}
+                  onChange={setIconImage}
+                  label="Imagem do Ícone"
+                  helper="Imagem do rosto"
+                  aspectClassName="aspect-square"
+                />
+              </div>
               <CharacterImageUpload
                 image={fullImage}
                 onChange={setFullImage}
