@@ -210,7 +210,7 @@ export default function SessionsSection({
                 description: event.target.value,
               }))
             }
-            placeholder="Ex: Trazer ficha atualizada, revisar inventário e preparar habilidades."
+            placeholder="Ex: Evento grande, revisar inventário e preparar habilidades."
             className="w-full resize-none rounded-lg border border-amber-900/40 bg-slate-950/70 px-4 py-3 text-sm leading-relaxed text-amber-100 outline-none transition-all placeholder:text-amber-100/20 focus:border-amber-500/60 focus:ring-1 focus:ring-amber-500/20"
           />
         </div>
