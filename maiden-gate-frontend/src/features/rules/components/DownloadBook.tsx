@@ -26,7 +26,7 @@ export default function DownloadBook() {
               text-stone-100
             "
           >
-            Livro Completo de Regras
+            Livro de Voice of Flower
           </h2>
 
           <p

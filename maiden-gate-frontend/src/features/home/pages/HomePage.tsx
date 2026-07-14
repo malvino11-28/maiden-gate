@@ -17,57 +17,52 @@ import Button from "../../../shared/components/Button/Button";
 const marcas = [
   {
     nome: "Manifesto",
-    subtitulo: "A classe da autoridade e do domínio",
+    subtitulo: "A Marca da luz, da nobreza e da influência divina",
     descricao:
-      "A Marca do Manifesto transforma vontade em ordem. Seus portadores impõem presença, controlam o ritmo do campo de batalha e sustentam aliados através de comando, disciplina e força declarada.",
-    funcao: "Controle • Liderança • Defesa",
+      "A Marca do Manifesto manifesta poderes ligados à luz. Seu prestígio nasce da proximidade com a Flor e do domínio político da família real, que transforma fé, sangue nobre e autoridade em poder.",
+    funcao: "Luz • Autoridade • Nobreza",
     cor: "from-amber-500 to-orange-700",
     corBorda: "border-amber-500/40",
-
     image: "/images/marks/manifesto.png",
   },
   {
     nome: "Oculto",
-    subtitulo: "A classe das sombras e dos segredos",
+    subtitulo: "A Marca da escuridão, dos segredos e do vazio",
     descricao:
-      "A Marca do Oculto pertence aos que vencem antes de serem vistos. Seus portadores caminham entre frestas da realidade, manipulam silêncio, medo e informação para atacar onde o inimigo é mais frágil.",
-    funcao: "Furtividade • Ilusão • Precisão",
+      "A Marca do Oculto domina sombras, matéria escura e constructos nascidos da umbracinese. Seus usuários tem acesso a uma dimensão vazia ligada à própria sombra, ocultando objetos ou até corpos.",
+    funcao: "Escuridão • Segredo • Vazio",
     cor: "from-violet-600 to-purple-900",
     corBorda: "border-violet-500/40",
-
     image: "/images/marks/oculto.png",
   },
   {
     nome: "Entoadora",
-    subtitulo: "A classe da voz, do canto e da ressonância",
+    subtitulo: "A Marca da voz, do canto e da alma",
     descricao:
-      "A Marca da Entoadora canaliza poder por meio da voz. Cânticos podem curar, proteger, confundir, enfraquecer inimigos ou despertar forças antigas adormecidas nas profundezas da Flor.",
-    funcao: "Suporte • Cura • Encantamento",
+      "A Marca da Entoadora canaliza poder através do canto. Suas vozes podem fortalecer aliados, enfraquecer inimigos, e, em casos raros, manifestar Anjos: criaturas ligadas à alma de quem canta.",
+    funcao: "Canto • Suporte • Manipulação",
     cor: "from-rose-400 to-pink-700",
     corBorda: "border-rose-500/40",
-
     image: "/images/marks/entoadora.png",
   },
   {
     nome: "Respiração",
-    subtitulo: "A classe do fluxo vital e do movimento",
+    subtitulo: "A Marca do corpo, da natureza e dos elementos",
     descricao:
-      "A Marca da Respiração conecta corpo, mente e mundo. Cada fôlego pode se tornar esquiva, impulso, corte, defesa ou cura, fazendo seus portadores dançarem entre velocidade e equilíbrio.",
-    funcao: "Mobilidade • Técnica • Equilíbrio",
+      "A Marca da Respiração controle corporal minucioso e sintonia com a natureza. Seus portadores canalizam elementos ou forças derivadas em estilos de combate precisos, muitas vezes associados a armas.",
+    funcao: "Elemento • Técnica • Disciplina",
     cor: "from-teal-400 to-cyan-700",
     corBorda: "border-teal-500/40",
-
     image: "/images/marks/respiracao.png",
   },
   {
     nome: "Maso",
-    subtitulo: "A classe da dor, do sangue e da resistência",
+    subtitulo: "A Marca da magia bruta, da mutação e do instinto",
     descricao:
-      "A Marca do Maso abraça sofrimento como combustível. Seus portadores convertem feridas em força, resistem além do limite e se tornam mais perigosos quanto mais próximos estão da ruína.",
-    funcao: "Resistência • Sacrifício • Dano",
+      "A Marca do Maso é a mais imprevisível. Cada usuário nasce com um poder próprio, podendo ser simples ou até impossível de classificar. Monstros, seres antropomórficos e muitos povos possuem a Marca.",
+    funcao: "Magia • Mutação • Poder Inato",
     cor: "from-red-600 to-rose-900",
     corBorda: "border-red-500/40",
-
     image: "/images/marks/maso.png",
   },
 ];
@@ -75,46 +70,46 @@ const marcas = [
 const features = [
   {
     icon: Swords,
-    title: "Aventuras Épicas",
+    title: "Conflitos Entre Facções",
     description:
-      "Explore mundos fantásticos, enfrente facções rivais e transforme decisões em consequências reais para a campanha.",
+      "Entre o domínio religioso do Manifesto e os territórios do Sindicato das Sombras, cada escolha pode alterar o equilíbrio do continente.",
   },
   {
     icon: BookOpen,
-    title: "Sistema de Regras",
+    title: "Campanhas no Universo VOF",
     description:
-      "Uma base organizada para mestres e jogadores criarem fichas, consultar regras e manter o ritmo da sessão.",
+      "Crie histórias próprias ou explore a campanha principal de Awakening of the Maiden, com RAIDs, personagens e eventos conectados à lore.",
   },
   {
     icon: Sparkles,
-    title: "Magia & Mistério",
+    title: "Miasma, Flor e Mistério",
     description:
-      "Marcas, Miasma, ecos do passado e segredos ancestrais constroem um mundo perigoso e memorável.",
+      "A Flor sustenta fé e poder, mas o Miasma ainda contamina regiões esquecidas, distorce realidades e transforma o que toca em ameaça.",
   },
 ];
 
 const tools = [
   {
     icon: Users,
-    title: "Criador de Personagens",
+    title: "Criação de Personagens",
     description:
-      "Crie heróis únicos com atributos, Marca, história e progressão.",
+      "Monte personagens com Marca, atributos, história, imagens, habilidades e vínculos com campanhas.",
     image:
       "https://images.unsplash.com/photo-1700234272632-9f7a43b84e1c?auto=format&fit=crop&w=900&q=80",
   },
   {
     icon: Scroll,
-    title: "Campanha Digital",
+    title: "Gestão de Campanhas",
     description:
-      "Organize as informações essenciais da campanha, em um acervo fácil de consultar.",
+      "Organize localizações, NPCs, monstros, itens, eventos, sessões e anotações em um acervo digital para a mesa.",
     image:
       "https://images.unsplash.com/photo-1653201927638-f752117e29d0?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
   },
   {
     icon: Wand2,
-    title: "Rolagem de Dados",
+    title: "Rolagens Compartilhadas",
     description:
-      "Ferramentas digitais para testes, combate e improviso de mesa.",
+      "Role dados em tempo real com histórico compartilhado entre Mestre e Jogadores dentro da campanha.",
     image:
       "https://images.unsplash.com/photo-1659480142923-0cd01191e0e9?auto=format&fit=crop&w=900&q=80",
   },
@@ -153,9 +148,9 @@ export default function HomePage() {
               Awakening Of The Maiden
             </p>
             <p className="mx-auto mb-8 max-w-2xl text-lg leading-8 text-amber-100/70">
-              Embarque em uma jornada épica através de um continente medieval
-              marcado por magia, política, Marcas ancestrais e mistérios que
-              atravessam séculos.
+              Explore um continente marcado pela Flor, pelo Miasma e por Marcas
+              capazes de moldar corpos, reinos e destinos em meio a uma guerra
+              prestes a despertar.
             </p>
             <div className="flex flex-wrap justify-center gap-4">
               <Link to="/tools">
@@ -173,14 +168,15 @@ export default function HomePage() {
 
       <section className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8">
         <p className="mb-3 text-xs font-semibold uppercase tracking-[0.3em] text-amber-400/60 text-center">
-          Do seu jeito
+          Awakening of the Maiden
         </p>
         <h2 className="mb-4 text-center text-4xl font-semibold text-amber-100">
-          Um Mundo de Possibilidades
+          Um Mundo Entre Fé, Guerra e Mentiras
         </h2>
         <p className="mx-auto mb-12 max-w-2xl text-center text-amber-100/60">
-          Voice Of Flower oferece ferramentas para criar histórias memoráveis,
-          personagens marcantes e campanhas de longa duração.
+          Voice of Flower apresenta um cenário onde Marcas definem poderes,
+          facções disputam territórios e a influência da Flor molda a fé, a
+          política e o medo das pessoas.
         </p>
 
         <div className="grid gap-8 md:grid-cols-3">
@@ -215,9 +211,9 @@ export default function HomePage() {
             </h2>
 
             <p className="text-base leading-7 text-amber-100/60">
-              Cada personagem carrega uma Marca, um poder singular que define
-              sua forma de lutar, sua relação com o mundo e seu papel dentro da
-              aventura.
+              Cada personagem carrega uma Marca, uma manifestação de poder que
+              influencia sua origem, sua posição no mundo e a forma como
+              enfrenta os perigos presentes.
             </p>
           </div>
 
@@ -394,13 +390,14 @@ export default function HomePage() {
 
       <section className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8">
         <p className="mb-3 text-xs font-semibold uppercase tracking-[0.3em] text-amber-400/60 text-center">
-          Utilidades
+          Maiden-Gate
         </p>
         <h2 className="mb-4 text-center text-4xl font-semibold text-amber-100">
-          Ferramentas Digitais
+          Uma Mesa Digital Para Voice of Flower
         </h2>
         <p className="mx-auto mb-12 max-w-2xl text-center text-amber-100/60">
-          Recursos integrados para facilitar a mesa e manter a campanha viva.
+          Gerencie campanhas, personagens, sessões e rolagens em um espaço
+          criado para apoiar Mestres e Jogadores durante a jornada.
         </p>
 
         <div className="grid gap-8 md:grid-cols-3">
@@ -436,14 +433,14 @@ export default function HomePage() {
       <section className="mx-auto max-w-5xl px-4 pb-20 sm:px-6 lg:px-8">
         <div className="rounded-2xl border border-amber-700/30 bg-gradient-to-r from-amber-900/30 to-rose-900/30 p-10 text-center">
           <h2 className="mb-4 text-3xl font-semibold text-amber-100">
-            Pronto para despertar sua Marca?
+            Pronto para atravessar o Maiden-Gate?
           </h2>
           <p className="mx-auto mb-8 max-w-2xl text-amber-100/65">
-            Crie sua conta, entre em uma campanha e comece a registrar sua lenda
-            no continente de Voice Of Flower.
+            Crie sua conta, prepare sua ficha e entre em campanhas marcadas por
+            facções, Marcas, RAIDs e segredos deixados pelo Miasma.
           </p>
           <Link to="/tools">
-            <Button size="lg">Explorar Ferramentas</Button>
+            <Button size="lg">Conhecer Ferramentas</Button>
           </Link>
         </div>
       </section>
