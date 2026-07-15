@@ -1,6 +1,7 @@
 import { CheckCircle2, MapPin, Navigation } from "lucide-react";
 import { useEffect, useState } from "react";
 
+import { getStorageImageUrl } from "../../../../../../services/apiUrl";
 import type {
   CampaignLocation,
   CurrentLocation,
@@ -11,16 +12,6 @@ type Props = {
   allLocations: CampaignLocation[];
   onChangeCurrentLocation: (locationId: number) => Promise<void>;
 };
-
-function getImageSrc(image?: string | null) {
-  if (!image) return "";
-
-  if (image.startsWith("http") || image.startsWith("/")) {
-    return image;
-  }
-
-  return `http://127.0.0.1:8000/storage/${image}`;
-}
 
 export default function LocationSection({
   currentLocation,
@@ -44,7 +35,7 @@ export default function LocationSection({
       (location) => String(location.id) === currentLocationId,
     ) ?? currentLocation;
 
-  const currentImage = getImageSrc(current.imagem ?? current.image);
+  const currentImage = getStorageImageUrl(current.imagem ?? current.image);
 
   async function handleUpdate(locationId: number) {
     try {

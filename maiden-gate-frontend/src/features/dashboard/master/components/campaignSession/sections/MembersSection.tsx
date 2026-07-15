@@ -1,22 +1,13 @@
 import { ChevronDown, ChevronUp, Sparkles } from "lucide-react";
 import { useState } from "react";
 
+import { getStorageImageUrl } from "../../../../../../services/apiUrl";
 import type { CampaignMember } from "../../../types/masterCampaign";
 
 type Props = {
   members: CampaignMember[];
   onCreateSkill?: () => void;
 };
-
-function getImageSrc(image?: string | null) {
-  if (!image) return "";
-
-  if (image.startsWith("http") || image.startsWith("/")) {
-    return image;
-  }
-
-  return `http://127.0.0.1:8000/storage/${image}`;
-}
 
 export default function MembersSection({ members, onCreateSkill }: Props) {
   const [expanded, setExpanded] = useState<string | null>(null);
@@ -56,7 +47,7 @@ export default function MembersSection({ members, onCreateSkill }: Props) {
             const hpMax = Math.max(member.hpMax || 1, 1);
             const hpPercent = Math.round((member.hp / hpMax) * 100);
             const isOpen = expanded === String(member.id ?? member.nome);
-            const iconSrc = getImageSrc(member.iconImage);
+            const iconSrc = getStorageImageUrl(member.iconImage);
 
             return (
               <div

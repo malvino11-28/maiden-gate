@@ -1,23 +1,14 @@
 import { ImageIcon, MapPin, Scroll } from "lucide-react";
 
+import { getStorageImageUrl } from "../../../../../../services/apiUrl";
 import type { PlayerCampaignData } from "../../../types/player";
 
 type Props = {
   location: PlayerCampaignData["localizacaoAtual"];
 };
 
-function getImageSrc(image?: string | null) {
-  if (!image) return "";
-
-  if (image.startsWith("http") || image.startsWith("/")) {
-    return image;
-  }
-
-  return `http://127.0.0.1:8000/storage/${image}`;
-}
-
 export default function PlayerLocationSection({ location }: Props) {
-  const imageSrc = getImageSrc(location.imagem);
+  const imageSrc = getStorageImageUrl(location.imagem);
 
   return (
     <div className="overflow-hidden rounded-2xl border border-emerald-900/30 bg-slate-900/50">

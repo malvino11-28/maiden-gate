@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { CheckCircle2, Edit3, ImageIcon, Trash2, Users, X } from "lucide-react";
 
+import { getStorageImageUrl } from "../../../../../../services/apiUrl";
 import type { MasterCampaign } from "../../../types/masterCampaign";
 
 import ImageInput from "../../forms/ImageField";
@@ -36,17 +37,7 @@ export default function CampaignDataSection({
     jogadores: campaign.jogadores ?? "",
   });
 
-  function getImageSrc(image?: string | null) {
-    if (!image) return "";
-
-    if (image.startsWith("http") || image.startsWith("/")) {
-      return image;
-    }
-
-    return `http://127.0.0.1:8000/storage/${image}`;
-  }
-
-  const [form, setForm] = useState<CampaignDataForm>(data);
+    const [form, setForm] = useState<CampaignDataForm>(data);
 
   const [isSaving, setIsSaving] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
@@ -106,7 +97,7 @@ export default function CampaignDataSection({
   }
 
   const visibleData = isEditing ? form : data;
-  const visibleImage = getImageSrc(visibleData.imagem);
+  const visibleImage = getStorageImageUrl(visibleData.imagem);
 
   return (
     <section className="overflow-hidden rounded-2xl border border-amber-900/25 bg-slate-900/60">

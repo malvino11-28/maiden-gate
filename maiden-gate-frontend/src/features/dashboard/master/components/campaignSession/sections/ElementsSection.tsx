@@ -16,6 +16,7 @@ import {
   Zap,
 } from "lucide-react";
 
+import { getStorageImageUrl } from "../../../../../../services/apiUrl";
 import type {
   CampaignCollection,
   CampaignElementStatus,
@@ -68,16 +69,6 @@ type GroupedCollection = {
   items: any[];
   color?: string | null;
 };
-
-function getImageSrc(image?: string | null) {
-  if (!image) return "";
-
-  if (image.startsWith("http") || image.startsWith("/")) {
-    return image;
-  }
-
-  return `http://127.0.0.1:8000/storage/${image}`;
-}
 
 function getVisibleToPlayers(item: VisibilityTarget) {
   return Boolean(item.visibleToPlayers ?? item.visible_to_players ?? false);
@@ -190,7 +181,7 @@ function groupItemsByCollection(
 }
 
 function ElementImage({ image, alt }: { image?: string | null; alt: string }) {
-  const imageSrc = getImageSrc(image);
+  const imageSrc = getStorageImageUrl(image);
 
   const containerClass =
     "flex w-full flex-shrink-0 overflow-hidden rounded-lg border border-amber-900/20 bg-slate-950/50 sm:w-32 sm:self-stretch";
@@ -286,6 +277,12 @@ function ElementCollectionSelect({
 
   return (
     <label className="flex w-full items-center gap-2 rounded-lg border border-amber-900/20 bg-slate-950/50 px-2.5 py-2 text-xs text-amber-100/45 sm:w-auto">
+      <span
+        className="h-2.5 w-2.5 flex-shrink-0 rounded-full border border-white/20"
+        style={{
+          backgroundColor: selectedCollection ? selectedCollectionColor : "#334155",
+        }}
+      />
       <FolderTree className="h-3.5 w-3.5 text-amber-400/70" />
       <span className="whitespace-nowrap">Conjunto</span>
       <select

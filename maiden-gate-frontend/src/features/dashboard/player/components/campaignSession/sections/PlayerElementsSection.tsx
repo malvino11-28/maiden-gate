@@ -14,6 +14,7 @@ import {
   Users,
 } from "lucide-react";
 
+import { getStorageImageUrl } from "../../../../../../services/apiUrl";
 import type {
   PlayerCampaignElements,
   PlayerElementStatus,
@@ -39,16 +40,6 @@ type GroupedCollection = {
   description?: string | null;
   items: any[];
 };
-
-function getImageSrc(image?: string | null) {
-  if (!image) return "";
-
-  if (image.startsWith("http") || image.startsWith("/")) {
-    return image;
-  }
-
-  return `http://127.0.0.1:8000/storage/${image}`;
-}
 
 function getCollectionId(item: CollectionTarget) {
   return item.collectionId ?? item.collection?.id ?? null;
@@ -89,7 +80,7 @@ function groupItemsByCollection(items: any[]): GroupedCollection[] {
 }
 
 function ElementImage({ image, alt }: { image?: string | null; alt: string }) {
-  const imageSrc = getImageSrc(image);
+  const imageSrc = getStorageImageUrl(image);
 
   if (!imageSrc) {
     return (

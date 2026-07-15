@@ -3,6 +3,8 @@ import { ImagePlus, X } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import type { ChangeEvent } from "react";
 
+import { getStorageImageUrl } from "../../../../../services/apiUrl";
+
 type Props = {
   image?: string | File | null;
   label?: string;
@@ -11,47 +13,16 @@ type Props = {
   onChange: (image: File | null) => void;
 };
 
-function getApiBaseUrl() {
-  const apiUrl = import.meta.env.VITE_API_URL ?? "http://127.0.0.1:8000/api";
-
-  return apiUrl.replace(/\/api\/?$/, "").replace(/\/$/, "");
-}
-
-function getImageSrc(image?: string | File | null) {
+function getPreviewSrc(image?: string | File | null) {
   if (!image) return null;
 
   if (image instanceof File) {
     return URL.createObjectURL(image);
   }
 
-  if (
-    image.startsWith("http") ||
-    image.startsWith("blob:") ||
-    image.startsWith("data:")
-  ) {
-    return image;
-  }
-
-  const apiBaseUrl = getApiBaseUrl();
-
-  if (image.startsWith("/storage/")) {
-    return `${apiBaseUrl}${image}`;
-  }
-
-  if (image.startsWith("storage/")) {
-    return `${apiBaseUrl}/${image}`;
-  }
-
-  if (image.startsWith("/assets/") || image.startsWith("/images/")) {
-    return image;
-  }
-
-  if (image.startsWith("/")) {
-    return image;
-  }
-
-  return `${apiBaseUrl}/storage/${image}`;
+  return getStorageImageUrl(image);
 }
+
 
 export default function CharacterImageUpload({
   image,
@@ -64,7 +35,7 @@ export default function CharacterImageUpload({
   const [preview, setPreview] = useState<string | null>(null);
 
   useEffect(() => {
-    const imageSrc = getImageSrc(image);
+    const imageSrc = getPreviewSrc(image);
 
     setPreview(imageSrc);
 

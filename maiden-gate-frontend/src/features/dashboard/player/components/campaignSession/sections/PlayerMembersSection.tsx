@@ -1,20 +1,11 @@
 import { Shield } from "lucide-react";
 
+import { getStorageImageUrl } from "../../../../../../services/apiUrl";
 import type { PlayerCampaignMember } from "../../../types/player";
 
 type Props = {
   members: PlayerCampaignMember[];
 };
-
-function getImageSrc(image?: string | null) {
-  if (!image) return "";
-
-  if (image.startsWith("http") || image.startsWith("/")) {
-    return image;
-  }
-
-  return `http://127.0.0.1:8000/storage/${image}`;
-}
 
 export default function PlayerMembersSection({ members }: Props) {
   return (
@@ -25,7 +16,7 @@ export default function PlayerMembersSection({ members }: Props) {
         </div>
       ) : (
         members.map((member) => {
-          const iconSrc = getImageSrc(member.iconImage);
+          const iconSrc = getStorageImageUrl(member.iconImage);
 
           return (
             <div

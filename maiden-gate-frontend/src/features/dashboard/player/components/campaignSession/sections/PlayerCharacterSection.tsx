@@ -9,6 +9,7 @@ import {
   Zap,
 } from "lucide-react";
 
+import { getStorageImageUrl } from "../../../../../../services/apiUrl";
 import type { PlayerCharacterFull } from "../../../types/player";
 
 import CharacterBattleResources from "../../character/CharacterBattleResources";
@@ -18,16 +19,6 @@ type Props = {
   character: PlayerCharacterFull;
   onUpdated?: () => void;
 };
-
-function getImageSrc(image?: string | null) {
-  if (!image) return "";
-
-  if (image.startsWith("http") || image.startsWith("/")) {
-    return image;
-  }
-
-  return `http://127.0.0.1:8000/storage/${image}`;
-}
 
 function clampNumber(value: number, min: number, max: number) {
   if (!Number.isFinite(value)) return min;
@@ -85,7 +76,7 @@ export default function PlayerCharacterSection({
             <div className="flex h-20 w-20 flex-shrink-0 items-center justify-center overflow-hidden rounded-2xl bg-slate-950/30 text-3xl text-white/80">
               {character.iconImage ? (
                 <img
-                  src={getImageSrc(character.iconImage)}
+                  src={getStorageImageUrl(character.iconImage)}
                   alt={character.nome}
                   className="h-full w-full object-cover"
                 />
@@ -107,7 +98,7 @@ export default function PlayerCharacterSection({
         {character.fullImage && (
           <div className="border-b border-amber-900/15 bg-slate-950/35 p-5">
             <img
-              src={getImageSrc(character.fullImage)}
+              src={getStorageImageUrl(character.fullImage)}
               alt={`${character.nome} ${character.sobrenome ?? ""}`.trim()}
               className="mx-auto max-h-[420px] rounded-2xl object-contain"
             />
