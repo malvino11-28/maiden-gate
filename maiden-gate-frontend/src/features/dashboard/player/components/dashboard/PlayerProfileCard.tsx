@@ -1,6 +1,5 @@
 import { Shield, User } from "lucide-react";
 
-import Button from "../../../../../shared/components/Button/Button";
 import { profileQuickActions } from "../../data/playerDashboardMock";
 import type { PlayerDashboardTab } from "../../types/player";
 
@@ -45,7 +44,10 @@ export default function PlayerProfileCard({
               { label: "Nome", value: playerName },
               { label: "Tipo de conta", value: "Jogador" },
               { label: "Personagens criados", value: String(charactersCount) },
-              { label: "Campanhas ativas", value: String(activeCampaignsCount) },
+              {
+                label: "Campanhas ativas",
+                value: String(activeCampaignsCount),
+              },
               { label: "Status", value: "Ativo" },
             ].map(({ label, value }) => (
               <div key={label}>
@@ -55,21 +57,6 @@ export default function PlayerProfileCard({
                 <p className="text-sm text-amber-100">{value}</p>
               </div>
             ))}
-          </div>
-
-          <div className="flex gap-3 border-t border-rose-900/20 pt-4">
-            <Button
-              variant="outline"
-              className="border-rose-500/40 text-rose-400 hover:bg-rose-500/10"
-            >
-              Editar Perfil
-            </Button>
-            <Button
-              variant="outline"
-              className="border-amber-500/40 text-amber-400 hover:bg-amber-500/10"
-            >
-              Alterar Senha
-            </Button>
           </div>
         </div>
       </div>

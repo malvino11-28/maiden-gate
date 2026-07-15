@@ -37,7 +37,7 @@ export default function SkillsSection({
   return (
     <EditableListSection<CampaignSkillForm>
       title="Skills da Campanha"
-      description="Habilidades exclusivas criadas pelo Mestre para esta campanha. Toda skill criada aqui será registrada automaticamente com tipo e ramo Campanha."
+      description="Habilidades exclusivas criadas pelo Mestre para esta campanha."
       icon={Sparkles}
       iconClassName="text-violet-400"
       items={campaign.skills}
@@ -79,7 +79,8 @@ export default function SkillsSection({
         {
           name: "description",
           label: "Descrição & efeito",
-          placeholder: "Explique o que a habilidade faz, seu custo, condição e consequência narrativa.",
+          placeholder:
+            "Explique o que a habilidade faz, seu custo, condição e consequência narrativa.",
           type: "textarea",
         },
       ]}

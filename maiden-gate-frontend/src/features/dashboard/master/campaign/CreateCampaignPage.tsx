@@ -282,21 +282,29 @@ export default function CreateCampaignPage() {
                 style={{ width: `${progress}%` }}
               />
             </div>
-            <div className="mt-4 grid grid-cols-3 gap-2 sm:grid-cols-6">
-              {steps.map((step) => {
-                const Icon = stepIcons[step];
-                const active = currentStep === step;
-                return (
-                  <button
-                    key={step}
-                    onClick={() => setCurrentStep(step)}
-                    className={`rounded-lg border px-3 py-2 text-xs transition-all ${active ? "border-amber-500/40 bg-amber-500/10 text-amber-200" : "border-amber-900/25 bg-slate-900/40 text-amber-100/45"}`}
-                  >
-                    <Icon className="mx-auto mb-1 h-4 w-4" />
-                    {stepLabels[step]}
-                  </button>
-                );
-              })}
+            <div className="mt-4 -mx-1 overflow-x-auto pb-2 sm:mx-0 sm:overflow-visible sm:pb-0">
+              <div className="flex min-w-max gap-2 px-1 sm:grid sm:min-w-0 sm:grid-cols-7 sm:px-0">
+                {steps.map((step) => {
+                  const Icon = stepIcons[step];
+                  const active = currentStep === step;
+
+                  return (
+                    <button
+                      key={step}
+                      type="button"
+                      onClick={() => setCurrentStep(step)}
+                      className={`min-w-[92px] rounded-lg border px-3 py-2 text-xs transition-all sm:min-w-0 ${
+                        active
+                          ? "border-amber-500/40 bg-amber-500/10 text-amber-200"
+                          : "border-amber-900/25 bg-slate-900/40 text-amber-100/45 hover:border-amber-700/40 hover:text-amber-100/70"
+                      }`}
+                    >
+                      <Icon className="mx-auto mb-1 h-4 w-4" />
+                      <span className="block truncate">{stepLabels[step]}</span>
+                    </button>
+                  );
+                })}
+              </div>
             </div>
           </div>
 
