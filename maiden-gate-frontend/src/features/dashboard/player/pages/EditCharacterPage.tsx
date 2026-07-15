@@ -94,9 +94,7 @@ export default function EditCharacterPage() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
 
-  const [character, setCharacter] = useState<EditableCharacterData | null>(
-    null,
-  );
+  const [character, setCharacter] = useState<EditableCharacterData | null>(null);
   const [form, setForm] = useState<CharacterForm>({
     nome: "",
     sobrenome: "",
@@ -108,12 +106,8 @@ export default function EditCharacterPage() {
   const [hp, setHp] = useState(0);
   const [iconImage, setIconImage] = useState<File | null>(null);
   const [fullImage, setFullImage] = useState<File | null>(null);
-  const [existingIconImage, setExistingIconImage] = useState<string | null>(
-    null,
-  );
-  const [existingFullImage, setExistingFullImage] = useState<string | null>(
-    null,
-  );
+  const [existingIconImage, setExistingIconImage] = useState<string | null>(null);
+  const [existingFullImage, setExistingFullImage] = useState<string | null>(null);
   const [availableSkills, setAvailableSkills] = useState<CharacterSkill[]>([]);
   const [equippedSkillIds, setEquippedSkillIds] = useState<string[]>([]);
 
@@ -178,9 +172,7 @@ export default function EditCharacterPage() {
     };
   }, [id]);
 
-  const baseAttributesByMark = getMinimumAttributesByMark(
-    character?.marca ?? "",
-  );
+  const baseAttributesByMark = getMinimumAttributesByMark(character?.marca ?? "");
   const minimumAttributes = character?.attributes ?? baseAttributesByMark;
   const attributePointLimit = character
     ? Math.max(
@@ -191,10 +183,7 @@ export default function EditCharacterPage() {
     : extraPoints;
 
   const equippedSkills = useMemo(() => {
-    const source =
-      availableSkills.length > 0
-        ? availableSkills
-        : (character?.habilidades ?? []);
+    const source = availableSkills.length > 0 ? availableSkills : character?.habilidades ?? [];
 
     return source.filter(
       (skill) => skill.id && equippedSkillIds.includes(String(skill.id)),
@@ -313,17 +302,16 @@ export default function EditCharacterPage() {
         )}
 
         <CharacterSectionCard title="Identidade" icon={Scroll}>
-          <div className="grid grid-cols-1 gap-6 lg:grid-cols-[390px_1fr]">
+          <div className="grid grid-cols-1 gap-6 lg:grid-cols-[320px_1fr]">
             <div className="grid grid-cols-2 gap-4">
-              <div className="mt-7 mx-2 lg:mx-6 lg:mt-12.5">
-                <CharacterImageUpload
-                  image={iconImage ?? existingIconImage}
-                  onChange={setIconImage}
-                  label="Imagem do Ícone"
-                  helper="Imagem pequena do card"
-                  aspectClassName="aspect-square"
-                />
-              </div>
+              <CharacterImageUpload
+                image={iconImage ?? existingIconImage}
+                onChange={setIconImage}
+                label="Imagem do Ícone"
+                helper="Imagem pequena do card"
+                aspectClassName="aspect-square"
+              />
+
               <CharacterImageUpload
                 image={fullImage ?? existingFullImage}
                 onChange={setFullImage}
@@ -430,8 +418,7 @@ export default function EditCharacterPage() {
             </div>
 
             <div className="rounded-xl border border-amber-900/25 bg-slate-900/60 px-4 py-3 text-sm text-amber-100/65">
-              Esta escolha não pode ser alterada depois da criação do
-              personagem.
+              Esta escolha não pode ser alterada depois da criação do personagem.
             </div>
           </div>
 

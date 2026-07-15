@@ -4,7 +4,7 @@ import type { AttributeDefinition, CharacterMarkOption } from "../types/player";
 
 import type { AttributeKey, CharacterMark } from "../types/player";
 
-export const extraPoints = 18;
+export const extraPoints = 12;
 export const baseAttributeValue = 6;
 
 export const campaignsForCharacter = [

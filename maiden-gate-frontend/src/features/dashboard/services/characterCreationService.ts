@@ -260,6 +260,7 @@ export type EditableCharacterData = {
   campaignId: number | null;
   campanha: string;
   nivel: number;
+  xp: number;
   hp: number;
   hpMax: number;
   paMax: number;
@@ -321,6 +322,7 @@ export function mapEditableCharacter(character: any): EditableCharacterData {
     campaignId: character?.campaign_id ? Number(character.campaign_id) : null,
     campanha: character?.campaign?.name ?? character?.campaign?.nome ?? "Sem campanha",
     nivel: Number(character?.level ?? 1),
+    xp: Number(character?.exp ?? 0),
     hp: Number(character?.hp_current ?? 0),
     hpMax: Math.max(Number(character?.hp_max ?? 1), 1),
     paMax: Number(character?.pa_max ?? 0),
@@ -373,6 +375,19 @@ export async function updateCharacter(
     headers: {
       "X-HTTP-Method-Override": "PUT",
     },
+  });
+
+  return mapEditableCharacter(response.data.character ?? response.data);
+}
+
+
+export async function updateCharacterProgress(
+  characterId: string | number,
+  payload: { hpCurrent: number; exp: number },
+) {
+  const response = await api.put(`/characters/${characterId}`, {
+    hp_current: payload.hpCurrent,
+    exp: payload.exp,
   });
 
   return mapEditableCharacter(response.data.character ?? response.data);

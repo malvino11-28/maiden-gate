@@ -1,11 +1,22 @@
-import { BarChart2, Heart, Shield, Star, Zap } from "lucide-react";
+/* eslint-disable react-hooks/set-state-in-effect */
+import { useEffect, useState } from "react";
+import {
+  BarChart2,
+  CheckCircle2,
+  Heart,
+  Shield,
+  Star,
+  Zap,
+} from "lucide-react";
 
 import type { PlayerCharacterFull } from "../../../types/player";
 
 import CharacterBattleResources from "../../character/CharacterBattleResources";
+import { updateCharacterProgress } from "../../../../services/characterCreationService";
 
 type Props = {
   character: PlayerCharacterFull;
+  onUpdated?: () => void;
 };
 
 function getImageSrc(image?: string | null) {
@@ -18,9 +29,53 @@ function getImageSrc(image?: string | null) {
   return `http://127.0.0.1:8000/storage/${image}`;
 }
 
-export default function PlayerCharacterSection({ character }: Props) {
-  const hpPercent = Math.round((character.hp / character.hpMax) * 100);
-  const xpPercent = Math.round((character.xp / character.xpProximo) * 100);
+function clampNumber(value: number, min: number, max: number) {
+  if (!Number.isFinite(value)) return min;
+  return Math.min(Math.max(value, min), max);
+}
+
+export default function PlayerCharacterSection({
+  character,
+  onUpdated,
+}: Props) {
+  const [hpDraft, setHpDraft] = useState(character.hp);
+  const [xpDraft, setXpDraft] = useState(character.xp);
+  const [isSavingProgress, setIsSavingProgress] = useState(false);
+  const [progressSaved, setProgressSaved] = useState(false);
+  const [progressError, setProgressError] = useState<string | null>(null);
+
+  useEffect(() => {
+    setHpDraft(character.hp);
+    setXpDraft(character.xp);
+  }, [character.hp, character.xp]);
+
+  const hpMax = Math.max(character.hpMax, 1);
+  const xpMax = Math.max(character.xpProximo, 1000);
+  const hpPercent = Math.round((character.hp / hpMax) * 100);
+  const xpPercent = Math.round((character.xp / xpMax) * 100);
+
+  const hasProgressChanges =
+    hpDraft !== character.hp || xpDraft !== character.xp;
+
+  async function handleSaveProgress() {
+    try {
+      setIsSavingProgress(true);
+      setProgressError(null);
+
+      await updateCharacterProgress(character.id, {
+        hpCurrent: clampNumber(hpDraft, 0, hpMax),
+        exp: Math.max(0, xpDraft),
+      });
+
+      setProgressSaved(true);
+      setTimeout(() => setProgressSaved(false), 1200);
+      onUpdated?.();
+    } catch {
+      setProgressError("Não foi possível atualizar vida e experiência.");
+    } finally {
+      setIsSavingProgress(false);
+    }
+  }
 
   return (
     <div className="space-y-5">
@@ -65,12 +120,12 @@ export default function PlayerCharacterSection({ character }: Props) {
               <Heart className="h-3.5 w-3.5 text-rose-400" /> Pontos de Vida
             </p>
             <p className="text-xl font-semibold text-amber-100">
-              {character.hp} / {character.hpMax}
+              {character.hp} / {hpMax}
             </p>
             <div className="mt-2 h-2 overflow-hidden rounded-full bg-slate-800">
               <div
                 className={`h-full rounded-full ${hpPercent > 60 ? "bg-emerald-500" : hpPercent > 30 ? "bg-amber-500" : "bg-rose-500"}`}
-                style={{ width: `${hpPercent}%` }}
+                style={{ width: `${Math.min(Math.max(hpPercent, 0), 100)}%` }}
               />
             </div>
           </div>
@@ -85,15 +140,80 @@ export default function PlayerCharacterSection({ character }: Props) {
               <Star className="h-3.5 w-3.5 text-amber-400" /> Experiência
             </p>
             <p className="text-xl font-semibold text-amber-100">
-              {character.xp} / {character.xpProximo}
+              {character.xp} / {xpMax}
             </p>
             <div className="mt-2 h-2 overflow-hidden rounded-full bg-slate-800">
               <div
                 className="h-full rounded-full bg-amber-500"
-                style={{ width: `${xpPercent}%` }}
+                style={{ width: `${Math.min(Math.max(xpPercent, 0), 100)}%` }}
               />
             </div>
           </div>
+        </div>
+
+        <div className="border-t border-amber-900/15 bg-slate-950/30 p-5">
+          <div className="grid gap-4 md:grid-cols-[1fr_1fr_auto]">
+            <label className="block">
+              <span className="mb-1 block text-[11px] uppercase tracking-[0.2em] text-amber-100/35">
+                Ajustar HP
+              </span>
+              <input
+                type="number"
+                min={0}
+                max={hpMax}
+                value={hpDraft}
+                onChange={(event) =>
+                  setHpDraft(clampNumber(Number(event.target.value), 0, hpMax))
+                }
+                className="w-full rounded-xl border border-rose-900/25 bg-slate-950/60 px-4 py-3 text-sm font-semibold text-amber-100 outline-none transition focus:border-rose-400/50"
+              />
+            </label>
+
+            <label className="block">
+              <span className="mb-1 block text-[11px] uppercase tracking-[0.2em] text-amber-100/35">
+                Adicionar / ajustar XP
+              </span>
+              <input
+                type="number"
+                min={0}
+                value={xpDraft}
+                onChange={(event) =>
+                  setXpDraft(Math.max(0, Number(event.target.value) || 0))
+                }
+                className="w-full rounded-xl border border-amber-900/25 bg-slate-950/60 px-4 py-3 text-sm font-semibold text-amber-100 outline-none transition focus:border-amber-400/50"
+              />
+            </label>
+
+            <div className="flex items-end">
+              <button
+                type="button"
+                disabled={!hasProgressChanges || isSavingProgress}
+                onClick={handleSaveProgress}
+                className="flex w-full items-center justify-center gap-2 rounded-xl border border-amber-500/30 bg-amber-500/10 px-5 py-3 text-sm font-semibold text-amber-300 transition hover:bg-amber-500/20 disabled:cursor-not-allowed disabled:opacity-45 md:w-auto"
+              >
+                {progressSaved ? (
+                  <>
+                    <CheckCircle2 className="h-4 w-4 text-emerald-400" />
+                    Salvo
+                  </>
+                ) : isSavingProgress ? (
+                  "Salvando..."
+                ) : (
+                  "Salvar"
+                )}
+              </button>
+            </div>
+          </div>
+
+          <p className="mt-3 text-xs leading-relaxed text-amber-100/35">
+            Ao atingir 1000 de experiência, o contador volta para 0 e o nível
+            sobe em 1. Novos níveis liberam pontos de atributo na edição da
+            ficha.
+          </p>
+
+          {progressError && (
+            <p className="mt-3 text-sm text-rose-300">{progressError}</p>
+          )}
         </div>
       </div>
 

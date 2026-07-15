@@ -146,7 +146,7 @@ function mapCharacter(character: any, campaignName: string) {
     paMax: getNumber(character?.pa_max, 0),
     prMax: getNumber(character?.pr_max, 0),
     xp: getNumber(character?.exp, 0),
-    xpProximo: Math.max(getNumber(character?.level, 1) * 100, 100),
+    xpProximo: 1000,
     atributos: attributes.map((attribute) => ({
       nome: attribute.nome,
       valor: attribute.valor,

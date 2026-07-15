@@ -129,7 +129,7 @@ export default function PlayerCampaignPage() {
           )}
 
           {activeSection === "personagem" && (
-            <PlayerCharacterSection character={campaign.personagem} />
+            <PlayerCharacterSection character={campaign.personagem} onUpdated={loadCampaign} />
           )}
 
           {activeSection === "membros" && (

@@ -144,16 +144,37 @@ class CharacterController extends Controller
             $data['image'] = $data['full_image'];
         }
 
+        $attributeKeys = ['pod', 'des', 'res', 'int', 'det', 'pre'];
+        foreach ($attributeKeys as $attributeKey) {
+            if (array_key_exists($attributeKey, $data)) {
+                $data[$attributeKey] = max((int) $data[$attributeKey], (int) $character->{$attributeKey});
+            }
+        }
+
         $skillIds = collect($data['skills'] ?? [])
             ->unique()
             ->take(6)
             ->values()
             ->all();
 
+        $shouldSyncSkills = $request->has('skills');
         unset($data['skills']);
 
         $requestedHpCurrent = $data['hp_current'] ?? null;
         $wasFullHp = $character->hp_current == $character->hp_max;
+
+        if (array_key_exists('exp', $data)) {
+            $currentLevel = (int) ($data['level'] ?? $character->level);
+            $currentExp = (int) $data['exp'];
+
+            while ($currentExp >= 1000) {
+                $currentExp -= 1000;
+                $currentLevel++;
+            }
+
+            $data['exp'] = $currentExp;
+            $data['level'] = $currentLevel;
+        }
 
         $character->update($data);
 
@@ -169,11 +190,13 @@ class CharacterController extends Controller
 
         $character->save();
 
-        $syncPayload = collect($skillIds)->mapWithKeys(function ($skillId) {
-            return [$skillId => ['unlocked' => true, 'equipped' => true]];
-        })->all();
+        if ($shouldSyncSkills) {
+            $syncPayload = collect($skillIds)->mapWithKeys(function ($skillId) {
+                return [$skillId => ['unlocked' => true, 'equipped' => true]];
+            })->all();
 
-        $character->skills()->sync($syncPayload);
+            $character->skills()->sync($syncPayload);
+        }
 
         return response()->json([
             'message' => 'personagem atualizado com sucesso',
