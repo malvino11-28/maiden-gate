@@ -8,6 +8,7 @@ class LoreEvents extends Model
 {
     protected $fillable = [
     'campaign_id',
+    'collection_id',
     'visible_to_players',
 
     'title',
@@ -22,5 +23,9 @@ class LoreEvents extends Model
 
     public function campaign() {
         return $this->belongsTo(Campaign::class);
+    }
+
+    public function collection() {
+        return $this->belongsTo(CampaignCollection::class, 'collection_id');
     }
 }

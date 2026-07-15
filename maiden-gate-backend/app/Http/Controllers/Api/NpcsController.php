@@ -6,6 +6,7 @@ use App\Models\Npcs;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Campaign;
+use App\Models\CampaignCollection;
 
 class NpcsController extends Controller
 {
@@ -15,7 +16,7 @@ class NpcsController extends Controller
     public function index(Campaign $campaign)
     {
         return response()->json(
-            $campaign->npcs()->latest()->get()
+            $campaign->npcs()->with(['collection', 'marca'])->latest()->get()
         );
     }
 
@@ -25,6 +26,7 @@ class NpcsController extends Controller
     public function store(Request $request, Campaign $campaign)
     {
         $data = $request->validate([
+            'collection_id' => 'nullable|integer',
             'marca_id' => 'nullable|integer|exists:marcas,id',
             'name' => 'required|string|max:255',
             'race' => 'nullable|string|max:255',
@@ -37,6 +39,14 @@ class NpcsController extends Controller
             'visible_to_players' => 'nullable|boolean'
         ]);
 
+        $collectionId = $data['collection_id'] ?? null;
+
+        if ($collectionId) {
+            CampaignCollection::where('id', $collectionId)
+                ->where('campaign_id', $campaign->id)
+                ->firstOrFail();
+        }
+
         $imagePath = null;
 
         if ($request->hasFile('image')) {
@@ -44,6 +54,7 @@ class NpcsController extends Controller
         }
 
         $npc = $campaign->npcs()->create([
+            'collection_id' => $collectionId,
             'marca_id' => $data['marca_id'] ?? null,
             'image' => $imagePath,
             'name' => $data['name'],
@@ -79,6 +90,7 @@ class NpcsController extends Controller
 
         $data = $request->validate([
             'campaign_id' => 'sometimes|required|integer|exists:campaigns,id',
+            'collection_id' => 'nullable|integer',
             'marca_id' => 'nullable|integer|exists:marcas,id',
 
             'name' => 'sometimes|string|max:255',
@@ -92,6 +104,12 @@ class NpcsController extends Controller
             'stats' => 'sometimes|nullable|array',
             'visible_to_players' => 'sometimes|boolean'
         ]);
+
+        if (array_key_exists('collection_id', $data) && $data['collection_id']) {
+            CampaignCollection::where('id', $data['collection_id'])
+                ->where('campaign_id', $npc->campaign_id)
+                ->firstOrFail();
+        }
 
         $npc->update($data);
         

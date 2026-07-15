@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Models\Campaign;
+use App\Models\CampaignCollection;
 use App\Models\Locations;
 use App\Models\Npcs;
 use App\Models\Items;
@@ -40,7 +41,17 @@ class CampaignController extends Controller
             'status' => 'nullable|in:ativa,pausada,encerrada',
             'notes' => 'nullable|string',
 
+            'collections' => 'sometimes|array',
+            'collections.*.client_id' => 'nullable|string|max:255',
+            'collections.*.name' => 'required|string|max:255',
+            'collections.*.description' => 'nullable|string',
+            'collections.*.color' => 'nullable|string|max:255',
+            'collections.*.sort_order' => 'nullable|integer|min:0',
+            'collections.*.visible_to_players' => 'nullable|boolean',
+
             'locations' => 'sometimes|array',
+            'locations.*.collection_id' => 'nullable|integer',
+            'locations.*.collection_client_id' => 'nullable|string|max:255',
             'locations.*.name' => 'required|string|max:255',
             'locations.*.type' => 'nullable|string|max:255',
             'locations.*.region' => 'nullable|string|max:255',
@@ -48,6 +59,8 @@ class CampaignController extends Controller
             'locations.*.description' => 'nullable|string',
 
             'npcs' => 'sometimes|array',
+            'npcs.*.collection_id' => 'nullable|integer',
+            'npcs.*.collection_client_id' => 'nullable|string|max:255',
             'npcs.*.marca_id' => 'nullable|exists:marcas,id',
             'npcs.*.name' => 'required|string|max:255',
             'npcs.*.race' => 'nullable|string|max:255',
@@ -59,6 +72,8 @@ class CampaignController extends Controller
             'npcs.*.stats' => 'nullable|array',
 
             'monsters' => 'sometimes|array',
+            'monsters.*.collection_id' => 'nullable|integer',
+            'monsters.*.collection_client_id' => 'nullable|string|max:255',
             'monsters.*.name' => 'required|string|max:255',
             'monsters.*.type' => 'nullable|string|max:255',
             'monsters.*.threat' => 'nullable|string|max:255',
@@ -67,17 +82,23 @@ class CampaignController extends Controller
             'monsters.*.stats' => 'nullable|array',
 
             'items' => 'sometimes|array',
+            'items.*.collection_id' => 'nullable|integer',
+            'items.*.collection_client_id' => 'nullable|string|max:255',
             'items.*.name' => 'required|string|max:255',
             'items.*.type' => 'nullable|string|max:255',
             'items.*.description' => 'nullable|string',
 
             'events' => 'sometimes|array',
+            'events.*.collection_id' => 'nullable|integer',
+            'events.*.collection_client_id' => 'nullable|string|max:255',
             'events.*.title' => 'required|string|max:255',
             'events.*.chronology' => 'nullable|string|max:255',
             'events.*.date' => 'nullable|string|max:255',
             'events.*.description' => 'nullable|string',
 
             'skills' => 'sometimes|array',
+            'skills.*.collection_id' => 'nullable|integer',
+            'skills.*.collection_client_id' => 'nullable|string|max:255',
             'skills.*.marca_id' => 'nullable|exists:marcas,id',
             'skills.*.name' => 'required|string|max:255',
             'skills.*.description' => 'nullable|string',
@@ -104,6 +125,22 @@ class CampaignController extends Controller
                 'notes' => $data['notes'] ?? null,
             ]);
 
+            $collectionMap = [];
+
+            foreach ($data['collections'] ?? [] as $index => $collection) {
+                $createdCollection = $campaign->collections()->create([
+                    'name' => $collection['name'],
+                    'description' => $collection['description'] ?? null,
+                    'color' => $collection['color'] ?? null,
+                    'sort_order' => $collection['sort_order'] ?? $index,
+                    'visible_to_players' => $collection['visible_to_players'] ?? false,
+                ]);
+
+                if (!empty($collection['client_id'])) {
+                    $collectionMap[$collection['client_id']] = $createdCollection->id;
+                }
+            }
+
             foreach ($data['locations'] ?? [] as $index => $location) {
                 $image = $location['image'] ?? null;
 
@@ -112,6 +149,7 @@ class CampaignController extends Controller
                 }
 
                 $campaign->locations()->create([
+                    'collection_id' => $this->resolveCollectionId($location, $collectionMap, $campaign->id),
                     'image' => $image,
                     'name' => $location['name'],
                     'type' => $location['type'] ?? '',
@@ -129,6 +167,7 @@ class CampaignController extends Controller
                 }
 
                 $campaign->npcs()->create([
+                    'collection_id' => $this->resolveCollectionId($npc, $collectionMap, $campaign->id),
                     'marca_id' => $npc['marca_id'] ?? null,
                     'name' => $npc['name'],
                     'race' => $npc['race'] ?? null,
@@ -151,6 +190,7 @@ class CampaignController extends Controller
                 }
 
                 $campaign->bestiary()->create([
+                    'collection_id' => $this->resolveCollectionId($monster, $collectionMap, $campaign->id),
                     'name' => $monster['name'],
                     'type' => $monster['type'] ?? null,
                     'threat' => $monster['threat'] ?? null,
@@ -166,6 +206,7 @@ class CampaignController extends Controller
 
             foreach ($data['items'] ?? [] as $item) {
                 $campaign->items()->create([
+                    'collection_id' => $this->resolveCollectionId($item, $collectionMap, $campaign->id),
                     'name' => $item['name'],
                     'type' => $item['type'] ?? null,
                     'description' => $item['description'] ?? null,
@@ -175,6 +216,7 @@ class CampaignController extends Controller
 
             foreach ($data['events'] ?? [] as $event) {
                 $campaign->loreEvents()->create([
+                    'collection_id' => $this->resolveCollectionId($event, $collectionMap, $campaign->id),
                     'title' => $event['title'],
                     'chronology' => $event['chronology'] ?? null,
                     'event_date' => $event['date'] ?? null,
@@ -185,6 +227,7 @@ class CampaignController extends Controller
 
             foreach ($data['skills'] ?? [] as $skill) {
                 $campaign->skills()->create([
+                    'collection_id' => $this->resolveCollectionId($skill, $collectionMap, $campaign->id),
                     'marca_id' => $skill['marca_id'] ?? null,
                     'name' => $skill['name'],
                     'description' => $skill['description'] ?? null,
@@ -201,14 +244,15 @@ class CampaignController extends Controller
 
         return response()->json(
             $campaign->load([
-                'locations',
-                'npcs',
-                'items',
-                'bestiary',
-                'loreEvents',
+                'collections',
+                'locations.collection',
+                'npcs.collection',
+                'items.collection',
+                'bestiary.collection',
+                'loreEvents.collection',
                 'sessions',
                 'currentLocation',
-                'skills',
+                'skills.collection',
             ]),
             201
         );
@@ -313,14 +357,15 @@ class CampaignController extends Controller
             'characters.user',
             'characters.marca',
             'users',
-            'locations',
-            'npcs',
-            'items',
-            'bestiary',
-            'loreEvents',
+            'collections',
+            'locations.collection',
+            'npcs.collection',
+            'items.collection',
+            'bestiary.collection',
+            'loreEvents.collection',
             'sessions',
             'currentLocation',
-            'skills',
+            'skills.collection',
         ]);
 
         return response()->json($campaign);
@@ -329,7 +374,7 @@ class CampaignController extends Controller
     public function playerView(Request $request, Campaign $campaign)
     {
         $visibleOnly = function ($query) {
-            $query->where('visible_to_players', true)->latest();
+            $query->where('visible_to_players', true)->with('collection')->latest();
         };
 
         $campaign->load([
@@ -337,7 +382,7 @@ class CampaignController extends Controller
             'acceptedUsers',
             'locations' => $visibleOnly,
             'npcs' => function ($query) {
-                $query->where('visible_to_players', true)->with('marca')->latest();
+                $query->where('visible_to_players', true)->with(['marca', 'collection'])->latest();
             },
             'items' => $visibleOnly,
             'bestiary' => $visibleOnly,
@@ -416,6 +461,30 @@ class CampaignController extends Controller
         return response()->json($element);
     }
 
+    public function updateElementCollection(Request $request, string $type, string $id)
+    {
+        $data = $request->validate([
+            'collection_id' => 'nullable|integer',
+        ]);
+
+        $modelClass = $this->getElementModelClass($type);
+        $element = $modelClass::findOrFail($id);
+
+        $collectionId = $data['collection_id'] ?? null;
+
+        if ($collectionId) {
+            CampaignCollection::where('id', $collectionId)
+                ->where('campaign_id', $element->campaign_id)
+                ->firstOrFail();
+        }
+
+        $element->update([
+            'collection_id' => $collectionId,
+        ]);
+
+        return response()->json($element->fresh('collection'));
+    }
+
     public function transferElement(Request $request)
     {
         $data = $request->validate([
@@ -438,9 +507,32 @@ class CampaignController extends Controller
             $copy->visible_to_players = false;
         }
 
+        if (array_key_exists('collection_id', $copy->getAttributes())) {
+            $copy->collection_id = null;
+        }
+
         $copy->save();
 
         return response()->json($copy->fresh(), 201);
+    }
+
+    private function resolveCollectionId(array $element, array $collectionMap, int $campaignId): ?int
+    {
+        $collectionId = $element['collection_id'] ?? null;
+
+        if ($collectionId) {
+            return CampaignCollection::where('id', $collectionId)
+                ->where('campaign_id', $campaignId)
+                ->value('id');
+        }
+
+        $clientId = $element['collection_client_id'] ?? $element['collectionId'] ?? null;
+
+        if ($clientId && isset($collectionMap[$clientId])) {
+            return $collectionMap[$clientId];
+        }
+
+        return null;
     }
 
     private function getElementModelClass(string $type): string
@@ -451,6 +543,7 @@ class CampaignController extends Controller
             'item', 'Item', 'items' => Items::class,
             'monster', 'monstro', 'Monstro', 'bestiary' => Bestiary::class,
             'event', 'evento', 'Evento', 'lore-event', 'lore_events' => LoreEvents::class,
+            'skill', 'skills', 'habilidade' => Skills::class,
             default => abort(422, 'Tipo de elemento inválido.'),
         };
     }

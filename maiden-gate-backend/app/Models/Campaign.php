@@ -41,6 +41,11 @@ class Campaign extends Model
             ->withTimestamps();
     }
     
+    public function collections()
+    {
+        return $this->hasMany(CampaignCollection::class);
+    }
+
     public function locations()
     {
         return $this->hasMany(Locations::class);

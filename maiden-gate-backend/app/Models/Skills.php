@@ -9,6 +9,7 @@ class Skills extends Model
     protected $fillable = [
         'marca_id',
         'campaign_id',
+        'collection_id',
         'name',
         'description',
         'type',
@@ -27,6 +28,11 @@ class Skills extends Model
     public function campaign() 
     {
         return $this->belongsTo(Campaign::class);
+    }
+
+    public function collection() 
+    {
+        return $this->belongsTo(CampaignCollection::class, 'collection_id');
     }
 
     public function characters()

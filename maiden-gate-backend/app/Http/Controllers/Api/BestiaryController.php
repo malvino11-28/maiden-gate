@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\Bestiary;
 use App\Models\Campaign;
+use App\Models\CampaignCollection;
 use Illuminate\Http\Request;
 
 class BestiaryController extends Controller
@@ -15,7 +16,7 @@ class BestiaryController extends Controller
     public function index(Campaign $campaign)
     {
         return response()->json(
-            $campaign->bestiary()->latest()->get()
+            $campaign->bestiary()->with('collection')->latest()->get()
         );
     }
 
@@ -25,6 +26,7 @@ class BestiaryController extends Controller
     public function store(Request $request, Campaign $campaign)
     {
         $data = $request->validate([
+            'collection_id' => 'nullable|integer',
             'image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
             'name' => 'required|string|max:255',
             'type' => 'nullable|string|max:255',
@@ -35,6 +37,14 @@ class BestiaryController extends Controller
             'visible_to_players' => 'nullable|boolean',
         ]);
 
+        $collectionId = $data['collection_id'] ?? null;
+
+        if ($collectionId) {
+            CampaignCollection::where('id', $collectionId)
+                ->where('campaign_id', $campaign->id)
+                ->firstOrFail();
+        }
+
         $imagePath = null;
 
         if ($request->hasFile('image')) {
@@ -42,6 +52,7 @@ class BestiaryController extends Controller
         }
 
         $monster = $campaign->bestiary()->create([
+            'collection_id' => $collectionId,
             'image' => $imagePath,
             'name' => $data['name'],
             'type' => $data['type'] ?? null,
@@ -73,6 +84,7 @@ class BestiaryController extends Controller
         $monster = Bestiary::findOrFail($id);
 
         $data = $request->validate([
+            'collection_id' => 'sometimes|nullable|integer',
             'image' => 'sometimes|nullable|string|max:255',
             'name' => 'sometimes|string|max:255',
             'threat' => 'sometimes|nullable|string|max:255',
@@ -82,6 +94,12 @@ class BestiaryController extends Controller
             'stats' => 'sometimes|nullable|array',
             'visible_to_players' => 'sometimes|boolean',
         ]);
+
+        if (array_key_exists('collection_id', $data) && $data['collection_id']) {
+            CampaignCollection::where('id', $data['collection_id'])
+                ->where('campaign_id', $monster->campaign_id)
+                ->firstOrFail();
+        }
 
         $monster->update($data);
 

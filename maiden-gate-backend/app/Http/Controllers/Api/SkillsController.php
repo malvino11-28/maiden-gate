@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Models\Skills;
+use App\Models\CampaignCollection;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
@@ -59,6 +60,7 @@ class SkillsController extends Controller
         $data = $request->validate([
             'marca_id' => 'nullable|integer|exists:marcas,id',
             'campaign_id' => 'nullable|integer|exists:campaigns,id',
+            'collection_id' => 'nullable|integer',
             'name' => 'required|string|max:255',
             'description' => 'nullable|string',
             'type' => 'required|in:ativa,passiva,penalidade,campanha',
@@ -68,6 +70,14 @@ class SkillsController extends Controller
             'resource_cost' => 'nullable|integer|min:0',
             'range' => 'nullable|string|max:255'
         ]);
+
+        if (!empty($data['collection_id'])) {
+            $campaignId = $data['campaign_id'] ?? null;
+
+            CampaignCollection::where('id', $data['collection_id'])
+                ->when($campaignId, fn ($query) => $query->where('campaign_id', $campaignId))
+                ->firstOrFail();
+        }
 
         $skill = Skills::create($data);
 
@@ -94,6 +104,7 @@ class SkillsController extends Controller
         $data = $request->validate([
             'marca_id' => 'sometimes|nullable|integer|exists:marcas,id',
             'campaign_id' => 'sometimes|nullable|integer|exists:campaigns,id',
+            'collection_id' => 'sometimes|nullable|integer',
             'name' => 'sometimes|string|max:255',
             'description' => 'nullable|string',
             'type' => 'sometimes|required|in:ativa,passiva,penalidade,campanha',
@@ -103,6 +114,12 @@ class SkillsController extends Controller
             'resource_cost' => 'sometimes|integer|min:0',
             'range' => 'nullable|string|max:255'
         ]);
+
+        if (array_key_exists('collection_id', $data) && $data['collection_id']) {
+            CampaignCollection::where('id', $data['collection_id'])
+                ->where('campaign_id', $data['campaign_id'] ?? $skill->campaign_id)
+                ->firstOrFail();
+        }
 
         $skill->update($data);
 

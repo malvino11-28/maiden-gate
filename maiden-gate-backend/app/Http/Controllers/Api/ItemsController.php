@@ -6,6 +6,7 @@ use App\Models\Items;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Campaign;
+use App\Models\CampaignCollection;
 
 class ItemsController extends Controller
 {
@@ -15,7 +16,7 @@ class ItemsController extends Controller
 public function index(Campaign $campaign)
 {
     return response()->json(
-        $campaign->items()->latest()->get()
+        $campaign->items()->with('collection')->latest()->get()
     );
 }
 
@@ -26,13 +27,23 @@ public function index(Campaign $campaign)
     public function store(Request $request, Campaign $campaign)
     {
         $data = $request->validate([
+            'collection_id' => 'nullable|integer',
             'name' => 'required|string|max:255',
             'description' => 'required|string',
             'type' => 'nullable|string',
             'visible_to_players' => 'nullable|boolean'
         ]);
 
+        $collectionId = $data['collection_id'] ?? null;
+
+        if ($collectionId) {
+            CampaignCollection::where('id', $collectionId)
+                ->where('campaign_id', $campaign->id)
+                ->firstOrFail();
+        }
+
         $items = $campaign->items()->create([
+            'collection_id' => $collectionId,
             'name' => $data['name'],
             'description' => $data['description'],
             'type' => $data['type'] ?? null,
@@ -60,11 +71,18 @@ public function index(Campaign $campaign)
         $items = Items::findOrFail($id);
 
         $data = $request->validate([
+            'collection_id' => 'sometimes|nullable|integer',
             'name' => 'sometimes|string|max:255',
             'description' => 'sometimes|string',
             'type' => 'sometimes|string',
             'visible_to_players' => 'sometimes|boolean'
         ]);
+
+        if (array_key_exists('collection_id', $data) && $data['collection_id']) {
+            CampaignCollection::where('id', $data['collection_id'])
+                ->where('campaign_id', $items->campaign_id)
+                ->firstOrFail();
+        }
 
         $items->update($data);
 

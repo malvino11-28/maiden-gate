@@ -1,105 +1,305 @@
-export type PremadeLocation = {
-  name: string;
-  image: string | null;
-  type: string;
-  region: string;
-  description: string;
-};
-
-export type PremadeNpc = {
-  name: string;
-  image: string;
-  brand: string | null;
-  race: string;
-  occupation: string;
-  personality: string;
-  secret: string;
-  description: string;
-  skills: string;
-};
-
-export type PremadeMonster = {
-  name: string;
-  image: string;
-  type: string;
-  threat: string;
-  skills: string;
-  description: string;
-};
-
-export type PremadeItem = {
-  name: string;
-  type: string;
-  description: string;
-};
-
-export type PremadeEvent = {
-  title: string;
-  chronology: string;
-  date: string;
-  description: string;
-};
-
-export type PremadeCampaign = {
-  id: string;
-  name: string;
-  image: string;
-  genre: string;
-  tone: string;
-  recommendedLevel: "Iniciante" | "Intermediário" | "Avançado";
-  players: string;
-  description: string;
-  locations: PremadeLocation[];
-  npcs: PremadeNpc[];
-  monsters: PremadeMonster[];
-  items: PremadeItem[];
-  events: PremadeEvent[];
-};
 import flower from "../../../../../assets/images/logo.png";
+
 export const premadeCampaigns: PremadeCampaign[] = [
   {
     id: "awakening",
     image: flower,
     name: "O Despertar da Donzela",
-    genre: "Mistério & Suspense",
-    tone: "Sombrio",
+    genre: "Fantasia Sombria & Intriga Política",
+    tone: "Sombrio, misterioso e político",
     recommendedLevel: "Avançado",
     players: "3–8",
     description:
-      "A tensão política está a tona, o Sindicato das Sombras e a Ordem da Luz estão prestes a iniciar uma nova guerra mundial. Como protesto, Eleanor, filha da rainha do Manifesto decide revelar seu segredo para o mundo... Muitos olharam para ela como a 'mêssias', outros como um sinal do apocalipse",
+      "Às vésperas do Festival da Flor, o domínio do Manifesto e os territórios do Sindicato das Sombras vivem uma tensão prestes a explodir. Enquanto o Miasma permanece de forma anormal em certas regiões, Eleanor, filha da rainha da linhagem principal do Manifesto, decide revelar ao mundo um segredo capaz de abalar a fé, a política e o equilíbrio entre as Marcas. Para alguns, ela será vista como uma messias. Para outros, como o primeiro sinal do colapso.",
 
     locations: [
       {
         name: "Cidade Catedral",
         image: flower,
-        type: "Cidade",
-        region: "Nascente da Flor",
+        type: "Capital / Cidade Sagrada",
+        region: "Extremo sul do Domínio do Manifesto",
         description:
-          "Cidade ainda em construção em volta da Flor, com o castelo da família real. Residem nela apenas cidadões de alta classe.",
+          "Cidade monumental construída ao redor da Flor, erguida sobre uma região que emergiu próxima ao oceano. Seus templos, pontes, muralhas e castelo representam o poder religioso e político do Manifesto. Apenas nobres, autoridades, membros do clero e cidadãos de alta classe vivem próximos ao centro.",
+      },
+      {
+        name: "Ponte da Catedral",
+        image: "",
+        type: "Ponte Monumental",
+        region: "Ligação entre a costa e a Cidade Catedral",
+        description:
+          "Uma ponte longa e fortemente vigiada que conecta a terra firme à Cidade Catedral. Peregrinos, nobres, soldados e trabalhadores cruzam diariamente sua extensão, mas qualquer movimentação suspeita é rapidamente investigada pela guarda do Manifesto.",
       },
       {
         name: "Caminho da Cidade Catedral",
         image: "",
-        type: "Estrada",
-        region: "Sul da Ilha da Flor",
+        type: "Estrada Montanhosa",
+        region: "Montanhas do Sul",
         description:
-          "Estrada estreita, cheias de montanhas em volta. Apenas pescadores e cidadões nobres passam por aqui.",
+          "Estrada estreita entre montanhas, usada por nobres, pescadores, mensageiros e pequenas caravanas que seguem em direção à Cidade Catedral. O terreno dificulta emboscadas em larga escala, mas favorece ataques rápidos e desaparecimentos misteriosos.",
+      },
+      {
+        name: "Vila de Maré Baixa",
+        image: "",
+        type: "Vila Costeira",
+        region: "Leste das Montanhas do Sul",
+        description:
+          "Pequena vila costeira próxima às montanhas. Seus moradores vivem da pesca, do transporte de mantimentos e de serviços menores ligados à Cidade Catedral. Muitos sabem mais do que aparentam sobre os destroços que atingiram as raízes da Flor.",
+      },
+      {
+        name: "Planícies de Aurel",
+        image: "",
+        type: "Planície",
+        region: "Região Central Sul",
+        description:
+          "Uma vasta área aberta logo após as montanhas. Suas estradas conectam a Cidade Catedral, Songbird e as regiões militares do Manifesto. Durante o dia, parecem tranquilas; à noite, rumores sobre vultos roxos e viajantes desaparecidos começam a circular.",
       },
       {
         name: "Songbird",
         image: "",
-        type: "Cidade",
-        region: "Sul da Ilha da Flor",
+        type: "Cidade das Entoadoras",
+        region: "Costa Oeste das Planícies de Aurel",
         description:
-          "Cidade, escolas e um castelo das Entoadoras. Próximo as montanhas.",
+          "Grande cidade controlada pelas Entoadoras e financiada pelo Manifesto. Possui três escolas de canto, teatros sagrados, residências nobres e um castelo próprio. Suas apresentações são vistas como símbolo de cultura e fé, mas também funcionam como instrumento político.",
       },
       {
-        name: "Cratera",
+        name: "Três Escolas de Songbird",
         image: "",
-        type: "Raid",
-        region: "Norte da Ilha da Flor",
+        type: "Instituição",
+        region: "Songbird",
         description:
-          "Uma grande cortina de Miasma cobre a cratera. Estranhamente, há um caminho de Miasma que leva há outra raid.",
+          "Conjunto de três escolas onde jovens Entoadoras treinam canto, presença, controle emocional e manifestação de poder. Cada escola possui filosofia própria e rivalidades internas, embora todas dependam do financiamento do Manifesto.",
+      },
+      {
+        name: "Castelo das Entoadoras",
+        image: "",
+        type: "Castelo / Sede Cultural",
+        region: "Songbird",
+        description:
+          "Sede política e artística das Entoadoras. Concertos, reuniões diplomáticas e acordos com nobres do Manifesto acontecem em seus salões. Algumas salas são acessíveis apenas a cantoras de alto prestígio.",
+      },
+      {
+        name: "Forte Lúmen",
+        image: "",
+        type: "Base Militar",
+        region: "Costa Leste das Planícies de Aurel",
+        description:
+          "Base militar do Manifesto voltada para a grande ilha dominada pelo Sindicato das Sombras. Suas torres observam o oceano constantemente, esperando qualquer movimentação inimiga ou surgimento de atividade ligada aos portais ocultos.",
+      },
+      {
+        name: "Reino do Manifesto",
+        image: "",
+        type: "Região Real",
+        region: "Centro do Domínio do Manifesto",
+        description:
+          "Região de grande importância política, composta por duas cidades próximas, uma base militar e o antigo castelo do Manifesto. Embora a Cidade Catedral tenha se tornado o símbolo máximo da fé, este reino ainda concentra tradição, exército e linhagens nobres antigas.",
+      },
+      {
+        name: "Castelo de Auréon",
+        image: "",
+        type: "Castelo Real",
+        region: "Reino do Manifesto",
+        description:
+          "Grande castelo do Manifesto no centro da região real. Abriga conselheiros, arquivos militares e membros de linhagens nobres secundárias. Alguns corredores guardam documentos sobre o sangue dos dragões e antigas campanhas contra o Sindicato.",
+      },
+      {
+        name: "Lumenhall",
+        image: "",
+        type: "Cidade",
+        region: "Reino do Manifesto",
+        description:
+          "Cidade organizada e fortemente religiosa, conhecida por seus templos de luz, praças limpas e presença constante de guardas. Seus habitantes tendem a apoiar o Manifesto, mas muitos temem a aproximação de uma guerra aberta.",
+      },
+      {
+        name: "Vitrália",
+        image: "",
+        type: "Cidade",
+        region: "Reino do Manifesto",
+        description:
+          "Cidade famosa por vitrais, oficinas de lentes, estudos ópticos e artesãos ligados à luz. Alguns pesquisadores locais estudam variações incomuns da Marca do Manifesto, embora evitem chamar atenção da nobreza.",
+      },
+      {
+        name: "Harbor City",
+        image: "",
+        type: "Cidade Costeira",
+        region: "Extremo leste do Reino do Manifesto",
+        description:
+          "Cidade portuária controlada pelo Manifesto. Serve como ponto de comércio, transporte militar e vigilância naval. Mercadores, espiões e soldados dividem as ruas estreitas próximas ao porto.",
+      },
+      {
+        name: "Forte das Vigílias",
+        image: "",
+        type: "Base Militar",
+        region: "Montanhas do Norte do Manifesto",
+        description:
+          "Pequena base militar escondida entre montanhas, voltada para a ilha intermediária entre o Manifesto e o Sindicato das Sombras. Seu objetivo oficial é defesa costeira, mas parte da guarnição monitora movimentações estranhas no Miasma.",
+      },
+      {
+        name: "Ilha de Vigília",
+        image: "",
+        type: "Ilha Estratégica",
+        region: "Entre o Manifesto e o Sindicato das Sombras",
+        description:
+          "Ilha disputada de forma indireta pelas duas facções. Nenhum lado controla completamente o território, mas ambos mantêm olheiros, rotas secretas e pequenas operações militares na região.",
+      },
+      {
+        name: "Cratera do Último Miasma",
+        image: "",
+        type: "RAID / Zona Contaminada",
+        region: "Planície Norte do Manifesto",
+        description:
+          "Grande cratera cercada por uma cortina de Miasma roxo. A região surgiu após distorções ligadas ao último ciclo de Miasma, mas seu comportamento atual é anormal. Estruturas e criaturas podem surgir dentro dela como cópias contaminadas de realidades distintas.",
+      },
+      {
+        name: "Trilha Roxa",
+        image: "",
+        type: "Caminho de Miasma",
+        region: "Norte da Cratera",
+        description:
+          "Fluxo de Miasma que se arrasta para o norte da cratera, formando uma trilha instável. Viajantes relatam sons abafados, sombras sem dono e silhuetas que desaparecem ao serem observadas diretamente.",
+      },
+      {
+        name: "Névoa Branda",
+        image: "",
+        type: "Zona de Miasma Leve",
+        region: "Norte da Cratera",
+        description:
+          "Concentração mais fraca de Miasma, ainda perigosa o suficiente para causar confusão, sonhos estranhos e alterações no ambiente. Muitos acreditam que ela é apenas resíduo da cratera, mas sua expansão preocupa estudiosos.",
+      },
+      {
+        name: "Acampamento dos Errantes",
+        image: "",
+        type: "Acampamento Militar Improvisado",
+        region: "Arredores da Cratera",
+        description:
+          "Acampamento onde guerreiros, mercenários, usuários da Marca do Maso, caçadores e curiosos se reúnem para discutir como eliminar ou conter o Miasma da cratera. A tensão é alta, pois cada grupo possui interesses diferentes.",
+      },
+      {
+        name: "Rochaviva",
+        image: "",
+        type: "Cidade Maso",
+        region: "Leste da Cratera",
+        description:
+          "Cidade próxima ao oceano onde a maioria dos habitantes possui a Marca do Maso. É barulhenta, diversa e pouco respeitada por nobres do Manifesto, mas possui guerreiros, artesãos e exploradores extremamente capazes.",
+      },
+      {
+        name: "Porto de Cinza Clara",
+        image: "",
+        type: "Cidade Costeira",
+        region: "Norte de Rochaviva",
+        description:
+          "Cidade costeira menor, usada como rota de suprimentos para viajantes que seguem ao norte. Parte da população teme que a Névoa Branda avance até a costa.",
+      },
+      {
+        name: "Vila Ventomar",
+        image: "",
+        type: "Cidade Costeira da Respiração",
+        region: "Extremo norte da Grande Ilha",
+        description:
+          "Pequena cidade costeira associada à Marca da Respiração. Seus habitantes valorizam disciplina, pesca, treinamento corporal e observação da natureza. Alguns mestres de armas vivem ali em isolamento.",
+      },
+      {
+        name: "Vila Atrás das Montanhas",
+        image: "",
+        type: "Vila Isolada",
+        region: "Montanhas do Extremo Norte",
+        description:
+          "Vila protegida por montanhas e rotas difíceis. Poucos estrangeiros chegam até ela. Seus moradores evitam falar sobre o que existe além dos picos e sobre antigas travessias usadas por guerreiros da Respiração.",
+      },
+      {
+        name: "Ilha das Sombras",
+        image: "",
+        type: "Território do Sindicato",
+        region: "Grande Ilha Ocidental",
+        description:
+          "Grande ilha dominada pelo Sindicato das Sombras. Suas cidades, montanhas e rotas secretas formam um território equivalente ao domínio do Manifesto, mas organizado de forma menos centralizada e mais clandestina.",
+      },
+      {
+        name: "Cordilheira Silente",
+        image: "",
+        type: "Montanhas",
+        region: "Borda Oeste da Ilha das Sombras",
+        description:
+          "Cadeia de montanhas que se estende do sul ao norte da ilha. Em locais ocultos entre as rochas existem portais secretos do Sindicato, protegidos por sigilo absoluto.",
+      },
+      {
+        name: "Portal Sul do Vazio",
+        image: "",
+        type: "Portal Oculto",
+        region: "Cordilheira Silente",
+        description:
+          "Um dos três portais secretos do Sindicato das Sombras. Oficialmente, ele não existe. Sua energia permite deslocamento rápido entre regiões, mas seu custo real é conhecido por pouquíssimos líderes.",
+      },
+      {
+        name: "Portal Central do Vazio",
+        image: "",
+        type: "Portal Oculto",
+        region: "Cordilheira Silente",
+        description:
+          "Portal escondido em uma caverna profunda da região central da ilha. Guardas do Sindicato protegem a entrada sem explicar o que há dentro. Pessoas esquecidas costumam desaparecer nas proximidades.",
+      },
+      {
+        name: "Portal Norte do Vazio",
+        image: "",
+        type: "Portal Oculto",
+        region: "Cordilheira Silente",
+        description:
+          "Portal mais distante e menos utilizado da rede do Sindicato. Sua instabilidade é maior, e rumores falam de vozes vindas da escuridão quando a estrutura é ativada.",
+      },
+      {
+        name: "Lago do Véu Roxo",
+        image: "",
+        type: "Lago Contaminado",
+        region: "Sul da Ilha das Sombras",
+        description:
+          "Grande lago coberto por uma camada de Miasma. A água parece parada demais, e reflexos mostram formas que não estão na superfície. O Sindicato evita que viajantes comuns se aproximem.",
+      },
+      {
+        name: "Porto Nox",
+        image: "",
+        type: "Cidade Costeira",
+        region: "Leste da Ilha das Sombras",
+        description:
+          "Cidade costeira controlada pelo Sindicato. Serve como ponto de entrada, contrabando e movimentação militar. Sua população é diversa, incluindo muitos indivíduos rejeitados por territórios do Manifesto.",
+      },
+      {
+        name: "Acampamento da Costa Leste",
+        image: "",
+        type: "Acampamento Militar",
+        region: "Costa voltada para o Manifesto",
+        description:
+          "Acampamento do exército do Sindicato voltado para a grande ilha do Manifesto. Suas patrulhas vigiam o oceano e interceptam embarcações suspeitas.",
+      },
+      {
+        name: "Acampamento da Ilha Intermediária",
+        image: "",
+        type: "Acampamento Militar",
+        region: "Costa voltada para a Ilha de Vigília",
+        description:
+          "Base avançada do Sindicato voltada para a ilha entre as duas nações. É usada para espionagem, movimentação de agentes e observação das tropas do Manifesto.",
+      },
+      {
+        name: "Noctária",
+        image: "",
+        type: "Grande Cidade do Sindicato",
+        region: "Centro da Ilha das Sombras",
+        description:
+          "Maior cidade do Sindicato das Sombras. Diferente dos castelos do Manifesto, Noctária é formada por salões, túneis, bairros sobrepostos, mercados subterrâneos e sedes de líderes. Para muitos rejeitados, ela é refúgio. Para outros, uma prisão sem grades.",
+      },
+      {
+        name: "Vila Névoa Baixa",
+        image: "",
+        type: "Vila Costeira",
+        region: "Norte da Ilha das Sombras",
+        description:
+          "Vila costeira pequena, marcada por pescadores silenciosos e rotas de contrabando. Alguns moradores sabem quando os portais são ativados, mas fingem ignorância para sobreviver.",
+      },
+      {
+        name: "Umbraford",
+        image: "",
+        type: "Pequena Cidade",
+        region: "Norte da Ilha das Sombras",
+        description:
+          "Cidade menor do Sindicato, usada como ponto de passagem entre Noctária e as regiões mais ao norte. Seus líderes locais são discretos, mas possuem forte ligação com operações secretas da facção.",
       },
     ],
 
@@ -109,300 +309,236 @@ export const premadeCampaigns: PremadeCampaign[] = [
         image: flower,
         brand: "Manifesto",
         race: "Humana",
-        occupation: "Futura Rainha",
+        occupation: "Herdeira da Linhagem Principal",
         personality:
-          "Determinada e inconsequente. Só quer acabar com a guerra entre os dois reinos.",
+          "Determinada, idealista e inconsequente. Acredita que uma verdade revelada pode impedir uma guerra, mesmo que isso destrua sua própria imagem.",
         secret:
-          "Possuí duas marcas, a da sua família (Manifesto) e de seus maiores inimigos (Oculto). A do Manifesto está em seu pescoço, a do Oculto está em seu ombro esquerdo.",
+          "Possui duas Marcas: Manifesto e Oculto. A Marca do Manifesto está em seu pescoço, enquanto a Marca do Oculto fica em seu ombro esquerdo.",
         description:
-          "Eleanor é uma figura central da tensão política entre Manifesto e Oculto.",
-        skills: "Autoridade Real. Dupla Marca. Resistência ao Miasma",
-      },
-      {
-        name: "Vasil, o Astuto",
-        image: "",
-        brand: "Maso",
-        race: "Maso (Pássaro)",
-        occupation: "Guia da Cidade",
-        personality:
-          "Carismático e eloquente. Faz de tudo pelo Manifesto, mesmo que eles repudiem sua espécie.",
-        secret: "É o melhor espião do Sindicato das Sombras.",
-        description: "",
-        skills: "",
-      },
-    ],
-
-    monsters: [
-      {
-        name: "Bandido",
-        image: flower,
-        type: "Humano",
-        threat: "1",
-        skills: "Bomba de Fumaça. Corte Rápido.",
-        description: "Bandido comum, querendo apenas roubar e ir embora.",
-      },
-      {
-        name: "Consciência Coletiva",
-        image: "",
-        type: "Aberração",
-        threat: "5",
+          "Figura central da campanha. Filha da rainha da linhagem principal do Manifesto, Eleanor carrega um segredo capaz de abalar a fé, a nobreza e a relação entre facções.",
         skills:
-          "Incorporal. Copiar. Drenar Esperança: reduz d6 de um atributo por turno.",
-        description: "Um vírus consciente. Se espalha por contato de sangue.",
-      },
-    ],
-
-    items: [
-      {
-        name: "Fragmento de Pétala",
-        type: "Artefato",
-        description:
-          "Um fragmento da pétala da Flor. Parece emitir um brilho fraco. Concede sorte ao portador (+5 de modificador), mas com um uso ela se desfaz.",
+          "Autoridade Real. Luz Nobre. Dupla Marca. Resistência ao Miasma. Presença da Donzela.",
       },
       {
-        name: "Fragmento da Raiz da Flor",
-        type: "Consumível",
-        description:
-          "Algumas partes da raiz da Flor flutuaram até a superfície do oceano. Concede 10 de cura por nível do usuário.",
-      },
-    ],
-
-    events: [
-      {
-        title: "O Desaparecimento de Elio",
-        chronology: "3 meses antes",
-        date: "Antes da Campanha",
-        description:
-          "O rei do Manifesto, Elio, desapareceu. Há suspeitas de que Velen esteja envolvido, atualmente está foragido.",
-      },
-      {
-        title: "A Revelação",
-        chronology: "Inicio da Campanha",
-        date: "Inicio da Campanha",
-        description:
-          "No Festival da Flor, com todos os tipos de pessoas presentes, Eleanor sobe até o palco da cantora e revela seu ombro para o mundo...",
-      },
-    ],
-  },
-  {
-    id: "awakenig",
-    image: flower,
-    name: "O Despertar da Donzela",
-    genre: "Mistério & Suspense",
-    tone: "Sombrio",
-    recommendedLevel: "Avançado",
-    players: "3–8",
-    description:
-      "A tensão política está a tona, o Sindicato das Sombras e a Ordem da Luz estão prestes a iniciar uma nova guerra mundial. Como protesto, Eleanor, filha da rainha do Manifesto decide revelar seu segredo para o mundo... Muitos olharam para ela como a 'mêssias', outros como um sinal do apocalipse",
-
-    locations: [
-      {
-        name: "Cidade Catedral",
-        image: flower,
-        type: "Cidade",
-        region: "Nascente da Flor",
-        description:
-          "Cidade ainda em construção em volta da Flor, com o castelo da família real. Residem nela apenas cidadões de alta classe.",
-      },
-      {
-        name: "Caminho da Cidade Catedral",
+        name: "Rainha Aurelia",
         image: "",
-        type: "Estrada",
-        region: "Sul da Ilha da Flor",
-        description:
-          "Estrada estreita, cheias de montanhas em volta. Apenas pescadores e cidadões nobres passam por aqui.",
-      },
-      {
-        name: "Songbird",
-        image: "",
-        type: "Cidade",
-        region: "Sul da Ilha da Flor",
-        description:
-          "Cidade, escolas e um castelo das Entoadoras. Próximo as montanhas.",
-      },
-      {
-        name: "Cratera",
-        image: "",
-        type: "Raid",
-        region: "Norte da Ilha da Flor",
-        description:
-          "Uma grande cortina de Miasma cobre a cratera. Estranhamente, há um caminho de Miasma que leva há outra raid.",
-      },
-    ],
-
-    npcs: [
-      {
-        name: "Eleanor, a Donzela",
-        image: flower,
         brand: "Manifesto",
         race: "Humana",
-        occupation: "Futura Rainha",
+        occupation: "Rainha do Manifesto",
         personality:
-          "Determinada e inconsequente. Só quer acabar com a guerra entre os dois reinos.",
+          "Controlada, imponente e profundamente consciente do peso da própria linhagem.",
         secret:
-          "Possuí duas marcas, a da sua família (Manifesto) e de seus maiores inimigos (Oculto). A do Manifesto está em seu pescoço, a do Oculto está em seu ombro esquerdo.",
+          "Sabe mais sobre o sangue dos dragões e sobre a origem da linhagem real do que admite publicamente.",
         description:
-          "Eleanor é uma figura central da tensão política entre Manifesto e Oculto.",
-        skills: "Autoridade Real. Dupla Marca. Resistência ao Miasma",
+          "Rainha da linhagem principal do Manifesto e mãe de Eleanor. Sua autoridade se apoia na fé da população, no prestígio da Flor e no controle político da Cidade Catedral.",
+        skills: "Comando Real. Luz Sagrada. Vontade Inabalável. Sangue Nobre.",
       },
       {
         name: "Vasil, o Astuto",
         image: "",
         brand: "Maso",
         race: "Maso (Pássaro)",
-        occupation: "Guia da Cidade",
+        occupation: "Guia da Cidade Catedral",
         personality:
-          "Carismático e eloquente. Faz de tudo pelo Manifesto, mesmo que eles repudiem sua espécie.",
-        secret: "É o melhor espião do Sindicato das Sombras.",
-        description: "",
-        skills: "",
-      },
-    ],
-
-    monsters: [
-      {
-        name: "Bandido",
-        image: flower,
-        type: "Humano",
-        threat: "1",
-        skills: "Bomba de Fumaça. Corte Rápido.",
-        description: "Bandido comum, querendo apenas roubar e ir embora.",
-      },
-      {
-        name: "Consciência Coletiva",
-        image: "",
-        type: "Aberração",
-        threat: "5",
+          "Carismático, eloquente e sempre atento. Age como alguém disposto a servir ao Manifesto, mesmo sendo desprezado por muitos nobres.",
+        secret:
+          "É um dos melhores espiões do Sindicato das Sombras dentro do território do Manifesto.",
+        description:
+          "Guia urbano que conhece rotas, rumores e pessoas importantes. Sua lealdade aparente ao Manifesto esconde uma rede de contatos ligada ao Sindicato.",
         skills:
-          "Incorporal. Copiar. Drenar Esperança: reduz d6 de um atributo por turno.",
-        description: "Um vírus consciente. Se espalha por contato de sangue.",
-      },
-    ],
-
-    items: [
-      {
-        name: "Fragmento de Pétala",
-        type: "Artefato",
-        description:
-          "Um fragmento da pétala da Flor. Parece emitir um brilho fraco. Concede sorte ao portador (+5 de modificador), mas com um uso ela se desfaz.",
+          "Olhar de Pássaro. Fuga Rápida. Fala Persuasiva. Rede de Informantes.",
       },
       {
-        name: "Fragmento da Raiz da Flor",
-        type: "Consumível",
-        description:
-          "Algumas partes da raiz da Flor flutuaram até a superfície do oceano. Concede 10 de cura por nível do usuário.",
-      },
-    ],
-
-    events: [
-      {
-        title: "O Desaparecimento de Elio",
-        chronology: "3 meses antes",
-        date: "Antes da Campanha",
-        description:
-          "O rei do Manifesto, Elio, desapareceu. Há suspeitas de que Velen esteja envolvido, atualmente está foragido.",
-      },
-      {
-        title: "A Revelação",
-        chronology: "Inicio da Campanha",
-        date: "Inicio da Campanha",
-        description:
-          "No Festival da Flor, com todos os tipos de pessoas presentes, Eleanor sobe até o palco da cantora e revela seu ombro para o mundo...",
-      },
-    ],
-  },
-  {
-    id: "awakening",
-    image: flower,
-    name: "O Despertar da Donzela",
-    genre: "Mistério & Suspense",
-    tone: "Sombrio",
-    recommendedLevel: "Avançado",
-    players: "3–8",
-    description:
-      "A tensão política está a tona, o Sindicato das Sombras e a Ordem da Luz estão prestes a iniciar uma nova guerra mundial. Como protesto, Eleanor, filha da rainha do Manifesto decide revelar seu segredo para o mundo... Muitos olharam para ela como a 'mêssias', outros como um sinal do apocalipse",
-
-    locations: [
-      {
-        name: "Cidade Catedral",
-        image: flower,
-        type: "Cidade",
-        region: "Nascente da Flor",
-        description:
-          "Cidade ainda em construção em volta da Flor, com o castelo da família real. Residem nela apenas cidadões de alta classe.",
-      },
-      {
-        name: "Caminho da Cidade Catedral",
+        name: "Maestra Celianne",
         image: "",
-        type: "Estrada",
-        region: "Sul da Ilha da Flor",
-        description:
-          "Estrada estreita, cheias de montanhas em volta. Apenas pescadores e cidadões nobres passam por aqui.",
-      },
-      {
-        name: "Songbird",
-        image: "",
-        type: "Cidade",
-        region: "Sul da Ilha da Flor",
-        description:
-          "Cidade, escolas e um castelo das Entoadoras. Próximo as montanhas.",
-      },
-      {
-        name: "Cratera",
-        image: "",
-        type: "Raid",
-        region: "Norte da Ilha da Flor",
-        description:
-          "Uma grande cortina de Miasma cobre a cratera. Estranhamente, há um caminho de Miasma que leva há outra raid.",
-      },
-    ],
-
-    npcs: [
-      {
-        name: "Eleanor, a Donzela",
-        image: flower,
-        brand: "Manifesto",
+        brand: "Entoadora",
         race: "Humana",
-        occupation: "Futura Rainha",
+        occupation: "Diretora das Escolas de Songbird",
         personality:
-          "Determinada e inconsequente. Só quer acabar com a guerra entre os dois reinos.",
+          "Elegante, exigente e maternal apenas quando ninguém está olhando.",
         secret:
-          "Possuí duas marcas, a da sua família (Manifesto) e de seus maiores inimigos (Oculto). A do Manifesto está em seu pescoço, a do Oculto está em seu ombro esquerdo.",
+          "Recebe ordens diretas do Manifesto para monitorar jovens Entoadoras com potencial de manifestar Anjos.",
         description:
-          "Eleanor é uma figura central da tensão política entre Manifesto e Oculto.",
-        skills: "Autoridade Real. Dupla Marca. Resistência ao Miasma",
+          "Responsável por parte da formação das Entoadoras de Songbird. Entre apresentações e aulas, ela mantém a cidade alinhada aos interesses do Manifesto.",
+        skills:
+          "Canto de Comando. Harmonia Curativa. Voz Paralisante. Autoridade de Palco.",
       },
       {
-        name: "Vasil, o Astuto",
+        name: "Comandante Darius Vell",
+        image: "",
+        brand: "Manifesto",
+        race: "Humano",
+        occupation: "Comandante Militar",
+        personality:
+          "Rígido, disciplinado e leal à imagem pública do Manifesto.",
+        secret:
+          "Recebeu ordens para ocultar relatórios sobre movimentações estranhas próximas à Cratera do Último Miasma.",
+        description:
+          "Comandante responsável por tropas próximas às regiões militares do Manifesto. Acredita que ordem vale mais que transparência.",
+        skills:
+          "Lâmina Solar. Formação Defensiva. Intimidação Militar. Disciplina de Ferro.",
+      },
+      {
+        name: "Irmandade dos Errantes - Garruk",
         image: "",
         brand: "Maso",
-        race: "Maso (Pássaro)",
-        occupation: "Guia da Cidade",
+        race: "Maso",
+        occupation: "Líder de Campo",
         personality:
-          "Carismático e eloquente. Faz de tudo pelo Manifesto, mesmo que eles repudiem sua espécie.",
-        secret: "É o melhor espião do Sindicato das Sombras.",
-        description: "",
-        skills: "",
+          "Bruto, protetor e desconfiado de qualquer autoridade nobre.",
+        secret:
+          "Pretende invadir a Cratera mesmo sem autorização, pois acredita que alguém próximo ainda está vivo dentro do Miasma.",
+        description:
+          "Um dos líderes do Acampamento dos Errantes. É respeitado por guerreiros da Marca do Maso e por sobreviventes de regiões contaminadas.",
+        skills:
+          "Força Anômala. Rugido de Guerra. Resistência Bruta. Proteção Instintiva.",
+      },
+      {
+        name: "Kaori Minazuki",
+        image: "",
+        brand: "Respiração",
+        race: "Humana",
+        occupation: "Samurai Errante",
+        personality: "Calma, observadora e extremamente disciplinada.",
+        secret:
+          "Investiga se o Miasma da Cratera possui relação com antigas ruínas que sua ordem deveria proteger.",
+        description:
+          "Guerreira associada à Respiração, vinda de uma comunidade isolada. Usa técnica elemental e acredita que o corpo deve entender a natureza antes de comandá-la.",
+        skills:
+          "Respiração do Vento. Corte Silencioso. Passo Leve. Marca do Caçador.",
+      },
+      {
+        name: "Lorde Veyr Noctis",
+        image: "",
+        brand: "Oculto",
+        race: "Humano",
+        occupation: "Líder do Sindicato das Sombras",
+        personality: "Paciente, diplomático e difícil de interpretar.",
+        secret:
+          "Conhece a rede de portais do Sindicato e sabe que sacrifícios humanos são usados para mantê-la ativa.",
+        description:
+          "Uma das figuras mais influentes de Noctária. Publicamente defende os rejeitados, mas permite atrocidades em nome da sobrevivência estratégica do Sindicato.",
+        skills:
+          "Porta do Vazio. Constructo Sombrio. Véu de Silêncio. Ordem Oculta.",
+      },
+      {
+        name: "Mira de Umbraford",
+        image: "",
+        brand: "Maso",
+        race: "Humana",
+        occupation: "Mensageira do Sindicato",
+        personality: "Pragmática, rápida e cansada de promessas políticas.",
+        secret:
+          "Descobriu indícios de que cidadãos desaparecidos estão ligados à manutenção dos portais ocultos.",
+        description:
+          "Mensageira que circula por regiões do Sindicato. Pode se tornar aliada dos jogadores caso perceba que eles investigam os desaparecimentos.",
+        skills: "Corrida de Sombra. Instinto de Sobrevivência. Rotas Secretas.",
+      },
+      {
+        name: "Padre Solenne",
+        image: "",
+        brand: "Manifesto",
+        race: "Humano",
+        occupation: "Orador da Flor",
+        personality: "Sereno, carismático e perigoso quando contrariado.",
+        secret:
+          "Manipula interpretações religiosas para proteger a imagem do Manifesto e desacreditar testemunhas inconvenientes.",
+        description:
+          "Figura religiosa da Cidade Catedral. Usa sermões e símbolos da Flor para fortalecer a fé popular na família real.",
+        skills: "Sermão Radiante. Persuasão Sagrada. Julgamento Público.",
+      },
+      {
+        name: "Nerys do Véu Roxo",
+        image: "",
+        brand: "Oculto",
+        race: "Humana",
+        occupation: "Guardião do Portal",
+        personality:
+          "Fria, silenciosa e totalmente obediente às ordens do Sindicato.",
+        secret:
+          "É responsável por selecionar vítimas usadas para alimentar um dos portais do vazio.",
+        description:
+          "Agente de alto sigilo do Sindicato. Quase ninguém sabe seu nome verdadeiro ou seu papel na manutenção dos portais.",
+        skills: "Toque do Vazio. Passagem Sombria. Silêncio Absoluto.",
       },
     ],
 
     monsters: [
       {
-        name: "Bandido",
+        name: "Bandido das Montanhas",
         image: flower,
         type: "Humano",
         threat: "1",
-        skills: "Bomba de Fumaça. Corte Rápido.",
-        description: "Bandido comum, querendo apenas roubar e ir embora.",
+        skills: "Bomba de Fumaça. Corte Rápido. Fuga pelas Rochas.",
+        description:
+          "Criminoso comum das rotas montanhosas. Ataca viajantes isolados, mas costuma fugir quando encontra resistência real.",
+      },
+      {
+        name: "Errante do Miasma",
+        image: "",
+        type: "Humanoide Corrompido",
+        threat: "3",
+        skills:
+          "Marcha Silenciosa. Pele Roxa. Grito Sem Voz. Contaminação Leve.",
+        description:
+          "Pessoa ou criatura exposta ao Miasma por tempo demais. Move-se de forma irregular, não fala e parece reagir a sons distantes que ninguém mais escuta.",
+      },
+      {
+        name: "Cópia Roxa",
+        image: "",
+        type: "Manifestação de RAID",
+        threat: "4",
+        skills:
+          "Imitação Imperfeita. Corpo Instável. Ataque Repetido. Dissolução.",
+        description:
+          "Cópia contaminada de uma criatura ou guerreiro de outra realidade. Possui aspecto roxo, comportamento agressivo e incapacidade de comunicação.",
+      },
+      {
+        name: "Guardião da Cratera",
+        image: "",
+        type: "Aberração de Miasma",
+        threat: "6",
+        skills:
+          "Barreira Roxa. Esmagamento. Pulsação de Miasma. Regeneração Instável.",
+        description:
+          "Criatura massiva formada dentro da Cratera do Último Miasma. Parece proteger o centro da região contaminada, mas ninguém sabe se age por instinto ou por comando.",
       },
       {
         name: "Consciência Coletiva",
         image: "",
         type: "Aberração",
         threat: "5",
+        skills: "Incorporal. Copiar. Drenar Esperança. Vozes Sobrepostas.",
+        description:
+          "Entidade consciente que se espalha por contato de sangue e memórias fragmentadas. Suas vítimas relatam ouvir pensamentos que não pertencem a elas.",
+      },
+      {
+        name: "Sombra do Portal",
+        image: "",
+        type: "Constructo Sombrio",
+        threat: "4",
+        skills: "Travessia Curta. Corte Escuro. Corpo Sem Luz. Defesa Umbral.",
+        description:
+          "Forma defensiva criada pela energia dos portais ocultos do Sindicato. Não possui vontade própria, apenas protege entradas e elimina testemunhas.",
+      },
+      {
+        name: "Arauto do Lago Roxo",
+        image: "",
+        type: "Criatura de Miasma",
+        threat: "5",
         skills:
-          "Incorporal. Copiar. Drenar Esperança: reduz d6 de um atributo por turno.",
-        description: "Um vírus consciente. Se espalha por contato de sangue.",
+          "Reflexo Falso. Afogamento Mental. Névoa sobre a Água. Chamado do Fundo.",
+        description:
+          "Criatura que surge no Lago do Véu Roxo. Seu corpo parece feito de água escura e luz roxa, e seus reflexos mostram versões distorcidas de quem o encara.",
+      },
+      {
+        name: "Draco-Luz Instável",
+        image: "",
+        type: "Manifestação Nobre",
+        threat: "7",
+        skills: "Clarão Cego. Garra Radiante. Escamas de Luz. Fúria de Sangue.",
+        description:
+          "Manifestação rara e perigosa ligada ao sangue nobre do Manifesto. Pode surgir como experimento, segredo exposto ou consequência de uma transformação fora de controle.",
       },
     ],
 
@@ -411,30 +547,122 @@ export const premadeCampaigns: PremadeCampaign[] = [
         name: "Fragmento de Pétala",
         type: "Artefato",
         description:
-          "Um fragmento da pétala da Flor. Parece emitir um brilho fraco. Concede sorte ao portador (+5 de modificador), mas com um uso ela se desfaz.",
+          "Fragmento de uma pétala ligada à Flor. Emite brilho fraco e parece reagir à presença de Miasma. Pode conceder sorte ou resistência temporária, mas se desfaz após uso intenso.",
       },
       {
         name: "Fragmento da Raiz da Flor",
         type: "Consumível",
         description:
-          "Algumas partes da raiz da Flor flutuaram até a superfície do oceano. Concede 10 de cura por nível do usuário.",
+          "Parte danificada de uma raiz da Flor que chegou à superfície após as obras da Cidade Catedral. Pode curar ferimentos, mas seu uso frequente causa sonhos estranhos.",
+      },
+      {
+        name: "Relatório de Construção Selado",
+        type: "Documento",
+        description:
+          "Documento antigo sobre obras realizadas próximas às raízes da Flor. Trechos foram censurados, mas há menções a destroços, cortes e liberação anormal de Miasma.",
+      },
+      {
+        name: "Selo do Manifesto",
+        type: "Insígnia",
+        description:
+          "Selo oficial usado por membros autorizados do Manifesto. Permite acesso limitado a áreas militares, religiosas ou administrativas, dependendo de quem o apresenta.",
+      },
+      {
+        name: "Chave de Noctária",
+        type: "Artefato",
+        description:
+          "Pequena chave escura usada em portas e passagens internas da grande cidade do Sindicato. Parece absorver luz ao redor.",
+      },
+      {
+        name: "Cantil Antimiasma",
+        type: "Equipamento",
+        description:
+          "Cantil com mistura herbal usada por exploradores para suportar regiões contaminadas. Não anula o Miasma, mas pode reduzir sintomas leves por pouco tempo.",
+      },
+      {
+        name: "Cristal Roxo Instável",
+        type: "Material",
+        description:
+          "Cristal encontrado próximo a regiões de RAID. Vibra quando exposto a habilidades de Marca e pode ser usado em experimentos perigosos.",
+      },
+      {
+        name: "Partitura Angelical Rasgada",
+        type: "Documento / Relíquia",
+        description:
+          "Fragmento de uma partitura usada por Entoadoras de alto nível. Algumas notas parecem impossíveis de cantar sem causar dor física.",
       },
     ],
 
     events: [
       {
+        title: "A Última Liberação do Miasma",
+        chronology: "70 anos antes",
+        date: "Antes da Campanha",
+        description:
+          "A Flor liberou Miasma em um ciclo anterior. Diferente do esperado, parte dele permaneceu em algumas regiões do mundo, comportamento que seria explicado apenas por segredos ligados às raízes danificadas.",
+      },
+      {
+        title: "Início da Construção da Cidade Catedral",
+        chronology: "Décadas antes",
+        date: "Antes da Campanha",
+        description:
+          "O Manifesto iniciou a construção da Cidade Catedral ao redor da Flor, transformando a região em símbolo máximo de fé, poder e autoridade real.",
+      },
+      {
+        title: "O Corte das Raízes",
+        chronology: "Segredo histórico",
+        date: "Antes da Campanha",
+        description:
+          "Durante as obras, partes das raízes da Flor sob o oceano foram cortadas ou atingidas por destroços. Pouquíssimos sabem que isso pode ter alterado o comportamento do Miasma.",
+      },
+      {
         title: "O Desaparecimento de Elio",
         chronology: "3 meses antes",
         date: "Antes da Campanha",
         description:
-          "O rei do Manifesto, Elio, desapareceu. Há suspeitas de que Velen esteja envolvido, atualmente está foragido.",
+          "Elio, figura importante ligada ao Manifesto, desapareceu sem explicação clara. Há suspeitas envolvendo Velen, atualmente foragido, mas versões contraditórias circulam entre nobres e agentes do Sindicato.",
       },
       {
-        title: "A Revelação",
-        chronology: "Inicio da Campanha",
-        date: "Inicio da Campanha",
+        title: "A Intensificação da Cratera",
+        chronology: "1 mês antes",
+        date: "Antes da Campanha",
         description:
-          "No Festival da Flor, com todos os tipos de pessoas presentes, Eleanor sobe até o palco da cantora e revela seu ombro para o mundo...",
+          "O Miasma ao redor da Cratera do Último Miasma se tornou mais denso. Cópias roxas e criaturas silenciosas passaram a surgir com mais frequência.",
+      },
+      {
+        title: "Reunião dos Errantes",
+        chronology: "2 semanas antes",
+        date: "Antes da Campanha",
+        description:
+          "Guerreiros, mercenários, usuários da Marca do Maso e exploradores começaram a se reunir no Acampamento dos Errantes para planejar uma ação contra a Cratera.",
+      },
+      {
+        title: "Movimentação nas Fronteiras",
+        chronology: "Dias antes",
+        date: "Antes da Campanha",
+        description:
+          "Bases militares do Manifesto e do Sindicato aumentaram patrulhas costeiras. A Ilha de Vigília se tornou ponto de tensão entre as duas facções.",
+      },
+      {
+        title: "O Festival da Flor",
+        chronology: "Início da Campanha",
+        date: "Sessão 1",
+        description:
+          "A Cidade Catedral se prepara para receber nobres, artistas, peregrinos, Entoadoras e representantes de várias regiões durante o Festival da Flor.",
+      },
+      {
+        title: "A Revelação da Donzela",
+        chronology: "Incidente Central",
+        date: "Sessão 1",
+        description:
+          "Durante o festival, Eleanor sobe ao palco e revela ao mundo parte de seu segredo. O gesto divide a multidão entre fé, medo, esperança e pânico político.",
+      },
+      {
+        title: "Primeira Noite de Caos",
+        chronology: "Após a Revelação",
+        date: "Sessão 1 ou 2",
+        description:
+          "Após a revelação, agentes, nobres, religiosos e espiões entram em movimento. Rumores se espalham pela Cidade Catedral, enquanto alguns tentam proteger Eleanor e outros querem silenciá-la.",
       },
     ],
   },
