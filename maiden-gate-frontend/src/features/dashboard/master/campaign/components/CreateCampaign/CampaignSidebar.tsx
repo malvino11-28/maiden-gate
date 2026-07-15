@@ -1,4 +1,4 @@
-import { BookOpen, CalendarDays, Gem, MapPin, Skull, Users } from "lucide-react";
+import { BookOpen, CalendarDays, Gem, MapPin, Skull, Sparkles, Users } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 
 import type { CampaignStep } from "../../types/campaignStep";
@@ -16,6 +16,7 @@ const steps: Step[] = [
   { id: "monsters", title: "Bestiário", icon: Skull },
   { id: "items", title: "Artefatos & Itens", icon: Gem },
   { id: "events", title: "Eventos", icon: CalendarDays },
+  { id: "skills", title: "Skills", icon: Sparkles },
 ];
 
 type Props = {

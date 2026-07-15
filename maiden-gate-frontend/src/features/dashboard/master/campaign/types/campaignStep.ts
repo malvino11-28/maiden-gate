@@ -4,4 +4,5 @@ export type CampaignStep =
   | "npcs"
   | "monsters"
   | "items"
-  | "events";
+  | "events"
+  | "skills";

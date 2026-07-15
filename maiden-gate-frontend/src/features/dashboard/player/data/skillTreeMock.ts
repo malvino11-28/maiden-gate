@@ -27,6 +27,7 @@ export type CharacterSkill = {
   desbloqueada: boolean;
   tipo: SkillType;
   emoji: string;
+  resourceCost?: number;
 };
 
 export type SkillTree = Record<SkillBranchKey, CharacterSkill[]>;

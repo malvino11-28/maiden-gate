@@ -59,6 +59,25 @@ export type TransferElementData = {
   element_type: string;
 };
 
+export type CreateSkillData = {
+  campaign_id: number;
+  marca_id?: number | null;
+  name: string;
+  description?: string | null;
+  type: "ativa" | "passiva" | "penalidade" | "campanha";
+  branch?: "ofensivo" | "suporte" | "destreza" | "passivas" | "penalidade" | "campanha";
+  unlock_level?: number;
+  resource_cost?: number;
+  range?: string | null;
+};
+
+export type TransferElementOption = {
+  id: number;
+  name: string;
+  type: string;
+  elementType: "location" | "npc" | "monster" | "item" | "event";
+};
+
 export async function createLoreEvent(
   campaignId: number,
   data: CreateLoreEventData,
@@ -160,6 +179,56 @@ export async function createLocation(
   const response = await api.post(
     `/campaigns/${campaignId}/locations`,
     formData,
+  );
+
+  return response.data;
+}
+
+
+export async function createSkill(data: CreateSkillData) {
+  const response = await api.post("/skills", data);
+
+  return response.data;
+}
+
+export async function getCampaignElementsForTransfer(
+  campaignId: string | number,
+): Promise<TransferElementOption[]> {
+  const response = await api.get(`/campaigns/${campaignId}/master-view`);
+  const data = response.data;
+
+  const normalize = (
+    items: any[] = [],
+    type: string,
+    elementType: TransferElementOption["elementType"],
+    nameKey = "name",
+  ): TransferElementOption[] =>
+    items.map((item) => ({
+      id: Number(item.id),
+      name: item[nameKey] ?? item.name ?? item.title ?? "Elemento sem nome",
+      type,
+      elementType,
+    }));
+
+  return [
+    ...normalize(data.locations ?? [], "Localização", "location"),
+    ...normalize(data.npcs ?? [], "NPC", "npc"),
+    ...normalize(data.bestiary ?? [], "Monstro", "monster"),
+    ...normalize(data.items ?? [], "Item", "item"),
+    ...normalize(data.lore_events ?? data.loreEvents ?? [], "Evento", "event", "title"),
+  ];
+}
+
+export async function updateCampaignElementVisibility(
+  elementType: string,
+  elementId: string | number,
+  visibleToPlayers: boolean,
+) {
+  const response = await api.patch(
+    `/campaign-elements/${elementType}/${elementId}/visibility`,
+    {
+      visible_to_players: visibleToPlayers,
+    },
   );
 
   return response.data;

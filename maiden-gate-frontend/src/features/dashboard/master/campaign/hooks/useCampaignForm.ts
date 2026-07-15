@@ -13,6 +13,7 @@ const initialCampaign: CampaignData = {
   monsters: [],
   items: [],
   events: [],
+  skills: [],
 };
 
 export default function useCampaignForm() {

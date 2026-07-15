@@ -15,6 +15,7 @@ type CreateCampaignData = {
   monsters: CampaignData["monsters"];
   items: CampaignData["items"];
   events: CampaignData["events"];
+  skills: CampaignData["skills"];
 };
 
 function appendImage(
@@ -108,6 +109,20 @@ export async function createCampaign(data: CreateCampaignData) {
     formData.append(`events[${index}][chronology]`, event.chronology ?? "");
     formData.append(`events[${index}][date]`, event.date ?? "");
     formData.append(`events[${index}][description]`, event.description ?? "");
+  });
+
+  data.skills.forEach((skill, index) => {
+    formData.append(`skills[${index}][name]`, skill.name);
+    formData.append(`skills[${index}][description]`, skill.description ?? "");
+    formData.append(`skills[${index}][type]`, skill.type || "campanha");
+    formData.append(`skills[${index}][branch]`, skill.branch || "campanha");
+    formData.append(`skills[${index}][unlock_level]`, skill.unlock_level || "1");
+    formData.append(`skills[${index}][resource_cost]`, skill.resource_cost || "0");
+    formData.append(`skills[${index}][range]`, skill.range ?? "");
+
+    if (skill.marca_id) {
+      formData.append(`skills[${index}][marca_id]`, skill.marca_id);
+    }
   });
 
   const response = await api.post("/campaigns", formData);

@@ -15,16 +15,31 @@ class SkillsController extends Controller
     {
         $query = Skills::query()->with(['marca', 'campaign']);
 
-        if ($request->filled('marca_id')) {
-            $query->where('marca_id', $request->integer('marca_id'));
-        }
+        $marcaId = $request->filled('marca_id') ? $request->integer('marca_id') : null;
+        $campaignId = $request->filled('campaign_id') ? $request->integer('campaign_id') : null;
 
-        if ($request->filled('campaign_id')) {
-            $query->where(function ($currentQuery) use ($request) {
+        if ($marcaId && $campaignId) {
+            $query->where(function ($currentQuery) use ($marcaId, $campaignId) {
                 $currentQuery
-                    ->whereNull('campaign_id')
-                    ->orWhere('campaign_id', $request->integer('campaign_id'));
+                    ->where(function ($markQuery) use ($marcaId, $campaignId) {
+                        $markQuery
+                            ->where('marca_id', $marcaId)
+                            ->where(function ($scopeQuery) use ($campaignId) {
+                                $scopeQuery
+                                    ->whereNull('campaign_id')
+                                    ->orWhere('campaign_id', $campaignId);
+                            });
+                    })
+                    ->orWhere(function ($campaignQuery) use ($campaignId) {
+                        $campaignQuery
+                            ->where('campaign_id', $campaignId)
+                            ->whereNull('marca_id');
+                    });
             });
+        } elseif ($marcaId) {
+            $query->where('marca_id', $marcaId)->whereNull('campaign_id');
+        } elseif ($campaignId) {
+            $query->where('campaign_id', $campaignId);
         }
 
         return response()->json(

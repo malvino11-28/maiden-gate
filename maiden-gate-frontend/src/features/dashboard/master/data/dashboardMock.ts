@@ -9,6 +9,7 @@ import {
   Gem,
   CalendarPlus,
   Copy,
+  Sparkles,
 } from "lucide-react";
 
 import type { LucideIcon } from "lucide-react";
@@ -69,6 +70,7 @@ export type ActiveModal =
   | "monster"
   | "item"
   | "location"
+  | "skill"
   | "transfer";
 
 type QuickAction = {
@@ -108,6 +110,12 @@ export const quickActions: QuickAction[] = [
     icon: CalendarPlus,
     title: "Novo Evento",
     description: "Registre acontecimentos da campanha.",
+  },
+  {
+    id: "skill",
+    icon: Sparkles,
+    title: "Nova Skill",
+    description: "Crie habilidades exclusivas de campanha.",
   },
   {
     id: "transfer",

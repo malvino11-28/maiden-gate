@@ -23,6 +23,7 @@ import ItemModal from "../components/modals/ItemModal";
 import LocationModal from "../components/modals/LocationModal";
 import MonsterModal from "../components/modals/MonsterModal";
 import NpcModal from "../components/modals/NpcModal";
+import SkillModal from "../components/modals/SkillModal";
 
 import type { SectionKey } from "../types/masterCampaign";
 import type { ActiveModal } from "../data/dashboardMock";
@@ -34,6 +35,7 @@ import {
   updateCampaignCurrentLocation,
   updateCampaignNotes,
 } from "../services/campaignPageService";
+import { updateCampaignElementVisibility } from "../services/masterElementService";
 
 type ElementActionType = "localizacao" | "npc" | "monstro" | "item" | "evento";
 
@@ -186,6 +188,8 @@ export default function MasterCampaignPage() {
             description: location.description ?? location.descricao ?? "",
             imagem: location.imagem ?? location.image ?? null,
             image: location.image ?? location.imagem ?? null,
+            visible_to_players: Boolean(location.visible_to_players),
+            visibleToPlayers: Boolean(location.visible_to_players),
           })),
 
           npcs: (data.npcs ?? []).map((npc: any) => ({
@@ -215,6 +219,8 @@ export default function MasterCampaignPage() {
 
             status: npc.status ?? npc.stats ?? {},
             stats: npc.stats ?? npc.status ?? {},
+            visible_to_players: Boolean(npc.visible_to_players),
+            visibleToPlayers: Boolean(npc.visible_to_players),
           })),
 
           monstros: (data.bestiary ?? []).map((monster: any) => ({
@@ -253,6 +259,8 @@ export default function MasterCampaignPage() {
 
             imagem: monster.imagem ?? monster.image ?? null,
             image: monster.image ?? monster.imagem ?? null,
+            visible_to_players: Boolean(monster.visible_to_players),
+            visibleToPlayers: Boolean(monster.visible_to_players),
           })),
 
           itens: (data.items ?? []).map((item: any) => ({
@@ -265,6 +273,8 @@ export default function MasterCampaignPage() {
             description: item.description ?? item.descricao ?? "",
             imagem: item.imagem ?? item.image ?? null,
             image: item.image ?? item.imagem ?? null,
+            visible_to_players: Boolean(item.visible_to_players),
+            visibleToPlayers: Boolean(item.visible_to_players),
           })),
 
           eventos: (data.lore_events ?? data.loreEvents ?? []).map(
@@ -278,6 +288,8 @@ export default function MasterCampaignPage() {
               date: event.date ?? event.event_date ?? event.data ?? "",
               descricao: event.descricao ?? event.description ?? "",
               description: event.description ?? event.descricao ?? "",
+              visible_to_players: Boolean(event.visible_to_players),
+              visibleToPlayers: Boolean(event.visible_to_players),
             }),
           ),
 
@@ -395,6 +407,20 @@ export default function MasterCampaignPage() {
     }));
   }
 
+  async function handleElementVisibilityChange(
+    elementType: string,
+    elementId: string | number,
+    visibleToPlayers: boolean,
+  ) {
+    await updateCampaignElementVisibility(
+      elementType,
+      elementId,
+      visibleToPlayers,
+    );
+
+    await loadCampaign();
+  }
+
   if (isLoading) {
     return (
       <div className="min-h-screen bg-slate-950 p-8 text-amber-100">
@@ -427,11 +453,12 @@ export default function MasterCampaignPage() {
               <ElementsSection
                 elements={campaign.elementos}
                 onAdd={handleAddElement}
+                onVisibilityChange={handleElementVisibilityChange}
               />
             )}
 
             {activeSection === "membros" && (
-              <MembersSection members={campaign.membros} />
+              <MembersSection members={campaign.membros} onCreateSkill={() => setActiveModal("skill")} />
             )}
 
             {activeSection === "localizacao" && (
@@ -525,6 +552,12 @@ export default function MasterCampaignPage() {
         onClose={handleCloseModal}
       />
       <NpcModal isOpen={activeModal === "npc"} onClose={handleCloseModal} />
+      <SkillModal
+        isOpen={activeModal === "skill"}
+        onClose={handleCloseModal}
+        fixedCampaignId={campaign.id}
+        fixedCampaignName={campaign.nome}
+      />
     </div>
   );
 }

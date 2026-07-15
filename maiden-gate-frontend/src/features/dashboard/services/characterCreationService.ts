@@ -203,12 +203,20 @@ export async function getSkillsByMark(
             : type === "campanha"
               ? "✧"
               : "✨",
+      resourceCost: skill.resource_cost ?? 0,
     };
 
     tree[branch].push(normalizedSkill);
   });
 
   return tree;
+}
+
+
+export async function deleteCharacter(characterId: string | number) {
+  const response = await api.delete(`/characters/${characterId}`);
+
+  return response.data;
 }
 
 export async function createCharacter(payload: CreateCharacterPayload) {

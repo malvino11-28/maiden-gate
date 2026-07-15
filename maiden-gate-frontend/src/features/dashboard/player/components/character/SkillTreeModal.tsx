@@ -184,7 +184,7 @@ export default function SkillTreeModal({
             text-xs
             font-medium
             transition-all
-            justify-center
+
             ${
               !showCampaignSkills && branch === key
                 ? key === "penalidade"
@@ -661,6 +661,22 @@ export default function SkillTreeModal({
                             `}
                           >
                             Lv {skill.nivel}
+                          </span>
+
+                          <span
+                            className="
+                              rounded
+                              border
+                              border-violet-700/40
+                              bg-violet-900/15
+                              px-1.5
+                              py-0.5
+                              text-[9px]
+                              font-medium
+                              text-violet-300/75
+                            "
+                          >
+                            Custo: {skill.resourceCost ?? 0}
                           </span>
                         </div>
 

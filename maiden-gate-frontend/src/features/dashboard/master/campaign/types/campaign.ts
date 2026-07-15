@@ -53,6 +53,17 @@ export interface CampaignEvent {
   description: string;
 }
 
+export interface CampaignSkillForm {
+  marca_id: string;
+  name: string;
+  description: string;
+  type: "ativa" | "passiva" | "penalidade" | "campanha";
+  branch: "ofensivo" | "suporte" | "destreza" | "passivas" | "penalidade" | "campanha";
+  unlock_level: string;
+  resource_cost: string;
+  range: string;
+}
+
 export interface CampaignData {
   image: string;
   name: string;
@@ -65,6 +76,7 @@ export interface CampaignData {
   monsters: CampaignMonster[];
   items: CampaignItem[];
   events: CampaignEvent[];
+  skills: CampaignSkillForm[];
 }
 
 export type UpdateCampaignField = <K extends keyof CampaignData>(

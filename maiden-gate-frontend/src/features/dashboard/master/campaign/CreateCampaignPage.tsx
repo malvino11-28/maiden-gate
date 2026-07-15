@@ -6,6 +6,7 @@ import {
   Gem,
   MapPin,
   Skull,
+  Sparkles,
   Users,
 } from "lucide-react";
 
@@ -17,6 +18,7 @@ import NpcsSection from "./components/sections/NpcsSection";
 import MonstersSection from "./components/sections/MonstersSection";
 import ItemsSection from "./components/sections/ItemsSection";
 import EventsSection from "./components/sections/EventsSection";
+import SkillsSection from "./components/sections/SkillsSection";
 import useCampaignForm from "./hooks/useCampaignForm";
 import type { CampaignStep } from "./types/campaignStep";
 
@@ -36,6 +38,7 @@ const steps: CampaignStep[] = [
   "monsters",
   "items",
   "events",
+  "skills",
 ];
 
 const stepLabels: Record<CampaignStep, string> = {
@@ -45,6 +48,7 @@ const stepLabels: Record<CampaignStep, string> = {
   monsters: "Bestiário",
   items: "Artefatos & Itens",
   events: "Eventos",
+  skills: "Skills",
 };
 
 const stepIcons = {
@@ -54,6 +58,7 @@ const stepIcons = {
   monsters: Skull,
   items: Gem,
   events: CalendarDays,
+  skills: Sparkles,
 };
 
 export default function CreateCampaignPage() {
@@ -231,6 +236,7 @@ export default function CreateCampaignPage() {
 
         items: campaign.items,
         events: campaign.events,
+        skills: campaign.skills,
       });
       setSaved(true);
 
@@ -250,6 +256,7 @@ export default function CreateCampaignPage() {
     { label: "Criaturas", value: campaign.monsters.length, icon: Skull },
     { label: "Itens", value: campaign.items.length, icon: Gem },
     { label: "Eventos", value: campaign.events.length, icon: CalendarDays },
+    { label: "Skills", value: campaign.skills.length, icon: Sparkles },
   ];
 
   return (
@@ -344,6 +351,16 @@ export default function CreateCampaignPage() {
                 <EventsSection
                   campaign={campaign}
                   updateField={updateField}
+                  onNext={goNext}
+                  onPrevious={goPrevious}
+                />
+              )}
+
+              {currentStep === "skills" && (
+                <SkillsSection
+                  campaign={campaign}
+                  updateField={updateField}
+                  marks={marks}
                   onPrevious={goPrevious}
                   onFinish={handleFinish}
                 />

@@ -6,8 +6,8 @@ import type { CampaignData, CampaignEvent, UpdateCampaignField } from "../../typ
 type Props = {
   campaign: CampaignData;
   updateField: UpdateCampaignField;
+  onNext: () => void;
   onPrevious: () => void;
-  onFinish: () => void;
 };
 
 const emptyEvent = (): CampaignEvent => ({
@@ -17,7 +17,7 @@ const emptyEvent = (): CampaignEvent => ({
   description: "",
 });
 
-export default function EventsSection({ campaign, updateField, onPrevious, onFinish }: Props) {
+export default function EventsSection({ campaign, updateField, onNext, onPrevious }: Props) {
   return (
     <EditableListSection<CampaignEvent>
       title="Eventos & Crônicas"
@@ -30,9 +30,8 @@ export default function EventsSection({ campaign, updateField, onPrevious, onFin
       onChange={(items) => updateField("events", items)}
       addLabel="Adicionar Evento"
       onPrevious={onPrevious}
-      onNext={onFinish}
-      nextLabel="Criar Campanha"
-      finish
+      onNext={onNext}
+      nextLabel="Próximo: Skills"
       fields={[
         { name: "title", label: "Título do Evento", placeholder: "Ex: A Queda de Valdris" },
         { name: "chronology", label: "Cronologia", placeholder: "Ex: 300 anos antes, Sessão 3, Clímax…" },
