@@ -38,6 +38,8 @@ export interface CampaignMember {
 
 export interface CampaignLocation {
   id?: string | number;
+  visible_to_players?: boolean;
+  visibleToPlayers?: boolean;
   imagem?: string | null;
   image?: string | null;
   nome: string;
@@ -62,12 +64,20 @@ export type CampaignElementStatus = {
 
 export interface CampaignNpc {
   id?: string | number;
+  visible_to_players?: boolean;
+  visibleToPlayers?: boolean;
   image?: string | null;
-  name: string;
-  race: string;
-  occupation: string;
-  personality: string;
-  secret: string;
+  imagem?: string | null;
+  nome?: string;
+  name?: string;
+  raca?: string;
+  race?: string;
+  ocupacao?: string;
+  occupation?: string;
+  personalidade?: string;
+  personality?: string;
+  segredo?: string;
+  secret?: string;
   description?: string;
   skills?: string | string[];
   stats?: CampaignElementStatus | null;
@@ -75,18 +85,30 @@ export interface CampaignNpc {
 
 export interface CampaignMonster {
   id?: string | number;
+  visible_to_players?: boolean;
+  visibleToPlayers?: boolean;
   image?: string | null;
+  imagem?: string | null;
+  nome?: string;
   name?: string;
+  tipo?: string;
   type?: string;
+  ameaca?: string;
   threat?: string;
   habilidades: string;
   skills?: string | string[];
+  descricao?: string;
   description?: string;
   stats?: CampaignElementStatus | null;
 }
 
 export interface CampaignItem {
   id?: string | number;
+  visible_to_players?: boolean;
+  visibleToPlayers?: boolean;
+  name?: string;
+  type?: string;
+  description?: string;
   nome: string;
   tipo: string;
   descricao: string;
@@ -94,6 +116,12 @@ export interface CampaignItem {
 
 export interface CampaignEvent {
   id?: string | number;
+  visible_to_players?: boolean;
+  visibleToPlayers?: boolean;
+  title?: string;
+  chronology?: string;
+  date?: string;
+  description?: string;
   titulo: string;
   cronologia: string;
   data: string;

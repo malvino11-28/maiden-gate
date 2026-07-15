@@ -28,14 +28,16 @@ class LoreEventsController extends Controller
             'title' => 'required|string|max:255',
             'description' => 'required|string',
             'chronology' => 'required|string|max:255',
-            'event_date' => 'nullable|string|max:255'
+            'event_date' => 'nullable|string|max:255',
+            'visible_to_players' => 'nullable|boolean'
         ]);
 
         $lore = $campaign->loreEvents()->create([
             'title' => $data['title'],
             'description' => $data['description'],
             'chronology' => $data['chronology'],
-            'event_date' => $data['event_date'] ?? null
+            'event_date' => $data['event_date'] ?? null,
+            'visible_to_players' => $data['visible_to_players'] ?? false
         ]);
 
         return response()->json($lore, 201);
@@ -62,7 +64,8 @@ class LoreEventsController extends Controller
             'title' => 'sometimes|string|max:255',
             'description' => 'sometimes|string',
             'chronology' => 'sometimes|string|max:255',
-            'event_date' => 'sometimes|string|max:255'
+            'event_date' => 'sometimes|string|max:255',
+            'visible_to_players' => 'sometimes|boolean'
         ]);
 
         $lore->update($data);

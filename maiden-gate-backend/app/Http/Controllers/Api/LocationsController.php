@@ -30,6 +30,8 @@ class LocationsController extends Controller
             'type' => 'required|string|max:255',
             'region' => 'nullable|string|max:255',
             'description' => 'required|string',
+            'region' => 'nullable|string|max:255',
+            'visible_to_players' => 'nullable|boolean',
         ]);
 
         $imagePath = null;
@@ -44,6 +46,8 @@ class LocationsController extends Controller
             'type' => $data['type'],
             'region' => $data['region'] ?? null,
             'description' => $data['description'],
+            'region' => $data['region'] ?? null,
+            'visible_to_players' => $data['visible_to_players'] ?? false,
         ]);
 
         return response()->json($location, 201);
@@ -71,7 +75,9 @@ class LocationsController extends Controller
             'name' => 'sometimes|string|max:255',
             'type' => 'sometimes|string',
             'region' => 'sometimes|string|max:255',
-            'description' => 'sometimes|string'
+            'description' => 'sometimes|string',
+            'region' => 'nullable|string|max:255',
+            'visible_to_players' => 'sometimes|boolean'
         ]);
 
         $location->update($data);

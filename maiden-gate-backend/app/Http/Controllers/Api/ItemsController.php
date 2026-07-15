@@ -28,13 +28,15 @@ public function index(Campaign $campaign)
         $data = $request->validate([
             'name' => 'required|string|max:255',
             'description' => 'required|string',
-            'type' => 'nullable|string'
+            'type' => 'nullable|string',
+            'visible_to_players' => 'nullable|boolean'
         ]);
 
         $items = $campaign->items()->create([
             'name' => $data['name'],
             'description' => $data['description'],
-            'type' => $data['type'] ?? null
+            'type' => $data['type'] ?? null,
+            'visible_to_players' => $data['visible_to_players'] ?? false
         ]);
 
         return response()->json($items, 201);
@@ -60,7 +62,8 @@ public function index(Campaign $campaign)
         $data = $request->validate([
             'name' => 'sometimes|string|max:255',
             'description' => 'sometimes|string',
-            'type' => 'sometimes|string'
+            'type' => 'sometimes|string',
+            'visible_to_players' => 'sometimes|boolean'
         ]);
 
         $items->update($data);

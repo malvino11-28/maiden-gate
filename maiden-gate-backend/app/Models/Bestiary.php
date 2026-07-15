@@ -10,6 +10,7 @@ class Bestiary extends Model
 
     protected $fillable = [
         'campaign_id',
+    'visible_to_players',
 
         'image',
         'name',
@@ -21,6 +22,7 @@ class Bestiary extends Model
     ];
 
     protected $casts = [
+        'visible_to_players' => 'boolean',
         'skills' => 'array',
         'stats' => 'array',
     ];

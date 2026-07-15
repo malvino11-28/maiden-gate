@@ -8,6 +8,7 @@ class Items extends Model
 {
     protected $fillable = [
     'campaign_id',
+    'visible_to_players',
     'name',
     'description',
     'type',
@@ -16,6 +17,10 @@ class Items extends Model
     public function inventories() {
         return $this->hasMany(Inventory::class, 'item_id');
     }
+
+    protected $casts = [
+        'visible_to_players' => 'boolean',
+    ];
 
     public function campaign()
 {

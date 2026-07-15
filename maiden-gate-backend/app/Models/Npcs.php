@@ -9,6 +9,7 @@ class Npcs extends Model
 
     protected $fillable = [
         'campaign_id',
+    'visible_to_players',
         'marca_id',
         'image',
         'name',
@@ -22,6 +23,7 @@ class Npcs extends Model
     ];
 
     protected $casts = [
+        'visible_to_players' => 'boolean',
         'skills' => 'array',
         'stats' => 'array',
     ];

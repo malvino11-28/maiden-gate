@@ -32,6 +32,7 @@ class BestiaryController extends Controller
             'description' => 'nullable|string',
             'skills' => 'nullable|array',
             'stats' => 'nullable|array',
+            'visible_to_players' => 'nullable|boolean',
         ]);
 
         $imagePath = null;
@@ -48,6 +49,7 @@ class BestiaryController extends Controller
             'description' => $data['description'] ?? null,
             'skills' => $data['skills'] ?? null,
             'stats' => $data['stats'] ?? null,
+            'visible_to_players' => $data['visible_to_players'] ?? false,
         ]);
 
         return response()->json($monster, 201);
@@ -78,6 +80,7 @@ class BestiaryController extends Controller
             'description' => 'sometimes|string',
             'skills' => 'sometimes|nullable|array',
             'stats' => 'sometimes|nullable|array',
+            'visible_to_players' => 'sometimes|boolean',
         ]);
 
         $monster->update($data);

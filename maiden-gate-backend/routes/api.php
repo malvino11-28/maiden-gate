@@ -46,6 +46,8 @@ Route::get('/campaigns/{campaign}/player-view', [CampaignController::class, 'pla
 Route::put('/campaigns/{campaign}/data', [CampaignController::class, 'update']);
 Route::put('/campaigns/{campaign}/notes', [CampaignController::class, 'updateNotes']);
 Route::put('/campaigns/{campaign}/current-location', [CampaignController::class, 'updateCurrentLocation']);
+Route::patch('/campaign-elements/{type}/{id}/visibility', [CampaignController::class, 'updateElementVisibility']);
+Route::post('/campaign-elements/transfer', [CampaignController::class, 'transferElement']);
 
 /* Player */
 

@@ -2,6 +2,7 @@ type Element = {
   id: number;
   name: string;
   type: string;
+  elementType?: string;
 };
 
 type ElementSelectProps = {
@@ -9,6 +10,7 @@ type ElementSelectProps = {
   onChange: (value: string) => void;
   disabled?: boolean;
   elements: Element[];
+  isLoading?: boolean;
 };
 
 export default function ElementSelect({
@@ -16,6 +18,7 @@ export default function ElementSelect({
   onChange,
   disabled = false,
   elements,
+  isLoading = false,
 }: ElementSelectProps) {
   return (
     <select
@@ -41,13 +44,18 @@ export default function ElementSelect({
       "
     >
       <option value="">
-        {disabled
-          ? "— Selecione a origem primeiro —"
-          : "— Selecione um elemento —"}
+        {isLoading
+          ? "— Carregando elementos... —"
+          : disabled
+            ? "— Selecione a origem primeiro —"
+            : "— Selecione um elemento —"}
       </option>
 
       {elements.map((element) => (
-        <option key={element.id} value={element.id.toString()}>
+        <option
+          key={`${element.elementType ?? element.type}-${element.id}`}
+          value={`${element.elementType ?? element.type}:${element.id}`}
+        >
           {element.name} • {element.type}
         </option>
       ))}

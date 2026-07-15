@@ -33,7 +33,8 @@ class NpcsController extends Controller
             'secret' => 'nullable|string',
             'description' => 'nullable|string',
             'skills' => 'nullable|array',
-            'stats' => 'nullable|array'
+            'stats' => 'nullable|array',
+            'visible_to_players' => 'nullable|boolean'
         ]);
 
         $imagePath = null;
@@ -52,7 +53,8 @@ class NpcsController extends Controller
             'secret' => $data['secret'] ?? null,
             'description' => $data['description'] ?? null,
             'skills' => $data['skills'] ?? [],
-            'stats' => $data['stats'] ?? []
+            'stats' => $data['stats'] ?? [],
+            'visible_to_players' => $data['visible_to_players'] ?? false
         ]);
         
         return response()->json($npc, 201);
@@ -87,7 +89,8 @@ class NpcsController extends Controller
             'description' => 'nullable|string',
 
             'skills' => 'sometimes|nullable|array',
-            'stats' => 'sometimes|nullable|array'
+            'stats' => 'sometimes|nullable|array',
+            'visible_to_players' => 'sometimes|boolean'
         ]);
 
         $npc->update($data);
