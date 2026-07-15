@@ -1,5 +1,6 @@
 export type CampaignStep =
   | "cover"
+  | "collections"
   | "locations"
   | "npcs"
   | "monsters"

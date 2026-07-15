@@ -11,6 +11,7 @@ type Props = {
 };
 
 const emptyItem = (): CampaignItem => ({
+  collectionId: "",
   name: "",
   type: "",
   description: "",
@@ -32,6 +33,16 @@ export default function ItemsSection({ campaign, updateField, onNext, onPrevious
       onPrevious={onPrevious}
       nextLabel="Próximo: Eventos"
       fields={[
+        {
+          name: "collectionId",
+          label: "Conjunto",
+          placeholder: "Sem conjunto",
+          type: "select",
+          options: campaign.collections.map((collection) => ({
+            value: collection.clientId,
+            label: collection.name || "Conjunto sem nome",
+          })),
+        },
         { name: "name", label: "Nome", placeholder: "Ex: Cristal do Abismo" },
         { name: "type", label: "Tipo", placeholder: "Ex: Arma, Armadura, Artefato, Consumível…" },
         { name: "description", label: "Descrição & Efeito", placeholder: "História, propriedades mágicas e efeito mecânico…", type: "textarea" },

@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import {
   BookOpen,
   CalendarDays,
+  FolderTree,
   Gem,
   MapPin,
   Skull,
@@ -13,6 +14,7 @@ import {
 import CampaignHeader from "./components/CreateCampaign/CampaignHeader";
 import CampaignSidebar from "./components/CreateCampaign/CampaignSidebar";
 import CoverSection from "./components/sections/CoverSection";
+import CollectionsSection from "./components/sections/CollectionsSection";
 import LocationSection from "./components/sections/LocationSection";
 import NpcsSection from "./components/sections/NpcsSection";
 import MonstersSection from "./components/sections/MonstersSection";
@@ -33,6 +35,7 @@ import { createCampaign } from "./service/createCampaignService";
 
 const steps: CampaignStep[] = [
   "cover",
+  "collections",
   "locations",
   "npcs",
   "monsters",
@@ -43,6 +46,7 @@ const steps: CampaignStep[] = [
 
 const stepLabels: Record<CampaignStep, string> = {
   cover: "Capa",
+  collections: "Conjuntos",
   locations: "Localizações",
   npcs: "NPCs",
   monsters: "Bestiário",
@@ -53,6 +57,7 @@ const stepLabels: Record<CampaignStep, string> = {
 
 const stepIcons = {
   cover: BookOpen,
+  collections: FolderTree,
   locations: MapPin,
   npcs: Users,
   monsters: Skull,
@@ -109,8 +114,19 @@ export default function CreateCampaignPage() {
     updateField("players", campaign.players);
 
     updateField(
+      "collections",
+      (campaign.collections ?? []).map((collection, index) => ({
+        clientId: collection.id ?? `premade-collection-${index}`,
+        name: collection.name,
+        description: collection.description ?? "",
+        color: collection.color ?? "",
+      })),
+    );
+
+    updateField(
       "locations",
       campaign.locations.map((location) => ({
+        collectionId: location.collectionId ?? "",
         image: location.image,
         name: location.name,
         type: location.type,
@@ -121,6 +137,7 @@ export default function CreateCampaignPage() {
     updateField(
       "npcs",
       campaign.npcs.map((npc) => ({
+        collectionId: npc.collectionId ?? "",
         image: npc.image,
         name: npc.name,
         marca_id: findMarkId(npc.brand),
@@ -149,6 +166,7 @@ export default function CreateCampaignPage() {
     updateField(
       "monsters",
       campaign.monsters.map((monster) => ({
+        collectionId: monster.collectionId ?? "",
         image: monster.image,
         name: monster.name,
         type: monster.type,
@@ -170,8 +188,20 @@ export default function CreateCampaignPage() {
         },
       })),
     );
-    updateField("items", campaign.items);
-    updateField("events", campaign.events);
+    updateField(
+      "items",
+      campaign.items.map((item) => ({
+        ...item,
+        collectionId: item.collectionId ?? "",
+      })),
+    );
+    updateField(
+      "events",
+      campaign.events.map((event) => ({
+        ...event,
+        collectionId: event.collectionId ?? "",
+      })),
+    );
   }
 
   function goNext() {
@@ -209,9 +239,12 @@ export default function CreateCampaignPage() {
         status: "ativa",
         notes: campaign.notes ?? null,
 
+        collections: campaign.collections,
+
         locations: campaign.locations,
 
         npcs: campaign.npcs.map((npc) => ({
+          collectionId: npc.collectionId,
           image: npc.image,
           name: npc.name,
           marca_id: npc.marca_id || "",
@@ -225,6 +258,7 @@ export default function CreateCampaignPage() {
         })),
 
         monsters: campaign.monsters.map((monster) => ({
+          collectionId: monster.collectionId,
           image: monster.image,
           name: monster.name,
           type: monster.type || "",
@@ -251,6 +285,7 @@ export default function CreateCampaignPage() {
   }
 
   const summary = [
+    { label: "Conjuntos", value: campaign.collections.length, icon: FolderTree },
     { label: "Localizações", value: campaign.locations.length, icon: MapPin },
     { label: "NPCs", value: campaign.npcs.length, icon: Users },
     { label: "Criaturas", value: campaign.monsters.length, icon: Skull },
@@ -283,7 +318,7 @@ export default function CreateCampaignPage() {
               />
             </div>
             <div className="mt-4 -mx-1 overflow-x-auto pb-2 sm:mx-0 sm:overflow-visible sm:pb-0">
-              <div className="flex min-w-max gap-2 px-1 sm:grid sm:min-w-0 sm:grid-cols-7 sm:px-0">
+              <div className="flex min-w-max gap-2 px-1 sm:grid sm:min-w-0 sm:grid-cols-8 sm:px-0">
                 {steps.map((step) => {
                   const Icon = stepIcons[step];
                   const active = currentStep === step;
@@ -315,6 +350,15 @@ export default function CreateCampaignPage() {
                   campaign={campaign}
                   updateField={updateField}
                   onNext={goNext}
+                />
+              )}
+
+              {currentStep === "collections" && (
+                <CollectionsSection
+                  campaign={campaign}
+                  updateField={updateField}
+                  onNext={goNext}
+                  onPrevious={goPrevious}
                 />
               )}
 

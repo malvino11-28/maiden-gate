@@ -1,6 +1,20 @@
 import api from "../../../../services/api";
 
+export type CampaignCollectionOption = {
+  id: number;
+  name: string;
+  description?: string | null;
+  color?: string | null;
+};
+
+export type CreateCollectionData = {
+  name: string;
+  description?: string | null;
+  color?: string | null;
+};
+
 type CreateLocationData = {
+  collection_id?: number | null;
   image: File | null;
   name: string;
   type: string;
@@ -8,6 +22,7 @@ type CreateLocationData = {
 };
 
 export type CreateLoreEventData = {
+  collection_id?: number | null;
   title: string;
   description: string;
   chronology: string;
@@ -15,6 +30,7 @@ export type CreateLoreEventData = {
 };
 
 export type CreateItemData = {
+  collection_id?: number | null;
   name: string;
   description: string;
   type: string;
@@ -30,6 +46,7 @@ export type StatusData = {
 };
 
 export type CreateMonsterData = {
+  collection_id?: number | null;
   image: File | null;
   name: string;
   threat?: string | null;
@@ -40,6 +57,7 @@ export type CreateMonsterData = {
 };
 
 export type CreateNpcData = {
+  collection_id?: number | null;
   image: File | null;
   name: string;
   race?: string | null;
@@ -61,6 +79,7 @@ export type TransferElementData = {
 
 export type CreateSkillData = {
   campaign_id: number;
+  collection_id?: number | null;
   marca_id?: number | null;
   name: string;
   description?: string | null;
@@ -77,6 +96,26 @@ export type TransferElementOption = {
   type: string;
   elementType: "location" | "npc" | "monster" | "item" | "event";
 };
+
+
+export async function getCampaignCollections(
+  campaignId: string | number,
+): Promise<CampaignCollectionOption[]> {
+  if (!campaignId) return [];
+
+  const response = await api.get(`/campaigns/${campaignId}/collections`);
+
+  return response.data;
+}
+
+export async function createCampaignCollection(
+  campaignId: number,
+  data: CreateCollectionData,
+) {
+  const response = await api.post(`/campaigns/${campaignId}/collections`, data);
+
+  return response.data;
+}
 
 export async function createLoreEvent(
   campaignId: number,
@@ -98,6 +137,10 @@ export async function createMonster(
   data: CreateMonsterData,
 ) {
   const formData = new FormData();
+
+  if (data.collection_id) {
+    formData.append("collection_id", String(data.collection_id));
+  }
 
   formData.append("name", data.name);
   formData.append("description", data.description);
@@ -127,6 +170,10 @@ export async function createMonster(
 
 export async function createNpc(campaignId: number, data: CreateNpcData) {
   const formData = new FormData();
+
+  if (data.collection_id) {
+    formData.append("collection_id", String(data.collection_id));
+  }
 
   formData.append("name", data.name);
   formData.append("description", data.description);
@@ -167,6 +214,10 @@ export async function createLocation(
   data: CreateLocationData,
 ) {
   const formData = new FormData();
+
+  if (data.collection_id) {
+    formData.append("collection_id", String(data.collection_id));
+  }
 
   formData.append("name", data.name);
   formData.append("type", data.type);
@@ -228,6 +279,22 @@ export async function updateCampaignElementVisibility(
     `/campaign-elements/${elementType}/${elementId}/visibility`,
     {
       visible_to_players: visibleToPlayers,
+    },
+  );
+
+  return response.data;
+}
+
+
+export async function updateCampaignElementCollection(
+  elementType: string,
+  elementId: string | number,
+  collectionId: string | number | null,
+) {
+  const response = await api.patch(
+    `/campaign-elements/${elementType}/${elementId}/collection`,
+    {
+      collection_id: collectionId ? Number(collectionId) : null,
     },
   );
 

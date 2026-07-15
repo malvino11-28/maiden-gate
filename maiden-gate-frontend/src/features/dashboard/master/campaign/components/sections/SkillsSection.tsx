@@ -17,6 +17,7 @@ type Props = {
 };
 
 const emptySkill = (): CampaignSkillForm => ({
+  collectionId: "",
   marca_id: "",
   name: "",
   description: "",
@@ -50,6 +51,16 @@ export default function SkillsSection({
       nextLabel="Criar Campanha"
       finish
       fields={[
+        {
+          name: "collectionId",
+          label: "Conjunto",
+          placeholder: "Sem conjunto",
+          type: "select",
+          options: campaign.collections.map((collection) => ({
+            value: collection.clientId,
+            label: collection.name || "Conjunto sem nome",
+          })),
+        },
         {
           name: "marca_id",
           label: "Marca vinculada",

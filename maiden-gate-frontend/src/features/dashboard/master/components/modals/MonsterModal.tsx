@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Skull } from "lucide-react";
 
 import Modal from "../../../../../shared/components/Modal/Modal";
@@ -8,6 +8,7 @@ import ModalFooter from "../../../../../shared/components/Modal/ModalFooter";
 
 import FormField from "../forms/FormField";
 import CampaignSelect from "../forms/CampaignSelect";
+import CollectionSelect from "../forms/CollectionSelect";
 import SkillSelector from "../forms/SkillSelector";
 import StatusEditor from "../forms/StatusEditor";
 import ImageInput from "../forms/ImageField";
@@ -21,10 +22,20 @@ import { createMonster } from "../../services/masterElementService";
 interface MonsterModalProps {
   isOpen: boolean;
   onClose: () => void;
+  fixedCampaignId?: string | number;
+  fixedCampaignName?: string;
 }
 
-export default function MonsterModal({ isOpen, onClose }: MonsterModalProps) {
-  const [campaign, setCampaign] = useState("");
+export default function MonsterModal({
+  isOpen,
+  onClose,
+  fixedCampaignId,
+  fixedCampaignName,
+}: MonsterModalProps) {
+  const [campaign, setCampaign] = useState(
+    fixedCampaignId ? String(fixedCampaignId) : "",
+  );
+  const [collection, setCollection] = useState("");
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [type, setType] = useState("");
@@ -44,6 +55,13 @@ export default function MonsterModal({ isOpen, onClose }: MonsterModalProps) {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
+  useEffect(() => {
+    if (!isOpen) return;
+
+    setCampaign(fixedCampaignId ? String(fixedCampaignId) : "");
+    setCollection("");
+  }, [fixedCampaignId, isOpen]);
+
   const handleSubmit = async () => {
     if (!campaign || !name || !description || skills.length === 0) {
       setError("Preencha todos os campos obrigatórios.");
@@ -55,6 +73,7 @@ export default function MonsterModal({ isOpen, onClose }: MonsterModalProps) {
       setError(null);
 
       await createMonster(Number(campaign), {
+        collection_id: collection ? Number(collection) : null,
         image,
         name,
         type,
@@ -64,9 +83,12 @@ export default function MonsterModal({ isOpen, onClose }: MonsterModalProps) {
         status,
       });
 
-      setCampaign("");
+      if (!fixedCampaignId) {
+        setCampaign("");
+      }
+
+      setCollection("");
       setName("");
-      setType("");
       setType("");
       setImage(null);
       setDescription("");
@@ -92,7 +114,21 @@ export default function MonsterModal({ isOpen, onClose }: MonsterModalProps) {
       <ModalBody>
         <div className="space-y-5">
           <FormField label="Campanha" required>
-            <CampaignSelect value={campaign} onChange={setCampaign} />
+            {fixedCampaignId ? (
+              <div className="rounded-xl border border-orange-500/20 bg-[#11162B] px-4 py-3 text-sm text-stone-200">
+                {fixedCampaignName ?? `Campanha #${fixedCampaignId}`}
+              </div>
+            ) : (
+              <CampaignSelect value={campaign} onChange={setCampaign} />
+            )}
+          </FormField>
+
+          <FormField label="Conjunto">
+            <CollectionSelect
+              campaignId={campaign}
+              value={collection}
+              onChange={setCollection}
+            />
           </FormField>
 
           <FormField label="Imagem">

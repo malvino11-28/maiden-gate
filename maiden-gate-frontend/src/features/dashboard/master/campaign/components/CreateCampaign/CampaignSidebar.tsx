@@ -1,4 +1,13 @@
-import { BookOpen, CalendarDays, Gem, MapPin, Skull, Sparkles, Users } from "lucide-react";
+import {
+  BookOpen,
+  CalendarDays,
+  FolderTree,
+  Gem,
+  MapPin,
+  Skull,
+  Sparkles,
+  Users,
+} from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 
 import type { CampaignStep } from "../../types/campaignStep";
@@ -11,6 +20,7 @@ type Step = {
 
 const steps: Step[] = [
   { id: "cover", title: "Capa", icon: BookOpen },
+  { id: "collections", title: "Coleções", icon: FolderTree },
   { id: "locations", title: "Localizações", icon: MapPin },
   { id: "npcs", title: "NPCs", icon: Users },
   { id: "monsters", title: "Bestiário", icon: Skull },

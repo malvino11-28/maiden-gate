@@ -21,6 +21,7 @@ type Props = {
 };
 
 const emptyNpc = (): CampaignNpc => ({
+  collectionId: "",
   image: null,
   name: "",
   marca_id: "",
@@ -62,6 +63,16 @@ export default function NpcsSection({
       onPrevious={onPrevious}
       nextLabel="Próximo: Bestiário"
       fields={[
+        {
+          name: "collectionId",
+          label: "Conjunto",
+          placeholder: "Sem conjunto",
+          type: "select",
+          options: campaign.collections.map((collection) => ({
+            value: collection.clientId,
+            label: collection.name || "Conjunto sem nome",
+          })),
+        },
         { name: "image", label: "Imagem", type: "image", placeholder: "" },
         { name: "name", label: "Nome", placeholder: "Ex: Eryn, o Taberneiro" },
         {

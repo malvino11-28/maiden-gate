@@ -7,6 +7,7 @@ import ModalBody from "../../../../../shared/components/Modal/ModalBody";
 import ModalFooter from "../../../../../shared/components/Modal/ModalFooter";
 import FormField from "../forms/FormField";
 import CampaignSelect from "../forms/CampaignSelect";
+import CollectionSelect from "../forms/CollectionSelect";
 import Input from "../../../../../shared/components/Form/Input";
 import TextArea from "../../../../../shared/components/Form/TextArea";
 import Button from "../../../../../shared/components/Button/Button";
@@ -33,6 +34,7 @@ export default function SkillModal({
   const [campaign, setCampaign] = useState(
     fixedCampaignId ? String(fixedCampaignId) : "",
   );
+  const [collection, setCollection] = useState("");
   const [marks, setMarks] = useState<MarkOption[]>([]);
   const [markId, setMarkId] = useState("");
   const [name, setName] = useState("");
@@ -47,6 +49,7 @@ export default function SkillModal({
     if (!isOpen) return;
 
     setCampaign(fixedCampaignId ? String(fixedCampaignId) : "");
+    setCollection("");
 
     async function loadMarks() {
       const data = await getMarks();
@@ -61,6 +64,7 @@ export default function SkillModal({
       setCampaign("");
     }
 
+    setCollection("");
     setMarkId("");
     setName("");
     setDescription("");
@@ -81,6 +85,7 @@ export default function SkillModal({
 
       await createSkill({
         campaign_id: Number(campaign),
+        collection_id: collection ? Number(collection) : null,
         marca_id: markId ? Number(markId) : null,
         name: name.trim(),
         description: description.trim() || null,
@@ -119,6 +124,14 @@ export default function SkillModal({
             ) : (
               <CampaignSelect value={campaign} onChange={setCampaign} />
             )}
+          </FormField>
+
+          <FormField label="Conjunto">
+            <CollectionSelect
+              campaignId={campaign}
+              value={collection}
+              onChange={setCollection}
+            />
           </FormField>
 
           <FormField label="Marca vinculada">

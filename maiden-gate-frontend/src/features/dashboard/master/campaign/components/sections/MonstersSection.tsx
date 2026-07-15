@@ -15,6 +15,7 @@ type Props = {
 };
 
 const emptyMonster = (): CampaignMonster => ({
+  collectionId: "",
   image: null,
   name: "",
   type: "",
@@ -52,6 +53,16 @@ export default function MonstersSection({
       onPrevious={onPrevious}
       nextLabel="Próximo: Itens"
       fields={[
+        {
+          name: "collectionId",
+          label: "Conjunto",
+          placeholder: "Sem conjunto",
+          type: "select",
+          options: campaign.collections.map((collection) => ({
+            value: collection.clientId,
+            label: collection.name || "Conjunto sem nome",
+          })),
+        },
         { name: "image", label: "Imagem", type: "image", placeholder: "" },
         { name: "name", label: "Nome", placeholder: "Ex: Golem de Cristal" },
         {

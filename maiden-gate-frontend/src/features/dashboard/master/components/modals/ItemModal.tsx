@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Gem } from "lucide-react";
 import Modal from "../../../../../shared/components/Modal/Modal";
 import ModalHeader from "../../../../../shared/components/Modal/ModalHeader";
@@ -6,6 +6,7 @@ import ModalBody from "../../../../../shared/components/Modal/ModalBody";
 import ModalFooter from "../../../../../shared/components/Modal/ModalFooter";
 import FormField from "../forms/FormField";
 import CampaignSelect from "../forms/CampaignSelect";
+import CollectionSelect from "../forms/CollectionSelect";
 import Input from "../../../../../shared/components/Form/Input";
 import TextArea from "../../../../../shared/components/Form/TextArea";
 import Button from "../../../../../shared/components/Button/Button";
@@ -15,15 +16,32 @@ import { createItem } from "../../services/masterElementService";
 interface ItemModalProps {
   isOpen: boolean;
   onClose: () => void;
+  fixedCampaignId?: string | number;
+  fixedCampaignName?: string;
 }
 
-export default function ItemModal({ isOpen, onClose }: ItemModalProps) {
-  const [campaign, setCampaign] = useState("");
+export default function ItemModal({
+  isOpen,
+  onClose,
+  fixedCampaignId,
+  fixedCampaignName,
+}: ItemModalProps) {
+  const [campaign, setCampaign] = useState(
+    fixedCampaignId ? String(fixedCampaignId) : "",
+  );
+  const [collection, setCollection] = useState("");
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [type, setType] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (!isOpen) return;
+
+    setCampaign(fixedCampaignId ? String(fixedCampaignId) : "");
+    setCollection("");
+  }, [fixedCampaignId, isOpen]);
 
   const handleSubmit = async () => {
     if (!campaign || !name || !description || !type) {
@@ -36,12 +54,17 @@ export default function ItemModal({ isOpen, onClose }: ItemModalProps) {
       setError(null);
 
       await createItem(Number(campaign), {
+        collection_id: collection ? Number(collection) : null,
         name,
         description,
         type,
       });
 
-      setCampaign("");
+      if (!fixedCampaignId) {
+        setCampaign("");
+      }
+
+      setCollection("");
       setName("");
       setDescription("");
       setType("");
@@ -60,7 +83,21 @@ export default function ItemModal({ isOpen, onClose }: ItemModalProps) {
 
       <ModalBody>
         <FormField label="Campanha" required>
-          <CampaignSelect value={campaign} onChange={setCampaign} />
+          {fixedCampaignId ? (
+            <div className="rounded-xl border border-orange-500/20 bg-[#11162B] px-4 py-3 text-sm text-stone-200">
+              {fixedCampaignName ?? `Campanha #${fixedCampaignId}`}
+            </div>
+          ) : (
+            <CampaignSelect value={campaign} onChange={setCampaign} />
+          )}
+        </FormField>
+
+        <FormField label="Conjunto">
+          <CollectionSelect
+            campaignId={campaign}
+            value={collection}
+            onChange={setCollection}
+          />
         </FormField>
 
         <FormField label="Nome" required>

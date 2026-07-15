@@ -9,6 +9,7 @@ import {
   Gem,
   CalendarPlus,
   Copy,
+  FolderTree,
   Sparkles,
 } from "lucide-react";
 
@@ -71,6 +72,7 @@ export type ActiveModal =
   | "item"
   | "location"
   | "skill"
+  | "collection"
   | "transfer";
 
 type QuickAction = {
@@ -81,6 +83,12 @@ type QuickAction = {
 };
 
 export const quickActions: QuickAction[] = [
+  {
+    id: "collection",
+    icon: FolderTree,
+    title: "Novo Conjunto",
+    description: "Agrupe elementos por mapa ou arco.",
+  },
   {
     id: "location",
     icon: MapPinned,

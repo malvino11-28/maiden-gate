@@ -10,6 +10,7 @@ type CreateCampaignData = {
   players: string | null;
   status: "ativa" | "pausada" | "encerrada";
   notes?: string | null;
+  collections: CampaignData["collections"];
   locations: CampaignData["locations"];
   npcs: CampaignData["npcs"];
   monsters: CampaignData["monsters"];
@@ -46,8 +47,20 @@ export async function createCampaign(data: CreateCampaignData) {
 
   appendImage(formData, "image", data.image);
 
+  data.collections.forEach((collection, index) => {
+    formData.append(`collections[${index}][client_id]`, collection.clientId);
+    formData.append(`collections[${index}][name]`, collection.name);
+    formData.append(`collections[${index}][description]`, collection.description ?? "");
+    formData.append(`collections[${index}][color]`, collection.color ?? "");
+    formData.append(`collections[${index}][sort_order]`, String(index));
+  });
+
   data.locations.forEach((location, index) => {
     appendImage(formData, `locations[${index}][image]`, location.image);
+
+    if (location.collectionId) {
+      formData.append(`locations[${index}][collection_client_id]`, location.collectionId);
+    }
 
     formData.append(`locations[${index}][name]`, location.name);
     formData.append(`locations[${index}][type]`, location.type ?? "");
@@ -60,6 +73,10 @@ export async function createCampaign(data: CreateCampaignData) {
 
   data.npcs.forEach((npc, index) => {
     appendImage(formData, `npcs[${index}][image]`, npc.image);
+
+    if (npc.collectionId) {
+      formData.append(`npcs[${index}][collection_client_id]`, npc.collectionId);
+    }
 
     formData.append(`npcs[${index}][name]`, npc.name);
     formData.append(`npcs[${index}][marca_id]`, npc.marca_id ?? "");
@@ -81,6 +98,10 @@ export async function createCampaign(data: CreateCampaignData) {
   data.monsters.forEach((monster, index) => {
     appendImage(formData, `monsters[${index}][image]`, monster.image);
 
+    if (monster.collectionId) {
+      formData.append(`monsters[${index}][collection_client_id]`, monster.collectionId);
+    }
+
     formData.append(`monsters[${index}][name]`, monster.name);
     formData.append(`monsters[${index}][type]`, monster.type ?? "");
     formData.append(`monsters[${index}][threat]`, monster.threat ?? "");
@@ -99,12 +120,20 @@ export async function createCampaign(data: CreateCampaignData) {
   });
 
   data.items.forEach((item, index) => {
+    if (item.collectionId) {
+      formData.append(`items[${index}][collection_client_id]`, item.collectionId);
+    }
+
     formData.append(`items[${index}][name]`, item.name);
     formData.append(`items[${index}][type]`, item.type ?? "");
     formData.append(`items[${index}][description]`, item.description ?? "");
   });
 
   data.events.forEach((event, index) => {
+    if (event.collectionId) {
+      formData.append(`events[${index}][collection_client_id]`, event.collectionId);
+    }
+
     formData.append(`events[${index}][title]`, event.title);
     formData.append(`events[${index}][chronology]`, event.chronology ?? "");
     formData.append(`events[${index}][date]`, event.date ?? "");
@@ -112,6 +141,10 @@ export async function createCampaign(data: CreateCampaignData) {
   });
 
   data.skills.forEach((skill, index) => {
+    if (skill.collectionId) {
+      formData.append(`skills[${index}][collection_client_id]`, skill.collectionId);
+    }
+
     formData.append(`skills[${index}][name]`, skill.name);
     formData.append(`skills[${index}][description]`, skill.description ?? "");
     formData.append(`skills[${index}][type]`, skill.type || "campanha");

@@ -22,6 +22,7 @@ import MonsterModal from "../components/modals/MonsterModal";
 import NpcModal from "../components/modals/NpcModal";
 import TransferElementModal from "../components/modals/TransferElementModal";
 import SkillModal from "../components/modals/SkillModal";
+import CollectionModal from "../components/modals/CollectionModal";
 
 import DashboardHeader from "../components/DashboardHeader";
 import DashboardTabs from "../components/DashboardTabs";
@@ -413,6 +414,10 @@ export default function MasterDashboard() {
       />
       <SkillModal
         isOpen={activeModal === "skill"}
+        onClose={() => setActiveModal(null)}
+      />
+      <CollectionModal
+        isOpen={activeModal === "collection"}
         onClose={() => setActiveModal(null)}
       />
       <TransferElementModal

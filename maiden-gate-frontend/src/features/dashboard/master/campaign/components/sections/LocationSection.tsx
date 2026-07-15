@@ -15,6 +15,7 @@ type Props = {
 };
 
 const emptyLocation = (): CampaignLocation => ({
+  collectionId: "",
   image: null,
   name: "",
   type: "",
@@ -43,12 +44,26 @@ export default function LocationSection({
       onPrevious={onPrevious}
       nextLabel="Próximo: NPCs"
       fields={[
+        {
+          name: "collectionId",
+          label: "Conjunto",
+          placeholder: "Sem conjunto",
+          type: "select",
+          options: campaign.collections.map((collection) => ({
+            value: collection.clientId,
+            label: collection.name || "Conjunto sem nome",
+          })),
+        },
         { name: "image", label: "Imagem", type: "image", placeholder: "" },
-        { name: "name", label: "Nome", placeholder: "Ex: Torre de Valdris" },
+        {
+          name: "name",
+          label: "Nome",
+          placeholder: "Ex: Cidade Catedral",
+        },
         {
           name: "type",
           label: "Tipo",
-          placeholder: "Ex: Cidade, Masmorra, Floresta…",
+          placeholder: "Ex: Cidade, RAID, Floresta…",
         },
         {
           name: "region",

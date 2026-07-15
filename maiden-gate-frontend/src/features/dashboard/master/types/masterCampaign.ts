@@ -36,8 +36,27 @@ export interface CampaignMember {
   habilidades: CampaignSkill[];
 }
 
+export interface CampaignCollection {
+  id: string | number;
+  name: string;
+  description?: string | null;
+  color?: string | null;
+  sortOrder?: number;
+  visibleToPlayers?: boolean;
+}
+
+export interface CampaignElementCollection {
+  id?: string | number | null;
+  name?: string | null;
+  description?: string | null;
+  color?: string | null;
+}
+
 export interface CampaignLocation {
   id?: string | number;
+  collection_id?: string | number | null;
+  collectionId?: string | number | null;
+  collection?: CampaignElementCollection | null;
   visible_to_players?: boolean;
   visibleToPlayers?: boolean;
   imagem?: string | null;
@@ -64,6 +83,9 @@ export type CampaignElementStatus = {
 
 export interface CampaignNpc {
   id?: string | number;
+  collection_id?: string | number | null;
+  collectionId?: string | number | null;
+  collection?: CampaignElementCollection | null;
   visible_to_players?: boolean;
   visibleToPlayers?: boolean;
   image?: string | null;
@@ -85,6 +107,9 @@ export interface CampaignNpc {
 
 export interface CampaignMonster {
   id?: string | number;
+  collection_id?: string | number | null;
+  collectionId?: string | number | null;
+  collection?: CampaignElementCollection | null;
   visible_to_players?: boolean;
   visibleToPlayers?: boolean;
   image?: string | null;
@@ -104,6 +129,9 @@ export interface CampaignMonster {
 
 export interface CampaignItem {
   id?: string | number;
+  collection_id?: string | number | null;
+  collectionId?: string | number | null;
+  collection?: CampaignElementCollection | null;
   visible_to_players?: boolean;
   visibleToPlayers?: boolean;
   name?: string;
@@ -116,6 +144,9 @@ export interface CampaignItem {
 
 export interface CampaignEvent {
   id?: string | number;
+  collection_id?: string | number | null;
+  collectionId?: string | number | null;
+  collection?: CampaignElementCollection | null;
   visible_to_players?: boolean;
   visibleToPlayers?: boolean;
   title?: string;
@@ -164,6 +195,7 @@ export interface MasterCampaign {
   agendaSessoes?: CampaignSessionNotice[];
 
   localizacaoAtual: CurrentLocation;
+  collections?: CampaignCollection[];
   membros: CampaignMember[];
   elementos: CampaignElements;
   notas: string;

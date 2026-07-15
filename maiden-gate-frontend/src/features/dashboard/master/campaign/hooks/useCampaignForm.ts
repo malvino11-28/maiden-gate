@@ -8,6 +8,7 @@ const initialCampaign: CampaignData = {
   description: "",
   recommendedLevel: "Iniciante",
   players: "",
+  collections: [],
   locations: [],
   npcs: [],
   monsters: [],
