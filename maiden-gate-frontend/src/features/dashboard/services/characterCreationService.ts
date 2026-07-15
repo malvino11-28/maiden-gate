@@ -203,7 +203,6 @@ export async function getSkillsByMark(
             : type === "campanha"
               ? "✧"
               : "✨",
-      resourceCost: skill.resource_cost ?? 0,
     };
 
     tree[branch].push(normalizedSkill);

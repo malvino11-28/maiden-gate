@@ -11,6 +11,7 @@ import {
   Shield,
   Sparkles,
   Swords,
+  Trash2,
   TreePine,
   Zap,
 } from "lucide-react";
@@ -29,6 +30,7 @@ import {
 } from "../data/characterFormMock";
 
 import {
+  deleteCharacter,
   getCharacterById,
   getSkillsByMark,
   updateCharacter,
@@ -113,6 +115,7 @@ export default function EditCharacterPage() {
 
   const [isLoading, setIsLoading] = useState(true);
   const [isSaving, setIsSaving] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [saved, setSaved] = useState(false);
   const [showSkillTree, setShowSkillTree] = useState(false);
@@ -234,6 +237,29 @@ export default function EditCharacterPage() {
       setError("Não foi possível salvar as alterações do personagem.");
     } finally {
       setIsSaving(false);
+    }
+  }
+
+  async function handleDeleteCharacter() {
+    if (!id || !character || isDeleting) return;
+
+    const confirmed = window.confirm(
+      `Tem certeza que deseja excluir ${character.nome}? Esta ação não pode ser desfeita.`,
+    );
+
+    if (!confirmed) return;
+
+    try {
+      setIsDeleting(true);
+      setError(null);
+
+      await deleteCharacter(id);
+
+      navigate("/dashboard/player", { replace: true });
+    } catch {
+      setError("Não foi possível excluir este personagem.");
+    } finally {
+      setIsDeleting(false);
     }
   }
 
@@ -519,19 +545,40 @@ export default function EditCharacterPage() {
           )}
         </CharacterSectionCard>
 
-        <div className="flex flex-col items-center justify-between gap-4 pb-8 pt-2 sm:flex-row">
-          <button
-            type="button"
-            onClick={() => navigate("/dashboard/player")}
-            className="text-sm text-amber-100/35 transition-colors hover:text-amber-100/60"
-          >
-            Cancelar e voltar
-          </button>
+        <div className="flex flex-col gap-4 pb-8 pt-2 sm:flex-row sm:items-center sm:justify-between">
+          <div className="flex flex-col items-center gap-3 sm:flex-row">
+            <button
+              type="button"
+              onClick={() => navigate("/dashboard/player")}
+              className="text-sm text-amber-100/35 transition-colors hover:text-amber-100/60"
+            >
+              Cancelar e voltar
+            </button>
+
+            <button
+              type="button"
+              onClick={handleDeleteCharacter}
+              disabled={isSaving || isDeleting}
+              className="inline-flex items-center justify-center gap-2 rounded-xl border border-rose-500/35 bg-rose-500/10 px-5 py-2.5 text-sm font-semibold text-rose-200 transition hover:border-rose-400/60 hover:bg-rose-500/20 disabled:cursor-not-allowed disabled:opacity-60"
+            >
+              {isDeleting ? (
+                <>
+                  <Loader2 className="h-4 w-4 animate-spin" />
+                  Excluindo...
+                </>
+              ) : (
+                <>
+                  <Trash2 className="h-4 w-4" />
+                  Excluir personagem
+                </>
+              )}
+            </button>
+          </div>
 
           <button
             type="submit"
-            disabled={saved || isSaving}
-            className={`flex items-center gap-2.5 rounded-xl px-8 py-3 text-base font-semibold shadow-lg transition-all ${
+            disabled={saved || isSaving || isDeleting}
+            className={`flex items-center justify-center gap-2.5 rounded-xl px-8 py-3 text-base font-semibold shadow-lg transition-all ${
               saved
                 ? "scale-95 bg-emerald-600/80 text-emerald-100 shadow-emerald-900/30"
                 : "bg-gradient-to-r from-amber-500 to-rose-600 text-white shadow-amber-900/30 hover:scale-[1.02] hover:from-amber-400 hover:to-rose-500 hover:shadow-amber-800/40 active:scale-95 disabled:cursor-not-allowed disabled:opacity-60"
