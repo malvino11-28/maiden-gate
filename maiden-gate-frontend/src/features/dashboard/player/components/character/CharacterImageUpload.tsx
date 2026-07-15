@@ -11,6 +11,48 @@ type Props = {
   onChange: (image: File | null) => void;
 };
 
+function getApiBaseUrl() {
+  const apiUrl = import.meta.env.VITE_API_URL ?? "http://127.0.0.1:8000/api";
+
+  return apiUrl.replace(/\/api\/?$/, "").replace(/\/$/, "");
+}
+
+function getImageSrc(image?: string | File | null) {
+  if (!image) return null;
+
+  if (image instanceof File) {
+    return URL.createObjectURL(image);
+  }
+
+  if (
+    image.startsWith("http") ||
+    image.startsWith("blob:") ||
+    image.startsWith("data:")
+  ) {
+    return image;
+  }
+
+  const apiBaseUrl = getApiBaseUrl();
+
+  if (image.startsWith("/storage/")) {
+    return `${apiBaseUrl}${image}`;
+  }
+
+  if (image.startsWith("storage/")) {
+    return `${apiBaseUrl}/${image}`;
+  }
+
+  if (image.startsWith("/assets/") || image.startsWith("/images/")) {
+    return image;
+  }
+
+  if (image.startsWith("/")) {
+    return image;
+  }
+
+  return `${apiBaseUrl}/storage/${image}`;
+}
+
 export default function CharacterImageUpload({
   image,
   label = "Retrato",
@@ -22,21 +64,14 @@ export default function CharacterImageUpload({
   const [preview, setPreview] = useState<string | null>(null);
 
   useEffect(() => {
-    if (!image) {
-      setPreview(null);
-      return;
-    }
+    const imageSrc = getImageSrc(image);
 
-    if (typeof image === "string") {
-      setPreview(image);
-      return;
-    }
-
-    const objectUrl = URL.createObjectURL(image);
-    setPreview(objectUrl);
+    setPreview(imageSrc);
 
     return () => {
-      URL.revokeObjectURL(objectUrl);
+      if (image instanceof File && imageSrc) {
+        URL.revokeObjectURL(imageSrc);
+      }
     };
   }, [image]);
 
@@ -53,6 +88,8 @@ export default function CharacterImageUpload({
 
   function clearImage() {
     onChange(null);
+    setPreview(null);
+
     if (fileRef.current) {
       fileRef.current.value = "";
     }
@@ -78,6 +115,7 @@ export default function CharacterImageUpload({
         ) : (
           <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 text-center">
             <ImagePlus className="h-9 w-9 text-amber-600/50" />
+
             <div>
               <p className="text-sm text-amber-100/55">Adicionar imagem</p>
               <p className="mt-1 text-xs text-amber-100/25">{helper}</p>
