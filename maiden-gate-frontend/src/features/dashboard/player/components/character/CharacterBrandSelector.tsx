@@ -7,6 +7,12 @@ type Props = {
   onChange: (mark: CharacterMarkOption) => void;
 };
 
+function getDefaultMarkImage(mark: CharacterMarkOption) {
+  const defaultMark = characterMarks.find((item) => item.value === mark.value);
+
+  return mark.image ?? defaultMark?.image ?? null;
+}
+
 export default function CharacterBrandSelector({
   value,
   marks = characterMarks,
@@ -17,12 +23,18 @@ export default function CharacterBrandSelector({
       {marks.map((mark) => {
         const optionValue = mark.id ? String(mark.id) : mark.value;
         const active = value === optionValue;
+        const markImage = getDefaultMarkImage(mark);
 
         return (
           <button
             key={optionValue}
             type="button"
-            onClick={() => onChange(mark)}
+            onClick={() =>
+              onChange({
+                ...mark,
+                image: markImage,
+              })
+            }
             className={`rounded-xl border p-4 text-left shadow-lg transition-all ${
               active
                 ? `${mark.ativo} shadow-lg`
@@ -30,16 +42,18 @@ export default function CharacterBrandSelector({
             }`}
           >
             <div
-              className={`mb-3 flex h-12 w-12 items-center justify-center overflow-hidden rounded-xl bg-gradient-to-br ${mark.gradiente} text-2xl`}
+              className={`mb-3 flex h-12 w-12 items-center justify-center overflow-hidden rounded-xl bg-gradient-to-br ${mark.gradiente}`}
             >
-              {mark.image ? (
+              {markImage ? (
                 <img
-                  src={mark.image}
+                  src={markImage}
                   alt={mark.value}
                   className="h-full w-full object-cover"
                 />
               ) : (
-                mark.emoji
+                <span className={`text-lg font-bold ${mark.texto}`}>
+                  {mark.value.charAt(0)}
+                </span>
               )}
             </div>
 

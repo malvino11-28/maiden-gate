@@ -178,7 +178,7 @@ class CharacterController extends Controller
 
         $character->update($data);
 
-        $character->hp_max = (int) floor($character->res * 1.5);
+        $character->hp_max = (int) floor(($character->res * 1.5) + round(($character->pod *0.5)) + 6);
         if ($requestedHpCurrent !== null) {
             $character->hp_current = min((int) $requestedHpCurrent, $character->hp_max);
         } elseif ($wasFullHp) {

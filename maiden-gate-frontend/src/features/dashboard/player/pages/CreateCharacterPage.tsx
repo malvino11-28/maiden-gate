@@ -58,7 +58,7 @@ const initialAttributes: Record<AttributeKey, number> = {
   PRE: baseAttributeValue,
 };
 
-const maxAttributeBonusOnCreation = 5;
+const maxAttributeBonusOnCreation = 3;
 
 export default function CreateCharacterPage() {
   const navigate = useNavigate();
@@ -306,7 +306,7 @@ export default function CreateCharacterPage() {
                     name="nome"
                     value={form.nome}
                     onChange={handleChange}
-                    placeholder="Ex: Lirien"
+                    placeholder="Ex: Renato"
                     className="w-full rounded-lg border border-amber-900/40 bg-slate-950/60 px-4 py-3 text-sm text-amber-100 outline-none transition-all placeholder:text-amber-100/20 focus:border-amber-500/60 focus:ring-1 focus:ring-amber-500/20"
                   />
                 </div>
@@ -319,7 +319,7 @@ export default function CreateCharacterPage() {
                     name="sobrenome"
                     value={form.sobrenome}
                     onChange={handleChange}
-                    placeholder="Ex: Respiração"
+                    placeholder="Ex: Cromado"
                     className="w-full rounded-lg border border-amber-900/40 bg-slate-950/60 px-4 py-3 text-sm text-amber-100 outline-none transition-all placeholder:text-amber-100/20 focus:border-amber-500/60 focus:ring-1 focus:ring-amber-500/20"
                   />
                 </div>

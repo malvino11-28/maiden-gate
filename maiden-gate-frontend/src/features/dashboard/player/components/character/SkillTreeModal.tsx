@@ -286,19 +286,28 @@ export default function SkillTreeModal({
                 flex-shrink-0
                 items-center
                 justify-center
+                overflow-hidden
                 rounded-xl
                 border
                 bg-gradient-to-br
-                text-xl
                 shadow-lg
                 sm:h-12
                 sm:w-12
-                sm:text-2xl
                 ${meta.gradient}
                 ${meta.active.split(" ")[0]}
               `}
             >
-              {meta.emoji}
+              {meta.image ? (
+                <img
+                  src={meta.image}
+                  alt={`Marca ${mark}`}
+                  className="h-full w-full object-cover"
+                />
+              ) : (
+                <span className={`text-lg font-bold ${meta.text}`}>
+                  {mark.charAt(0)}
+                </span>
+              )}
             </div>
 
             <div className="min-w-0">

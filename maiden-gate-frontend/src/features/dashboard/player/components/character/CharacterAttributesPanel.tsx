@@ -53,9 +53,8 @@ export default function CharacterAttributesPanel({
   return (
     <>
       <p className="mb-6 text-xs text-amber-100/35">
-        Cada atributo começa em{" "}
-        <strong className="text-amber-300/60">{baseAttributeValue}</strong>.
-        Distribua{" "}
+        Cada atributo começa com valores diferentes dependendo da{" "}
+        <strong className="text-amber-300/60">Marca</strong>. Distribua{" "}
         <strong className="text-amber-300/60">{pointLimit} pontos</strong>{" "}
         adicionais conforme a progressão do personagem.
       </p>

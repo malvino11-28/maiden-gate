@@ -4,20 +4,20 @@ import type { AttributeDefinition, CharacterMarkOption } from "../types/player";
 
 import type { AttributeKey, CharacterMark } from "../types/player";
 
-export const extraPoints = 12;
-export const baseAttributeValue = 6;
+import manifest from "../../../../assets/images/marks/min/manifest_arv.png";
+import occult from "../../../../assets/images/marks/min/occult_arv.png";
+import intoner from "../../../../assets/images/marks/min/intoner_arv.png";
+import breath from "../../../../assets/images/marks/min/breath_arv.png";
+import maso from "../../../../assets/images/marks/min/maso_arv.png";
 
-export const campaignsForCharacter = [
-  { id: 1, nome: "A Flor do Abismo" },
-  { id: 2, nome: "Véu de Cinzas" },
-  { id: 3, nome: "Crônicas de Vareth" },
-  { id: 4, nome: "O Sangue de Maso" },
-];
+export const extraPoints = 8;
+export const baseAttributeValue = 6;
 
 export const characterMarks: CharacterMarkOption[] = [
   {
     value: "Manifesto",
     emoji: "⚔️",
+    image: manifest,
     gradiente: "from-orange-500/30 to-red-700/30",
     borda: "border-orange-500/50",
     texto: "text-orange-300",
@@ -27,6 +27,7 @@ export const characterMarks: CharacterMarkOption[] = [
   {
     value: "Oculto",
     emoji: "🌒",
+    image: occult,
     gradiente: "from-violet-700/30 to-slate-800/30",
     borda: "border-violet-500/50",
     texto: "text-violet-300",
@@ -36,8 +37,9 @@ export const characterMarks: CharacterMarkOption[] = [
   {
     value: "Entoadora",
     emoji: "🎶",
+    image: intoner,
     gradiente: "from-teal-500/30 to-emerald-700/30",
-    borda: "border-teal-500/50",
+    borda: "border-rose-500/40",
     texto: "text-teal-300",
     ativo: "border-teal-400 bg-teal-500/20 shadow-teal-500/20",
     descricao: "Tecelã de melodias arcanas",
@@ -45,6 +47,7 @@ export const characterMarks: CharacterMarkOption[] = [
   {
     value: "Respiração",
     emoji: "🌬️",
+    image: breath,
     gradiente: "from-sky-400/30 to-cyan-600/30",
     borda: "border-sky-500/50",
     texto: "text-sky-300",
@@ -54,6 +57,7 @@ export const characterMarks: CharacterMarkOption[] = [
   {
     value: "Maso",
     emoji: "🩸",
+    image: maso,
     gradiente: "from-rose-700/30 to-red-900/30",
     borda: "border-rose-500/50",
     texto: "text-rose-300",
@@ -87,48 +91,48 @@ export const markMinimumAttributes: Record<
   Record<AttributeKey, number>
 > = {
   Manifesto: {
-    POD: baseAttributeValue + 1,
-    DES: baseAttributeValue - 1,
-    RES: baseAttributeValue + 1,
-    INT: baseAttributeValue - 1,
-    DET: baseAttributeValue,
-    PRE: baseAttributeValue,
+    POD: baseAttributeValue - 4,
+    DES: baseAttributeValue - 4,
+    RES: baseAttributeValue - 3,
+    INT: baseAttributeValue - 3,
+    DET: baseAttributeValue - 2,
+    PRE: baseAttributeValue - 2,
   },
 
   Oculto: {
-    POD: baseAttributeValue - 1,
-    DES: baseAttributeValue + 1,
-    RES: baseAttributeValue - 1,
-    INT: baseAttributeValue + 1,
-    DET: baseAttributeValue + 1,
-    PRE: baseAttributeValue - 1,
+    POD: baseAttributeValue - 4,
+    DES: baseAttributeValue - 1,
+    RES: baseAttributeValue - 4,
+    INT: baseAttributeValue - 2,
+    DET: baseAttributeValue - 3,
+    PRE: baseAttributeValue - 4,
   },
 
   Entoadora: {
-    POD: baseAttributeValue - 1,
-    DES: baseAttributeValue - 1,
-    RES: baseAttributeValue,
-    INT: baseAttributeValue + 1,
-    DET: baseAttributeValue,
-    PRE: baseAttributeValue + 1,
-  },
-
-  Respiração: {
-    POD: baseAttributeValue,
-    DES: baseAttributeValue + 1,
-    RES: baseAttributeValue + 1,
+    POD: baseAttributeValue - 5,
+    DES: baseAttributeValue - 4,
+    RES: baseAttributeValue - 5,
     INT: baseAttributeValue - 1,
-    DET: baseAttributeValue,
+    DET: baseAttributeValue - 2,
     PRE: baseAttributeValue - 1,
   },
 
+  Respiração: {
+    POD: baseAttributeValue - 3,
+    DES: baseAttributeValue - 2,
+    RES: baseAttributeValue - 3,
+    INT: baseAttributeValue - 4,
+    DET: baseAttributeValue - 3,
+    PRE: baseAttributeValue - 3,
+  },
+
   Maso: {
-    POD: baseAttributeValue + 1,
-    DES: baseAttributeValue - 1,
-    RES: baseAttributeValue + 1,
-    INT: baseAttributeValue - 1,
-    DET: baseAttributeValue,
-    PRE: baseAttributeValue,
+    POD: baseAttributeValue - 3,
+    DES: baseAttributeValue - 4,
+    RES: baseAttributeValue - 1,
+    INT: baseAttributeValue - 4,
+    DET: baseAttributeValue - 2,
+    PRE: baseAttributeValue - 4,
   },
 };
 

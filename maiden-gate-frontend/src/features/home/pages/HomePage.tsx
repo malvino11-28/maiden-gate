@@ -14,6 +14,12 @@ import {
 
 import Button from "../../../shared/components/Button/Button";
 
+import manifest from "../../../assets/images/marks/manifest.png";
+import occult from "../../../assets/images/marks/occult.png";
+import intoner from "../../../assets/images/marks/intoner.png";
+import breath from "../../../assets/images/marks/breath.png";
+import maso from "../../../assets/images/marks/maso.png";
+
 const marcas = [
   {
     nome: "Manifesto",
@@ -23,7 +29,7 @@ const marcas = [
     funcao: "Luz • Autoridade • Nobreza",
     cor: "from-amber-500 to-orange-700",
     corBorda: "border-amber-500/40",
-    image: "/images/marks/manifesto.png",
+    image: manifest,
   },
   {
     nome: "Oculto",
@@ -33,7 +39,7 @@ const marcas = [
     funcao: "Escuridão • Segredo • Vazio",
     cor: "from-violet-600 to-purple-900",
     corBorda: "border-violet-500/40",
-    image: "/images/marks/oculto.png",
+    image: occult,
   },
   {
     nome: "Entoadora",
@@ -43,7 +49,7 @@ const marcas = [
     funcao: "Canto • Suporte • Manipulação",
     cor: "from-rose-400 to-pink-700",
     corBorda: "border-rose-500/40",
-    image: "/images/marks/entoadora.png",
+    image: intoner,
   },
   {
     nome: "Respiração",
@@ -53,7 +59,7 @@ const marcas = [
     funcao: "Elemento • Técnica • Disciplina",
     cor: "from-teal-400 to-cyan-700",
     corBorda: "border-teal-500/40",
-    image: "/images/marks/respiracao.png",
+    image: breath,
   },
   {
     nome: "Maso",
@@ -63,7 +69,7 @@ const marcas = [
     funcao: "Magia • Mutação • Poder Inato",
     cor: "from-red-600 to-rose-900",
     corBorda: "border-red-500/40",
-    image: "/images/marks/maso.png",
+    image: maso,
   },
 ];
 
@@ -107,7 +113,7 @@ const tools = [
   },
   {
     icon: Wand2,
-    title: "Rolagens Compartilhadas",
+    title: "Chat de Dados",
     description:
       "Role dados em tempo real com histórico compartilhado entre Mestre e Jogadores dentro da campanha.",
     image:

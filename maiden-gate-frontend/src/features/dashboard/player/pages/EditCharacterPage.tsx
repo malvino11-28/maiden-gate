@@ -346,7 +346,7 @@ export default function EditCharacterPage() {
                   image={iconImage ?? existingIconImage}
                   onChange={setIconImage}
                   label="Imagem do Ícone"
-                  helper="Imagem pequena do card"
+                  helper="Imagem do Rosto"
                   aspectClassName="aspect-square"
                 />
               </div>
