@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\BestiaryController;
 use App\Http\Controllers\Api\CampaignController;
+use App\Http\Controllers\Api\CampaignCollectionController;
 use App\Http\Controllers\Api\CampaignUserController;
 use App\Http\Controllers\Api\CharacterController;
 use App\Http\Controllers\Api\CharacterSkillController;
@@ -47,6 +48,7 @@ Route::put('/campaigns/{campaign}/data', [CampaignController::class, 'update']);
 Route::put('/campaigns/{campaign}/notes', [CampaignController::class, 'updateNotes']);
 Route::put('/campaigns/{campaign}/current-location', [CampaignController::class, 'updateCurrentLocation']);
 Route::patch('/campaign-elements/{type}/{id}/visibility', [CampaignController::class, 'updateElementVisibility']);
+Route::patch('/campaign-elements/{type}/{id}/collection', [CampaignController::class, 'updateElementCollection']);
 Route::post('/campaign-elements/transfer', [CampaignController::class, 'transferElement']);
 
 /* Player */
@@ -62,6 +64,18 @@ Route::post('/campaigns/{campaign}/sessions', [CampaignSessionController::class,
 Route::patch('/campaign-sessions/{campaignSession}/status', [CampaignSessionController::class, 'updateStatus']);
 Route::put('/campaign-sessions/{campaignSession}', [CampaignSessionController::class, 'update']);
 Route::delete('/campaign-sessions/{campaignSession}', [CampaignSessionController::class, 'destroy']);
+
+/*
+|--------------------------------------------------------------------------
+| Campaign collections
+|--------------------------------------------------------------------------
+*/
+
+Route::get('/campaigns/{campaign}/collections', [CampaignCollectionController::class, 'index']);
+Route::post('/campaigns/{campaign}/collections', [CampaignCollectionController::class, 'store']);
+Route::put('/campaign-collections/{campaignCollection}', [CampaignCollectionController::class, 'update']);
+Route::patch('/campaign-collections/{campaignCollection}', [CampaignCollectionController::class, 'update']);
+Route::delete('/campaign-collections/{campaignCollection}', [CampaignCollectionController::class, 'destroy']);
 
 /*
 |--------------------------------------------------------------------------

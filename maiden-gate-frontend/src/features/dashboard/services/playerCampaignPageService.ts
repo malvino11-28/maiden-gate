@@ -84,9 +84,26 @@ function getInventoryItem(entry: any) {
   };
 }
 
+function mapElementCollection(item: any) {
+  const collection = item.collection ?? null;
+
+  return {
+    collectionId: item.collection_id ?? collection?.id ?? null,
+    collection: collection
+      ? {
+          id: Number(collection.id),
+          name: collection.name ?? null,
+          description: collection.description ?? null,
+          color: collection.color ?? null,
+        }
+      : null,
+  };
+}
+
 function mapCampaignItem(item: any): PlayerCampaignElementItem {
   return {
     id: Number(item.id),
+    ...mapElementCollection(item),
     nome: item.name ?? item.nome ?? "Item sem nome",
     tipo: item.type ?? item.tipo ?? "Misc",
     descricao: item.description ?? item.descricao ?? "",
@@ -221,6 +238,7 @@ export function normalizePlayerCampaignView(
     elementos: {
       localizacoes: locations.map((location: any) => ({
         id: Number(location.id),
+        ...mapElementCollection(location),
         imagem: getImage(location.image ?? location.imagem),
         nome: location.name ?? location.nome ?? "Sem nome",
         tipo: location.type ?? location.tipo ?? "",
@@ -229,6 +247,7 @@ export function normalizePlayerCampaignView(
       })),
       npcs: npcs.map((npc: any) => ({
         id: Number(npc.id),
+        ...mapElementCollection(npc),
         imagem: getImage(npc.image ?? npc.imagem),
         nome: npc.name ?? npc.nome ?? "Sem nome",
         marca: normalizeMarkName(npc.marca),
@@ -242,6 +261,7 @@ export function normalizePlayerCampaignView(
       })),
       monstros: monsters.map((monster: any) => ({
         id: Number(monster.id),
+        ...mapElementCollection(monster),
         imagem: getImage(monster.image ?? monster.imagem),
         nome: monster.name ?? monster.nome ?? "Sem nome",
         tipo: monster.type ?? monster.tipo ?? "",
@@ -254,6 +274,7 @@ export function normalizePlayerCampaignView(
       itens: items.map(mapCampaignItem),
       eventos: loreEvents.map((event: any) => ({
         id: Number(event.id),
+        ...mapElementCollection(event),
         titulo: event.title ?? event.titulo ?? "Sem título",
         cronologia: event.chronology ?? event.cronologia ?? "",
         data: event.event_date ?? event.date ?? event.data ?? "",
