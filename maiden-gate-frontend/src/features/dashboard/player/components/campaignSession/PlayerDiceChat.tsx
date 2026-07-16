@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import { Crown, Dice1, Hash, RefreshCw, Trash2, UserRound } from "lucide-react";
+import { Crown, Dice1, Hash, RefreshCw, UserRound } from "lucide-react";
 
 import {
   createCampaignDiceRoll,
@@ -247,22 +247,13 @@ export default function PlayerDiceChat({
           ))}
         </div>
 
-        <div className="grid grid-cols-2 gap-2">
+        <div className="grid grid-cols-1 gap-2">
           <button
             onClick={loadHistory}
             className="flex w-full items-center justify-center gap-1.5 py-1 text-xs text-amber-100/30 transition hover:text-amber-400"
           >
             <RefreshCw className="h-3 w-3" /> Atualizar
           </button>
-
-          {history.length > 0 && (
-            <button
-              onClick={() => setHistory([])}
-              className="flex w-full items-center justify-center gap-1.5 py-1 text-xs text-amber-100/30 transition hover:text-rose-400"
-            >
-              <Trash2 className="h-3 w-3" /> Ocultar local
-            </button>
-          )}
         </div>
       </div>
     </div>

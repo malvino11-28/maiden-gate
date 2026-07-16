@@ -227,6 +227,11 @@ export default function CreateCharacterPage() {
       return;
     }
 
+    if (remainingPoints != 0) {
+      setError("Distribua todos os pontos de atributos.");
+      return;
+    }
+
     try {
       setIsSaving(true);
       setError(null);

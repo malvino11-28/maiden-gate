@@ -411,7 +411,7 @@ export default function EditCharacterPage() {
                     className="w-full bg-transparent text-xl font-semibold text-amber-100 outline-none"
                   />
                   <p className="text-xs text-amber-100/30">
-                    máx. {character.hpMax}
+                    máx. {character.hpMax - 5}
                   </p>
                 </div>
 

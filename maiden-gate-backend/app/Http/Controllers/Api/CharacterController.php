@@ -45,10 +45,10 @@ class CharacterController extends Controller
 
         $data['level'] = 1;
         $data['exp'] = 0;
-        $data['hp_max'] = (int) floor($data['res'] * 1.5);
+        $data['hp_max'] = (int) floor($data['res'] * 1.5 + round(($data['pod'] *0.5)) + 6); 
         $data['hp_current'] = $data['hp_max'];
 
-        $data['pa_max'] = max(1, 4 + floor($data['int'] * 0.6) + floor($data['des'] * 0.2));
+        $data['pa_max'] = max(1, 4 + floor($data['int'] * 0.6) + floor($data['des'] * 0.2)); 
         $data['pr_max'] = max(1, 1 + floor($data['des'] * 0.25) + floor($data['det'] * 0.1));
 
         if ($request->hasFile('icon_image')) {
@@ -178,7 +178,7 @@ class CharacterController extends Controller
 
         $character->update($data);
 
-        $character->hp_max = (int) floor(($character->res * 1.5) + round(($character->pod *0.5)) + 6);
+        $character->hp_max = (int) floor(($character->res * 1.5) + round(($character->pod *0.5)) + 6); 
         if ($requestedHpCurrent !== null) {
             $character->hp_current = min((int) $requestedHpCurrent, $character->hp_max);
         } elseif ($wasFullHp) {
