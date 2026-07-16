@@ -95,6 +95,11 @@ export const masterTabs: RuleTab[] = [
           "Nem todo NPC ou monstro precisa ter uma ficha completa. Para personagens secundários, defina apenas nome, função, comportamento e uma informação útil. Isso mantém a sessão rápida sem perder imersão.",
       },
       {
+        title: "Raças",
+        content:
+          "Além dos humanos, existem elfos e animais antropomórficos. Ambos existem em menor quanidade, especialmente os elfos, e ambos nasceram da Flor.",
+      },
+      {
         title: "Eventos",
         content:
           "Eventos ajudam a organizar a linha do tempo da campanha. Eles podem representar ataques, festivais, reuniões políticas, avanço do Miasma, surgimento de RAIDs, desaparecimentos, julgamentos ou mudanças de poder. Eventos tornam o mundo ativo mesmo quando os jogadores estão em outro lugar.",
