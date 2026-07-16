@@ -476,7 +476,7 @@ export default function CreateCharacterPage() {
             onChange={handleAttributesChange}
             minimumAttributes={minimumAttributes}
             pointLimit={extraPoints}
-            circleLimit={50}
+            circleLimit={3}
           />
         </CharacterSectionCard>
 

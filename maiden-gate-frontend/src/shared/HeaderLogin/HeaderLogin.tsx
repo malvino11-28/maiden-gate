@@ -30,10 +30,12 @@ export default function HeaderLogin() {
     {
       label: "Início",
       path: dashboardPath,
+      end: true,
     },
     {
       label: "Regras",
       path: rulesPath,
+      end: true,
     },
   ];
 
@@ -125,6 +127,7 @@ export default function HeaderLogin() {
               <NavLink
                 key={link.path}
                 to={link.path}
+                end={link.end}
                 onClick={closeMobileMenu}
                 className={({ isActive }) =>
                   `
