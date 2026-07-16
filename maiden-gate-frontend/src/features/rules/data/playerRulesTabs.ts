@@ -10,6 +10,8 @@ import {
 
 import type { RuleTab } from "./RoleRulesTypes";
 
+import { effectRules } from "./effectRules";
+
 export const playerTabs: RuleTab[] = [
   {
     key: "visao-geral",
@@ -325,6 +327,16 @@ export const playerTabs: RuleTab[] = [
           "Mesmo uma vitória pode deixar marcas. Ferimentos, perda de itens, destruição de locais, morte de NPCs, mudança na reputação ou avanço do Miasma podem surgir como consequência. O combate deve impactar a história, não existir isolado dela.",
       },
     ],
+  },
+
+  {
+    key: "efeitos",
+    label: "Efeitos",
+    icon: Sparkles,
+    title: "Efeitos de Combate",
+    description:
+      "Efeitos representam condições aplicadas por habilidades, Marcas, inimigos, itens ou eventos durante a campanha.",
+    topics: effectRules,
   },
 
   {

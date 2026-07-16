@@ -105,13 +105,13 @@ function getStatusEntries(status?: PlayerElementStatus | null) {
   const labels: Record<string, string> = {
     level: "Nível",
     hp: "HP",
-    mana: "Mana",
+    mana: "Energia",
     atk: "ATK",
     def: "DEF",
     speed: "Velocidade",
   };
 
-  const order = ["level", "hp", "mana", "atk", "def", "speed"];
+  const order = ["level", "hp", "atk", "def", "mana", "speed"];
 
   return Object.entries(status)
     .filter(([, value]) => value !== null && value !== undefined)
@@ -232,7 +232,9 @@ export default function PlayerElementsSection({ elements }: Props) {
             <div className="min-w-0 flex-1">
               <div className="flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between">
                 <div className="min-w-0">
-                  <p className="text-sm font-medium text-amber-100">{item.nome}</p>
+                  <p className="text-sm font-medium text-amber-100">
+                    {item.nome}
+                  </p>
                   <p className="mt-0.5 text-xs text-amber-100/40">
                     {item.raca} · {item.ocupacao}
                   </p>
@@ -240,7 +242,9 @@ export default function PlayerElementsSection({ elements }: Props) {
 
                 <button
                   type="button"
-                  onClick={() => setOpenStatusId(isStatusOpen ? null : statusId)}
+                  onClick={() =>
+                    setOpenStatusId(isStatusOpen ? null : statusId)
+                  }
                   className="rounded-md border border-violet-500/30 bg-slate-950/70 px-2.5 py-1.5 text-xs font-medium text-violet-400 transition-all hover:border-violet-400/50 hover:bg-violet-500/10 hover:text-violet-300 sm:w-auto"
                 >
                   {isStatusOpen ? "Ocultar Status" : "Ver Status"}
@@ -263,7 +267,9 @@ export default function PlayerElementsSection({ elements }: Props) {
                 </p>
               )}
 
-              {isStatusOpen && <StatusPanel status={item.status ?? item.stats} />}
+              {isStatusOpen && (
+                <StatusPanel status={item.status ?? item.stats} />
+              )}
             </div>
           </article>
         );
@@ -289,7 +295,9 @@ export default function PlayerElementsSection({ elements }: Props) {
             <div className="min-w-0 flex-1">
               <div className="flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between">
                 <div className="min-w-0">
-                  <p className="text-sm font-medium text-amber-100">{item.nome}</p>
+                  <p className="text-sm font-medium text-amber-100">
+                    {item.nome}
+                  </p>
                   <p className="mt-0.5 text-xs text-amber-100/40">
                     {item.tipo} · Ameaça {item.ameaca}
                   </p>
@@ -297,7 +305,9 @@ export default function PlayerElementsSection({ elements }: Props) {
 
                 <button
                   type="button"
-                  onClick={() => setOpenStatusId(isStatusOpen ? null : statusId)}
+                  onClick={() =>
+                    setOpenStatusId(isStatusOpen ? null : statusId)
+                  }
                   className="rounded-md border border-violet-500/30 bg-slate-950/70 px-2.5 py-1.5 text-xs font-medium text-violet-400 transition-all hover:border-violet-400/50 hover:bg-violet-500/10 hover:text-violet-300 sm:w-auto"
                 >
                   {isStatusOpen ? "Ocultar Status" : "Ver Status"}
@@ -313,7 +323,9 @@ export default function PlayerElementsSection({ elements }: Props) {
                 </p>
               )}
 
-              {isStatusOpen && <StatusPanel status={item.status ?? item.stats} />}
+              {isStatusOpen && (
+                <StatusPanel status={item.status ?? item.stats} />
+              )}
             </div>
           </article>
         );
@@ -382,8 +394,12 @@ export default function PlayerElementsSection({ elements }: Props) {
               onClick={() => setOpenGroup(openGroup === key ? null : key)}
             >
               <Icon className={`h-4 w-4 ${color}`} />
-              <span className="text-sm font-medium text-amber-100">{label}</span>
-              <span className="text-xs text-amber-100/35">({items.length})</span>
+              <span className="text-sm font-medium text-amber-100">
+                {label}
+              </span>
+              <span className="text-xs text-amber-100/35">
+                ({items.length})
+              </span>
               <span className="ml-auto">
                 {openGroup === key ? (
                   <ChevronUp className="h-4 w-4 text-amber-100/40" />
@@ -437,7 +453,9 @@ export default function PlayerElementsSection({ elements }: Props) {
 
                         {isCollectionOpen && (
                           <div className="space-y-2 border-t border-amber-900/15 p-3">
-                            {collectionGroup.items.map((item) => render(item as never))}
+                            {collectionGroup.items.map((item) =>
+                              render(item as never),
+                            )}
                           </div>
                         )}
                       </div>
@@ -452,7 +470,8 @@ export default function PlayerElementsSection({ elements }: Props) {
 
       <div className="rounded-xl border border-amber-900/20 bg-slate-900/30 p-4 text-xs text-amber-100/35">
         <Backpack className="mr-2 inline h-3.5 w-3.5 text-amber-400" />
-        Segredos do mestre e informações não descobertas não aparecem nesta lista.
+        Segredos do mestre e informações não descobertas não aparecem nesta
+        lista.
       </div>
     </div>
   );

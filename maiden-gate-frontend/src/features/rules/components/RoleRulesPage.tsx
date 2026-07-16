@@ -132,7 +132,7 @@ export default function RoleRulesPage({ role }: Props) {
                   </h3>
                 </div>
 
-                <p className="text-sm leading-7 text-amber-100/55">
+                <p className="whitespace-pre-line text-sm leading-7 text-amber-100/55">
                   {topic.content}
                 </p>
               </article>

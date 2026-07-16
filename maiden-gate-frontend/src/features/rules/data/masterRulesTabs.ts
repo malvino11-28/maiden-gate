@@ -8,6 +8,7 @@ import {
 } from "lucide-react";
 
 import type { RuleTab } from "./RoleRulesTypes";
+import { effectRules } from "./effectRules";
 
 export const masterTabs: RuleTab[] = [
   {
@@ -246,12 +247,47 @@ export const masterTabs: RuleTab[] = [
       {
         title: "Dano causado",
         content:
-          "Ao calcular ou interpretar dano causado por jogadores, observe principalmente POD, o tipo da habilidade e a Marca usada. Habilidades ofensivas geralmente escalam melhor com POD, mas algumas podem depender de DES, INT, DET ou PRE quando a descrição fizer sentido.",
+          "Ao calcular ou interpretar dano causado por jogadores, observe principalmente POD, o tipo da habilidade e a Marca usada. Habilidades ofensivas geralmente escalam melhor com POD, mas algumas podem depender de DES, INT, DET ou PRE quando a descrição fizer sentido. No caso de NPCs e inimigos, use o valor de dano como base e ajuste conforme a habilidade, arma, elemento ou condição da cena.",
       },
       {
         title: "Dano recebido",
         content:
-          "Ao calcular ou interpretar dano recebido, observe RES, defesa narrativa, proteção de aliados, cobertura, armadura, habilidades defensivas e circunstâncias da cena. RES não precisa anular dano sozinha, mas deve representar a capacidade de resistir ao impacto.",
+          "Ao calcular ou interpretar dano recebido, observe RES, defesa narrativa, proteção de aliados, cobertura, armadura, habilidades defensivas e circunstâncias da cena. No caso de NPCs e inimigos, use o valor de defesa como referência principal, considerando também equipamento, porte físico, natureza da criatura e tipo de ataque recebido.",
+      },
+      {
+        title: "Status de NPCs e inimigos",
+        content:
+          "NPCs, monstros e inimigos não precisam seguir exatamente a mesma estrutura de atributos dos jogadores. Para facilitar a condução da mesa, eles podem usar valores diretos como vida, dano, energia, defesa e velocidade. Esses valores representam o funcionamento prático da ameaça durante uma cena, sem exigir uma ficha tão detalhada quanto a de um personagem jogador.",
+      },
+      {
+        title: "Vida",
+        content:
+          "A vida representa o HP máximo do NPC ou inimigo. Ela indica quanto dano a criatura consegue suportar antes de cair, fugir, ser derrotada ou mudar de fase dentro do combate. Inimigos comuns podem ter pouca vida, enquanto chefes, monstros de RAID e figuras importantes podem ter valores muito maiores.",
+      },
+      {
+        title: "Dano",
+        content:
+          "O dano representa o impacto base causado pelo NPC ou inimigo. Dependendo do estilo de combate da criatura, esse dano pode representar força física, corte, perfuração, impacto elemental, energia de Marca, Miasma, canto, sombras ou qualquer outra forma de ataque. O Mestre pode ajustar esse valor de acordo com a situação, habilidade usada ou vulnerabilidade do alvo.",
+      },
+      {
+        title: "Energia",
+        content:
+          "A energia indica a frequência com que o NPC ou inimigo consegue usar habilidades especiais. Um inimigo com pouca energia deve usar técnicas fortes com menos frequência, enquanto uma ameaça com energia alta pode pressionar os jogadores com poderes, reações, efeitos de área ou habilidades recorrentes durante o combate.",
+      },
+      {
+        title: "Defesa",
+        content:
+          "A defesa representa a resistência geral do NPC ou inimigo contra dano recebido. Ela não precisa ser tratada apenas como uma redução exata de dano. O Mestre pode considerar armadura, equipamento, porte físico, proteção natural, escamas, barreiras, treinamento, cobertura, resistência elemental ou qualquer fator narrativo que torne aquele inimigo mais difícil de ferir.",
+      },
+      {
+        title: "Velocidade",
+        content:
+          "A velocidade determina a agilidade do NPC ou inimigo dentro do combate. Para definir quem age primeiro, o Mestre pode comparar a velocidade da criatura com a DES dos personagens envolvidos. Inimigos muito velozes tendem a agir antes, reagir melhor, se reposicionar com facilidade ou pressionar personagens mais lentos.",
+      },
+      {
+        title: "Comparando inimigos com jogadores",
+        content:
+          "Quando um NPC ou inimigo interage diretamente com um personagem, o Mestre pode comparar seus status diretos com os atributos dos jogadores. Velocidade pode ser comparada com DES, defesa com POD ou dano recebido, energia com frequência de habilidades, dano com RES ou proteção, e efeitos mentais ou sociais podem envolver DET, INT ou PRE dependendo da situação.",
       },
       {
         title: "Atributo certo para cada cena",
@@ -345,6 +381,29 @@ export const masterTabs: RuleTab[] = [
       },
     ],
   },
+
+  {
+    key: "efeitos",
+    label: "Efeitos",
+    icon: Sparkles,
+    title: "Efeitos, Durações e Interações",
+    description:
+      "Use efeitos para criar combates mais estratégicos, habilidades mais marcantes e inimigos com comportamentos diferentes.",
+    topics: [
+      ...effectRules,
+      {
+        title: "Usando efeitos como Mestre",
+        content:
+          "O Mestre pode ajustar duração, acúmulos, resistência, custo e forma de remoção dos efeitos conforme a cena. Efeitos devem tornar o combate mais interessante, não travar completamente a mesa. Sempre que um efeito impedir ações, negar dano ou alterar turnos, use com cuidado para manter o desafio justo.",
+      },
+      {
+        title: "Efeitos em NPCs e inimigos",
+        content:
+          "NPCs e inimigos também podem aplicar ou receber efeitos. Para criaturas simples, o Mestre pode resumir efeitos diretamente na descrição da habilidade. Para chefes, monstros de RAID ou usuários importantes de Marca, os efeitos podem definir fases, padrões de ataque e fraquezas exploráveis pelos jogadores.",
+      },
+    ],
+  },
+
   {
     key: "miasma",
     label: "Miasma",

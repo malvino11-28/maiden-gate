@@ -280,7 +280,9 @@ function ElementCollectionSelect({
       <span
         className="h-2.5 w-2.5 flex-shrink-0 rounded-full border border-white/20"
         style={{
-          backgroundColor: selectedCollection ? selectedCollectionColor : "#334155",
+          backgroundColor: selectedCollection
+            ? selectedCollectionColor
+            : "#334155",
         }}
       />
       <FolderTree className="h-3.5 w-3.5 text-amber-400/70" />
@@ -350,13 +352,13 @@ function getStatusEntries(status?: CampaignElementStatus | null) {
   const labels: Record<string, string> = {
     level: "Nível",
     hp: "HP",
-    mana: "Mana",
+    mana: "Energia",
     atk: "ATK",
     def: "DEF",
     speed: "Velocidade",
   };
 
-  const order = ["level", "hp", "mana", "atk", "def", "speed"];
+  const order = ["level", "hp", "atk", "def", "mana", "speed"];
 
   return Object.entries(status)
     .filter(([, value]) => value !== null && value !== undefined)
