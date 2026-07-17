@@ -23,6 +23,8 @@ import ItemModal from "../components/modals/ItemModal";
 import LocationModal from "../components/modals/LocationModal";
 import MonsterModal from "../components/modals/MonsterModal";
 import NpcModal from "../components/modals/NpcModal";
+import SkillModal from "../components/modals/SkillModal";
+import CollectionModal from "../components/modals/CollectionModal";
 
 import type { SectionKey } from "../types/masterCampaign";
 import type { ActiveModal } from "../data/dashboardMock";
@@ -34,8 +36,17 @@ import {
   updateCampaignCurrentLocation,
   updateCampaignNotes,
 } from "../services/campaignPageService";
+import {
+  updateCampaignElementCollection,
+  updateCampaignElementVisibility,
+} from "../services/masterElementService";
 
-type ElementActionType = "localizacao" | "npc" | "monstro" | "item" | "evento";
+type ElementActionType =
+  | "localizacao"
+  | "npc"
+  | "monstro"
+  | "item"
+  | "evento";
 
 const elementActionToModal: Record<ElementActionType, ActiveModal> = {
   localizacao: "location",
@@ -70,6 +81,23 @@ function getSkillType(type?: string | null) {
 
 function getMarkName(mark: any) {
   return mark?.name ?? mark?.nome ?? mark ?? "Sem marca";
+}
+
+function mapElementCollection(item: any) {
+  const collection = item.collection ?? null;
+
+  return {
+    collection_id: item.collection_id ?? collection?.id ?? null,
+    collectionId: item.collection_id ?? collection?.id ?? null,
+    collection: collection
+      ? {
+          id: collection.id,
+          name: collection.name,
+          description: collection.description ?? null,
+          color: collection.color ?? null,
+        }
+      : null,
+  };
 }
 
 function mapCampaignMember(character: any) {
@@ -151,6 +179,14 @@ export default function MasterCampaignPage() {
         jogadores: data.players,
         status: data.status,
         notas: data.notes ?? "",
+        collections: (data.collections ?? []).map((collection: any) => ({
+          id: collection.id,
+          name: collection.name,
+          description: collection.description ?? null,
+          color: collection.color ?? null,
+          sortOrder: collection.sort_order ?? collection.sortOrder ?? 0,
+          visibleToPlayers: Boolean(collection.visible_to_players),
+        })),
 
         membros: (data.characters ?? []).map(mapCampaignMember),
         agendaSessoes: data.sessions ?? [],
@@ -176,6 +212,7 @@ export default function MasterCampaignPage() {
         elementos: {
           localizacoes: (data.locations ?? []).map((location: any) => ({
             ...location,
+            ...mapElementCollection(location),
             nome: location.nome ?? location.name ?? "Sem nome",
             name: location.name ?? location.nome ?? "Sem nome",
             tipo: location.tipo ?? location.type ?? "",
@@ -186,10 +223,13 @@ export default function MasterCampaignPage() {
             description: location.description ?? location.descricao ?? "",
             imagem: location.imagem ?? location.image ?? null,
             image: location.image ?? location.imagem ?? null,
+            visible_to_players: Boolean(location.visible_to_players),
+            visibleToPlayers: Boolean(location.visible_to_players),
           })),
 
           npcs: (data.npcs ?? []).map((npc: any) => ({
             ...npc,
+            ...mapElementCollection(npc),
             id: String(npc.id),
 
             nome: npc.nome ?? npc.name ?? "Sem nome",
@@ -215,10 +255,13 @@ export default function MasterCampaignPage() {
 
             status: npc.status ?? npc.stats ?? {},
             stats: npc.stats ?? npc.status ?? {},
+            visible_to_players: Boolean(npc.visible_to_players),
+            visibleToPlayers: Boolean(npc.visible_to_players),
           })),
 
           monstros: (data.bestiary ?? []).map((monster: any) => ({
             ...monster,
+            ...mapElementCollection(monster),
             id: String(monster.id),
 
             nome: monster.nome ?? monster.name ?? "Sem nome",
@@ -253,10 +296,13 @@ export default function MasterCampaignPage() {
 
             imagem: monster.imagem ?? monster.image ?? null,
             image: monster.image ?? monster.imagem ?? null,
+            visible_to_players: Boolean(monster.visible_to_players),
+            visibleToPlayers: Boolean(monster.visible_to_players),
           })),
 
           itens: (data.items ?? []).map((item: any) => ({
             ...item,
+            ...mapElementCollection(item),
             nome: item.nome ?? item.name ?? "Sem nome",
             name: item.name ?? item.nome ?? "Sem nome",
             tipo: item.tipo ?? item.type ?? "",
@@ -265,11 +311,14 @@ export default function MasterCampaignPage() {
             description: item.description ?? item.descricao ?? "",
             imagem: item.imagem ?? item.image ?? null,
             image: item.image ?? item.imagem ?? null,
+            visible_to_players: Boolean(item.visible_to_players),
+            visibleToPlayers: Boolean(item.visible_to_players),
           })),
 
           eventos: (data.lore_events ?? data.loreEvents ?? []).map(
             (event: any) => ({
               ...event,
+              ...mapElementCollection(event),
               titulo: event.titulo ?? event.title ?? "Sem título",
               title: event.title ?? event.titulo ?? "Sem título",
               cronologia: event.cronologia ?? event.chronology ?? "",
@@ -278,6 +327,8 @@ export default function MasterCampaignPage() {
               date: event.date ?? event.event_date ?? event.data ?? "",
               descricao: event.descricao ?? event.description ?? "",
               description: event.description ?? event.descricao ?? "",
+              visible_to_players: Boolean(event.visible_to_players),
+              visibleToPlayers: Boolean(event.visible_to_players),
             }),
           ),
 
@@ -395,6 +446,30 @@ export default function MasterCampaignPage() {
     }));
   }
 
+  async function handleElementVisibilityChange(
+    elementType: string,
+    elementId: string | number,
+    visibleToPlayers: boolean,
+  ) {
+    await updateCampaignElementVisibility(
+      elementType,
+      elementId,
+      visibleToPlayers,
+    );
+
+    await loadCampaign();
+  }
+
+  async function handleElementCollectionChange(
+    elementType: string,
+    elementId: string | number,
+    collectionId: string | number | null,
+  ) {
+    await updateCampaignElementCollection(elementType, elementId, collectionId);
+
+    await loadCampaign();
+  }
+
   if (isLoading) {
     return (
       <div className="min-h-screen bg-slate-950 p-8 text-amber-100">
@@ -426,12 +501,16 @@ export default function MasterCampaignPage() {
             {activeSection === "elementos" && (
               <ElementsSection
                 elements={campaign.elementos}
+                collections={campaign.collections}
                 onAdd={handleAddElement}
+                onAddCollection={() => setActiveModal("collection")}
+                onVisibilityChange={handleElementVisibilityChange}
+                onCollectionChange={handleElementCollectionChange}
               />
             )}
 
             {activeSection === "membros" && (
-              <MembersSection members={campaign.membros} />
+              <MembersSection members={campaign.membros} onCreateSkill={() => setActiveModal("skill")} />
             )}
 
             {activeSection === "localizacao" && (
@@ -514,17 +593,48 @@ export default function MasterCampaignPage() {
         </div>
       </main>
 
-      <EventModal isOpen={activeModal === "event"} onClose={handleCloseModal} />
-      <ItemModal isOpen={activeModal === "item"} onClose={handleCloseModal} />
+      <EventModal
+        isOpen={activeModal === "event"}
+        onClose={handleCloseModal}
+        fixedCampaignId={campaign.id}
+        fixedCampaignName={campaign.nome}
+      />
+      <ItemModal
+        isOpen={activeModal === "item"}
+        onClose={handleCloseModal}
+        fixedCampaignId={campaign.id}
+        fixedCampaignName={campaign.nome}
+      />
       <LocationModal
         isOpen={activeModal === "location"}
         onClose={handleCloseModal}
+        fixedCampaignId={campaign.id}
+        fixedCampaignName={campaign.nome}
       />
       <MonsterModal
         isOpen={activeModal === "monster"}
         onClose={handleCloseModal}
+        fixedCampaignId={campaign.id}
+        fixedCampaignName={campaign.nome}
       />
-      <NpcModal isOpen={activeModal === "npc"} onClose={handleCloseModal} />
+      <NpcModal
+        isOpen={activeModal === "npc"}
+        onClose={handleCloseModal}
+        fixedCampaignId={campaign.id}
+        fixedCampaignName={campaign.nome}
+      />
+      <CollectionModal
+        isOpen={activeModal === "collection"}
+        onClose={handleCloseModal}
+        fixedCampaignId={campaign.id}
+        fixedCampaignName={campaign.nome}
+      />
+      <SkillModal
+        isOpen={activeModal === "skill"}
+        onClose={handleCloseModal}
+        fixedCampaignId={campaign.id}
+        fixedCampaignName={campaign.nome}
+      />
     </div>
   );
 }

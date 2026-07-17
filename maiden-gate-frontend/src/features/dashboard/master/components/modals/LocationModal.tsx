@@ -1,5 +1,5 @@
 import { MapPinned } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import Modal from "../../../../../shared/components/Modal/Modal";
 import ModalHeader from "../../../../../shared/components/Modal/ModalHeader";
@@ -7,6 +7,7 @@ import ModalBody from "../../../../../shared/components/Modal/ModalBody";
 import ModalFooter from "../../../../../shared/components/Modal/ModalFooter";
 import FormField from "../forms/FormField";
 import CampaignSelect from "../forms/CampaignSelect";
+import CollectionSelect from "../forms/CollectionSelect";
 import Input from "../../../../../shared/components/Form/Input";
 import TextArea from "../../../../../shared/components/Form/TextArea";
 import Button from "../../../../../shared/components/Button/Button";
@@ -17,10 +18,20 @@ import { createLocation } from "../../services/masterElementService";
 interface LocationModalProps {
   isOpen: boolean;
   onClose: () => void;
+  fixedCampaignId?: string | number;
+  fixedCampaignName?: string;
 }
 
-export default function LocationModal({ isOpen, onClose }: LocationModalProps) {
-  const [campaign, setCampaign] = useState("");
+export default function LocationModal({
+  isOpen,
+  onClose,
+  fixedCampaignId,
+  fixedCampaignName,
+}: LocationModalProps) {
+  const [campaign, setCampaign] = useState(
+    fixedCampaignId ? String(fixedCampaignId) : "",
+  );
+  const [collection, setCollection] = useState("");
   const [image, setImage] = useState<File | null>(null);
   const [name, setName] = useState("");
   const [type, setType] = useState("");
@@ -28,6 +39,13 @@ export default function LocationModal({ isOpen, onClose }: LocationModalProps) {
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (!isOpen) return;
+
+    setCampaign(fixedCampaignId ? String(fixedCampaignId) : "");
+    setCollection("");
+  }, [fixedCampaignId, isOpen]);
 
   const handleSubmit = async () => {
     if (!campaign || !name || !type || !description) {
@@ -40,13 +58,18 @@ export default function LocationModal({ isOpen, onClose }: LocationModalProps) {
       setError(null);
 
       await createLocation(Number(campaign), {
+        collection_id: collection ? Number(collection) : null,
         image,
         name,
         type,
         description,
       });
 
-      setCampaign("");
+      if (!fixedCampaignId) {
+        setCampaign("");
+      }
+
+      setCollection("");
       setImage(null);
       setName("");
       setType("");
@@ -70,7 +93,21 @@ export default function LocationModal({ isOpen, onClose }: LocationModalProps) {
 
       <ModalBody>
         <FormField label="Campanha" required>
-          <CampaignSelect value={campaign} onChange={setCampaign} />
+          {fixedCampaignId ? (
+            <div className="rounded-xl border border-orange-500/20 bg-[#11162B] px-4 py-3 text-sm text-stone-200">
+              {fixedCampaignName ?? `Campanha #${fixedCampaignId}`}
+            </div>
+          ) : (
+            <CampaignSelect value={campaign} onChange={setCampaign} />
+          )}
+        </FormField>
+
+        <FormField label="Conjunto">
+          <CollectionSelect
+            campaignId={campaign}
+            value={collection}
+            onChange={setCollection}
+          />
         </FormField>
 
         <FormField label="Imagem do Local">

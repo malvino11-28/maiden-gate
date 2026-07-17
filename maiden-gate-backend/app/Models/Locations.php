@@ -8,6 +8,8 @@ class Locations extends Model
 {
     protected $fillable = [
     'campaign_id',
+    'collection_id',
+    'visible_to_players',
 
     'image',
     'name',
@@ -16,7 +18,15 @@ class Locations extends Model
     'region'
     ];
 
+    protected $casts = [
+        'visible_to_players' => 'boolean',
+    ];
+
     public function campaign() {
         return $this->belongsTo(Campaign::class);
+    }
+
+    public function collection() {
+        return $this->belongsTo(CampaignCollection::class, 'collection_id');
     }
 }

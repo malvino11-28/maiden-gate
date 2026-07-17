@@ -9,6 +9,8 @@ class Npcs extends Model
 
     protected $fillable = [
         'campaign_id',
+        'collection_id',
+    'visible_to_players',
         'marca_id',
         'image',
         'name',
@@ -22,6 +24,7 @@ class Npcs extends Model
     ];
 
     protected $casts = [
+        'visible_to_players' => 'boolean',
         'skills' => 'array',
         'stats' => 'array',
     ];
@@ -34,5 +37,10 @@ class Npcs extends Model
     public function marca() 
     {
         return $this->belongsTo(Marcas::class, 'marca_id');
+    }
+
+    public function collection() 
+    {
+        return $this->belongsTo(CampaignCollection::class, 'collection_id');
     }
 }

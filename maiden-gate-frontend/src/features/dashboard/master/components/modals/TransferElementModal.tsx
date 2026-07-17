@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Copy } from "lucide-react";
 
 import Modal from "../../../../../shared/components/Modal/Modal";
@@ -12,30 +12,11 @@ import ElementSelect from "../forms/ElementSelect";
 
 import Button from "../../../../../shared/components/Button/Button";
 
-import { transferElement } from "../../services/masterElementService";
-
-const availableElements = [
-  {
-    id: 1,
-    name: "Rei Arthur",
-    type: "NPC",
-  },
-  {
-    id: 2,
-    name: "Espada Celestial",
-    type: "Item",
-  },
-  {
-    id: 3,
-    name: "Dragão Negro",
-    type: "Monstro",
-  },
-  {
-    id: 4,
-    name: "Capital Imperial",
-    type: "Localização",
-  },
-];
+import {
+  getCampaignElementsForTransfer,
+  transferElement,
+  type TransferElementOption,
+} from "../../services/masterElementService";
 
 interface TransferElementModalProps {
   isOpen: boolean;
@@ -49,6 +30,53 @@ export default function TransferElementModal({
   const [originCampaign, setOriginCampaign] = useState("");
   const [selectedElement, setSelectedElement] = useState("");
   const [destinationCampaign, setDestinationCampaign] = useState("");
+  const [availableElements, setAvailableElements] = useState<
+    TransferElementOption[]
+  >([]);
+  const [isLoadingElements, setIsLoadingElements] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (!isOpen || !originCampaign) {
+      setAvailableElements([]);
+      setSelectedElement("");
+      return;
+    }
+
+    let active = true;
+
+    async function loadElements() {
+      try {
+        setIsLoadingElements(true);
+        setError(null);
+        setSelectedElement("");
+
+        const elements = await getCampaignElementsForTransfer(originCampaign);
+
+        if (active) {
+          setAvailableElements(elements);
+        }
+      } catch {
+        if (active) {
+          setAvailableElements([]);
+          setError(
+            "Não foi possível carregar os elementos da campanha origem.",
+          );
+        }
+      } finally {
+        if (active) {
+          setIsLoadingElements(false);
+        }
+      }
+    }
+
+    loadElements();
+
+    return () => {
+      active = false;
+    };
+  }, [isOpen, originCampaign]);
 
   const canSubmit = Boolean(
     originCampaign &&
@@ -57,12 +85,9 @@ export default function TransferElementModal({
     originCampaign !== destinationCampaign,
   );
 
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-
   const handleSubmit = async () => {
     const element = availableElements.find(
-      (item) => String(item.id) === selectedElement,
+      (item) => `${item.elementType}:${item.id}` === selectedElement,
     );
 
     if (!canSubmit || !element) {
@@ -78,12 +103,13 @@ export default function TransferElementModal({
         origin_campaign_id: Number(originCampaign),
         destination_campaign_id: Number(destinationCampaign),
         element_id: element.id,
-        element_type: element.type,
+        element_type: element.elementType,
       });
 
       setOriginCampaign("");
       setSelectedElement("");
       setDestinationCampaign("");
+      setAvailableElements([]);
 
       onClose();
     } catch {
@@ -97,7 +123,7 @@ export default function TransferElementModal({
     <Modal isOpen={isOpen} onClose={onClose}>
       <ModalHeader
         title="Copiar Elemento"
-        subtitle="Mova elementos entre campanhas."
+        subtitle="Copie elementos reais de uma campanha para outra."
         icon={Copy}
         onClose={onClose}
       />
@@ -115,8 +141,9 @@ export default function TransferElementModal({
             <ElementSelect
               value={selectedElement}
               onChange={setSelectedElement}
-              disabled={!originCampaign}
+              disabled={!originCampaign || isLoadingElements}
               elements={availableElements}
+              isLoading={isLoadingElements}
             />
           </FormField>
 
@@ -128,7 +155,15 @@ export default function TransferElementModal({
           </FormField>
         </div>
 
-        {error && <p className="text-sm text-rose-400">{error}</p>}
+        {originCampaign &&
+          !isLoadingElements &&
+          availableElements.length === 0 && (
+            <p className="mt-3 rounded-lg border border-amber-900/20 bg-slate-950/40 px-3 py-2 text-xs text-amber-100/40">
+              Nenhum elemento encontrado na campanha selecionada.
+            </p>
+          )}
+
+        {error && <p className="mt-3 text-sm text-rose-400">{error}</p>}
       </ModalBody>
 
       <ModalFooter>

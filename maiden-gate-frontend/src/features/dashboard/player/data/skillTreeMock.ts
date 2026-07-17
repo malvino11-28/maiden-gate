@@ -9,6 +9,12 @@ import {
 
 import type { LucideIcon } from "lucide-react";
 
+import manifest from "../../../../assets/images/marks/min/manifest_arv.png";
+import occult from "../../../../assets/images/marks/min/occult_arv.png";
+import intoner from "../../../../assets/images/marks/min/intoner_arv.png";
+import breath from "../../../../assets/images/marks/min/breath_arv.png";
+import maso from "../../../../assets/images/marks/min/maso_arv.png";
+
 export type SkillType = "ativa" | "passiva" | "penalidade" | "campanha";
 
 export type SkillBranchKey =
@@ -27,6 +33,7 @@ export type CharacterSkill = {
   desbloqueada: boolean;
   tipo: SkillType;
   emoji: string;
+  resourceCost?: number;
 };
 
 export type SkillTree = Record<SkillBranchKey, CharacterSkill[]>;
@@ -68,7 +75,7 @@ export const skillBranches: {
 export const markMeta: Record<
   string,
   {
-    emoji: string;
+    image: string | null;
     text: string;
     gradient: string;
     active: string;
@@ -76,38 +83,47 @@ export const markMeta: Record<
   }
 > = {
   Manifesto: {
-    emoji: "⚔️",
-    text: "text-orange-300",
-    gradient: "from-orange-500/30 to-red-700/30",
-    active: "border-orange-400 bg-orange-500/20",
+    image: manifest,
+    text: "text-amber-300",
+    gradient: "from-amber-500/25 to-orange-700/25",
+    active:
+      "border-amber-400 bg-slate-950/75 shadow-amber-500/20 ring-1 ring-amber-400/30",
     description: "Guerreiro da voz declarada",
   },
+
   Oculto: {
-    emoji: "🌒",
+    image: occult,
     text: "text-violet-300",
-    gradient: "from-violet-700/30 to-slate-800/30",
-    active: "border-violet-400 bg-violet-500/20",
+    gradient: "from-violet-600/20 to-purple-950/30",
+    active:
+      "border-violet-300 bg-slate-950/85 shadow-violet-500/25 ring-1 ring-violet-300/35",
     description: "Mestre dos segredos sombrios",
   },
+
   Entoadora: {
-    emoji: "🎶",
-    text: "text-teal-300",
-    gradient: "from-teal-500/30 to-emerald-700/30",
-    active: "border-teal-400 bg-teal-500/20",
+    image: intoner,
+    text: "text-rose-300",
+    gradient: "from-rose-400/25 to-pink-700/25",
+    active:
+      "border-rose-300 bg-slate-950/75 shadow-rose-500/25 ring-1 ring-rose-300/35",
     description: "Tecelã de melodias arcanas",
   },
+
   Respiração: {
-    emoji: "🌬️",
-    text: "text-sky-300",
-    gradient: "from-sky-400/30 to-cyan-600/30",
-    active: "border-sky-400 bg-sky-500/20",
+    image: breath,
+    text: "text-cyan-300",
+    gradient: "from-cyan-400/20 to-teal-700/25",
+    active:
+      "border-cyan-300 bg-slate-950/75 shadow-cyan-500/25 ring-1 ring-cyan-300/35",
     description: "Portador do fluxo vital",
   },
+
   Maso: {
-    emoji: "🩸",
-    text: "text-rose-300",
-    gradient: "from-rose-700/30 to-red-900/30",
-    active: "border-rose-400 bg-rose-500/20",
+    image: maso,
+    text: "text-red-300",
+    gradient: "from-red-600/20 to-rose-950/30",
+    active:
+      "border-red-300 bg-slate-950/85 shadow-red-500/25 ring-1 ring-red-300/35",
     description: "Forjado pelo sacrifício",
   },
 };

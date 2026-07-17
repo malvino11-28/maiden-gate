@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { UserRound } from "lucide-react";
 
 import Modal from "../../../../../shared/components/Modal/Modal";
@@ -8,6 +8,7 @@ import ModalFooter from "../../../../../shared/components/Modal/ModalFooter";
 
 import FormField from "../forms/FormField";
 import CampaignSelect from "../forms/CampaignSelect";
+import CollectionSelect from "../forms/CollectionSelect";
 import SkillSelector from "../forms/SkillSelector";
 import StatusEditor from "../forms/StatusEditor";
 import ImageInput from "../forms/ImageField";
@@ -21,10 +22,20 @@ import { createNpc } from "../../services/masterElementService";
 interface NpcModalProps {
   isOpen: boolean;
   onClose: () => void;
+  fixedCampaignId?: string | number;
+  fixedCampaignName?: string;
 }
 
-export default function NpcModal({ isOpen, onClose }: NpcModalProps) {
-  const [campaign, setCampaign] = useState("");
+export default function NpcModal({
+  isOpen,
+  onClose,
+  fixedCampaignId,
+  fixedCampaignName,
+}: NpcModalProps) {
+  const [campaign, setCampaign] = useState(
+    fixedCampaignId ? String(fixedCampaignId) : "",
+  );
+  const [collection, setCollection] = useState("");
   const [name, setName] = useState("");
   const [image, setImage] = useState<File | null>(null);
   const [brand, setBrand] = useState("");
@@ -48,6 +59,13 @@ export default function NpcModal({ isOpen, onClose }: NpcModalProps) {
   const [personality, setPersonality] = useState("");
   const [secret, setSecret] = useState("");
 
+  useEffect(() => {
+    if (!isOpen) return;
+
+    setCampaign(fixedCampaignId ? String(fixedCampaignId) : "");
+    setCollection("");
+  }, [fixedCampaignId, isOpen]);
+
   const handleSubmit = async () => {
     if (!campaign || !name || !description) {
       setError("Preencha todos os campos obrigatórios.");
@@ -59,6 +77,7 @@ export default function NpcModal({ isOpen, onClose }: NpcModalProps) {
       setError(null);
 
       await createNpc(Number(campaign), {
+        collection_id: collection ? Number(collection) : null,
         image,
         name,
         brand: brand || null,
@@ -71,7 +90,11 @@ export default function NpcModal({ isOpen, onClose }: NpcModalProps) {
         status,
       });
 
-      setCampaign("");
+      if (!fixedCampaignId) {
+        setCampaign("");
+      }
+
+      setCollection("");
       setImage(null);
       setName("");
       setBrand("");
@@ -110,7 +133,21 @@ export default function NpcModal({ isOpen, onClose }: NpcModalProps) {
       <ModalBody>
         <div className="space-y-5">
           <FormField label="Campanha" required>
-            <CampaignSelect value={campaign} onChange={setCampaign} />
+            {fixedCampaignId ? (
+              <div className="rounded-xl border border-orange-500/20 bg-[#11162B] px-4 py-3 text-sm text-stone-200">
+                {fixedCampaignName ?? `Campanha #${fixedCampaignId}`}
+              </div>
+            ) : (
+              <CampaignSelect value={campaign} onChange={setCampaign} />
+            )}
+          </FormField>
+
+          <FormField label="Conjunto">
+            <CollectionSelect
+              campaignId={campaign}
+              value={collection}
+              onChange={setCollection}
+            />
           </FormField>
 
           <FormField label="Imagem">
@@ -125,24 +162,14 @@ export default function NpcModal({ isOpen, onClose }: NpcModalProps) {
             <select
               value={brand}
               onChange={(e) => setBrand(e.target.value)}
-              className="
-                w-full
-                rounded-xl
-                border
-                border-orange-500/20
-                bg-[#11162B]
-                px-4
-                py-3
-                text-stone-200
-                focus:border-orange-400
-                focus:outline-none
-              "
+              className="w-full rounded-xl border border-orange-500/20 bg-[#11162B] px-4 py-3 text-stone-200 focus:border-orange-400 focus:outline-none"
             >
               <option value="">Nenhuma</option>
               <option value="Manifesto">Manifesto</option>
               <option value="Oculto">Oculto</option>
               <option value="Respiração">Respiração</option>
-              <option value="Flor">Flor</option>
+              <option value="Entoadora">Entoadora</option>
+              <option value="Maso">Maso</option>
             </select>
           </FormField>
 

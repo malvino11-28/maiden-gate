@@ -58,7 +58,7 @@ const initialAttributes: Record<AttributeKey, number> = {
   PRE: baseAttributeValue,
 };
 
-const maxAttributeBonusOnCreation = 5;
+const maxAttributeBonusOnCreation = 3;
 
 export default function CreateCharacterPage() {
   const navigate = useNavigate();
@@ -227,6 +227,11 @@ export default function CreateCharacterPage() {
       return;
     }
 
+    if (remainingPoints != 0) {
+      setError("Distribua todos os pontos de atributos.");
+      return;
+    }
+
     try {
       setIsSaving(true);
       setError(null);
@@ -277,16 +282,17 @@ export default function CreateCharacterPage() {
         )}
 
         <CharacterSectionCard title="Identidade" icon={Scroll}>
-          <div className="grid grid-cols-1 gap-8 md:grid-cols-[260px_1fr]">
-            <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-1">
-              <CharacterImageUpload
-                image={iconImage}
-                onChange={setIconImage}
-                label="Imagem do Ícone"
-                helper="Imagem pequena do card"
-                aspectClassName="aspect-square"
-              />
-
+          <div className="grid grid-cols-1 gap-6 lg:grid-cols-[390px_1fr]">
+            <div className="grid grid-cols-2 gap-4">
+              <div className="mt-7 mx-2 lg:mx-6 lg:mt-12.5">
+                <CharacterImageUpload
+                  image={iconImage}
+                  onChange={setIconImage}
+                  label="Imagem do Ícone"
+                  helper="Imagem do rosto"
+                  aspectClassName="aspect-square"
+                />
+              </div>
               <CharacterImageUpload
                 image={fullImage}
                 onChange={setFullImage}
@@ -305,7 +311,7 @@ export default function CreateCharacterPage() {
                     name="nome"
                     value={form.nome}
                     onChange={handleChange}
-                    placeholder="Ex: Lirien"
+                    placeholder="Ex: Renato"
                     className="w-full rounded-lg border border-amber-900/40 bg-slate-950/60 px-4 py-3 text-sm text-amber-100 outline-none transition-all placeholder:text-amber-100/20 focus:border-amber-500/60 focus:ring-1 focus:ring-amber-500/20"
                   />
                 </div>
@@ -318,7 +324,7 @@ export default function CreateCharacterPage() {
                     name="sobrenome"
                     value={form.sobrenome}
                     onChange={handleChange}
-                    placeholder="Ex: Respiração"
+                    placeholder="Ex: Cromado"
                     className="w-full rounded-lg border border-amber-900/40 bg-slate-950/60 px-4 py-3 text-sm text-amber-100 outline-none transition-all placeholder:text-amber-100/20 focus:border-amber-500/60 focus:ring-1 focus:ring-amber-500/20"
                   />
                 </div>
@@ -470,7 +476,7 @@ export default function CreateCharacterPage() {
             onChange={handleAttributesChange}
             minimumAttributes={minimumAttributes}
             pointLimit={extraPoints}
-            circleLimit={50}
+            circleLimit={3}
           />
         </CharacterSectionCard>
 

@@ -1,21 +1,12 @@
 import { BarChart2, Backpack, ChevronRight, Star } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
+import { getStorageImageUrl } from "../../../../../services/apiUrl";
 import type { PlayerCharacterSummary } from "../../types/player";
 
 type Props = {
   character: PlayerCharacterSummary;
 };
-
-function getImageSrc(image?: string | null) {
-  if (!image) return;
-
-  if (image.startsWith("http") || image.startsWith("/")) {
-    return image;
-  }
-
-  return `http://127.0.0.1:8000/storage/${image}`;
-}
 
 export default function CharacterCard({ character }: Props) {
   const navigate = useNavigate();
@@ -35,7 +26,7 @@ export default function CharacterCard({ character }: Props) {
           >
             {character.iconImage ? (
               <img
-                src={getImageSrc(character.iconImage)}
+                src={getStorageImageUrl(character.iconImage)}
                 alt={character.nome}
                 className="h-full w-full object-cover"
               />

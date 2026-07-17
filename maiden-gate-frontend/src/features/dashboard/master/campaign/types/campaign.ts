@@ -1,6 +1,14 @@
 export type RecommendedLevel = "Iniciante" | "Intermediário" | "Avançado";
 
+export interface CampaignCollection {
+  clientId: string;
+  name: string;
+  description: string;
+  color: string;
+}
+
 export interface CampaignLocation {
+  collectionId: string;
   image: File | null | string;
   name: string;
   type: string;
@@ -18,6 +26,7 @@ type StatusData = {
 };
 
 export interface CampaignNpc {
+  collectionId: string;
   image: string | null | File;
   name: string;
   marca_id: string;
@@ -31,6 +40,7 @@ export interface CampaignNpc {
 }
 
 export interface CampaignMonster {
+  collectionId: string;
   image: File | null | string;
   name: string;
   type: string;
@@ -41,16 +51,30 @@ export interface CampaignMonster {
 }
 
 export interface CampaignItem {
+  collectionId: string;
   name: string;
   type: string;
   description: string;
 }
 
 export interface CampaignEvent {
+  collectionId: string;
   title: string;
   chronology: string;
   date: string;
   description: string;
+}
+
+export interface CampaignSkillForm {
+  collectionId: string;
+  marca_id: string;
+  name: string;
+  description: string;
+  type: "ativa" | "passiva" | "penalidade" | "campanha";
+  branch: "ofensivo" | "suporte" | "destreza" | "passivas" | "penalidade" | "campanha";
+  unlock_level: string;
+  resource_cost: string;
+  range: string;
 }
 
 export interface CampaignData {
@@ -60,11 +84,13 @@ export interface CampaignData {
   recommendedLevel: RecommendedLevel;
   players: string;
   notes?: string;
+  collections: CampaignCollection[];
   locations: CampaignLocation[];
   npcs: CampaignNpc[];
   monsters: CampaignMonster[];
   items: CampaignItem[];
   events: CampaignEvent[];
+  skills: CampaignSkillForm[];
 }
 
 export type UpdateCampaignField = <K extends keyof CampaignData>(

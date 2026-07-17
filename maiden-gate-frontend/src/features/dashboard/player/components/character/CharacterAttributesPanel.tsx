@@ -5,6 +5,12 @@ import {
   characterAttributes,
   extraPoints,
 } from "../../data/characterFormMock";
+
+import {
+  attributeImpacts,
+  type AttributeImpact,
+} from "../../data/attributesImpacts";
+
 import type { AttributeKey } from "../../types/player";
 
 type Props = {
@@ -15,6 +21,35 @@ type Props = {
   pointLimit?: number;
   circleLimit?: number;
 };
+
+function ImpactArrows({ level }: { level: AttributeImpact["level"] }) {
+  return (
+    <span className="tracking-[-0.15em] text-emerald-300/80">
+      {"↑".repeat(level)}
+    </span>
+  );
+}
+
+function ImpactPill({
+  impact,
+  active,
+}: {
+  impact: AttributeImpact;
+  active: boolean;
+}) {
+  return (
+    <span
+      className={`inline-flex min-w-[42px] items-center justify-center gap-0.5 rounded-md border px-1.5 py-1 text-[9px] font-semibold uppercase leading-none transition-all ${
+        active
+          ? "border-emerald-400/35 bg-emerald-500/10 text-emerald-200"
+          : "border-amber-900/25 bg-slate-950/45 text-amber-100/28"
+      }`}
+    >
+      {impact.label}
+      <ImpactArrows level={impact.level} />
+    </span>
+  );
+}
 
 export default function CharacterAttributesPanel({
   attributes,
@@ -53,9 +88,8 @@ export default function CharacterAttributesPanel({
   return (
     <>
       <p className="mb-6 text-xs text-amber-100/35">
-        Cada atributo começa em{" "}
-        <strong className="text-amber-300/60">{baseAttributeValue}</strong>.
-        Distribua{" "}
+        Cada atributo começa com valores diferentes dependendo da{" "}
+        <strong className="text-amber-300/60">Marca</strong>. Distribua{" "}
         <strong className="text-amber-300/60">{pointLimit} pontos</strong>{" "}
         adicionais conforme a progressão do personagem.
       </p>
@@ -70,6 +104,9 @@ export default function CharacterAttributesPanel({
 
           const circleProgress = Math.min(extras / circleLimit, 1);
           const circleLength = 175.93;
+          const impacts = attributeImpacts[key];
+          const allImpacts = [...impacts.left, ...impacts.right];
+          const hasAttributeBonus = extras > 0;
 
           return (
             <div
@@ -90,37 +127,86 @@ export default function CharacterAttributesPanel({
 
               <span className="-mt-2 text-[9px] text-amber-100/30">{nome}</span>
 
-              <div className="relative flex h-16 w-16 items-center justify-center">
-                <svg
-                  className="absolute inset-0 h-full w-full -rotate-90"
-                  viewBox="0 0 64 64"
-                >
-                  <circle
-                    cx="32"
-                    cy="32"
-                    r="28"
-                    fill="none"
-                    stroke="rgba(120,53,15,0.2)"
-                    strokeWidth="3"
-                  />
+              <div className="flex w-full flex-col items-center gap-2 sm:grid sm:grid-cols-[1fr_auto_1fr] sm:items-center sm:gap-2">
+                <div className="hidden min-w-0 flex-col items-end gap-1 sm:flex">
+                  {impacts.left.map((impact) => (
+                    <ImpactPill
+                      key={impact.label}
+                      impact={impact}
+                      active={hasAttributeBonus}
+                    />
+                  ))}
+                </div>
 
-                  {extras > 0 && (
+                <div className="relative flex h-16 w-16 items-center justify-center">
+                  <svg
+                    className="absolute inset-0 h-full w-full -rotate-90"
+                    viewBox="0 0 64 64"
+                  >
                     <circle
                       cx="32"
                       cy="32"
                       r="28"
                       fill="none"
-                      stroke="rgba(251,191,36,0.5)"
+                      stroke="rgba(251,191,36,0.65)"
                       strokeWidth="3"
-                      strokeDasharray={`${circleProgress * circleLength} ${circleLength}`}
+                      strokeDasharray={circleLength}
+                      strokeDashoffset={
+                        circleLength - circleProgress * circleLength
+                      }
                       strokeLinecap="round"
+                      className="transition-all duration-500 ease-out"
+                      style={{
+                        opacity: extras > 0 ? 1 : 0,
+                        filter:
+                          extras > 0
+                            ? "drop-shadow(0 0 4px rgba(251,191,36,0.35))"
+                            : "none",
+                      }}
                     />
-                  )}
-                </svg>
 
-                <span className="relative z-10 text-3xl font-bold leading-none text-amber-200">
-                  {value}
-                </span>
+                    {extras > 0 && (
+                      <circle
+                        cx="32"
+                        cy="32"
+                        r="28"
+                        fill="none"
+                        stroke="rgba(251,191,36,0.5)"
+                        strokeWidth="3"
+                        strokeDasharray={`${circleProgress * circleLength} ${circleLength}`}
+                        strokeLinecap="round"
+                      />
+                    )}
+                  </svg>
+
+                  <span
+                    className={`relative z-10 text-3xl font-bold leading-none transition-all duration-300 ${
+                      extras > 0 ? "scale-105 text-amber-100" : "text-amber-200"
+                    }`}
+                  >
+                    {value}
+                  </span>
+                </div>
+
+                <div className="hidden min-w-0 flex-col items-start gap-1 sm:flex">
+                  {impacts.right.map((impact) => (
+                    <ImpactPill
+                      key={impact.label}
+                      impact={impact}
+                      active={hasAttributeBonus}
+                    />
+                  ))}
+                </div>
+
+                <div className="flex flex-wrap justify-center gap-1.5 sm:hidden">
+                  {allImpacts.map((impact, index) => (
+                    <ImpactPill
+                      key={`${impact.label}-${index}`}
+                      impact={impact}
+                      active={hasAttributeBonus}
+                    />
+                  ))}
+                </div>
               </div>
 
               <div className="flex items-center gap-2">

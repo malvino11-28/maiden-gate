@@ -36,8 +36,29 @@ export interface CampaignMember {
   habilidades: CampaignSkill[];
 }
 
+export interface CampaignCollection {
+  id: string | number;
+  name: string;
+  description?: string | null;
+  color?: string | null;
+  sortOrder?: number;
+  visibleToPlayers?: boolean;
+}
+
+export interface CampaignElementCollection {
+  id?: string | number | null;
+  name?: string | null;
+  description?: string | null;
+  color?: string | null;
+}
+
 export interface CampaignLocation {
   id?: string | number;
+  collection_id?: string | number | null;
+  collectionId?: string | number | null;
+  collection?: CampaignElementCollection | null;
+  visible_to_players?: boolean;
+  visibleToPlayers?: boolean;
   imagem?: string | null;
   image?: string | null;
   nome: string;
@@ -62,12 +83,23 @@ export type CampaignElementStatus = {
 
 export interface CampaignNpc {
   id?: string | number;
+  collection_id?: string | number | null;
+  collectionId?: string | number | null;
+  collection?: CampaignElementCollection | null;
+  visible_to_players?: boolean;
+  visibleToPlayers?: boolean;
   image?: string | null;
-  name: string;
-  race: string;
-  occupation: string;
-  personality: string;
-  secret: string;
+  imagem?: string | null;
+  nome?: string;
+  name?: string;
+  raca?: string;
+  race?: string;
+  ocupacao?: string;
+  occupation?: string;
+  personalidade?: string;
+  personality?: string;
+  segredo?: string;
+  secret?: string;
   description?: string;
   skills?: string | string[];
   stats?: CampaignElementStatus | null;
@@ -75,18 +107,36 @@ export interface CampaignNpc {
 
 export interface CampaignMonster {
   id?: string | number;
+  collection_id?: string | number | null;
+  collectionId?: string | number | null;
+  collection?: CampaignElementCollection | null;
+  visible_to_players?: boolean;
+  visibleToPlayers?: boolean;
   image?: string | null;
+  imagem?: string | null;
+  nome?: string;
   name?: string;
+  tipo?: string;
   type?: string;
+  ameaca?: string;
   threat?: string;
   habilidades: string;
   skills?: string | string[];
+  descricao?: string;
   description?: string;
   stats?: CampaignElementStatus | null;
 }
 
 export interface CampaignItem {
   id?: string | number;
+  collection_id?: string | number | null;
+  collectionId?: string | number | null;
+  collection?: CampaignElementCollection | null;
+  visible_to_players?: boolean;
+  visibleToPlayers?: boolean;
+  name?: string;
+  type?: string;
+  description?: string;
   nome: string;
   tipo: string;
   descricao: string;
@@ -94,6 +144,15 @@ export interface CampaignItem {
 
 export interface CampaignEvent {
   id?: string | number;
+  collection_id?: string | number | null;
+  collectionId?: string | number | null;
+  collection?: CampaignElementCollection | null;
+  visible_to_players?: boolean;
+  visibleToPlayers?: boolean;
+  title?: string;
+  chronology?: string;
+  date?: string;
+  description?: string;
   titulo: string;
   cronologia: string;
   data: string;
@@ -136,6 +195,7 @@ export interface MasterCampaign {
   agendaSessoes?: CampaignSessionNotice[];
 
   localizacaoAtual: CurrentLocation;
+  collections?: CampaignCollection[];
   membros: CampaignMember[];
   elementos: CampaignElements;
   notas: string;

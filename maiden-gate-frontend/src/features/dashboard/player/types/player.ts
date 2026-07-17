@@ -113,8 +113,17 @@ export type PlayerElementStatus = {
   [key: string]: number | undefined;
 };
 
+export interface PlayerElementCollection {
+  id?: number | null;
+  name?: string | null;
+  description?: string | null;
+  color?: string | null;
+}
+
 export interface PlayerCampaignElementLocation {
   id?: number;
+  collectionId?: number | null;
+  collection?: PlayerElementCollection | null;
   imagem?: string | null;
   nome: string;
   tipo: string;
@@ -124,6 +133,8 @@ export interface PlayerCampaignElementLocation {
 
 export interface PlayerCampaignElementNpc {
   id?: number;
+  collectionId?: number | null;
+  collection?: PlayerElementCollection | null;
   imagem?: string | null;
   nome: string;
   marca?: CharacterMark;
@@ -138,6 +149,8 @@ export interface PlayerCampaignElementNpc {
 
 export interface PlayerCampaignElementMonster {
   id?: number;
+  collectionId?: number | null;
+  collection?: PlayerElementCollection | null;
   imagem?: string | null;
   nome: string;
   tipo: string;
@@ -150,6 +163,8 @@ export interface PlayerCampaignElementMonster {
 
 export interface PlayerCampaignElementItem {
   id?: number;
+  collectionId?: number | null;
+  collection?: PlayerElementCollection | null;
   nome: string;
   tipo: string;
   descricao: string;
@@ -157,6 +172,8 @@ export interface PlayerCampaignElementItem {
 
 export interface PlayerCampaignElementEvent {
   id?: number;
+  collectionId?: number | null;
+  collection?: PlayerElementCollection | null;
   titulo: string;
   cronologia: string;
   data: string;

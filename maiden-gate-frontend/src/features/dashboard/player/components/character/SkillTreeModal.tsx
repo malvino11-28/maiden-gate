@@ -1,6 +1,15 @@
 /* eslint-disable react-hooks/set-state-in-effect */
 import { useEffect, useState } from "react";
-import { BookOpen, Lock, Save, Unlock, Wand2, X } from "lucide-react";
+import {
+  BookOpen,
+  ChevronDown,
+  ChevronUp,
+  Lock,
+  Save,
+  Unlock,
+  Wand2,
+  X,
+} from "lucide-react";
 
 import {
   getAllSkills,
@@ -49,6 +58,7 @@ export default function SkillTreeModal({
   const [hoveredSkill, setHoveredSkill] = useState<string | null>(null);
   const [isLoadingSkills, setIsLoadingSkills] = useState(false);
   const [skillsError, setSkillsError] = useState<string | null>(null);
+  const [showMobileTypes, setShowMobileTypes] = useState(false);
 
   const initialEquipped = equippedSkillIds ?? getInitialEquippedSkills(tree);
 
@@ -64,6 +74,7 @@ export default function SkillTreeModal({
     setTree(getSkillTreeByMark(mark));
     setBranch("ofensivo");
     setShowCampaignSkills(false);
+    setShowMobileTypes(false);
 
     if (!markId) {
       setSkillsError(null);
@@ -117,6 +128,11 @@ export default function SkillTreeModal({
     ? tree.campanha
     : (tree[branch] ?? []);
 
+  const activeFilterLabel = showCampaignSkills
+    ? "Skills da Campanha"
+    : (skillBranches.find((item) => item.key === branch)?.label ??
+      "Habilidades");
+
   function hasRequiredLevel(skill: CharacterSkill) {
     return level >= skill.nivel;
   }
@@ -140,9 +156,83 @@ export default function SkillTreeModal({
     onSaveEquippedSkills?.([...equippedSkills]);
   }
 
+  function selectBranch(nextBranch: SkillBranchKey) {
+    setBranch(nextBranch);
+    setShowCampaignSkills(false);
+    setShowMobileTypes(false);
+  }
+
+  function selectCampaignSkills() {
+    setShowCampaignSkills(true);
+    setShowMobileTypes(false);
+  }
+
+  const filters = (
+    <>
+      {skillBranches.map(({ key, label, icon: Icon }) => (
+        <button
+          key={key}
+          type="button"
+          onClick={() => selectBranch(key)}
+          className={`
+            flex
+            items-center
+            gap-1.5
+            rounded-lg
+            px-3
+            py-1.5
+            text-xs
+            font-medium
+            transition-all
+
+            ${
+              !showCampaignSkills && branch === key
+                ? key === "penalidade"
+                  ? "border border-rose-500/40 bg-rose-500/20 text-rose-300"
+                  : "border border-amber-500/30 bg-amber-500/15 text-amber-200"
+                : "text-amber-100/40 hover:bg-slate-800/60 hover:text-amber-100/70"
+            }
+          `}
+        >
+          <Icon className="h-3 w-3" />
+          {label}
+        </button>
+      ))}
+
+      {campaign && (
+        <button
+          type="button"
+          onClick={selectCampaignSkills}
+          className={`
+            flex
+            items-center
+            gap-1.5
+            rounded-lg
+            border
+            px-3
+            py-1.5
+            text-xs
+            font-medium
+            transition-all
+            lg:ml-auto
+
+            ${
+              showCampaignSkills
+                ? "border-violet-500/40 bg-violet-500/20 text-violet-300"
+                : "border-violet-900/30 text-violet-400/50 hover:border-violet-700/50 hover:text-violet-300/80"
+            }
+          `}
+        >
+          <BookOpen className="h-3 w-3" />
+          Skills da Campanha
+        </button>
+      )}
+    </>
+  );
+
   return (
     <div
-      className="fixed inset-0 z-[100] flex items-center justify-center p-4"
+      className="fixed inset-0 z-[100] flex items-center justify-center p-2 sm:p-4"
       onClick={(event) => {
         if (event.target === event.currentTarget) {
           onClose();
@@ -155,7 +245,7 @@ export default function SkillTreeModal({
         className="
           relative
           flex
-          h-[92vh]
+          h-[94vh]
           w-full
           max-w-7xl
           flex-col
@@ -165,6 +255,7 @@ export default function SkillTreeModal({
           border-amber-900/40
           bg-slate-950
           shadow-2xl
+          sm:h-[92vh]
         "
       >
         <header
@@ -173,39 +264,55 @@ export default function SkillTreeModal({
             flex-shrink-0
             items-start
             justify-between
+            gap-3
             border-b
             border-amber-900/30
-            px-6
-            py-5
+            px-4
+            py-4
+            sm:px-6
+            sm:py-5
           "
           style={{
             background:
               "linear-gradient(135deg, rgba(30,20,5,0.9) 0%, rgba(15,15,25,0.9) 100%)",
           }}
         >
-          <div className="flex items-center gap-4">
+          <div className="flex min-w-0 items-center gap-3 sm:gap-4">
             <div
               className={`
                 flex
-                h-12
-                w-12
+                h-10
+                w-10
+                flex-shrink-0
                 items-center
                 justify-center
+                overflow-hidden
                 rounded-xl
                 border
                 bg-gradient-to-br
-                text-2xl
                 shadow-lg
+                sm:h-12
+                sm:w-12
                 ${meta.gradient}
                 ${meta.active.split(" ")[0]}
               `}
             >
-              {meta.emoji}
+              {meta.image ? (
+                <img
+                  src={meta.image}
+                  alt={`Marca ${mark}`}
+                  className="h-full w-full object-cover"
+                />
+              ) : (
+                <span className={`text-lg font-bold ${meta.text}`}>
+                  {mark.charAt(0)}
+                </span>
+              )}
             </div>
 
-            <div>
+            <div className="min-w-0">
               <div className="flex flex-wrap items-center gap-2">
-                <h2 className="text-lg font-bold text-amber-100">
+                <h2 className="truncate text-base font-bold text-amber-100 sm:text-lg">
                   Árvore de Habilidades
                 </h2>
 
@@ -215,7 +322,8 @@ export default function SkillTreeModal({
                     border
                     px-2
                     py-0.5
-                    text-xs
+                    text-[10px]
+                    sm:text-xs
                     ${meta.active}
                     ${meta.text}
                   `}
@@ -224,7 +332,7 @@ export default function SkillTreeModal({
                 </span>
               </div>
 
-              <p className="mt-0.5 text-xs text-amber-100/40">
+              <p className="mt-0.5 truncate text-xs text-amber-100/40">
                 {characterName} · Nível {level}
               </p>
             </div>
@@ -237,6 +345,7 @@ export default function SkillTreeModal({
               flex
               h-8
               w-8
+              flex-shrink-0
               items-center
               justify-center
               rounded-lg
@@ -250,14 +359,20 @@ export default function SkillTreeModal({
           </button>
         </header>
 
-        <section className="flex-shrink-0 border-b border-amber-900/20 bg-slate-900/60 px-6 py-4">
+        <section className="flex-shrink-0 border-b border-amber-900/20 bg-slate-900/60 px-3 py-3 sm:px-6 sm:py-4">
           <div className="flex flex-wrap items-center justify-between gap-3">
-            <div className="flex flex-wrap items-center gap-3">
-              <span className="text-[10px] font-medium uppercase tracking-[0.2em] text-amber-600/60">
-                Equipadas
-              </span>
+            <div className="min-w-0 flex-1">
+              <div className="mb-2 flex items-center justify-between gap-2">
+                <span className="text-[10px] font-medium uppercase tracking-[0.2em] text-amber-600/60">
+                  Equipadas
+                </span>
 
-              <div className="flex flex-wrap gap-2">
+                <span className="text-[10px] text-amber-100/30 sm:hidden">
+                  {equippedSkills.length}/{MAX_EQUIPPED_SKILLS}
+                </span>
+              </div>
+
+              <div className="grid grid-cols-3 gap-1.5 sm:flex sm:flex-wrap sm:gap-2">
                 {Array.from({ length: MAX_EQUIPPED_SKILLS }).map((_, index) => {
                   const skillId = equippedSkills[index];
 
@@ -272,14 +387,18 @@ export default function SkillTreeModal({
                         group
                         relative
                         flex
-                        h-10
-                        w-32
+                        h-9
+                        min-w-0
                         items-center
                         justify-center
-                        gap-1.5
+                        gap-1
                         rounded-lg
                         border
+                        px-1.5
                         transition-all
+                        sm:h-10
+                        sm:w-32
+                        sm:gap-1.5
 
                         ${
                           skill
@@ -290,9 +409,11 @@ export default function SkillTreeModal({
                     >
                       {skill ? (
                         <>
-                          <span className="text-sm">{skill.emoji}</span>
+                          <span className="hidden text-sm sm:inline">
+                            {skill.emoji}
+                          </span>
 
-                          <span className="truncate text-[11px] font-medium">
+                          <span className="truncate text-[10px] font-medium sm:text-[11px]">
                             {skill.nome}
                           </span>
 
@@ -359,71 +480,32 @@ export default function SkillTreeModal({
           </div>
         </section>
 
-        <nav className="flex flex-shrink-0 flex-wrap items-center gap-1 border-b border-amber-900/20 bg-slate-900/40 px-6 py-3">
-          {skillBranches.map(({ key, label, icon: Icon }) => (
-            <button
-              key={key}
-              type="button"
-              onClick={() => {
-                setBranch(key);
-                setShowCampaignSkills(false);
-              }}
-              className={`
-                flex
-                items-center
-                gap-1.5
-                rounded-lg
-                px-3
-                py-1.5
-                text-xs
-                font-medium
-                transition-all
+        <nav className="flex-shrink-0 border-b border-amber-900/20 bg-slate-900/40 px-3 py-2 sm:px-6 sm:py-3">
+          <button
+            type="button"
+            onClick={() => setShowMobileTypes((value) => !value)}
+            className="flex w-full items-center justify-between rounded-lg border border-amber-900/25 bg-slate-950/60 px-3 py-2 text-left text-xs font-medium text-amber-100/70 sm:hidden"
+          >
+            <span>Tipo: {activeFilterLabel}</span>
+            {showMobileTypes ? (
+              <ChevronUp className="h-4 w-4 text-amber-100/35" />
+            ) : (
+              <ChevronDown className="h-4 w-4 text-amber-100/35" />
+            )}
+          </button>
 
-                ${
-                  !showCampaignSkills && branch === key
-                    ? key === "penalidade"
-                      ? "border border-rose-500/40 bg-rose-500/20 text-rose-300"
-                      : "border border-amber-500/30 bg-amber-500/15 text-amber-200"
-                    : "text-amber-100/40 hover:bg-slate-800/60 hover:text-amber-100/70"
-                }
-              `}
-            >
-              <Icon className="h-3 w-3" />
-              {label}
-            </button>
-          ))}
-
-          {campaign && (
-            <button
-              type="button"
-              onClick={() => setShowCampaignSkills(true)}
-              className={`
-                ml-auto
-                flex
-                items-center
-                gap-1.5
-                rounded-lg
-                border
-                px-3
-                py-1.5
-                text-xs
-                font-medium
-                transition-all
-
-                ${
-                  showCampaignSkills
-                    ? "border-violet-500/40 bg-violet-500/20 text-violet-300"
-                    : "border-violet-900/30 text-violet-400/50 hover:border-violet-700/50 hover:text-violet-300/80"
-                }
-              `}
-            >
-              <BookOpen className="h-3 w-3" />
-              Skills da Campanha
-            </button>
+          {showMobileTypes && (
+            <div className="mt-2 grid grid-cols-2 gap-1.5 sm:hidden">
+              {filters}
+            </div>
           )}
+
+          <div className="hidden flex-wrap items-center gap-1 sm:flex">
+            {filters}
+          </div>
         </nav>
 
-        <main className="flex-1 overflow-y-auto p-5">
+        <main className="flex-1 overflow-y-auto p-3 sm:p-5">
           {showCampaignSkills && (
             <div className="mb-4 flex items-start gap-2 rounded-lg border border-violet-800/30 bg-violet-900/20 p-3">
               <Wand2 className="mt-0.5 h-4 w-4 flex-shrink-0 text-violet-400" />
@@ -589,6 +671,22 @@ export default function SkillTreeModal({
                           >
                             Lv {skill.nivel}
                           </span>
+
+                          <span
+                            className="
+                              rounded
+                              border
+                              border-violet-700/40
+                              bg-violet-900/15
+                              px-1.5
+                              py-0.5
+                              text-[9px]
+                              font-medium
+                              text-violet-300/75
+                            "
+                          >
+                            Custo: {skill.resourceCost ?? 0}
+                          </span>
                         </div>
 
                         <p
@@ -608,6 +706,13 @@ export default function SkillTreeModal({
                         >
                           {skill.descricao}
                         </p>
+
+                        {!unlocked && (
+                          <p className="mt-3 inline-flex items-center gap-1 rounded-md border border-slate-700/40 bg-slate-900/40 px-2 py-1 text-[10px] text-slate-500">
+                            <Lock className="h-2.5 w-2.5" />
+                            Requer nível {skill.nivel}
+                          </p>
+                        )}
                       </div>
                     </div>
 
@@ -618,8 +723,7 @@ export default function SkillTreeModal({
                           flex
                           justify-end
                           transition-opacity
-
-                          ${hovering || equipped ? "opacity-100" : "opacity-0"}
+                          ${hovering || equipped ? "sm:opacity-100" : "sm:opacity-0"}
                         `}
                       >
                         <button
@@ -652,15 +756,6 @@ export default function SkillTreeModal({
                         </button>
                       </div>
                     )}
-
-                    {!unlocked && (
-                      <div className="pointer-events-none absolute inset-0 flex items-end justify-center rounded-xl pb-3">
-                        <span className="flex items-center gap-1 text-[10px] text-slate-600">
-                          <Lock className="h-2.5 w-2.5" />
-                          Requer nível {skill.nivel}
-                        </span>
-                      </div>
-                    )}
                   </div>
                 );
               })}
@@ -668,7 +763,7 @@ export default function SkillTreeModal({
           )}
         </main>
 
-        <footer className="flex flex-shrink-0 items-center justify-between border-t border-amber-900/20 bg-slate-900/60 px-6 py-3">
+        <footer className="hidden flex-shrink-0 items-center justify-between border-t border-amber-900/20 bg-slate-900/60 px-6 py-3 sm:flex">
           <div className="flex items-center gap-4 text-[10px] text-amber-100/30">
             <span className="flex items-center gap-1">
               <Unlock className="h-3 w-3" />

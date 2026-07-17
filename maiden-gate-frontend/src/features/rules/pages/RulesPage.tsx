@@ -1,9 +1,9 @@
-import { Crown, Download, Shield } from "lucide-react";
+import { Crown, Shield } from "lucide-react";
 
-import Button from "../../../shared/components/Button/Button";
 import RuleAccordion from "../../../shared/components/Accordion/RuleAccordion";
 import { masterRules } from "../data/masterRules";
 import { playerRules } from "../data/playerRules";
+import DownloadBook from "../components/DownloadBook";
 
 function RulesGroup({
   title,
@@ -25,9 +25,15 @@ function RulesGroup({
         <h2 className="text-3xl font-semibold text-amber-100">{title}</h2>
       </div>
 
-      <div className={`rounded-xl border bg-slate-900/50 p-6 ${tone === "amber" ? "border-amber-900/30" : "border-rose-900/30"}`}>
+      <div
+        className={`rounded-xl border bg-slate-900/50 p-6 ${tone === "amber" ? "border-amber-900/30" : "border-rose-900/30"}`}
+      >
         {rules.map((rule, index) => (
-          <RuleAccordion key={rule.title} title={rule.title} defaultOpen={index === 0}>
+          <RuleAccordion
+            key={rule.title}
+            title={rule.title}
+            defaultOpen={index === 0}
+          >
             {rule.content}
           </RuleAccordion>
         ))}
@@ -40,16 +46,18 @@ export default function RulesPage() {
   return (
     <main className="mx-auto max-w-4xl px-4 pb-20 pt-32 sm:px-6 lg:px-8">
       <h1 className="mb-4 text-5xl font-semibold text-amber-100">
-        Regras do Jogo
+        Regras de Voice of Flower
       </h1>
+
       <p className="mb-16 text-lg leading-8 text-amber-100/70">
-        Aprenda tudo sobre o sistema de Voice Of Flower. Aqui você encontra um
-        resumo das principais regras para mestres e jogadores; o livro completo
-        reúne todos os detalhes para campanha.
+        Conheça os fundamentos de Voice of Flower: Awakening of the Maiden. Aqui
+        você encontra uma visão inicial sobre campanhas, Marcas, testes,
+        combates, RAIDs e o papel de Mestres e Jogadores dentro de um mundo
+        moldado pela Flor, pelo Miasma e pelas facções que disputam seu futuro.
       </p>
 
       <RulesGroup
-        title="Para Mestres"
+        title="Guia do Mestre"
         icon={<Crown className="h-6 w-6" />}
         tone="amber"
         rules={masterRules}
@@ -58,25 +66,13 @@ export default function RulesPage() {
       <div className="mb-14 border-t border-amber-900/25" />
 
       <RulesGroup
-        title="Para Jogadores"
+        title="Guia do Jogador"
         icon={<Shield className="h-6 w-6" />}
         tone="rose"
         rules={playerRules}
       />
 
-      <section className="rounded-2xl border border-amber-700/30 bg-gradient-to-r from-amber-900/30 to-rose-900/30 p-10 text-center">
-        <h3 className="mb-3 text-2xl font-semibold text-amber-100">
-          Quer as regras completas?
-        </h3>
-        <p className="mx-auto mb-7 max-w-lg text-amber-100/60">
-          O Livro VOF reúne todas as regras, tabelas, bestiário e lore do
-          universo em um guia completo para mestres e jogadores.
-        </p>
-        <Button size="lg">
-          <Download className="h-5 w-5" />
-          Baixar Livro VOF
-        </Button>
-      </section>
+      <DownloadBook />
     </main>
   );
 }

@@ -41,6 +41,11 @@ class Campaign extends Model
             ->withTimestamps();
     }
     
+    public function collections()
+    {
+        return $this->hasMany(CampaignCollection::class);
+    }
+
     public function locations()
     {
         return $this->hasMany(Locations::class);
@@ -79,6 +84,11 @@ class Campaign extends Model
     public function diceRolls()
     {
         return $this->hasMany(DiceRoll::class);
+    }
+
+    public function skills()
+    {
+        return $this->hasMany(Skills::class);
     }
 
     public function campaignUsers()

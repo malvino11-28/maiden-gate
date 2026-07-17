@@ -8,11 +8,13 @@ const initialCampaign: CampaignData = {
   description: "",
   recommendedLevel: "Iniciante",
   players: "",
+  collections: [],
   locations: [],
   npcs: [],
   monsters: [],
   items: [],
   events: [],
+  skills: [],
 };
 
 export default function useCampaignForm() {

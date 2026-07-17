@@ -21,6 +21,8 @@ import LocationModal from "../components/modals/LocationModal";
 import MonsterModal from "../components/modals/MonsterModal";
 import NpcModal from "../components/modals/NpcModal";
 import TransferElementModal from "../components/modals/TransferElementModal";
+import SkillModal from "../components/modals/SkillModal";
+import CollectionModal from "../components/modals/CollectionModal";
 
 import DashboardHeader from "../components/DashboardHeader";
 import DashboardTabs from "../components/DashboardTabs";
@@ -53,7 +55,7 @@ export default function MasterDashboard() {
       if (!user) return;
 
       try {
-        setIsLoading(true);
+        setIsLoadingRequests(true);
         setRequestError(null);
 
         const data = await getMasterCampaignRequests(user.id);
@@ -408,6 +410,14 @@ export default function MasterDashboard() {
       />
       <NpcModal
         isOpen={activeModal === "npc"}
+        onClose={() => setActiveModal(null)}
+      />
+      <SkillModal
+        isOpen={activeModal === "skill"}
+        onClose={() => setActiveModal(null)}
+      />
+      <CollectionModal
+        isOpen={activeModal === "collection"}
         onClose={() => setActiveModal(null)}
       />
       <TransferElementModal

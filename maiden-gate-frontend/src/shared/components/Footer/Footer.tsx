@@ -10,8 +10,9 @@ export default function Footer() {
           <div className="space-y-4">
             <Logo />
             <p className="max-w-sm text-sm leading-6 text-amber-100/55">
-              Voice Of Flower é um RPG medieval de fantasia focado em campanhas
-              narrativas, exploração e um sistema único de Marcas.
+              Maiden-Gate conecta Mestres e Jogadores ao universo de Voice of
+              Flower, uma fantasia sombria marcada pela Flor, pelo Miasma e por
+              Marcas de poder.
             </p>
           </div>
 
@@ -30,7 +31,8 @@ export default function Footer() {
         </div>
 
         <div className="mt-10 border-t border-amber-900/25 pt-6 text-center text-sm text-amber-100/35">
-          © 2026 Voice Of Flower: Awakening Of The Maiden. Todos os direitos reservados.
+          © 2026 Voice Of Flower: Awakening Of The Maiden. Todos os direitos
+          reservados.
         </div>
       </div>
     </footer>

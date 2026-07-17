@@ -9,6 +9,8 @@ import {
   Gem,
   CalendarPlus,
   Copy,
+  FolderTree,
+  Sparkles,
 } from "lucide-react";
 
 import type { LucideIcon } from "lucide-react";
@@ -69,6 +71,8 @@ export type ActiveModal =
   | "monster"
   | "item"
   | "location"
+  | "skill"
+  | "collection"
   | "transfer";
 
 type QuickAction = {
@@ -79,6 +83,12 @@ type QuickAction = {
 };
 
 export const quickActions: QuickAction[] = [
+  {
+    id: "collection",
+    icon: FolderTree,
+    title: "Novo Conjunto",
+    description: "Agrupe elementos por mapa ou arco.",
+  },
   {
     id: "location",
     icon: MapPinned,
@@ -108,6 +118,12 @@ export const quickActions: QuickAction[] = [
     icon: CalendarPlus,
     title: "Novo Evento",
     description: "Registre acontecimentos da campanha.",
+  },
+  {
+    id: "skill",
+    icon: Sparkles,
+    title: "Nova Skill",
+    description: "Crie habilidades exclusivas de campanha.",
   },
   {
     id: "transfer",

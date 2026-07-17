@@ -8,6 +8,9 @@ export default function HeaderLoginNav({ role }: HeaderLoginNavProps) {
   const dashboardPath =
     role === "master" ? "/dashboard/master" : "/dashboard/player";
 
+  const rulesPath =
+    role === "master" ? "/dashboard/master/rules" : "/dashboard/player/rules";
+
   const dashboardLabel =
     role === "master" ? "Painel do Mestre" : "Painel do Jogador";
 
@@ -15,14 +18,12 @@ export default function HeaderLoginNav({ role }: HeaderLoginNavProps) {
     {
       label: dashboardLabel,
       path: dashboardPath,
+      end: true,
     },
     {
       label: "Regras",
-      path: "/rules",
-    },
-    {
-      label: "Ferramentas",
-      path: "/tools",
+      path: rulesPath,
+      end: true,
     },
   ];
 
@@ -32,6 +33,7 @@ export default function HeaderLoginNav({ role }: HeaderLoginNavProps) {
         <NavLink
           key={link.path}
           to={link.path}
+          end={link.end}
           className={({ isActive }) =>
             `
               rounded-xl

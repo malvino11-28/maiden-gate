@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Models\Skills;
+use App\Models\CampaignCollection;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
@@ -15,16 +16,31 @@ class SkillsController extends Controller
     {
         $query = Skills::query()->with(['marca', 'campaign']);
 
-        if ($request->filled('marca_id')) {
-            $query->where('marca_id', $request->integer('marca_id'));
-        }
+        $marcaId = $request->filled('marca_id') ? $request->integer('marca_id') : null;
+        $campaignId = $request->filled('campaign_id') ? $request->integer('campaign_id') : null;
 
-        if ($request->filled('campaign_id')) {
-            $query->where(function ($currentQuery) use ($request) {
+        if ($marcaId && $campaignId) {
+            $query->where(function ($currentQuery) use ($marcaId, $campaignId) {
                 $currentQuery
-                    ->whereNull('campaign_id')
-                    ->orWhere('campaign_id', $request->integer('campaign_id'));
+                    ->where(function ($markQuery) use ($marcaId, $campaignId) {
+                        $markQuery
+                            ->where('marca_id', $marcaId)
+                            ->where(function ($scopeQuery) use ($campaignId) {
+                                $scopeQuery
+                                    ->whereNull('campaign_id')
+                                    ->orWhere('campaign_id', $campaignId);
+                            });
+                    })
+                    ->orWhere(function ($campaignQuery) use ($campaignId) {
+                        $campaignQuery
+                            ->where('campaign_id', $campaignId)
+                            ->whereNull('marca_id');
+                    });
             });
+        } elseif ($marcaId) {
+            $query->where('marca_id', $marcaId)->whereNull('campaign_id');
+        } elseif ($campaignId) {
+            $query->where('campaign_id', $campaignId);
         }
 
         return response()->json(
@@ -44,6 +60,7 @@ class SkillsController extends Controller
         $data = $request->validate([
             'marca_id' => 'nullable|integer|exists:marcas,id',
             'campaign_id' => 'nullable|integer|exists:campaigns,id',
+            'collection_id' => 'nullable|integer',
             'name' => 'required|string|max:255',
             'description' => 'nullable|string',
             'type' => 'required|in:ativa,passiva,penalidade,campanha',
@@ -53,6 +70,14 @@ class SkillsController extends Controller
             'resource_cost' => 'nullable|integer|min:0',
             'range' => 'nullable|string|max:255'
         ]);
+
+        if (!empty($data['collection_id'])) {
+            $campaignId = $data['campaign_id'] ?? null;
+
+            CampaignCollection::where('id', $data['collection_id'])
+                ->when($campaignId, fn ($query) => $query->where('campaign_id', $campaignId))
+                ->firstOrFail();
+        }
 
         $skill = Skills::create($data);
 
@@ -79,6 +104,7 @@ class SkillsController extends Controller
         $data = $request->validate([
             'marca_id' => 'sometimes|nullable|integer|exists:marcas,id',
             'campaign_id' => 'sometimes|nullable|integer|exists:campaigns,id',
+            'collection_id' => 'sometimes|nullable|integer',
             'name' => 'sometimes|string|max:255',
             'description' => 'nullable|string',
             'type' => 'sometimes|required|in:ativa,passiva,penalidade,campanha',
@@ -88,6 +114,12 @@ class SkillsController extends Controller
             'resource_cost' => 'sometimes|integer|min:0',
             'range' => 'nullable|string|max:255'
         ]);
+
+        if (array_key_exists('collection_id', $data) && $data['collection_id']) {
+            CampaignCollection::where('id', $data['collection_id'])
+                ->where('campaign_id', $data['campaign_id'] ?? $skill->campaign_id)
+                ->firstOrFail();
+        }
 
         $skill->update($data);
 

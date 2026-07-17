@@ -3,20 +3,24 @@ import { useNavigate } from "react-router-dom";
 import {
   BookOpen,
   CalendarDays,
+  FolderTree,
   Gem,
   MapPin,
   Skull,
+  Sparkles,
   Users,
 } from "lucide-react";
 
 import CampaignHeader from "./components/CreateCampaign/CampaignHeader";
 import CampaignSidebar from "./components/CreateCampaign/CampaignSidebar";
 import CoverSection from "./components/sections/CoverSection";
+import CollectionsSection from "./components/sections/CollectionsSection";
 import LocationSection from "./components/sections/LocationSection";
 import NpcsSection from "./components/sections/NpcsSection";
 import MonstersSection from "./components/sections/MonstersSection";
 import ItemsSection from "./components/sections/ItemsSection";
 import EventsSection from "./components/sections/EventsSection";
+import SkillsSection from "./components/sections/SkillsSection";
 import useCampaignForm from "./hooks/useCampaignForm";
 import type { CampaignStep } from "./types/campaignStep";
 
@@ -31,29 +35,35 @@ import { createCampaign } from "./service/createCampaignService";
 
 const steps: CampaignStep[] = [
   "cover",
+  "collections",
   "locations",
   "npcs",
   "monsters",
   "items",
   "events",
+  "skills",
 ];
 
 const stepLabels: Record<CampaignStep, string> = {
   cover: "Capa",
+  collections: "Conjuntos",
   locations: "Localizações",
   npcs: "NPCs",
   monsters: "Bestiário",
   items: "Artefatos & Itens",
   events: "Eventos",
+  skills: "Skills",
 };
 
 const stepIcons = {
   cover: BookOpen,
+  collections: FolderTree,
   locations: MapPin,
   npcs: Users,
   monsters: Skull,
   items: Gem,
   events: CalendarDays,
+  skills: Sparkles,
 };
 
 export default function CreateCampaignPage() {
@@ -104,8 +114,19 @@ export default function CreateCampaignPage() {
     updateField("players", campaign.players);
 
     updateField(
+      "collections",
+      (campaign.collections ?? []).map((collection, index) => ({
+        clientId: collection.id ?? `premade-collection-${index}`,
+        name: collection.name,
+        description: collection.description ?? "",
+        color: collection.color ?? "",
+      })),
+    );
+
+    updateField(
       "locations",
       campaign.locations.map((location) => ({
+        collectionId: location.collectionId ?? "",
         image: location.image,
         name: location.name,
         type: location.type,
@@ -116,6 +137,7 @@ export default function CreateCampaignPage() {
     updateField(
       "npcs",
       campaign.npcs.map((npc) => ({
+        collectionId: npc.collectionId ?? "",
         image: npc.image,
         name: npc.name,
         marca_id: findMarkId(npc.brand),
@@ -144,6 +166,7 @@ export default function CreateCampaignPage() {
     updateField(
       "monsters",
       campaign.monsters.map((monster) => ({
+        collectionId: monster.collectionId ?? "",
         image: monster.image,
         name: monster.name,
         type: monster.type,
@@ -165,8 +188,20 @@ export default function CreateCampaignPage() {
         },
       })),
     );
-    updateField("items", campaign.items);
-    updateField("events", campaign.events);
+    updateField(
+      "items",
+      campaign.items.map((item) => ({
+        ...item,
+        collectionId: item.collectionId ?? "",
+      })),
+    );
+    updateField(
+      "events",
+      campaign.events.map((event) => ({
+        ...event,
+        collectionId: event.collectionId ?? "",
+      })),
+    );
   }
 
   function goNext() {
@@ -204,9 +239,12 @@ export default function CreateCampaignPage() {
         status: "ativa",
         notes: campaign.notes ?? null,
 
+        collections: campaign.collections,
+
         locations: campaign.locations,
 
         npcs: campaign.npcs.map((npc) => ({
+          collectionId: npc.collectionId,
           image: npc.image,
           name: npc.name,
           marca_id: npc.marca_id || "",
@@ -220,6 +258,7 @@ export default function CreateCampaignPage() {
         })),
 
         monsters: campaign.monsters.map((monster) => ({
+          collectionId: monster.collectionId,
           image: monster.image,
           name: monster.name,
           type: monster.type || "",
@@ -231,6 +270,7 @@ export default function CreateCampaignPage() {
 
         items: campaign.items,
         events: campaign.events,
+        skills: campaign.skills,
       });
       setSaved(true);
 
@@ -245,11 +285,13 @@ export default function CreateCampaignPage() {
   }
 
   const summary = [
+    { label: "Conjuntos", value: campaign.collections.length, icon: FolderTree },
     { label: "Localizações", value: campaign.locations.length, icon: MapPin },
     { label: "NPCs", value: campaign.npcs.length, icon: Users },
     { label: "Criaturas", value: campaign.monsters.length, icon: Skull },
     { label: "Itens", value: campaign.items.length, icon: Gem },
     { label: "Eventos", value: campaign.events.length, icon: CalendarDays },
+    { label: "Skills", value: campaign.skills.length, icon: Sparkles },
   ];
 
   return (
@@ -275,21 +317,29 @@ export default function CreateCampaignPage() {
                 style={{ width: `${progress}%` }}
               />
             </div>
-            <div className="mt-4 grid grid-cols-3 gap-2 sm:grid-cols-6">
-              {steps.map((step) => {
-                const Icon = stepIcons[step];
-                const active = currentStep === step;
-                return (
-                  <button
-                    key={step}
-                    onClick={() => setCurrentStep(step)}
-                    className={`rounded-lg border px-3 py-2 text-xs transition-all ${active ? "border-amber-500/40 bg-amber-500/10 text-amber-200" : "border-amber-900/25 bg-slate-900/40 text-amber-100/45"}`}
-                  >
-                    <Icon className="mx-auto mb-1 h-4 w-4" />
-                    {stepLabels[step]}
-                  </button>
-                );
-              })}
+            <div className="mt-4 -mx-1 overflow-x-auto pb-2 sm:mx-0 sm:overflow-visible sm:pb-0">
+              <div className="flex min-w-max gap-2 px-1 sm:grid sm:min-w-0 sm:grid-cols-8 sm:px-0">
+                {steps.map((step) => {
+                  const Icon = stepIcons[step];
+                  const active = currentStep === step;
+
+                  return (
+                    <button
+                      key={step}
+                      type="button"
+                      onClick={() => setCurrentStep(step)}
+                      className={`min-w-[92px] rounded-lg border px-3 py-2 text-xs transition-all sm:min-w-0 ${
+                        active
+                          ? "border-amber-500/40 bg-amber-500/10 text-amber-200"
+                          : "border-amber-900/25 bg-slate-900/40 text-amber-100/45 hover:border-amber-700/40 hover:text-amber-100/70"
+                      }`}
+                    >
+                      <Icon className="mx-auto mb-1 h-4 w-4" />
+                      <span className="block truncate">{stepLabels[step]}</span>
+                    </button>
+                  );
+                })}
+              </div>
             </div>
           </div>
 
@@ -300,6 +350,15 @@ export default function CreateCampaignPage() {
                   campaign={campaign}
                   updateField={updateField}
                   onNext={goNext}
+                />
+              )}
+
+              {currentStep === "collections" && (
+                <CollectionsSection
+                  campaign={campaign}
+                  updateField={updateField}
+                  onNext={goNext}
+                  onPrevious={goPrevious}
                 />
               )}
 
@@ -344,6 +403,16 @@ export default function CreateCampaignPage() {
                 <EventsSection
                   campaign={campaign}
                   updateField={updateField}
+                  onNext={goNext}
+                  onPrevious={goPrevious}
+                />
+              )}
+
+              {currentStep === "skills" && (
+                <SkillsSection
+                  campaign={campaign}
+                  updateField={updateField}
+                  marks={marks}
                   onPrevious={goPrevious}
                   onFinish={handleFinish}
                 />

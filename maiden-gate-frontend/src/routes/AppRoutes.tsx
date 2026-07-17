@@ -19,6 +19,8 @@ import CreateCharacterPage from "../features/dashboard/player/pages/CreateCharac
 import EditCharacterPage from "../features/dashboard/player/pages/EditCharacterPage";
 import CreateCampaignPage from "../features/dashboard/master/campaign/CreateCampaignPage";
 import MasterCampaignPage from "../features/dashboard/master/pages/MasterCampaignPage";
+import MasterRulesPage from "../features/rules/pages/MasterRulesPage";
+import PlayerRulesPage from "../features/rules/pages/PlayerRulesPage";
 
 import NotFoundPage from "../features/errors/pages/NotFoundPage";
 import UnauthorizedPage from "../features/errors/pages/UnathorizedPage";
@@ -61,6 +63,7 @@ export default function AppRoutes() {
             path="/dashboard/master/campaign/:id"
             element={<MasterCampaignPage />}
           />
+          <Route path="/dashboard/master/rules" element={<MasterRulesPage />} />
         </Route>
 
         <Route element={<RoleProtectedRoute allowedRole="player" />}>
@@ -76,6 +79,7 @@ export default function AppRoutes() {
             path="/dashboard/player/campaign/:id"
             element={<PlayerCampaignPage />}
           />
+          <Route path="/dashboard/player/rules" element={<PlayerRulesPage />} />
         </Route>
       </Route>
 

@@ -15,6 +15,12 @@ import type {
   SkillType,
 } from "../player/data/skillTreeMock";
 
+import manifest from "../../../assets/images/marks/min/manifest_arv.png";
+import occult from "../../../assets/images/marks/min/occult_arv.png";
+import intoner from "../../../assets/images/marks/min/intoner_arv.png";
+import breath from "../../../assets/images/marks/min/breath_arv.png";
+import maso from "../../../assets/images/marks/min/maso_arv.png";
+
 export type CharacterCampaignOption = {
   id: number;
   nome: string;
@@ -56,42 +62,56 @@ export function getMarkVisualMeta(markName?: string | null) {
   const meta: Record<CharacterMark, Omit<CharacterMarkOption, "value">> = {
     Manifesto: {
       emoji: "⚔️",
-      gradiente: "from-orange-500/30 to-red-700/30",
-      borda: "border-orange-500/50",
-      texto: "text-orange-300",
-      ativo: "border-orange-400 bg-orange-500/20 shadow-orange-500/20",
+      image: manifest,
+      gradiente: "from-amber-500/25 to-orange-700/25",
+      borda: "border-amber-500/50",
+      texto: "text-amber-300",
+      ativo:
+        "border-amber-400 bg-slate-950/70 shadow-amber-500/20 ring-1 ring-amber-400/30",
       descricao: "Guerreiro da voz declarada",
     },
+
     Oculto: {
       emoji: "🌒",
-      gradiente: "from-violet-700/30 to-slate-800/30",
+      image: occult,
+      gradiente: "from-violet-600/20 to-purple-950/30",
       borda: "border-violet-500/50",
       texto: "text-violet-300",
-      ativo: "border-violet-400 bg-violet-500/20 shadow-violet-500/20",
+      ativo:
+        "border-violet-300 bg-slate-950/80 shadow-violet-500/25 ring-1 ring-violet-300/35",
       descricao: "Mestre dos segredos sombrios",
     },
+
     Entoadora: {
       emoji: "🎶",
-      gradiente: "from-teal-500/30 to-emerald-700/30",
-      borda: "border-teal-500/50",
-      texto: "text-teal-300",
-      ativo: "border-teal-400 bg-teal-500/20 shadow-teal-500/20",
-      descricao: "Tecelã de melodias arcanas",
-    },
-    Respiração: {
-      emoji: "🌬️",
-      gradiente: "from-sky-400/30 to-cyan-600/30",
-      borda: "border-sky-500/50",
-      texto: "text-sky-300",
-      ativo: "border-sky-400 bg-sky-500/20 shadow-sky-500/20",
-      descricao: "Portador do fluxo vital",
-    },
-    Maso: {
-      emoji: "🩸",
-      gradiente: "from-rose-700/30 to-red-900/30",
+      image: intoner,
+      gradiente: "from-rose-400/25 to-pink-700/25",
       borda: "border-rose-500/50",
       texto: "text-rose-300",
-      ativo: "border-rose-400 bg-rose-500/20 shadow-rose-500/20",
+      ativo:
+        "border-rose-300 bg-slate-950/70 shadow-rose-500/25 ring-1 ring-rose-300/35",
+      descricao: "Tecelã de melodias arcanas",
+    },
+
+    Respiração: {
+      emoji: "🌬️",
+      image: breath,
+      gradiente: "from-cyan-400/20 to-teal-700/25",
+      borda: "border-cyan-500/50",
+      texto: "text-cyan-300",
+      ativo:
+        "border-cyan-300 bg-slate-950/70 shadow-cyan-500/25 ring-1 ring-cyan-300/35",
+      descricao: "Portador do fluxo vital",
+    },
+
+    Maso: {
+      emoji: "🩸",
+      image: maso,
+      gradiente: "from-red-600/20 to-rose-950/30",
+      borda: "border-red-500/50",
+      texto: "text-red-300",
+      ativo:
+        "border-red-300 bg-slate-950/80 shadow-red-500/25 ring-1 ring-red-300/35",
       descricao: "Forjado pelo sacrifício",
     },
   };
@@ -211,6 +231,12 @@ export async function getSkillsByMark(
   return tree;
 }
 
+export async function deleteCharacter(characterId: string | number) {
+  const response = await api.delete(`/characters/${characterId}`);
+
+  return response.data;
+}
+
 export async function createCharacter(payload: CreateCharacterPayload) {
   const formData = new FormData();
 
@@ -248,7 +274,6 @@ export async function createCharacter(payload: CreateCharacterPayload) {
   return response.data;
 }
 
-
 export type EditableCharacterData = {
   id: number;
   nome: string;
@@ -260,6 +285,7 @@ export type EditableCharacterData = {
   campaignId: number | null;
   campanha: string;
   nivel: number;
+  xp: number;
   hp: number;
   hpMax: number;
   paMax: number;
@@ -283,14 +309,18 @@ export type UpdateCharacterPayload = {
   equippedSkillIds: string[];
 };
 
-function normalizePlayerSkillType(type?: string | null): PlayerCharacterSkill["tipo"] {
+function normalizePlayerSkillType(
+  type?: string | null,
+): PlayerCharacterSkill["tipo"] {
   if (type === "passiva") return "Passiva";
   if (type === "reacao" || type === "reação") return "Reação";
   return "Ativa";
 }
 
 export function mapEditableCharacter(character: any): EditableCharacterData {
-  const mark = normalizeMarkName(character?.marca?.name ?? character?.marca?.nome);
+  const mark = normalizeMarkName(
+    character?.marca?.name ?? character?.marca?.nome,
+  );
 
   const attributes: Record<AttributeKey, number> = {
     POD: Number(character?.pod ?? 0),
@@ -319,17 +349,22 @@ export function mapEditableCharacter(character: any): EditableCharacterData {
     marca: mark,
     marcaId: Number(character?.marca_id ?? character?.marca?.id ?? 0),
     campaignId: character?.campaign_id ? Number(character.campaign_id) : null,
-    campanha: character?.campaign?.name ?? character?.campaign?.nome ?? "Sem campanha",
+    campanha:
+      character?.campaign?.name ?? character?.campaign?.nome ?? "Sem campanha",
     nivel: Number(character?.level ?? 1),
+    xp: Number(character?.exp ?? 0),
     hp: Number(character?.hp_current ?? 0),
-    hpMax: Math.max(Number(character?.hp_max ?? 1), 1),
+    hpMax: 5 + Math.max(Number(character?.hp_max ?? 1), 1),
     paMax: Number(character?.pa_max ?? 0),
     prMax: Number(character?.pr_max ?? 0),
     iconImage: character?.icon_image ?? character?.iconImage ?? null,
-    fullImage: character?.full_image ?? character?.fullImage ?? character?.image ?? null,
+    fullImage:
+      character?.full_image ?? character?.fullImage ?? character?.image ?? null,
     attributes,
     habilidades,
-    equippedSkillIds: habilidades.map((skill) => skill.id).filter(Boolean) as string[],
+    equippedSkillIds: habilidades
+      .map((skill) => skill.id)
+      .filter(Boolean) as string[],
   };
 }
 
@@ -373,6 +408,18 @@ export async function updateCharacter(
     headers: {
       "X-HTTP-Method-Override": "PUT",
     },
+  });
+
+  return mapEditableCharacter(response.data.character ?? response.data);
+}
+
+export async function updateCharacterProgress(
+  characterId: string | number,
+  payload: { hpCurrent: number; exp: number },
+) {
+  const response = await api.put(`/characters/${characterId}`, {
+    hp_current: payload.hpCurrent,
+    exp: payload.exp,
   });
 
   return mapEditableCharacter(response.data.character ?? response.data);

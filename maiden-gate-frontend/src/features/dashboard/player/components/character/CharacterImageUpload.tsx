@@ -3,6 +3,8 @@ import { ImagePlus, X } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import type { ChangeEvent } from "react";
 
+import { getStorageImageUrl } from "../../../../../services/apiUrl";
+
 type Props = {
   image?: string | File | null;
   label?: string;
@@ -10,6 +12,17 @@ type Props = {
   aspectClassName?: string;
   onChange: (image: File | null) => void;
 };
+
+function getPreviewSrc(image?: string | File | null) {
+  if (!image) return null;
+
+  if (image instanceof File) {
+    return URL.createObjectURL(image);
+  }
+
+  return getStorageImageUrl(image);
+}
+
 
 export default function CharacterImageUpload({
   image,
@@ -22,21 +35,14 @@ export default function CharacterImageUpload({
   const [preview, setPreview] = useState<string | null>(null);
 
   useEffect(() => {
-    if (!image) {
-      setPreview(null);
-      return;
-    }
+    const imageSrc = getPreviewSrc(image);
 
-    if (typeof image === "string") {
-      setPreview(image);
-      return;
-    }
-
-    const objectUrl = URL.createObjectURL(image);
-    setPreview(objectUrl);
+    setPreview(imageSrc);
 
     return () => {
-      URL.revokeObjectURL(objectUrl);
+      if (image instanceof File && imageSrc) {
+        URL.revokeObjectURL(imageSrc);
+      }
     };
   }, [image]);
 
@@ -53,6 +59,8 @@ export default function CharacterImageUpload({
 
   function clearImage() {
     onChange(null);
+    setPreview(null);
+
     if (fileRef.current) {
       fileRef.current.value = "";
     }
@@ -78,6 +86,7 @@ export default function CharacterImageUpload({
         ) : (
           <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 text-center">
             <ImagePlus className="h-9 w-9 text-amber-600/50" />
+
             <div>
               <p className="text-sm text-amber-100/55">Adicionar imagem</p>
               <p className="mt-1 text-xs text-amber-100/25">{helper}</p>

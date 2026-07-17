@@ -106,7 +106,7 @@ export async function createCampaignDiceRoll(
 
 export async function clearDiceRollHistory(
   campaignId: number | string,
-  userId: string,
+  userId: number | string,
 ) {
   const response = await api.delete(`/campaigns/${campaignId}/dice-rolls`, {
     data: {
