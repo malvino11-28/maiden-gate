@@ -5,7 +5,7 @@
 <h1 align="center">Maiden Gate</h1>
 
 <p align="center">
-  A web support platform for the original tabletop RPG system <strong>Voice Of Flower: Awakening of the Maiden</strong>.
+  A full stack web platform designed to support tabletop RPG campaigns for the original system <strong>Voice Of Flower: Awakening of the Maiden</strong>.
 </p>
 
 <p align="center">
@@ -17,15 +17,44 @@
   <img alt="PostgreSQL" src="https://img.shields.io/badge/PostgreSQL-111827?style=for-the-badge&logo=postgresql&logoColor=4169E1" />
 </p>
 
+<p align="center">
+  <img alt="Docker" src="https://img.shields.io/badge/Docker-111827?style=for-the-badge&logo=docker&logoColor=2496ED" />
+  <img alt="Vercel" src="https://img.shields.io/badge/Vercel-111827?style=for-the-badge&logo=vercel&logoColor=FFFFFF" />
+  <img alt="Render" src="https://img.shields.io/badge/Render-111827?style=for-the-badge&logo=render&logoColor=46E3B7" />
+  <img alt="Supabase" src="https://img.shields.io/badge/Supabase-111827?style=for-the-badge&logo=supabase&logoColor=3ECF8E" />
+</p>
+
 ---
 
 ## About the Project
 
-**Maiden Gate** is a full stack web application created to support Game Masters and Players during tabletop RPG campaigns.
+**Maiden Gate** is a full stack web application created to support **Game Masters** and **Players** during tabletop RPG campaigns.
 
-The platform was created to replace scattered notes, manual spreadsheets, and physical controls with an integrated digital tool. Its goal is to make tabletop sessions more organized, fluid, and immersive, allowing the group to focus more on storytelling and less on manually managing information.
+The platform was created to replace scattered notes, manual spreadsheets and physical campaign controls with an integrated digital tool. Its goal is to make tabletop sessions more organized, fluid and immersive, allowing the group to focus more on storytelling and less on manual information management.
 
-Although it was initially designed for the original **Voice Of Flower** system, its core structure was built to be expandable and adaptable to other RPG systems in the future.
+Although it was initially created for the original system **Voice Of Flower: Awakening of the Maiden**, the application was designed with future expansion and adaptation to other RPG systems in mind.
+
+---
+
+## Deployment
+
+The project is deployed in production with separated frontend, backend and database services.
+
+| Layer | Service | URL / Note |
+|---|---|---|
+| Frontend | Vercel | `https://maiden-gate-six.vercel.app` |
+| Backend / API | Render | `https://maiden-gate.onrender.com` |
+| Database | Supabase | PostgreSQL using pooler connection |
+| Container | Docker | Laravel backend running in an Apache/PHP container |
+
+### Deployment Notes
+
+- The frontend is deployed on **Vercel**.
+- The Laravel backend is deployed on **Render** using **Docker**.
+- The PostgreSQL database is hosted on **Supabase**.
+- The backend uses environment variables to define `APP_URL`, `FRONTEND_URL`, database connection and production settings.
+- The frontend uses `VITE_API_URL` to point to the API deployed on Render.
+- The container startup script runs important Laravel commands such as migrations, storage link creation and application optimization.
 
 ---
 
@@ -59,26 +88,27 @@ Although it was initially designed for the original **Voice Of Flower** system, 
 
 ## About Voice Of Flower
 
-**Voice Of Flower: Awakening of the Maiden** is an original tabletop RPG system currently in development. It is set in a dark fantasy universe involving political conflict, mystery, Miasma, Marks, factions, and narrative tension.
+**Voice Of Flower: Awakening of the Maiden** is an original tabletop RPG system currently in development, set in a dark fantasy universe filled with politics, mystery, Miasma, Marks and conflicts between factions.
 
-In the system, characters have Marks that influence their abilities, attributes, and role in the story. Maiden Gate acts as a digital tool to test, organize, and apply these rules during real campaigns.
+In the system, characters have Marks that influence their abilities, attributes and role within the narrative. **Maiden Gate** works as a digital tool to test, organize and apply these rules during real campaigns.
 
 ---
 
 ## Main Features
 
-### Authentication and Roles
+### Authentication and Profiles
 
 - User registration and login.
-- Role separation between **Game Master** and **Player**.
-- Protected routes.
-- Interface adapted according to the user role.
+- Separate profiles for **Game Master** and **Player**.
+- Protected routes through authentication.
+- Interface adapted according to user role.
+- Automatic redirection based on user profile.
 
 ---
 
 ## Game Master Module
 
-The Game Master has a complete panel to create, edit, and manage campaigns.
+The Game Master has a complete dashboard to create, edit and manage campaigns.
 
 ### Game Master Dashboard
 
@@ -86,91 +116,116 @@ The Game Master has a complete panel to create, edit, and manage campaigns.
 - General statistics.
 - Player join requests.
 - Accept or reject players in campaigns.
+- Quick access to campaign and element creation.
 
-### Campaign Creation
+### Campaign Creation and Management
 
 - Manual campaign creation.
-- Premade campaign templates.
-- Registration of locations, NPCs, monsters, items, lore events, and sessions.
-- Image upload for campaigns, locations, NPCs, and monsters.
+- Premade campaign based on **Voice Of Flower: Awakening of the Maiden**.
+- Campaign editing and deletion.
+- Campaign cover image upload.
+- Creation of locations, NPCs, monsters, items, events, sessions and campaign skills.
+- Organization of elements into custom **collections**.
+- Visibility control for elements shown to players.
 - NPC association with Marks stored in the database.
-- Status and skill registration for NPCs and monsters.
+- Status and skill creation for NPCs and monsters.
 
 ### Game Master Campaign Page
 
-- Complete campaign element visualization.
-- Current location control.
+- Complete visualization of campaign elements.
+- Current campaign location control.
 - Private Game Master notes.
 - Session schedule.
 - Campaign member visualization.
+- Character HP/XP visualization and editing.
 - NPC and monster status visualization.
-- Campaign data management.
+- Main campaign data management.
 - Shared dice roll chat.
-- Dice roll history clearing by the Game Master.
-- Battle tab marked as **In development**.
+- Dice history clearing by the Game Master.
+- Quick combat effects reference.
+- Element creation, copying and reorganization between collections.
 
 ---
 
 ## Player Module
 
-Players have their own dashboard to manage characters, campaigns, and session participation.
+The Player has a dedicated dashboard to manage characters, campaigns and session participation.
 
 ### Player Dashboard
 
 - List of created characters.
-- Real statistics based on the player’s characters.
+- Real statistics based on characters.
 - List of campaigns the player has joined.
 - List of available campaigns.
-- Campaign join request system.
+- Campaign join requests.
 
-### Character Creation
+### Character Creation and Editing
 
-- Selection of campaigns accessible to the player.
+- Selection of campaigns available to the player.
 - Selection of Marks from the database.
-- Skill tree visualization by Mark.
-- Up to 6 equipped skills.
-- Attribute distribution: POD, DES, RES, INT, DET, and PRE.
+- Mark-based skill tree visualization.
+- Equipment of up to 6 skills.
+- Attribute distribution: POD, DES, RES, INT, DET and PRE.
+- Initial distribution limits controlled by system rules.
 - Automatic status calculation.
-- Two image uploads: icon image and full character image.
+- Visual indicators showing attribute impact.
+- Upload of two character images: icon image and full-body image.
+- Character editing and deletion.
 - Real backend persistence.
 
 ### Player Campaign Page
 
-- Campaign element visualization.
-- Images for locations, NPCs, and monsters.
+- Visualization of campaign elements released by the Game Master.
+- Visualization of location, NPC and monster images.
 - NPC and monster status visualization.
-- Player character information.
-- Campaign member visualization.
-- Current location defined by the Game Master.
-- Functional inventory: add item, update quantity, and remove item.
-- Session visualization.
+- Visualization of the player's own character data.
+- Visualization of campaign members.
+- Visualization of the current location defined by the Game Master.
+- Functional inventory: add item, update quantity and remove item.
+- Visualization of sessions created by the Game Master.
 - Shared dice roll chat.
-- Battle tab marked as **In development**.
+- Quick combat effects reference.
 
 ---
 
 ## Dice Roll System
 
-Maiden Gate includes a shared dice roll system between Game Masters and Players.
+Maiden Gate includes a shared dice roll system between Game Master and Players.
 
-- Rolls are stored in the backend.
-- Campaign-based shared history.
-- Game Masters can see player rolls.
-- Players can see rolls from the Game Master and other players.
+- Dice rolls stored in the backend.
+- Shared campaign history.
+- Game Master can view player rolls.
+- Players can view Game Master and other player rolls.
 - Automatic updates through polling.
-- Game Masters can clear the campaign dice roll history.
+- Game Master can clear the full campaign roll history.
 
 ---
 
 ## Rules Pages
 
-While the complete Voice Of Flower rulebook is still in development, the project includes summarized rules pages:
+While the full **Voice Of Flower** rulebook is still in development, the project includes summarized rules pages:
 
 - General public rules.
 - Game Master-specific rules.
 - Player-specific rules.
-- Tab-based interface with essential information.
+- Explanation of main attributes.
+- Combat effects list.
+- Tab-based interface with essential content.
 - Download button displayed as unavailable until the rulebook is finished.
+
+---
+
+## Effects System
+
+The project includes an internal effects guide used as a session reference.
+
+Available effects include:
+
+- Buffs, such as Increase, Advantage, Regeneration and Purification.
+- Debuffs, such as Infection, Reduction, Burn and Disadvantage.
+- Control effects, such as Doom, Paralysis and Omen.
+- Special effects, such as Ephemeral, Ruin, Punish and Decay.
+- Mark-based effects, such as Decree, Authority, Resonance, Shadow, Pain and Fortuitous.
 
 ---
 
@@ -178,10 +233,12 @@ While the complete Voice Of Flower rulebook is still in development, the project
 
 The project includes specific adjustments for smaller screens:
 
-- Mobile menu on the public home page.
+- Mobile menu on the home page.
 - Mobile menu on authenticated pages.
-- Campaign tabs adapted into mobile selectors.
-- Responsive layout for dashboards, cards, elements, and forms.
+- Campaign tabs adapted into a mobile selector.
+- Modals adapted for smaller screens.
+- Effects guide displayed as a mobile accordion.
+- Responsive layouts for dashboards, cards, elements and forms.
 
 ---
 
@@ -198,6 +255,15 @@ The project includes specific adjustments for smaller screens:
   <img alt="Axios" src="https://img.shields.io/badge/Axios-111827?style=flat-square&logo=axios&logoColor=5A29E4" />
 </p>
 
+- React
+- TypeScript
+- Vite
+- Tailwind CSS
+- React Router
+- Axios
+- Lucide React
+- EmailJS
+
 ### Backend
 
 <p>
@@ -206,6 +272,22 @@ The project includes specific adjustments for smaller screens:
   <img alt="PostgreSQL" src="https://img.shields.io/badge/PostgreSQL-111827?style=flat-square&logo=postgresql&logoColor=4169E1" />
   <img alt="REST API" src="https://img.shields.io/badge/REST_API-111827?style=flat-square" />
 </p>
+
+- PHP
+- Laravel
+- REST API
+- PostgreSQL
+- Migrations
+- File uploads
+- API authentication
+
+### Deployment and Infrastructure
+
+- Vercel for the frontend.
+- Render for the backend.
+- Supabase PostgreSQL for the database.
+- Docker to package the Laravel backend.
+- Apache/PHP in the production container.
 
 ### Development Tools
 
@@ -217,9 +299,24 @@ The project includes specific adjustments for smaller screens:
   <img alt="NPM" src="https://img.shields.io/badge/NPM-111827?style=flat-square&logo=npm&logoColor=CB3837" />
 </p>
 
+- Git and GitHub
+- VS Code
+- Composer
+- NPM
+- Postman/Insomnia
+- pgAdmin/Supabase Dashboard
+
 ---
 
-## Running the Project
+## Running the Project Locally
+
+### Prerequisites
+
+- Node.js
+- NPM
+- PHP
+- Composer
+- PostgreSQL
 
 ### Backend
 
@@ -247,10 +344,21 @@ npm run dev
 
 ### Frontend
 
-Create a `.env` file in the frontend project:
+Create a `.env` or `.env.local` file inside the frontend folder:
 
 ```env
 VITE_API_URL=http://127.0.0.1:8000/api
+VITE_STORAGE_URL=http://127.0.0.1:8000/storage
+
+VITE_EMAILJS_SERVICE_ID=your_service_id
+VITE_EMAILJS_TEMPLATE_ID=your_template_id
+VITE_EMAILJS_PUBLIC_KEY=your_public_key
+```
+
+In production, on Vercel:
+
+```env
+VITE_API_URL=https://maiden-gate.onrender.com/api
 ```
 
 ### Backend
@@ -258,16 +366,76 @@ VITE_API_URL=http://127.0.0.1:8000/api
 Configure the Laravel `.env` file:
 
 ```env
-APP_NAME=MaidenGate
+APP_NAME=Maiden-Gate
+APP_ENV=local
+APP_KEY=
+APP_DEBUG=true
 APP_URL=http://127.0.0.1:8000
+FRONTEND_URL=http://localhost:5173
 
 DB_CONNECTION=pgsql
 DB_HOST=127.0.0.1
-DB_PORT=0000
-DB_DATABASE=your_db
+DB_PORT=5432
+DB_DATABASE=your_database
 DB_USERNAME=your_username
 DB_PASSWORD=your_password
+
+CACHE_STORE=file
+SESSION_DRIVER=file
+QUEUE_CONNECTION=sync
+FILESYSTEM_DISK=public
 ```
+
+In production, on Render:
+
+```env
+APP_NAME=Maiden-Gate
+APP_ENV=production
+APP_DEBUG=false
+APP_URL=https://maiden-gate.onrender.com
+FRONTEND_URL=https://maiden-gate-six.vercel.app
+
+LOG_CHANNEL=stderr
+LOG_LEVEL=info
+
+DB_CONNECTION=pgsql
+DB_HOST=supabase_pooler_host
+DB_PORT=0000
+DB_DATABASE=postgres
+DB_USERNAME=pooler_username
+DB_PASSWORD=database_password
+DB_SSLMODE=require
+
+CACHE_STORE=file
+SESSION_DRIVER=file
+QUEUE_CONNECTION=sync
+FILESYSTEM_DISK=public
+PORT=80
+```
+
+> **Important:** Production variables should be configured directly on Vercel and Render.
+
+---
+
+## Docker
+
+The backend includes a Dockerfile for deploying Laravel on Render.
+
+The container runs Laravel with Apache/PHP and points the web server to Laravel's `public` directory.
+
+It also includes a startup script responsible for preparing the application before starting the server:
+
+```bash
+php artisan config:clear
+php artisan route:clear
+php artisan view:clear
+php artisan storage:link
+php artisan migrate --force
+php artisan optimize
+apache2-foreground
+```
+
+This flow avoids the need to access Render's shell to run manual commands after deployment.
 
 ---
 
@@ -278,7 +446,9 @@ maiden-gate/
 ├── backend/
 │   ├── app/
 │   ├── database/
+│   ├── docker/
 │   ├── routes/
+│   ├── Dockerfile
 │   └── ...
 │
 ├── frontend/
@@ -289,34 +459,32 @@ maiden-gate/
 │   │   └── services/
 │   └── ...
 │
-└── README.md
+├── README.md
+└── README.en.md
 ```
 
 ---
 
 ## Project Status
 
-The project is currently in a **functional MVP** stage.
+The project is a **completed and deployed MVP**.
 
-Most of the main features are already implemented:
+The main features are already implemented:
 
 - authentication;
 - dashboards;
-- campaign creation;
-- character creation;
-- campaign pages;
+- campaign creation and editing;
+- premade campaigns;
+- character creation, editing and deletion;
+- campaign pages for Game Master and Player;
 - inventory;
-- shared dice rolls;
+- shared dice roll system;
+- collection-based organization;
+- element visibility control;
 - rules pages;
-- responsive interface.
-
-The next steps are mainly focused on:
-
-- interface adjustments;
-- text and placeholder review;
-- final testing;
-- bug fixing;
-- deployment preparation.
+- effects guide;
+- responsiveness;
+- frontend and backend deployment.
 
 ---
 
@@ -329,25 +497,26 @@ The next steps are mainly focused on:
 - [x] Campaign creation.
 - [x] Premade campaigns.
 - [x] Character creation.
-- [x] Image upload.
+- [x] Image uploads.
 - [x] Functional inventory.
 - [x] Campaign sessions.
 - [x] Shared dice roll chat.
 - [x] Rules pages.
+- [x] Effects guide.
+- [x] Collection-based organization.
 - [x] Mobile interface.
-- [ ] Final UI/UX review.
-- [ ] Text and description adjustments.
-- [ ] Final testing.
-- [ ] Deployment.
+- [x] Frontend deployment.
+- [x] Backend deployment.
 
 ---
 
 ## Notes
 
-- The complete Voice Of Flower rulebook is still in development.
+- The complete **Voice Of Flower** rulebook is still in development.
 - Some rules and texts may change as the system evolves.
-- The battle tab is currently marked as **In development**.
-- The project was created as a practical tool to support real campaigns and also as a full stack portfolio project.
+- The battle tab is still marked as **In development**.
+- Local image storage in the backend may be replaced in the future by an external solution such as Supabase Storage, Cloudinary or S3.
+- The project was created both as a practical tool for real campaigns and as a full stack portfolio project.
 
 ---
 
@@ -357,3 +526,9 @@ Developed by **Kauan Malvino Garcia**.
 
 - GitHub: [malvino11-28](https://github.com/malvino11-28)
 - LinkedIn: [Malvino Garcia](https://www.linkedin.com/in/malvino-garcia)
+
+---
+
+## License
+
+This project is licensed under the **MIT** license.
