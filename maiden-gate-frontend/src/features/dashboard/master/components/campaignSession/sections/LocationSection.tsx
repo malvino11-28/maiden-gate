@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/set-state-in-effect */
 import {
   CheckCircle2,
   ChevronDown,
@@ -122,7 +123,7 @@ export default function LocationSection({
       const collection = getLocationCollection(location);
 
       const key = collection?.id ? String(collection.id) : "sem-conjunto";
-      const name = collection?.nome ?? collection?.name ?? "Sem conjunto";
+      const name = collection?.name ?? "Sem conjunto";
       const color = normalizeCollectionColor(collection?.color);
 
       if (!groups.has(key)) {

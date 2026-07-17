@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import { AlertTriangle, Crown, Download, Shield } from "lucide-react";
 
-import { masterTabs } from "../data/MasterRulesTabs";
+import { masterTabs } from "../data/masterRulesTabs";
 import { playerTabs } from "../data/playerRulesTabs";
 
 type Props = {

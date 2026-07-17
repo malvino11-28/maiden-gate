@@ -70,7 +70,7 @@ type GroupedCollection = {
   name: string;
   description?: string | null;
   items: any[];
-  color?: string | null;
+  color: string;
 };
 
 function getVisibleToPlayers(item: VisibilityTarget) {

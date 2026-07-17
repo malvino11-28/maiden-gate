@@ -368,7 +368,7 @@ export function mapEditableCharacter(character: any): EditableCharacterData {
   };
 }
 
-export async function getCharacterById(characterId: string | number) {
+export async function getCharacterById(characterId?: string | number) {
   const response = await api.get(`/characters/${characterId}`);
   return mapEditableCharacter(response.data);
 }

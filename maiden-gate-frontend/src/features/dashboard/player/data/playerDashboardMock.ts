@@ -107,11 +107,13 @@ export const playerDashboardTabs: { key: PlayerDashboardTab; label: string }[] =
 
 export const campaignStatusStyle = {
   ativa: "bg-emerald-500/15 text-emerald-300 border-emerald-500/30",
+  pausada: "", // deixando sem nada pois atualmente nem tem como alterar o status da campanha
   encerrada: "bg-slate-500/15 text-slate-400 border-slate-500/30",
 };
 
 export const campaignStatusLabel = {
   ativa: "Ativa",
+  pausada: "Pausada",
   encerrada: "Encerrada",
 };
 
