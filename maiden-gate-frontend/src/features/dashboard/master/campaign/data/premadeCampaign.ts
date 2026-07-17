@@ -82,223 +82,311 @@ export const premadeCampaigns: PremadeCampaign[] = [
     collections: [
       {
         id: "dominio-manifesto",
-        name: "Domínio do Manifesto",
+        name: "Domínio do Manifesto — Área 1",
         description:
-          "Regiões da grande ilha controladas pela família real, pela Cidade Catedral e pelas forças militares do Manifesto.",
+          "Primeira grande área territorial do Manifesto. Abrange a Cidade Catedral, o Reino de Songbird, Auréon, as comunidades associadas às Marcas Maso e Respiração, além de bases militares e regiões afetadas pelo Miasma.",
         color: getCollectionColor(0),
       },
       {
         id: "regiao-cratera",
         name: "Região da Cratera",
         description:
-          "Locais marcados pelo Miasma persistente, por RAIDs e pelo acampamento dos guerreiros que tentam conter a contaminação.",
+          "Setor contaminado da Área 1 do Manifesto, marcado por uma cratera cercada por Miasma impenetrável, por um rastro de contaminação e pelo grande acampamento de guerreiros que procuram uma forma de atravessá-lo.",
         color: getCollectionColor(4),
       },
       {
         id: "sindicato-sombras",
-        name: "Território do Sindicato das Sombras",
+        name: "Território do Sindicato — Área 1",
         description:
-          "Grande ilha ocidental dominada pelo Sindicato, com cidades, montanhas, acampamentos e portais ocultos.",
+          "Primeira grande área territorial do Sindicato das Sombras. É formada por cidades diversas, montanhas, portais secretos, bases militares e locais perigosamente afetados pelo Miasma.",
         color: getCollectionColor(1),
+      },
+      {
+        id: "fronteira-area-1",
+        name: "Fronteira das Áreas 1",
+        description:
+          "Locais situados entre os territórios do Manifesto e do Sindicato das Sombras, sem domínio oficial reconhecido e constantemente utilizados em operações secretas por ambos os lados.",
+        color: getCollectionColor(2),
       },
       {
         id: "eventos-principais",
         name: "Eventos Principais",
         description:
-          "Linha do tempo inicial da campanha O Despertar da Donzela.",
+          "Linha do tempo principal da campanha O Despertar da Donzela.",
         color: getCollectionColor(3),
+      },
+      {
+        id: "dominio-manifesto-area-2",
+        name: "Domínio do Manifesto — Área 2",
+        description:
+          "Região econômica e industrial do Manifesto, marcada por comércio, turismo, propriedades agrícolas, instalações militares e fortes desigualdades entre a nobreza e os trabalhadores.",
+        color: getCollectionColor(0),
+      },
+      {
+        id: "sindicato-sombras-area-2",
+        name: "Território do Sindicato — Área 2",
+        description:
+          "Região populosa e fortemente militarizada do Sindicato, formada por grandes cidades, comunidades precárias, portais ocultos e territórios recentemente destruídos pelo Miasma.",
+        color: getCollectionColor(1),
+      },
+      {
+        id: "fronteira-area-2",
+        name: "Fronteira das Áreas 2",
+        description:
+          "Ilhas e regiões marítimas situadas entre as Áreas 2 do Manifesto e do Sindicato. Inclui territórios diplomáticos neutros e pontos com grande risco de surgimento de Miasma.",
+        color: getCollectionColor(2),
       },
     ],
 
     locations: [
+      // =========================================================
+      // ÁREA 1 DO MANIFESTO — CIDADE CATEDRAL
+      // =========================================================
+
       {
         collectionId: "dominio-manifesto",
         name: "Cidade Catedral",
         image: flower,
         type: "Capital / Cidade Sagrada",
-        region: "Extremo sul do Domínio do Manifesto",
+        region: "Extremo sul da Área 1 do Manifesto",
         description:
-          "Cidade monumental construída ao redor da Flor, erguida sobre uma região que emergiu próxima ao oceano. Seus templos, pontes, muralhas e castelo representam o poder religioso e político do Manifesto. Apenas nobres, autoridades, membros do clero e cidadãos de alta classe vivem próximos ao centro.",
+          "Capital religiosa construída ao redor da Flor. A cidade ainda está incompleta e possui um grande terreno vazio ao redor da entidade. Próximo à entrada encontra-se o castelo da família real, enquanto uma praça com um palco foi preparada para cerimônias, pronunciamentos e para o Festival da Flor.",
+      },
+      {
+        collectionId: "dominio-manifesto",
+        name: "A Flor",
+        image: flower,
+        type: "Entidade Sagrada / Marco Central",
+        region: "Centro da Cidade Catedral",
+        description:
+          "A entidade que deu origem às Marcas, aos elfos e aos antropomórficos. Permanece no centro de um grande espaço ainda pouco ocupado da Cidade Catedral. Sua presença sustenta a fé do Manifesto e transforma a cidade no principal destino de peregrinos do continente.",
+      },
+      {
+        collectionId: "dominio-manifesto",
+        name: "Castelo da Coroa Áurea",
+        image: "",
+        type: "Castelo Real",
+        region: "Entrada da Cidade Catedral",
+        description:
+          "Grande castelo do Manifesto construído próximo à entrada da Cidade Catedral. Abriga nobres, autoridades e principalmente os membros considerados mais puros da linhagem real. A rainha Aurelia e Eleanor permanecem no castelo durante os preparativos para o Festival da Flor.",
+      },
+      {
+        collectionId: "dominio-manifesto",
+        name: "Praça da Flor",
+        image: "",
+        type: "Praça Cerimonial",
+        region: "Diante do Castelo da Coroa Áurea",
+        description:
+          "Ampla praça construída diante do castelo real. É utilizada para celebrações, recepções diplomáticas, sermões e eventos públicos. Durante o Festival da Flor, recebe convidados de diferentes regiões, facções, Marcas e raças.",
+      },
+      {
+        collectionId: "dominio-manifesto",
+        name: "Palco do Festival",
+        image: "",
+        type: "Palco Cerimonial",
+        region: "Praça da Flor",
+        description:
+          "Palco elevado preparado para apresentações de Entoadoras, discursos religiosos e pronunciamentos da família real. É neste local que Eleanor pretende realizar sua revelação diante dos convidados do Festival da Flor.",
       },
       {
         collectionId: "dominio-manifesto",
         name: "Ponte da Catedral",
         image: "",
         type: "Ponte Monumental",
-        region: "Ligação entre a costa e a Cidade Catedral",
+        region: "Ligação entre a Cidade Catedral e o continente",
         description:
-          "Uma ponte longa e fortemente vigiada que conecta a terra firme à Cidade Catedral. Peregrinos, nobres, soldados e trabalhadores cruzam diariamente sua extensão, mas qualquer movimentação suspeita é rapidamente investigada pela guarda do Manifesto.",
+          "Longa ponte que representa a única grande ligação terrestre entre a Cidade Catedral e o restante da Área 1. Guardas controlam a entrada de peregrinos, nobres, trabalhadores e convidados, tornando a estrutura um dos principais pontos de vigilância do Manifesto.",
       },
       {
         collectionId: "dominio-manifesto",
-        name: "Caminho da Cidade Catedral",
+        name: "Passagem das Agulhas",
         image: "",
         type: "Estrada Montanhosa",
-        region: "Montanhas do Sul",
+        region: "Montanhas ao norte da Cidade Catedral",
         description:
-          "Estrada estreita entre montanhas, usada por nobres, pescadores, mensageiros e pequenas caravanas que seguem em direção à Cidade Catedral. O terreno dificulta emboscadas em larga escala, mas favorece ataques rápidos e desaparecimentos misteriosos.",
+          "Estrada estreita que atravessa as montanhas e conecta a Ponte da Catedral ao Reino de Songbird. Seus caminhos sinuosos dificultam grandes movimentações militares, mas favorecem ataques rápidos, contrabando e desaparecimentos.",
       },
       {
         collectionId: "dominio-manifesto",
         name: "Vila de Maré Baixa",
         image: "",
         type: "Vila Costeira",
-        region: "Leste das Montanhas do Sul",
+        region: "Leste da Passagem das Agulhas",
         description:
-          "Pequena vila costeira próxima às montanhas. Seus moradores vivem da pesca, do transporte de mantimentos e de serviços menores ligados à Cidade Catedral. Muitos sabem mais do que aparentam sobre os destroços que atingiram as raízes da Flor.",
+          "Pequena comunidade costeira acessada por um desvio da estrada principal. Seus moradores vivem da pesca, do transporte de mantimentos e dos trabalhos relacionados à construção da Cidade Catedral. Alguns conhecem histórias sobre danos causados às raízes da Flor.",
       },
+
+      // =========================================================
+      // ÁREA 1 DO MANIFESTO — REINO DE SONGBIRD
+      // =========================================================
+
       {
         collectionId: "dominio-manifesto",
-        name: "Planícies de Aurel",
+        name: "Reino de Songbird",
         image: "",
-        type: "Planície",
-        region: "Região Central Sul",
+        type: "Território das Entoadoras",
+        region: "Sul das Planícies de Aurel",
         description:
-          "Uma vasta área aberta logo após as montanhas. Suas estradas conectam a Cidade Catedral, Songbird e as regiões militares do Manifesto. Durante o dia, parecem tranquilas; à noite, rumores sobre vultos roxos e viajantes desaparecidos começam a circular.",
+          "Território administrado pelas Entoadoras com apoio político e financeiro do Manifesto. Reúne cidades, escolas de canto, teatros, residências de prestígio e o castelo que funciona como sede política e artística da região.",
       },
       {
         collectionId: "dominio-manifesto",
-        name: "Songbird",
+        name: "Cidade de Songbird",
         image: "",
         type: "Cidade das Entoadoras",
-        region: "Costa Oeste das Planícies de Aurel",
+        region: "Reino de Songbird",
         description:
-          "Grande cidade controlada pelas Entoadoras e financiada pelo Manifesto. Possui três escolas de canto, teatros sagrados, residências nobres e um castelo próprio. Suas apresentações são vistas como símbolo de cultura e fé, mas também funcionam como instrumento político.",
+          "Principal centro populacional das Entoadoras na Área 1. Apresentações musicais, cerimônias religiosas e festivais atraem viajantes de várias regiões. Por trás da imagem cultural, a cidade também funciona como instrumento de influência política do Manifesto.",
       },
       {
         collectionId: "dominio-manifesto",
         name: "Três Escolas de Songbird",
         image: "",
-        type: "Instituição",
-        region: "Songbird",
+        type: "Instituições de Formação",
+        region: "Cidade de Songbird",
         description:
-          "Conjunto de três escolas onde jovens Entoadoras treinam canto, presença, controle emocional e manifestação de poder. Cada escola possui filosofia própria e rivalidades internas, embora todas dependam do financiamento do Manifesto.",
+          "Conjunto das três maiores escolas de formação de Entoadoras. As estudantes aprendem canto, presença, controle emocional, manifestação de habilidades e conduta pública. Cada escola possui sua própria filosofia e mantém rivalidades com as demais.",
       },
       {
         collectionId: "dominio-manifesto",
         name: "Castelo das Entoadoras",
         image: "",
         type: "Castelo / Sede Cultural",
-        region: "Songbird",
+        region: "Reino de Songbird",
         description:
-          "Sede política e artística das Entoadoras. Concertos, reuniões diplomáticas e acordos com nobres do Manifesto acontecem em seus salões. Algumas salas são acessíveis apenas a cantoras de alto prestígio.",
+          "Sede política e artística das Entoadoras. Concertos, reuniões diplomáticas e acordos com o Manifesto acontecem em seus salões. Determinados aposentos são acessíveis apenas às Entoadoras de maior prestígio e às autoridades da região.",
+      },
+
+      // =========================================================
+      // ÁREA 1 DO MANIFESTO — PLANÍCIES E AURÉON
+      // =========================================================
+
+      {
+        collectionId: "dominio-manifesto",
+        name: "Planícies de Aurel",
+        image: "",
+        type: "Planície",
+        region: "Centro-sul da Área 1 do Manifesto",
+        description:
+          "Vasta planície que conecta Songbird, Auréon, as vilas costeiras e as bases militares da região. Suas estradas são utilizadas por comerciantes, soldados, mensageiros e peregrinos. Durante a noite, viajantes relatam vultos e desaparecimentos inexplicáveis.",
       },
       {
         collectionId: "dominio-manifesto",
-        name: "Forte Lúmen",
+        name: "Auréon",
         image: "",
-        type: "Base Militar",
-        region: "Costa Leste das Planícies de Aurel",
+        type: "Cidade-Reino Amuralhada",
+        region: "Centro das Planícies de Aurel",
         description:
-          "Base militar do Manifesto voltada para a grande ilha dominada pelo Sindicato das Sombras. Suas torres observam o oceano constantemente, esperando qualquer movimentação inimiga ou surgimento de atividade ligada aos portais ocultos.",
-      },
-      {
-        collectionId: "dominio-manifesto",
-        name: "Reino do Manifesto",
-        image: "",
-        type: "Região Real",
-        region: "Centro do Domínio do Manifesto",
-        description:
-          "Região de grande importância política, composta por duas cidades próximas, uma base militar e o antigo castelo do Manifesto. Embora a Cidade Catedral tenha se tornado o símbolo máximo da fé, este reino ainda concentra tradição, exército e linhagens nobres antigas.",
+          "Grande cidade-reino do Manifesto cercada por uma muralha. Seu núcleo político ocupa o centro, enquanto duas extensões urbanas formam os distritos de Lumenhall e Vitrália. Antes da construção da Cidade Catedral, Auréon era o principal símbolo do poder da família real.",
       },
       {
         collectionId: "dominio-manifesto",
         name: "Castelo de Auréon",
         image: "",
         type: "Castelo Real",
-        region: "Reino do Manifesto",
+        region: "Núcleo central de Auréon",
         description:
-          "Grande castelo do Manifesto no centro da região real. Abriga conselheiros, arquivos militares e membros de linhagens nobres secundárias. Alguns corredores guardam documentos sobre o sangue dos dragões e antigas campanhas contra o Sindicato.",
+          "Antiga sede central do Manifesto e atual centro administrativo de Auréon. Abriga conselheiros, arquivos militares e integrantes de linhagens nobres secundárias. Alguns documentos guardados no castelo mencionam o sangue dos dragões e antigas campanhas contra o Sindicato.",
       },
       {
         collectionId: "dominio-manifesto",
         name: "Lumenhall",
         image: "",
-        type: "Cidade",
-        region: "Reino do Manifesto",
+        type: "Distrito Religioso e Militar",
+        region: "Extensão de Auréon",
         description:
-          "Cidade organizada e fortemente religiosa, conhecida por seus templos de luz, praças limpas e presença constante de guardas. Seus habitantes tendem a apoiar o Manifesto, mas muitos temem a aproximação de uma guerra aberta.",
+          "Distrito organizado e fortemente religioso, marcado por templos, praças limpas, quartéis e presença constante de guardas. Seus habitantes costumam apoiar a autoridade do Manifesto, embora muitos temam o início de uma guerra aberta.",
       },
       {
         collectionId: "dominio-manifesto",
         name: "Vitrália",
         image: "",
-        type: "Cidade",
-        region: "Reino do Manifesto",
+        type: "Distrito de Artesãos e Pesquisadores",
+        region: "Extensão de Auréon",
         description:
-          "Cidade famosa por vitrais, oficinas de lentes, estudos ópticos e artesãos ligados à luz. Alguns pesquisadores locais estudam variações incomuns da Marca do Manifesto, embora evitem chamar atenção da nobreza.",
+          "Distrito conhecido por seus vitrais, oficinas de lentes, estudos ópticos e artesãos especializados em manifestações de luz. Alguns pesquisadores investigam variações incomuns da Marca do Manifesto sem autorização da nobreza.",
       },
       {
         collectionId: "dominio-manifesto",
-        name: "Harbor City",
+        name: "Porto Alvor",
         image: "",
-        type: "Cidade Costeira",
-        region: "Extremo leste do Reino do Manifesto",
+        type: "Vila Costeira",
+        region: "Leste das Planícies de Aurel",
         description:
-          "Cidade portuária controlada pelo Manifesto. Serve como ponto de comércio, transporte militar e vigilância naval. Mercadores, espiões e soldados dividem as ruas estreitas próximas ao porto.",
+          "Vila costeira responsável pelo fornecimento de pescado, sal e mercadorias para Auréon. Embarcações comerciais e militares utilizam seu pequeno porto, fazendo com que mercadores, soldados e possíveis espiões dividam as mesmas ruas.",
       },
+      {
+        collectionId: "dominio-manifesto",
+        name: "Forte Lúmen",
+        image: "",
+        type: "Base Militar",
+        region: "Oeste das Planícies de Aurel",
+        description:
+          "Grande base militar do Manifesto voltada diretamente para a Área 1 do Sindicato. Suas torres observam o oceano, registram movimentações inimigas e protegem a região contra possíveis desembarques ou operações clandestinas.",
+      },
+
+      // =========================================================
+      // FRONTEIRA ENTRE AS ÁREAS 1
+      // =========================================================
+
       {
         collectionId: "dominio-manifesto",
         name: "Forte das Vigílias",
         image: "",
         type: "Base Militar",
-        region: "Montanhas do Norte do Manifesto",
+        region: "Montanhas ao norte das Planícies de Aurel",
         description:
-          "Pequena base militar escondida entre montanhas, voltada para a ilha intermediária entre o Manifesto e o Sindicato das Sombras. Seu objetivo oficial é defesa costeira, mas parte da guarnição monitora movimentações estranhas no Miasma.",
+          "Base militar escondida entre as montanhas e voltada para a Ilha de Vigília. Sua guarnição monitora embarcações, movimentações do Sindicato e possíveis operações realizadas no território neutro.",
       },
       {
-        collectionId: "dominio-manifesto",
+        collectionId: "fronteira-area-1",
         name: "Ilha de Vigília",
         image: "",
-        type: "Ilha Estratégica",
-        region: "Entre o Manifesto e o Sindicato das Sombras",
+        type: "Ilha Neutra / Território Disputado",
+        region: "Entre as Áreas 1 do Manifesto e do Sindicato",
         description:
-          "Ilha disputada de forma indireta pelas duas facções. Nenhum lado controla completamente o território, mas ambos mantêm olheiros, rotas secretas e pequenas operações militares na região.",
+          "Pequena ilha que não pertence oficialmente a nenhuma facção. Manifesto e Sindicato mantêm olheiros, esconderijos e operações secretas no território, embora nenhum dos lados reconheça publicamente essas atividades.",
       },
+
+      // =========================================================
+      // ÁREA 1 DO MANIFESTO — REGIÃO DA CRATERA
+      // =========================================================
+
       {
         collectionId: "regiao-cratera",
         name: "Cratera do Último Miasma",
         image: "",
         type: "RAID / Zona Contaminada",
-        region: "Planície Norte do Manifesto",
+        region: "Norte da Área 1 do Manifesto",
         description:
-          "Grande cratera cercada por uma cortina de Miasma roxo. A região surgiu após distorções ligadas ao último ciclo de Miasma, mas seu comportamento atual é anormal. Estruturas e criaturas podem surgir dentro dela como cópias contaminadas de realidades distintas.",
+          "Grande cratera completamente cercada por uma cortina de Miasma extremamente densa. Nenhuma tentativa conhecida conseguiu atravessar a barreira. Estruturas, sons e criaturas aparecem ocasionalmente além da névoa, mas sua verdadeira origem permanece desconhecida.",
       },
       {
         collectionId: "regiao-cratera",
         name: "Trilha Roxa",
         image: "",
-        type: "Caminho de Miasma",
-        region: "Norte da Cratera",
+        type: "Rastro de Miasma",
+        region: "Norte da Cratera do Último Miasma",
         description:
-          "Fluxo de Miasma que se arrasta para o norte da cratera, formando uma trilha instável. Viajantes relatam sons abafados, sombras sem dono e silhuetas que desaparecem ao serem observadas diretamente.",
+          "Rastro de Miasma que escapa da cratera e avança em direção ao norte. A trilha muda lentamente de forma e provoca distorções sonoras, sombras sem origem e alterações no comportamento de animais e viajantes.",
       },
       {
         collectionId: "regiao-cratera",
         name: "Névoa Branda",
         image: "",
-        type: "Zona de Miasma Leve",
-        region: "Norte da Cratera",
+        type: "Zona de Miasma Reduzido",
+        region: "Extremidade norte da Trilha Roxa",
         description:
-          "Concentração mais fraca de Miasma, ainda perigosa o suficiente para causar confusão, sonhos estranhos e alterações no ambiente. Muitos acreditam que ela é apenas resíduo da cratera, mas sua expansão preocupa estudiosos.",
-      },
-      {
-        collectionId: "regiao-cratera",
-        name: "Acampamento dos Errantes",
-        image: "",
-        type: "Acampamento Militar Improvisado",
-        region: "Arredores da Cratera",
-        description:
-          "Acampamento onde guerreiros, mercenários, usuários da Marca do Maso, caçadores e curiosos se reúnem para discutir como eliminar ou conter o Miasma da cratera. A tensão é alta, pois cada grupo possui interesses diferentes.",
+          "Região onde a concentração do Miasma se torna menor e pode ser atravessada por pessoas preparadas. Ainda causa confusão, sonhos anormais, perda de direção e alterações temporárias no ambiente.",
       },
       {
         collectionId: "regiao-cratera",
         name: "Rochaviva",
         image: "",
-        type: "Cidade Maso",
-        region: "Leste da Cratera",
+        type: "Cidade de Usuários da Marca Maso",
+        region: "Leste da Cratera do Último Miasma",
         description:
-          "Cidade próxima ao oceano onde a maioria dos habitantes possui a Marca do Maso. É barulhenta, diversa e pouco respeitada por nobres do Manifesto, mas possui guerreiros, artesãos e exploradores extremamente capazes.",
+          "Cidade desorganizada e barulhenta onde a maior parte dos habitantes possui a Marca Maso. Suas ruas reúnem oficinas, arenas, mercenários, artesãos e estilos de combate únicos. Muitos dos guerreiros interessados na cratera partem de Rochaviva.",
       },
       {
         collectionId: "regiao-cratera",
@@ -307,133 +395,722 @@ export const premadeCampaigns: PremadeCampaign[] = [
         type: "Cidade Costeira",
         region: "Norte de Rochaviva",
         description:
-          "Cidade costeira menor, usada como rota de suprimentos para viajantes que seguem ao norte. Parte da população teme que a Névoa Branda avance até a costa.",
+          "Cidade costeira ligada a Rochaviva e habitada principalmente por usuários da Marca Maso. Fornece pescado, transporte e suprimentos para os guerreiros da região. Parte da população teme que a Névoa Branda alcance a costa.",
+      },
+      {
+        collectionId: "regiao-cratera",
+        name: "Acampamento dos Errantes",
+        image: "",
+        type: "Grande Acampamento de Aventureiros",
+        region: "Arredores da Cratera do Último Miasma",
+        description:
+          "Extenso acampamento formado por aventureiros, guerreiros, mercenários, pesquisadores e usuários de diferentes Marcas que procuram uma forma de atravessar o Miasma. Muitos vieram de Rochaviva, enquanto autoridades do Manifesto permanecem no local para observar e controlar as tentativas.",
+      },
+
+      // =========================================================
+      // ÁREA 1 DO MANIFESTO — EXTREMO NORTE
+      // =========================================================
+
+      {
+        collectionId: "dominio-manifesto",
+        name: "Seiran",
+        image: "",
+        type: "Cidade de Samurais",
+        region: "Extremo norte da Área 1 do Manifesto",
+        description:
+          "Pequena cidade de samurais associada à Marca da Respiração. Seus habitantes valorizam disciplina, treinamento corporal, domínio da espada e observação da natureza. A comunidade mantém costumes próprios e pouco contato com a nobreza do Manifesto.",
       },
       {
         collectionId: "dominio-manifesto",
         name: "Vila Ventomar",
         image: "",
-        type: "Cidade Costeira da Respiração",
-        region: "Extremo norte da Grande Ilha",
+        type: "Vila Costeira de Abastecimento",
+        region: "Costa próxima a Seiran",
         description:
-          "Pequena cidade costeira associada à Marca da Respiração. Seus habitantes valorizam disciplina, pesca, treinamento corporal e observação da natureza. Alguns mestres de armas vivem ali em isolamento.",
+          "Pequena vila costeira responsável por fornecer alimentos para Seiran. Seus habitantes vivem principalmente da pesca, da coleta de frutos marinhos e da produção de sal, mantendo uma relação de dependência e proteção com os samurais.",
       },
-      {
-        collectionId: "dominio-manifesto",
-        name: "Vila Atrás das Montanhas",
-        image: "",
-        type: "Vila Isolada",
-        region: "Montanhas do Extremo Norte",
-        description:
-          "Vila protegida por montanhas e rotas difíceis. Poucos estrangeiros chegam até ela. Seus moradores evitam falar sobre o que existe além dos picos e sobre antigas travessias usadas por guerreiros da Respiração.",
-      },
-      {
-        collectionId: "sindicato-sombras",
-        name: "Ilha das Sombras",
-        image: "",
-        type: "Território do Sindicato",
-        region: "Grande Ilha Ocidental",
-        description:
-          "Grande ilha dominada pelo Sindicato das Sombras. Suas cidades, montanhas e rotas secretas formam um território equivalente ao domínio do Manifesto, mas organizado de forma menos centralizada e mais clandestina.",
-      },
+
+      // =========================================================
+      // ÁREA 1 DO SINDICATO — REGIÃO SUL
+      // =========================================================
+
       {
         collectionId: "sindicato-sombras",
         name: "Cordilheira Silente",
         image: "",
-        type: "Montanhas",
-        region: "Borda Oeste da Ilha das Sombras",
+        type: "Cadeia de Montanhas",
+        region: "Borda montanhosa da Área 1 do Sindicato",
         description:
-          "Cadeia de montanhas que se estende do sul ao norte da ilha. Em locais ocultos entre as rochas existem portais secretos do Sindicato, protegidos por sigilo absoluto.",
+          "Extensa cadeia de montanhas que acompanha grande parte da borda da Área 1. Cavernas, passagens secretas e estruturas ocultas permitem que o Sindicato proteja seus portais e movimente agentes sem utilizar as estradas comuns.",
       },
       {
         collectionId: "sindicato-sombras",
         name: "Portal Sul do Vazio",
         image: "",
         type: "Portal Oculto",
-        region: "Cordilheira Silente",
+        region: "Montanhas do sul da Área 1 do Sindicato",
         description:
-          "Um dos três portais secretos do Sindicato das Sombras. Oficialmente, ele não existe. Sua energia permite deslocamento rápido entre regiões, mas seu custo real é conhecido por pouquíssimos líderes.",
-      },
-      {
-        collectionId: "sindicato-sombras",
-        name: "Portal Central do Vazio",
-        image: "",
-        type: "Portal Oculto",
-        region: "Cordilheira Silente",
-        description:
-          "Portal escondido em uma caverna profunda da região central da ilha. Guardas do Sindicato protegem a entrada sem explicar o que há dentro. Pessoas esquecidas costumam desaparecer nas proximidades.",
-      },
-      {
-        collectionId: "sindicato-sombras",
-        name: "Portal Norte do Vazio",
-        image: "",
-        type: "Portal Oculto",
-        region: "Cordilheira Silente",
-        description:
-          "Portal mais distante e menos utilizado da rede do Sindicato. Sua instabilidade é maior, e rumores falam de vozes vindas da escuridão quando a estrutura é ativada.",
+          "Primeiro dos três portais secretos da região. Está escondido entre as montanhas próximas ao início da ilha e permite deslocamentos rápidos pela rede do Sindicato. Sua existência é conhecida apenas por agentes autorizados.",
       },
       {
         collectionId: "sindicato-sombras",
         name: "Lago do Véu Roxo",
         image: "",
         type: "Lago Contaminado",
-        region: "Sul da Ilha das Sombras",
+        region: "Sul da Área 1 do Sindicato",
         description:
-          "Grande lago coberto por uma camada de Miasma. A água parece parada demais, e reflexos mostram formas que não estão na superfície. O Sindicato evita que viajantes comuns se aproximem.",
+          "Grande lago cuja superfície está completamente coberta por Miasma. A água abaixo da névoa permanece invisível, enquanto reflexos mostram formas que não existem nas margens. Poucas pessoas se arriscam a navegar pelo local.",
       },
       {
         collectionId: "sindicato-sombras",
-        name: "Porto Nox",
+        name: "Forte da Costa Leste",
         image: "",
-        type: "Cidade Costeira",
-        region: "Leste da Ilha das Sombras",
+        type: "Base Militar",
+        region: "Leste do Lago do Véu Roxo",
         description:
-          "Cidade costeira controlada pelo Sindicato. Serve como ponto de entrada, contrabando e movimentação militar. Sua população é diversa, incluindo muitos indivíduos rejeitados por territórios do Manifesto.",
-      },
-      {
-        collectionId: "sindicato-sombras",
-        name: "Acampamento da Costa Leste",
-        image: "",
-        type: "Acampamento Militar",
-        region: "Costa voltada para o Manifesto",
-        description:
-          "Acampamento do exército do Sindicato voltado para a grande ilha do Manifesto. Suas patrulhas vigiam o oceano e interceptam embarcações suspeitas.",
-      },
-      {
-        collectionId: "sindicato-sombras",
-        name: "Acampamento da Ilha Intermediária",
-        image: "",
-        type: "Acampamento Militar",
-        region: "Costa voltada para a Ilha de Vigília",
-        description:
-          "Base avançada do Sindicato voltada para a ilha entre as duas nações. É usada para espionagem, movimentação de agentes e observação das tropas do Manifesto.",
-      },
-      {
-        collectionId: "sindicato-sombras",
-        name: "Noctária",
-        image: "",
-        type: "Grande Cidade do Sindicato",
-        region: "Centro da Ilha das Sombras",
-        description:
-          "Maior cidade do Sindicato das Sombras. Diferente dos castelos do Manifesto, Noctária é formada por salões, túneis, bairros sobrepostos, mercados subterrâneos e sedes de líderes. Para muitos rejeitados, ela é refúgio. Para outros, uma prisão sem grades.",
+          "Pequena base militar do Sindicato voltada para a Área 1 do Manifesto. Suas patrulhas observam embarcações inimigas, protegem a costa e controlam parte das rotas de suprimentos da região.",
       },
       {
         collectionId: "sindicato-sombras",
         name: "Vila Névoa Baixa",
         image: "",
         type: "Vila Costeira",
-        region: "Norte da Ilha das Sombras",
+        region: "Próxima ao Forte da Costa Leste",
         description:
-          "Vila costeira pequena, marcada por pescadores silenciosos e rotas de contrabando. Alguns moradores sabem quando os portais são ativados, mas fingem ignorância para sobreviver.",
+          "Vila de pescadores e marinheiros que fornece alimentos e embarcações para o forte e para outras comunidades do Sindicato. Alguns moradores colaboram com contrabandistas e fingem não perceber atividades militares clandestinas.",
+      },
+      {
+        collectionId: "sindicato-sombras",
+        name: "Acampamento do Véu",
+        image: "",
+        type: "Acampamento de Aventureiros",
+        region: "Margens do Lago do Véu Roxo",
+        description:
+          "Acampamento formado por guerreiros, exploradores e estudiosos interessados no Miasma do lago. Diferente dos Errantes, seus integrantes operam com pouca supervisão e frequentemente escondem seus verdadeiros objetivos.",
+      },
+      {
+        collectionId: "sindicato-sombras",
+        name: "Floresta da Névoa Imóvel",
+        image: "",
+        type: "Floresta Misteriosa",
+        region: "Montanhas a oeste do Lago do Véu Roxo",
+        description:
+          "Floresta coberta por uma névoa densa que nunca se dissipa, mesmo diante de ventos fortes ou mudanças de temperatura. Caminhos parecem alterar de posição, sons surgem de direções impossíveis e viajantes podem perder a noção do tempo.",
+      },
+      {
+        collectionId: "sindicato-sombras",
+        name: "Portal Oeste do Vazio",
+        image: "",
+        type: "Portal Oculto",
+        region: "Extremo oeste da Cordilheira Silente",
+        description:
+          "Portal escondido em uma caverna profunda entre as montanhas. Guardas do Sindicato protegem a entrada e eliminam testemunhas. Pessoas esquecidas ou desaparecidas são vistas com frequência nas rotas próximas.",
+      },
+
+      // =========================================================
+      // ÁREA 1 DO SINDICATO — NOCTÁRIA E REGIÃO NORTE
+      // =========================================================
+
+      {
+        collectionId: "sindicato-sombras",
+        name: "Noctária",
+        image: "",
+        type: "Grande Cidade do Sindicato",
+        region: "Planícies centrais da Área 1 do Sindicato",
+        description:
+          "Principal centro político e populacional do Sindicato das Sombras na Área 1. A cidade é formada por bairros sobrepostos, mercados, túneis, salões e comunidades de diferentes origens. Para muitos rejeitados, Noctária representa refúgio; para outros, uma prisão sem grades.",
+      },
+      {
+        collectionId: "sindicato-sombras",
+        name: "Saguão do Véu",
+        image: "",
+        type: "Sede Política do Sindicato",
+        region: "Centro de Noctária",
+        description:
+          "Grande saguão onde líderes, conselheiros e representantes do Sindicato discutem decisões políticas, operações militares e assuntos relacionados aos portais. Funciona como equivalente ao castelo de uma monarquia, embora o Sindicato rejeite essa comparação.",
+      },
+      {
+        collectionId: "sindicato-sombras",
+        name: "Portal Norte do Vazio",
+        image: "",
+        type: "Portal Oculto",
+        region: "Montanhas a noroeste de Noctária",
+        description:
+          "Portal mais distante e instável da rede da Área 1. Durante sua ativação, vozes podem ser ouvidas além da estrutura, mesmo quando nenhum viajante está realizando a travessia.",
+      },
+      {
+        collectionId: "sindicato-sombras",
+        name: "Porto Nox",
+        image: "",
+        type: "Cidade Costeira de Abastecimento",
+        region: "Leste de Noctária",
+        description:
+          "Cidade costeira responsável por grande parte dos alimentos que chegam a Noctária. Além da pesca e do comércio, o porto é utilizado para contrabando, transporte de agentes e entrada de pessoas rejeitadas pelos territórios do Manifesto.",
       },
       {
         collectionId: "sindicato-sombras",
         name: "Umbraford",
         image: "",
-        type: "Pequena Cidade",
-        region: "Norte da Ilha das Sombras",
+        type: "Cidade",
+        region: "Norte de Porto Nox",
         description:
-          "Cidade menor do Sindicato, usada como ponto de passagem entre Noctária e as regiões mais ao norte. Seus líderes locais são discretos, mas possuem forte ligação com operações secretas da facção.",
+          "Cidade localizada ao norte do principal porto da região. Funciona como ponto de passagem entre Noctária, o litoral e as montanhas do norte. Seus líderes locais mantêm relações discretas com as operações secretas do Sindicato.",
+      },
+      // =========================================================
+      // ÁREA 2 DO MANIFESTO — PLANÍCIE DE VIDRO
+      // =========================================================
+
+      {
+        collectionId: "dominio-manifesto-area-2",
+        name: "Planície de Vidro",
+        image: "",
+        type: "Planície Cristalizada / Local Turístico",
+        region: "Nordeste da Área 2 do Manifesto",
+        description:
+          "Região dividida em três grandes campos cristalizados. A explosão de um monstro de cristal provocou uma reação que transformou plantações, vegetação, construções e guerreiros em cristal. Apesar da tragédia, o local tornou-se uma atração frequentada principalmente por turistas ricos.",
+      },
+      {
+        collectionId: "dominio-manifesto-area-2",
+        name: "Prismária",
+        image: "",
+        type: "Cidade Costeira Aristocrática",
+        region: "Costa próxima à Planície de Vidro",
+        description:
+          "Cidade nobre que funciona como principal acesso à Planície de Vidro. Suas construções utilizam vitrais, espelhos, cristais e monumentos que exaltam os poderes do Manifesto. Hotéis, salões e guias particulares atendem os visitantes mais ricos.",
+      },
+
+      // =========================================================
+      // ÁREA 2 DO MANIFESTO — VALE ESCAMADO
+      // =========================================================
+
+      {
+        collectionId: "dominio-manifesto-area-2",
+        name: "Vale Escamado",
+        image: "",
+        type: "Vale Rochoso",
+        region: "Setor oriental da Área 2 do Manifesto",
+        description:
+          "Região formada por grandes paredões rochosos que lembram escamas sobrepostas. Suas poucas entradas naturais são controladas por bases militares que impedem viajantes de se aproximarem do antigo santuário localizado no centro do vale.",
+      },
+      {
+        collectionId: "dominio-manifesto-area-2",
+        name: "Bastião da Escama Norte",
+        image: "",
+        type: "Base Militar",
+        region: "Entrada norte do Vale Escamado",
+        description:
+          "Base militar responsável por vigiar a entrada superior do Vale Escamado. Sua guarnição registra viajantes, intercepta expedições não autorizadas e mantém patrulhas permanentes ao redor do santuário abandonado.",
+      },
+      {
+        collectionId: "dominio-manifesto-area-2",
+        name: "Bastião da Escama Sul",
+        image: "",
+        type: "Base Militar",
+        region: "Entrada sul do Vale Escamado",
+        description:
+          "Base militar que protege a entrada inferior do vale. Oficialmente combate monstros e saqueadores, mas sua principal função é impedir que pessoas não autorizadas alcancem as ruínas existentes no interior da região.",
+      },
+      {
+        collectionId: "dominio-manifesto-area-2",
+        name: "Santuário da Primeira Luz",
+        image: "",
+        type: "Santuário Abandonado",
+        region: "Centro do Vale Escamado",
+        description:
+          "Antigo templo do Manifesto pertencente a uma doutrina anterior à religião atual. Símbolos foram raspados, estátuas foram destruídas e registros foram removidos. Uma passagem escondida conduz até as estruturas subterrâneas do santuário.",
+      },
+      {
+        collectionId: "dominio-manifesto-area-2",
+        name: "Cripta Escamada",
+        image: "",
+        type: "Masmorra / Caverna",
+        region: "Subsolo do Santuário da Primeira Luz",
+        description:
+          "Rede subterrânea de cavernas, corredores religiosos e câmaras escavadas na rocha. As duas bases militares do vale parecem existir principalmente para impedir que o conteúdo da cripta seja descoberto.",
+      },
+
+      // =========================================================
+      // ÁREA 2 DO MANIFESTO — REGIÃO INDUSTRIAL
+      // =========================================================
+
+      {
+        collectionId: "dominio-manifesto-area-2",
+        name: "Altos de Ferrúria",
+        image: "",
+        type: "Região Industrial Elevada",
+        region: "Norte da Área 2 do Manifesto",
+        description:
+          "Região elevada marcada por fumaça, estradas de carga e grandes instalações industriais. A maior parte de sua produção abastece o comércio de Nova Auréola e as forças militares do Manifesto.",
+      },
+      {
+        collectionId: "dominio-manifesto-area-2",
+        name: "Complexo Industrial de Ferrúria",
+        image: "",
+        type: "Complexo de Fábricas",
+        region: "Altos de Ferrúria",
+        description:
+          "Conjunto de fábricas responsáveis pela produção de armas, ferramentas, peças de embarcações e equipamentos militares. Muitos trabalhadores são prisioneiros transportados diariamente da Penitenciária do Grilhão.",
+      },
+
+      // =========================================================
+      // ÁREA 2 DO MANIFESTO — NOVA AURÉOLA
+      // =========================================================
+
+      {
+        collectionId: "dominio-manifesto-area-2",
+        name: "Nova Auréola",
+        image: "",
+        type: "Grande Distrito Comercial",
+        region: "Centro da Área 2 do Manifesto",
+        description:
+          "Um dos maiores centros econômicos do Manifesto. Mercados, bancos, leilões, casas de espetáculo, hospedarias e comerciantes de artefatos atraem visitantes de diversas regiões. Apesar de ser chamada de distrito, possui dimensões comparáveis às de uma grande cidade.",
+      },
+      {
+        collectionId: "dominio-manifesto-area-2",
+        name: "Palácio da Coroa Mercante",
+        image: "",
+        type: "Castelo Administrativo",
+        region: "Centro de Nova Auréola",
+        description:
+          "Castelo ocupado pela ramificação da família real responsável pelos negócios da região. Ali são administrados impostos, concessões comerciais, licenças de transporte e acordos com as famílias proprietárias das grandes plantações.",
+      },
+
+      // =========================================================
+      // ÁREA 2 DO MANIFESTO — PROPRIEDADES AGRÍCOLAS
+      // =========================================================
+
+      {
+        collectionId: "dominio-manifesto-area-2",
+        name: "Herdade Solaris",
+        image: "",
+        type: "Propriedade Agrícola",
+        region: "Sul de Nova Auréola",
+        description:
+          "Grande propriedade especializada na produção de cereais. Uma mansão luxuosa abriga a família Solaris, responsável pela administração das plantações e dos trabalhadores.",
+      },
+      {
+        collectionId: "dominio-manifesto-area-2",
+        name: "Mansão Solaris",
+        image: "",
+        type: "Mansão Aristocrática",
+        region: "Herdade Solaris",
+        description:
+          "Residência da família Solaris. A mansão possui depósitos privados, alojamentos para guardas e salões utilizados para negociar contratos agrícolas com representantes de Nova Auréola.",
+      },
+      {
+        collectionId: "dominio-manifesto-area-2",
+        name: "Herdade Velária",
+        image: "",
+        type: "Propriedade Agrícola",
+        region: "Sul de Nova Auréola",
+        description:
+          "Propriedade dedicada ao cultivo de frutas, plantas medicinais e ingredientes utilizados na fabricação de óleos e perfumes. É administrada pela influente família Velária.",
+      },
+      {
+        collectionId: "dominio-manifesto-area-2",
+        name: "Mansão Velária",
+        image: "",
+        type: "Mansão Aristocrática",
+        region: "Herdade Velária",
+        description:
+          "Residência da família Velária, cercada por jardins particulares e laboratórios de preparação de essências. Poucos trabalhadores possuem autorização para entrar nas áreas internas.",
+      },
+      {
+        collectionId: "dominio-manifesto-area-2",
+        name: "Herdade Calêndria",
+        image: "",
+        type: "Propriedade Agrícola",
+        region: "Sul de Nova Auréola",
+        description:
+          "Grande propriedade produtora de uvas, ervas e ingredientes destinados às casas nobres e aos estabelecimentos comerciais de Nova Auréola.",
+      },
+      {
+        collectionId: "dominio-manifesto-area-2",
+        name: "Mansão Calêndria",
+        image: "",
+        type: "Mansão Aristocrática",
+        region: "Herdade Calêndria",
+        description:
+          "Residência da família Calêndria. Seus porões armazenam vinhos, ervas raras e parte da produção que não aparece nos registros comerciais oficiais.",
+      },
+      {
+        collectionId: "dominio-manifesto-area-2",
+        name: "Baixio de Auréola",
+        image: "",
+        type: "Cidade de Trabalhadores",
+        region: "Entre as três grandes propriedades agrícolas",
+        description:
+          "Cidade precária habitada principalmente por trabalhadores das plantações, carregadores, criados e transportadores. Pessoas de diferentes Marcas vivem no local, embora recebam poucos dos investimentos destinados à rica Nova Auréola.",
+      },
+
+      // =========================================================
+      // ÁREA 2 DO MANIFESTO — ZONA PORTUÁRIA MILITAR
+      // =========================================================
+
+      {
+        collectionId: "dominio-manifesto-area-2",
+        name: "Porto Régio",
+        image: "",
+        type: "Cidade Portuária Comercial",
+        region: "Sudoeste da Área 2 do Manifesto",
+        description:
+          "Cidade costeira que concentra comerciantes, companhias marítimas, armazéns e escritórios responsáveis pela documentação das embarcações. É conectada diretamente à Baía de Candeia.",
+      },
+      {
+        collectionId: "dominio-manifesto-area-2",
+        name: "Baía de Candeia",
+        image: "",
+        type: "Cidade Portuária Industrial",
+        region: "Sudoeste da Área 2 do Manifesto",
+        description:
+          "Cidade costeira ligada a Porto Régio. Possui estaleiros, alojamentos de marinheiros, oficinas de reparo e instalações utilizadas na manutenção de embarcações comerciais e militares.",
+      },
+      {
+        collectionId: "dominio-manifesto-area-2",
+        name: "Arsenal de Solferro",
+        image: "",
+        type: "Grande Base Naval",
+        region: "Entre Porto Régio e Baía de Candeia",
+        description:
+          "Maior porto militar do Manifesto. A base controla as rotas marítimas, inspeciona cargas, regulamenta embarcações comerciais e abriga grande parte da frota naval da facção.",
+      },
+      {
+        collectionId: "dominio-manifesto-area-2",
+        name: "Porto Sereno",
+        image: "",
+        type: "Cidade Costeira",
+        region: "Extremo sul da Área 2 do Manifesto",
+        description:
+          "Cidade portuária menor e menos militarizada. Atende pescadores, embarcações particulares e viajantes que seguem em direção às ilhas e aos territórios neutros.",
+      },
+
+      // =========================================================
+      // ÁREA 2 DO MANIFESTO — MIASMA E FRONTEIRA
+      // =========================================================
+
+      {
+        collectionId: "dominio-manifesto-area-2",
+        name: "Nuvens Gêmeas",
+        image: "",
+        type: "Zona de Miasma",
+        region: "Leste da Área 2 do Manifesto",
+        description:
+          "Duas grandes concentrações de Miasma que flutuam sobre a região. Embora não estejam fisicamente conectadas, parecem reagir uma à outra: quando uma cresce, a outra frequentemente perde densidade.",
+      },
+      {
+        collectionId: "dominio-manifesto-area-2",
+        name: "Acampamento Entre Véus",
+        image: "",
+        type: "Acampamento de Guerreiros",
+        region: "Entre as Nuvens Gêmeas",
+        description:
+          "Acampamento ocupado por soldados, aventureiros, estudiosos, curandeiros e mercenários. Seus integrantes monitoram as duas nuvens e tentam impedir que o Miasma avance para áreas habitadas.",
+      },
+      {
+        collectionId: "dominio-manifesto-area-2",
+        name: "As Três Sentinelas",
+        image: "",
+        type: "Complexo de Torres de Vigia",
+        region: "Extremo leste da Área 2 do Manifesto",
+        description:
+          "Conjunto de três grandes torres posicionadas próximo à fronteira com o Sindicato. Elas monitoram tropas, mensageiros, embarcações e alterações no Miasma, transmitindo sinais entre si e para as bases militares próximas.",
+      },
+      {
+        collectionId: "dominio-manifesto-area-2",
+        name: "Sentinela da Aurora",
+        image: "",
+        type: "Torre de Vigia",
+        region: "Complexo das Três Sentinelas",
+        description:
+          "Torre responsável por observar o setor norte da fronteira e transmitir os primeiros alertas ao restante do complexo.",
+      },
+      {
+        collectionId: "dominio-manifesto-area-2",
+        name: "Sentinela Central",
+        image: "",
+        type: "Torre de Comando",
+        region: "Complexo das Três Sentinelas",
+        description:
+          "Torre principal do complexo. Recebe informações das outras sentinelas e coordena a comunicação com as forças militares da Área 2.",
+      },
+      {
+        collectionId: "dominio-manifesto-area-2",
+        name: "Sentinela do Ocaso",
+        image: "",
+        type: "Torre de Vigia",
+        region: "Complexo das Três Sentinelas",
+        description:
+          "Torre responsável por observar o setor sul da fronteira e as rotas marítimas próximas.",
+      },
+
+      // =========================================================
+      // ÁREA 2 DO MANIFESTO — PRISÃO E TEMPLO
+      // =========================================================
+
+      {
+        collectionId: "dominio-manifesto-area-2",
+        name: "Penitenciária do Grilhão",
+        image: "",
+        type: "Grande Prisão",
+        region: "Noroeste da Área 2 do Manifesto",
+        description:
+          "Gigantesca penitenciária que abriga criminosos comuns, contrabandistas, opositores políticos e acusados de colaborar com o Sindicato. Muitos presos são transportados diariamente para trabalhar nas fábricas dos Altos de Ferrúria.",
+      },
+      {
+        collectionId: "dominio-manifesto-area-2",
+        name: "Templo da Expiação",
+        image: "",
+        type: "Templo Religioso",
+        region: "Ao lado da Penitenciária do Grilhão",
+        description:
+          "Templo destinado oficialmente à purificação dos pecados dos prisioneiros. Suas cerimônias pregam que o trabalho e o sofrimento podem redimir os condenados, ajudando a justificar o uso dos presos nas fábricas.",
+      },
+
+      // =========================================================
+      // ÁREA 2 DO SINDICATO — FRONTEIRA E CENTRO MILITAR
+      // =========================================================
+
+      {
+        collectionId: "sindicato-sombras-area-2",
+        name: "Fortaleza de Vantor",
+        image: "",
+        type: "Grande Centro Militar",
+        region: "Fronteira com a Área 2 do Manifesto",
+        description:
+          "Um dos maiores centros militares do Sindicato. Possui quartéis, depósitos, áreas de treinamento, defesas costeiras e unidades preparadas para responder às forças posicionadas nas Três Sentinelas.",
+      },
+
+      // =========================================================
+      // ÁREA 2 DO SINDICATO — VÉSPERA
+      // =========================================================
+
+      {
+        collectionId: "sindicato-sombras-area-2",
+        name: "Véspera",
+        image: "",
+        type: "Metrópole do Sindicato",
+        region: "Região elevada do norte da Área 2 do Sindicato",
+        description:
+          "Maior cidade do Sindicato, construída sobre terrenos elevados e rochosos. É dividida em três distritos conectados por pontes, túneis, escadarias e elevadores mecânicos. Sua organização física também representa as divisões sociais da população.",
+      },
+      {
+        collectionId: "sindicato-sombras-area-2",
+        name: "Distrito da Ferrugem",
+        image: "",
+        type: "Distrito Industrial Inferior",
+        region: "Nível inferior de Véspera",
+        description:
+          "Distrito marcado por oficinas, depósitos, trabalhadores e habitações apertadas. Grande parte dos equipamentos utilizados pelo Sindicato é produzida ou reparada nesta região.",
+      },
+      {
+        collectionId: "sindicato-sombras-area-2",
+        name: "Distrito do Baixo Véu",
+        image: "",
+        type: "Distrito Residencial Inferior",
+        region: "Nível inferior de Véspera",
+        description:
+          "Distrito densamente povoado por refugiados, trabalhadores e comerciantes informais. Possui ruas estreitas, construções improvisadas e pouca presença direta das autoridades.",
+      },
+      {
+        collectionId: "sindicato-sombras-area-2",
+        name: "Distrito da Coroa Negra",
+        image: "",
+        type: "Distrito Superior",
+        region: "Nível superior de Véspera",
+        description:
+          "Distrito ocupado por comandantes, autoridades, famílias influentes e comerciantes poderosos. Suas construções são mais seguras e recebem melhores recursos que os níveis inferiores.",
+      },
+      {
+        collectionId: "sindicato-sombras-area-2",
+        name: "Posto da Margem Morta",
+        image: "",
+        type: "Base Militar",
+        region: "Noroeste de Véspera",
+        description:
+          "Pequena base militar construída próxima à Grande Barreira do Miasma. Seus soldados monitoram alterações na barreira e impedem que criaturas ou viajantes contaminados avancem em direção à cidade.",
+      },
+      {
+        collectionId: "sindicato-sombras-area-2",
+        name: "Portal da Margem",
+        image: "",
+        type: "Portal Oculto",
+        region: "Atrás do Posto da Margem Morta",
+        description:
+          "Portal escondido nas formações rochosas atrás da base militar. Poucos soldados conhecem sua existência, e ele pode ser utilizado para retirar autoridades ou transportar agentes em situações de emergência.",
+      },
+
+      // =========================================================
+      // ÁREA 2 DO SINDICATO — RUÍNAS E RISCO DE MIASMA
+      // =========================================================
+
+      {
+        collectionId: "sindicato-sombras-area-2",
+        name: "Planície das Cinzas Recentes",
+        image: "",
+        type: "Planície de Ruínas",
+        region: "Centro da Área 2 do Sindicato",
+        description:
+          "Região devastada por uma manifestação recente de Miasma. Ruínas de casas, estradas e construções permanecem espalhadas pelo terreno enquanto equipes procuram sobreviventes, materiais e corpos.",
+      },
+      {
+        collectionId: "sindicato-sombras-area-2",
+        name: "Fenda Latente",
+        image: "",
+        type: "Zona de Risco de Miasma",
+        region: "Planície das Cinzas Recentes",
+        description:
+          "Ponto onde instrumentos, animais e habilidades apresentam comportamentos anormais. Pequenas manchas de Miasma surgem e desaparecem, indicando uma alta probabilidade de uma nova manifestação atingir a planície.",
+      },
+
+      // =========================================================
+      // ÁREA 2 DO SINDICATO — VERTÍGIA
+      // =========================================================
+
+      {
+        collectionId: "sindicato-sombras-area-2",
+        name: "Vertígia",
+        image: "",
+        type: "Cidade Vertical",
+        region: "Próxima à Grande Barreira do Miasma",
+        description:
+          "Gigantesca cidade construída verticalmente junto à barreira. Casas, passarelas, escadas e plataformas foram empilhadas sem planejamento para abrigar uma população cada vez maior. Os níveis mais próximos do Miasma são também os mais pobres e perigosos.",
+      },
+
+      // =========================================================
+      // ÁREA 2 DO SINDICATO — TEMPLO E CEMITÉRIO
+      // =========================================================
+
+      {
+        collectionId: "sindicato-sombras-area-2",
+        name: "Templo do Último Véu",
+        image: "",
+        type: "Templo Religioso",
+        region: "Sul da Planície das Cinzas Recentes",
+        description:
+          "Templo que afirma preparar os mortos e desaparecidos para atravessarem o último véu. Em seu interior existe um portal controlado por membros religiosos do Sindicato.",
+      },
+      {
+        collectionId: "sindicato-sombras-area-2",
+        name: "Portal dos Mortos",
+        image: "",
+        type: "Portal Oculto",
+        region: "Interior do Templo do Último Véu",
+        description:
+          "Portal ligado à rede secreta do Sindicato, mas que apresenta reações incomuns devido à proximidade dos cadáveres e das ruínas contaminadas. Sua verdadeira função é conhecida apenas pelos responsáveis pelo templo.",
+      },
+      {
+        collectionId: "sindicato-sombras-area-2",
+        name: "Campo dos Sem-Nome",
+        image: "",
+        type: "Cemitério Coletivo",
+        region: "Diante do Templo do Último Véu",
+        description:
+          "Grande cemitério onde são levados os corpos encontrados nas ruínas. Como a quantidade de mortos supera a capacidade de sepultamento, cadáveres aguardam identificação, cremação ou cerimônia em grandes pilhas.",
+      },
+
+      // =========================================================
+      // ÁREA 2 DO SINDICATO — FAZENDAS E PORTOS
+      // =========================================================
+
+      {
+        collectionId: "sindicato-sombras-area-2",
+        name: "Herdade Dargan",
+        image: "",
+        type: "Fazenda de Animais",
+        region: "Sudoeste da Área 2 do Sindicato",
+        description:
+          "Grande fazenda pertencente à família Dargan. Fornece carne, couro e animais de carga para Véspera e para as forças militares do Sindicato.",
+      },
+      {
+        collectionId: "sindicato-sombras-area-2",
+        name: "Herdade Volnir",
+        image: "",
+        type: "Fazenda de Animais",
+        region: "Sudoeste da Área 2 do Sindicato",
+        description:
+          "Propriedade controlada pela família Volnir e localizada diante da Herdade Dargan. As duas famílias mantêm uma rivalidade comercial enquanto cooperam para controlar terras, trabalhadores e rotas de transporte.",
+      },
+      {
+        collectionId: "sindicato-sombras-area-2",
+        name: "Porto Sal Negro",
+        image: "",
+        type: "Cidade Costeira Comercial",
+        region: "Próxima às herdades do sudoeste",
+        description:
+          "Cidade responsável pelo transporte de carne, couro, animais e outros produtos das grandes fazendas. O cheiro de sal, fumaça e couro domina a região portuária.",
+      },
+      {
+        collectionId: "sindicato-sombras-area-2",
+        name: "Porto de Ébano",
+        image: "",
+        type: "Cidade Costeira Aristocrática",
+        region: "Extremo sul da Área 2 do Sindicato",
+        description:
+          "Cidade frequentada principalmente por líderes, conselheiros, comandantes e figuras influentes do Sindicato. Possui residências privadas, salões reservados, embarcações luxuosas e forte segurança.",
+      },
+
+      // =========================================================
+      // ÁREA 2 DO SINDICATO — ILHAS
+      // =========================================================
+
+      {
+        collectionId: "sindicato-sombras-area-2",
+        name: "Ilha da Chave Sombria",
+        image: "",
+        type: "Ilha Estratégica",
+        region: "Próxima a Porto de Ébano",
+        description:
+          "Pequena ilha protegida por uma guarnição reduzida, porém extremamente leal. É utilizada como rota secreta para viagens e evacuações de figuras importantes do Sindicato.",
+      },
+      {
+        collectionId: "sindicato-sombras-area-2",
+        name: "Portal Insular",
+        image: "",
+        type: "Portal Oculto",
+        region: "Ilha da Chave Sombria",
+        description:
+          "Portal utilizado para viagens discretas de autoridades e agentes. Sua existência não aparece nos registros comuns da rede de portais do Sindicato.",
+      },
+      {
+        collectionId: "sindicato-sombras-area-2",
+        name: "Ilha Púrpura Morta",
+        image: "",
+        type: "Ilha Contaminada",
+        region: "Próxima a Porto de Ébano",
+        description:
+          "Ilha completamente coberta pelo Miasma. Nenhuma construção habitável permanece visível, embora luzes e movimentos sejam ocasionalmente observados em sua costa durante a noite.",
+      },
+
+      // =========================================================
+      // TERRITÓRIOS NEUTROS ENTRE AS ÁREAS 2
+      // =========================================================
+
+      {
+        collectionId: "fronteira-area-2",
+        name: "Ilha da Concórdia",
+        image: "",
+        type: "Ilha Neutra / Território Diplomático",
+        region: "Mar entre as Áreas 2 do Manifesto e do Sindicato",
+        description:
+          "Pequena ilha que não pertence oficialmente a nenhuma das facções. Manifesto e Sindicato utilizam o território para realizar encontros diplomáticos e discutir assuntos que exigem cooperação.",
+      },
+      {
+        collectionId: "fronteira-area-2",
+        name: "Porto da Trégua",
+        image: "",
+        type: "Cidade Costeira Neutra",
+        region: "Ilha da Concórdia",
+        description:
+          "Cidade preparada para receber representantes das duas facções. Possui salões diplomáticos, hospedarias, guardas neutros e regras rígidas contra o uso de habilidades durante negociações.",
+      },
+      {
+        collectionId: "fronteira-area-2",
+        name: "Fossa do Presságio",
+        image: "",
+        type: "Zona Marítima de Risco",
+        region: "Mar entre as Áreas 2",
+        description:
+          "Região marítima com alta probabilidade de surgimento de Miasma. Uma manifestação no local poderia bloquear rotas comerciais, atingir a Ilha da Concórdia e ser confundida com um ataque de uma das facções.",
       },
     ],
 
