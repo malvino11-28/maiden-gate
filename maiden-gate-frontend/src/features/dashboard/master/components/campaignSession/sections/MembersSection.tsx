@@ -58,7 +58,9 @@ export default function MembersSection({ members, onCreateSkill }: Props) {
                   type="button"
                   className="flex w-full items-center gap-4 px-5 py-4 text-left"
                   onClick={() =>
-                    setExpanded(isOpen ? null : String(member.id ?? member.nome))
+                    setExpanded(
+                      isOpen ? null : String(member.id ?? member.nome),
+                    )
                   }
                 >
                   <div className="flex h-11 w-11 flex-shrink-0 items-center justify-center overflow-hidden rounded-xl bg-gradient-to-br from-slate-700 to-slate-800 text-2xl">
@@ -69,7 +71,7 @@ export default function MembersSection({ members, onCreateSkill }: Props) {
                         className="h-full w-full object-cover"
                       />
                     ) : (
-                      member.emoji ?? member.personagem.charAt(0)
+                      (member.emoji ?? member.personagem.charAt(0))
                     )}
                   </div>
 
@@ -79,7 +81,8 @@ export default function MembersSection({ members, onCreateSkill }: Props) {
                     </p>
 
                     <p className="mt-0.5 text-xs text-amber-100/45">
-                      {member.nome} · Marca {member.marca} · Nível {member.nivel}
+                      {member.nome} · Marca {member.marca} · Nível{" "}
+                      {member.nivel}
                     </p>
 
                     <div className="mt-1.5 flex items-center gap-2">
