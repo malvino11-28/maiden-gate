@@ -14,6 +14,7 @@ use App\Models\LoreEvents;
 use App\Models\Skills;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Validation\ValidationException;
 
 class CampaignController extends Controller
 {
@@ -30,6 +31,8 @@ class CampaignController extends Controller
      */
     public function store(Request $request)
     {
+        $this->mergeJsonPayload($request);
+
         $data = $request->validate([
             'master_id' => 'required|exists:users,id',
 
@@ -514,6 +517,23 @@ class CampaignController extends Controller
         $copy->save();
 
         return response()->json($copy->fresh(), 201);
+    }
+
+    private function mergeJsonPayload(Request $request): void
+    {
+        if (!$request->filled('payload')) {
+            return;
+        }
+
+        $payload = json_decode((string) $request->input('payload'), true);
+
+        if (!is_array($payload) || json_last_error() !== JSON_ERROR_NONE) {
+            throw ValidationException::withMessages([
+                'payload' => 'Os dados da campanha estão em um formato inválido.',
+            ]);
+        }
+
+        $request->merge($payload);
     }
 
     private function resolveCollectionId(array $element, array $collectionMap, int $campaignId): ?int
