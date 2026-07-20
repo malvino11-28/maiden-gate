@@ -8,6 +8,15 @@ function getCollectionColor(index: number) {
   );
 }
 
+export type PremadeStats = {
+  level: number;
+  hp: number;
+  mana: number;
+  atk: number;
+  def: number;
+  speed: number;
+};
+
 export type PremadeCampaign = {
   id: string;
   image: string;
@@ -42,6 +51,7 @@ export type PremadeCampaign = {
     secret: string;
     description: string;
     skills: string;
+    stats: PremadeStats;
   }>;
   monsters: Array<{
     collectionId?: string;
@@ -51,6 +61,7 @@ export type PremadeCampaign = {
     threat: string;
     skills: string;
     description: string;
+    stats: PremadeStats;
   }>;
   items: Array<{
     collectionId?: string;
@@ -67,7 +78,29 @@ export type PremadeCampaign = {
   }>;
 };
 
-export const premadeCampaigns: PremadeCampaign[] = [
+type PremadeCampaignSource = Omit<PremadeCampaign, "npcs" | "monsters"> & {
+  npcs: Array<
+    Omit<PremadeCampaign["npcs"][number], "stats"> & {
+      stats?: PremadeStats;
+    }
+  >;
+  monsters: Array<
+    Omit<PremadeCampaign["monsters"][number], "stats"> & {
+      stats?: PremadeStats;
+    }
+  >;
+};
+
+const DEFAULT_PREMADE_STATS: PremadeStats = {
+  level: 1,
+  hp: 100,
+  mana: 50,
+  atk: 10,
+  def: 10,
+  speed: 10,
+};
+
+const premadeCampaignSources: PremadeCampaignSource[] = [
   {
     id: "awakening",
     image: flower,
@@ -5394,3 +5427,17 @@ export const premadeCampaigns: PremadeCampaign[] = [
     ],
   },
 ];
+
+export const premadeCampaigns: PremadeCampaign[] = premadeCampaignSources.map(
+  (campaign) => ({
+    ...campaign,
+    npcs: campaign.npcs.map((npc) => ({
+      ...npc,
+      stats: { ...(npc.stats ?? DEFAULT_PREMADE_STATS) },
+    })),
+    monsters: campaign.monsters.map((monster) => ({
+      ...monster,
+      stats: { ...(monster.stats ?? DEFAULT_PREMADE_STATS) },
+    })),
+  }),
+);

@@ -19,143 +19,119 @@ type CreateCampaignData = {
   skills: CampaignData["skills"];
 };
 
-function appendImage(
+function appendFile(
   formData: FormData,
   key: string,
   image: string | File | null | undefined,
 ) {
   if (image instanceof File) {
     formData.append(key, image);
-    return;
   }
+}
 
-  if (image) {
-    formData.append(key, image);
-  }
+function serializeImage(image: string | File | null | undefined) {
+  return typeof image === "string" && image ? image : null;
 }
 
 export async function createCampaign(data: CreateCampaignData) {
   const formData = new FormData();
 
-  formData.append("master_id", String(data.master_id));
-  formData.append("name", data.name);
-  formData.append("description", data.description ?? "");
-  formData.append("recommended_level", data.recommended_level);
-  formData.append("players", data.players ?? "");
-  formData.append("status", data.status);
-  formData.append("notes", data.notes ?? "");
+  // todo o conteúdo textual é enviado em um único campo JSON
+  // evita campanhas grandes sejam truncadas pelo limite max_input_vars do PHP
+  const payload = {
+    master_id: data.master_id,
+    name: data.name,
+    description: data.description,
+    image: serializeImage(data.image),
+    recommended_level: data.recommended_level,
+    players: data.players,
+    status: data.status,
+    notes: data.notes ?? null,
 
-  appendImage(formData, "image", data.image);
+    collections: data.collections.map((collection, index) => ({
+      client_id: collection.clientId,
+      name: collection.name,
+      description: collection.description || null,
+      color: collection.color || null,
+      sort_order: index,
+    })),
 
-  data.collections.forEach((collection, index) => {
-    formData.append(`collections[${index}][client_id]`, collection.clientId);
-    formData.append(`collections[${index}][name]`, collection.name);
-    formData.append(`collections[${index}][description]`, collection.description ?? "");
-    formData.append(`collections[${index}][color]`, collection.color ?? "");
-    formData.append(`collections[${index}][sort_order]`, String(index));
-  });
+    locations: data.locations.map((location) => ({
+      collection_client_id: location.collectionId || null,
+      image: serializeImage(location.image),
+      name: location.name,
+      type: location.type || null,
+      region: location.region || null,
+      description: location.description || null,
+    })),
+
+    npcs: data.npcs.map((npc) => ({
+      collection_client_id: npc.collectionId || null,
+      image: serializeImage(npc.image),
+      name: npc.name,
+      marca_id: npc.marca_id || null,
+      race: npc.race || null,
+      occupation: npc.occupation || null,
+      personality: npc.personality || null,
+      secret: npc.secret || null,
+      description: npc.description || null,
+      skills: npc.skills,
+      stats: npc.stats,
+    })),
+
+    monsters: data.monsters.map((monster) => ({
+      collection_client_id: monster.collectionId || null,
+      image: serializeImage(monster.image),
+      name: monster.name,
+      type: monster.type || null,
+      threat: monster.threat || null,
+      description: monster.description || null,
+      skills: monster.skills,
+      stats: monster.stats,
+    })),
+
+    items: data.items.map((item) => ({
+      collection_client_id: item.collectionId || null,
+      name: item.name,
+      type: item.type || null,
+      description: item.description || null,
+    })),
+
+    events: data.events.map((event) => ({
+      collection_client_id: event.collectionId || null,
+      title: event.title,
+      chronology: event.chronology || null,
+      date: event.date || null,
+      description: event.description || null,
+    })),
+
+    skills: data.skills.map((skill) => ({
+      collection_client_id: skill.collectionId || null,
+      marca_id: skill.marca_id || null,
+      name: skill.name,
+      description: skill.description || null,
+      type: skill.type || "campanha",
+      branch: skill.branch || "campanha",
+      unlock_level: Number(skill.unlock_level || 1),
+      resource_cost: Number(skill.resource_cost || 0),
+      range: skill.range || null,
+    })),
+  };
+
+  formData.append("payload", JSON.stringify(payload));
+
+  appendFile(formData, "image", data.image);
 
   data.locations.forEach((location, index) => {
-    appendImage(formData, `locations[${index}][image]`, location.image);
-
-    if (location.collectionId) {
-      formData.append(`locations[${index}][collection_client_id]`, location.collectionId);
-    }
-
-    formData.append(`locations[${index}][name]`, location.name);
-    formData.append(`locations[${index}][type]`, location.type ?? "");
-    formData.append(`locations[${index}][region]`, location.region ?? "");
-    formData.append(
-      `locations[${index}][description]`,
-      location.description ?? "",
-    );
+    appendFile(formData, `locations[${index}][image]`, location.image);
   });
 
   data.npcs.forEach((npc, index) => {
-    appendImage(formData, `npcs[${index}][image]`, npc.image);
-
-    if (npc.collectionId) {
-      formData.append(`npcs[${index}][collection_client_id]`, npc.collectionId);
-    }
-
-    formData.append(`npcs[${index}][name]`, npc.name);
-    formData.append(`npcs[${index}][marca_id]`, npc.marca_id ?? "");
-    formData.append(`npcs[${index}][race]`, npc.race ?? "");
-    formData.append(`npcs[${index}][occupation]`, npc.occupation ?? "");
-    formData.append(`npcs[${index}][personality]`, npc.personality ?? "");
-    formData.append(`npcs[${index}][secret]`, npc.secret ?? "");
-    formData.append(`npcs[${index}][description]`, npc.description ?? "");
-
-    npc.skills.forEach((skill, skillIndex) => {
-      formData.append(`npcs[${index}][skills][${skillIndex}]`, skill);
-    });
-
-    Object.entries(npc.stats).forEach(([key, value]) => {
-      formData.append(`npcs[${index}][stats][${key}]`, String(value));
-    });
+    appendFile(formData, `npcs[${index}][image]`, npc.image);
   });
 
   data.monsters.forEach((monster, index) => {
-    appendImage(formData, `monsters[${index}][image]`, monster.image);
-
-    if (monster.collectionId) {
-      formData.append(`monsters[${index}][collection_client_id]`, monster.collectionId);
-    }
-
-    formData.append(`monsters[${index}][name]`, monster.name);
-    formData.append(`monsters[${index}][type]`, monster.type ?? "");
-    formData.append(`monsters[${index}][threat]`, monster.threat ?? "");
-    formData.append(
-      `monsters[${index}][description]`,
-      monster.description ?? "",
-    );
-
-    monster.skills.forEach((skill, skillIndex) => {
-      formData.append(`monsters[${index}][skills][${skillIndex}]`, skill);
-    });
-
-    Object.entries(monster.stats).forEach(([key, value]) => {
-      formData.append(`monsters[${index}][stats][${key}]`, String(value));
-    });
-  });
-
-  data.items.forEach((item, index) => {
-    if (item.collectionId) {
-      formData.append(`items[${index}][collection_client_id]`, item.collectionId);
-    }
-
-    formData.append(`items[${index}][name]`, item.name);
-    formData.append(`items[${index}][type]`, item.type ?? "");
-    formData.append(`items[${index}][description]`, item.description ?? "");
-  });
-
-  data.events.forEach((event, index) => {
-    if (event.collectionId) {
-      formData.append(`events[${index}][collection_client_id]`, event.collectionId);
-    }
-
-    formData.append(`events[${index}][title]`, event.title);
-    formData.append(`events[${index}][chronology]`, event.chronology ?? "");
-    formData.append(`events[${index}][date]`, event.date ?? "");
-    formData.append(`events[${index}][description]`, event.description ?? "");
-  });
-
-  data.skills.forEach((skill, index) => {
-    if (skill.collectionId) {
-      formData.append(`skills[${index}][collection_client_id]`, skill.collectionId);
-    }
-
-    formData.append(`skills[${index}][name]`, skill.name);
-    formData.append(`skills[${index}][description]`, skill.description ?? "");
-    formData.append(`skills[${index}][type]`, skill.type || "campanha");
-    formData.append(`skills[${index}][branch]`, skill.branch || "campanha");
-    formData.append(`skills[${index}][unlock_level]`, skill.unlock_level || "1");
-    formData.append(`skills[${index}][resource_cost]`, skill.resource_cost || "0");
-    formData.append(`skills[${index}][range]`, skill.range ?? "");
-
-    if (skill.marca_id) {
-      formData.append(`skills[${index}][marca_id]`, skill.marca_id);
-    }
+    appendFile(formData, `monsters[${index}][image]`, monster.image);
   });
 
   const response = await api.post("/campaigns", formData);

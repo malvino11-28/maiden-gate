@@ -152,14 +152,7 @@ export default function CreateCampaignPage() {
               .map((skill) => skill.trim())
               .filter(Boolean)
           : [],
-        stats: {
-          level: 1,
-          hp: 100,
-          mana: 50,
-          atk: 10,
-          def: 10,
-          speed: 10,
-        },
+        stats: { ...npc.stats },
       })),
     );
 
@@ -178,14 +171,7 @@ export default function CreateCampaignPage() {
               .map((skill) => skill.trim())
               .filter(Boolean)
           : [],
-        stats: {
-          level: 1,
-          hp: 100,
-          mana: 50,
-          atk: 10,
-          def: 10,
-          speed: 10,
-        },
+        stats: { ...monster.stats },
       })),
     );
     updateField(
@@ -285,7 +271,11 @@ export default function CreateCampaignPage() {
   }
 
   const summary = [
-    { label: "Conjuntos", value: campaign.collections.length, icon: FolderTree },
+    {
+      label: "Conjuntos",
+      value: campaign.collections.length,
+      icon: FolderTree,
+    },
     { label: "Localizações", value: campaign.locations.length, icon: MapPin },
     { label: "NPCs", value: campaign.npcs.length, icon: Users },
     { label: "Criaturas", value: campaign.monsters.length, icon: Skull },
