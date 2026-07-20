@@ -39,6 +39,14 @@ class CharacterController extends Controller
             'det' => 'required|integer|min:0',
             'pre' => 'required|integer|min:0',
 
+            'attribute_modifiers' => 'nullable|array',
+            'attribute_modifiers.POD' => 'sometimes|integer|min:-99|max:99',
+            'attribute_modifiers.DES' => 'sometimes|integer|min:-99|max:99',
+            'attribute_modifiers.RES' => 'sometimes|integer|min:-99|max:99',
+            'attribute_modifiers.INT' => 'sometimes|integer|min:-99|max:99',
+            'attribute_modifiers.DET' => 'sometimes|integer|min:-99|max:99',
+            'attribute_modifiers.PRE' => 'sometimes|integer|min:-99|max:99',
+
             'skills' => 'nullable|array|max:6',
             'skills.*' => 'integer|exists:skills,id',
         ]);
@@ -50,6 +58,10 @@ class CharacterController extends Controller
 
         $data['pa_max'] = max(1, 4 + floor($data['int'] * 0.6) + floor($data['des'] * 0.2)); 
         $data['pr_max'] = max(1, 1 + floor($data['des'] * 0.25) + floor($data['det'] * 0.1));
+        $data['attribute_modifiers'] = $this->normalizeAttributeModifiers(
+            $data['attribute_modifiers'] ?? null,
+            $data
+        );
 
         if ($request->hasFile('icon_image')) {
             $data['icon_image'] = $request->file('icon_image')->store('characters/icons', 'public');
@@ -125,6 +137,15 @@ class CharacterController extends Controller
             'int' => 'sometimes|integer|min:0',
             'det' => 'sometimes|integer|min:0',
             'pre' => 'sometimes|integer|min:0',
+
+            'attribute_modifiers' => 'sometimes|array',
+            'attribute_modifiers.POD' => 'sometimes|integer|min:-99|max:99',
+            'attribute_modifiers.DES' => 'sometimes|integer|min:-99|max:99',
+            'attribute_modifiers.RES' => 'sometimes|integer|min:-99|max:99',
+            'attribute_modifiers.INT' => 'sometimes|integer|min:-99|max:99',
+            'attribute_modifiers.DET' => 'sometimes|integer|min:-99|max:99',
+            'attribute_modifiers.PRE' => 'sometimes|integer|min:-99|max:99',
+
             'hp_current' => 'sometimes|integer|min:0',
             'effect' => 'nullable|string',
 
@@ -149,6 +170,22 @@ class CharacterController extends Controller
             if (array_key_exists($attributeKey, $data)) {
                 $data[$attributeKey] = max((int) $data[$attributeKey], (int) $character->{$attributeKey});
             }
+        }
+
+        if (array_key_exists('attribute_modifiers', $data)) {
+            $attributeValues = [
+                'pod' => $data['pod'] ?? $character->pod,
+                'des' => $data['des'] ?? $character->des,
+                'res' => $data['res'] ?? $character->res,
+                'int' => $data['int'] ?? $character->int,
+                'det' => $data['det'] ?? $character->det,
+                'pre' => $data['pre'] ?? $character->pre,
+            ];
+
+            $data['attribute_modifiers'] = $this->normalizeAttributeModifiers(
+                $data['attribute_modifiers'],
+                $attributeValues
+            );
         }
 
         $skillIds = collect($data['skills'] ?? [])
@@ -220,6 +257,28 @@ class CharacterController extends Controller
             ->with(['campaign', 'marca'])
             ->latest()
             ->get();
+    }
+
+    private function normalizeAttributeModifiers(?array $modifiers, array $attributes): array
+    {
+        $attributeMap = [
+            'POD' => 'pod',
+            'DES' => 'des',
+            'RES' => 'res',
+            'INT' => 'int',
+            'DET' => 'det',
+            'PRE' => 'pre',
+        ];
+
+        $normalized = [];
+
+        foreach ($attributeMap as $modifierKey => $attributeKey) {
+            $defaultModifier = (int) floor((((int) ($attributes[$attributeKey] ?? 0)) - 10) / 2);
+            $value = $modifiers[$modifierKey] ?? $defaultModifier;
+            $normalized[$modifierKey] = max(-99, min(99, (int) $value));
+        }
+
+        return $normalized;
     }
 
     public function destroy(string $id)

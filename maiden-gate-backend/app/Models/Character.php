@@ -28,6 +28,7 @@ class Character extends Model
         'int',
         'det',
         'pre',
+        'attribute_modifiers',
 
         'hp_current',
         'hp_max',
@@ -36,6 +37,10 @@ class Character extends Model
 
         'pa_max',
         'pr_max'
+    ];
+
+    protected $casts = [
+        'attribute_modifiers' => 'array',
     ];
 
     public function user() 
