@@ -61,12 +61,12 @@ const baseCampaign: PlayerCampaignData = {
     historia:
       "Lirien aprendeu a controlar a própria respiração antes de entender o peso das marcas. Hoje segue a Flor do Abismo buscando respostas sobre os ecos antigos da torre.",
     atributos: [
-      { nome: "POD", valor: 12, mod: 1 },
-      { nome: "DES", valor: 16, mod: 3 },
-      { nome: "RES", valor: 14, mod: 2 },
-      { nome: "INT", valor: 18, mod: 4 },
-      { nome: "DET", valor: 13, mod: 1 },
-      { nome: "PRE", valor: 10, mod: 0 },
+      { key: "POD", nome: "POD", valor: 12, mod: 1 },
+      { key: "DES", nome: "DES", valor: 16, mod: 3 },
+      { key: "RES", nome: "RES", valor: 14, mod: 2 },
+      { key: "INT", nome: "INT", valor: 18, mod: 4 },
+      { key: "DET", nome: "DET", valor: 13, mod: 1 },
+      { key: "PRE", nome: "PRE", valor: 10, mod: 0 },
     ],
     habilidades: [
       {

@@ -42,8 +42,36 @@ function getNumber(value: unknown, fallback = 0) {
   return Number.isFinite(parsed) ? parsed : fallback;
 }
 
-function getAttributeMod(value: number) {
-  return Math.floor((value - 10) / 2);
+function getAttributeModifiers(
+  value: unknown,
+): Partial<Record<AttributeKey, number>> {
+  if (!value) return {};
+
+  let parsed = value;
+
+  if (typeof value === "string") {
+    try {
+      parsed = JSON.parse(value);
+    } catch {
+      return {};
+    }
+  }
+
+  if (typeof parsed !== "object" || Array.isArray(parsed)) return {};
+
+  const source = parsed as Record<string, unknown>;
+  const keys: AttributeKey[] = ["POD", "DES", "RES", "INT", "DET", "PRE"];
+
+  return keys.reduce<Partial<Record<AttributeKey, number>>>((result, key) => {
+    const rawValue = source[key] ?? source[key.toLowerCase()];
+    const numberValue = Number(rawValue);
+
+    if (Number.isFinite(numberValue)) {
+      result[key] = numberValue;
+    }
+
+    return result;
+  }, {});
 }
 
 function getSkillType(type?: string | null): CharacterSkill["tipo"] {
@@ -134,6 +162,10 @@ function mapCharacter(character: any, campaignName: string) {
       { key: "PRE", nome: "PRE", valor: getNumber(character?.pre, 0) },
     ];
 
+  const storedModifiers = getAttributeModifiers(
+    character?.attribute_modifiers ?? character?.attributeModifiers,
+  );
+
   const skills = (character?.skills ?? [])
     .filter((skill: any) => skill?.pivot?.equipped ?? true)
     .map((skill: any) => ({
@@ -165,9 +197,10 @@ function mapCharacter(character: any, campaignName: string) {
     xp: getNumber(character?.exp, 0),
     xpProximo: 1000,
     atributos: attributes.map((attribute) => ({
+      key: attribute.key,
       nome: attribute.nome,
       valor: attribute.valor,
-      mod: getAttributeMod(attribute.valor),
+      mod: storedModifiers[attribute.key] ?? 0,
     })),
     habilidades: skills,
     origem: character?.origin ?? "",

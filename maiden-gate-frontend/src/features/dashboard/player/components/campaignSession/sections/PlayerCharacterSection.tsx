@@ -4,16 +4,21 @@ import {
   BarChart2,
   CheckCircle2,
   Heart,
+  Pencil,
   Shield,
   Star,
+  X,
   Zap,
 } from "lucide-react";
 
 import { getStorageImageUrl } from "../../../../../../services/apiUrl";
-import type { PlayerCharacterFull } from "../../../types/player";
+import type { AttributeKey, PlayerCharacterFull } from "../../../types/player";
 
 import CharacterBattleResources from "../../character/CharacterBattleResources";
-import { updateCharacterProgress } from "../../../../services/characterCreationService";
+import {
+  updateCharacterModifiers,
+  updateCharacterProgress,
+} from "../../../../services/characterCreationService";
 
 type Props = {
   character: PlayerCharacterFull;
@@ -25,6 +30,16 @@ function clampNumber(value: number, min: number, max: number) {
   return Math.min(Math.max(value, min), max);
 }
 
+function getModifierDraft(character: PlayerCharacterFull) {
+  return character.atributos.reduce<Record<AttributeKey, number>>(
+    (modifiers, attribute) => {
+      modifiers[attribute.key] = attribute.mod;
+      return modifiers;
+    },
+    { POD: 0, DES: 0, RES: 0, INT: 0, DET: 0, PRE: 0 },
+  );
+}
+
 export default function PlayerCharacterSection({
   character,
   onUpdated,
@@ -34,11 +49,24 @@ export default function PlayerCharacterSection({
   const [isSavingProgress, setIsSavingProgress] = useState(false);
   const [progressSaved, setProgressSaved] = useState(false);
   const [progressError, setProgressError] = useState<string | null>(null);
+  const [modifierDraft, setModifierDraft] = useState(() =>
+    getModifierDraft(character),
+  );
+  const [isEditingModifiers, setIsEditingModifiers] = useState(false);
+  const [isSavingModifiers, setIsSavingModifiers] = useState(false);
+  const [modifiersSaved, setModifiersSaved] = useState(false);
+  const [modifierError, setModifierError] = useState<string | null>(null);
 
   useEffect(() => {
     setHpDraft(character.hp);
     setXpDraft(character.xp);
   }, [character.hp, character.xp]);
+
+  useEffect(() => {
+    if (!isEditingModifiers) {
+      setModifierDraft(getModifierDraft(character));
+    }
+  }, [character, isEditingModifiers]);
 
   const hpMax = Math.max(character.hpMax, 1);
   const xpMax = Math.max(character.xpProximo, 1000);
@@ -47,6 +75,43 @@ export default function PlayerCharacterSection({
 
   const hasProgressChanges =
     hpDraft !== character.hp || xpDraft !== character.xp;
+
+  function handleEditModifiers() {
+    setModifierDraft(getModifierDraft(character));
+    setModifierError(null);
+    setIsEditingModifiers(true);
+  }
+
+  function handleCancelModifiers() {
+    setModifierDraft(getModifierDraft(character));
+    setModifierError(null);
+    setIsEditingModifiers(false);
+  }
+
+  function handleModifierChange(key: AttributeKey, value: number) {
+    setModifierDraft((current) => ({
+      ...current,
+      [key]: clampNumber(value, -99, 99),
+    }));
+  }
+
+  async function handleSaveModifiers() {
+    try {
+      setIsSavingModifiers(true);
+      setModifierError(null);
+
+      await updateCharacterModifiers(character.id, modifierDraft);
+
+      setModifiersSaved(true);
+      setIsEditingModifiers(false);
+      setTimeout(() => setModifiersSaved(false), 1200);
+      onUpdated?.();
+    } catch {
+      setModifierError("Não foi possível atualizar os modificadores.");
+    } finally {
+      setIsSavingModifiers(false);
+    }
+  }
 
   async function handleSaveProgress() {
     try {
@@ -209,13 +274,27 @@ export default function PlayerCharacterSection({
       </div>
 
       <div className="rounded-2xl border border-amber-900/25 bg-slate-900/50 p-5">
-        <h3 className="mb-4 flex items-center gap-2 text-sm font-semibold uppercase tracking-wider text-amber-100/60">
-          <BarChart2 className="h-4 w-4 text-amber-400" /> Atributos
-        </h3>
+        <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
+          <h3 className="flex items-center gap-2 text-sm font-semibold uppercase tracking-wider text-amber-100/60">
+            <BarChart2 className="h-4 w-4 text-amber-400" /> Atributos
+          </h3>
+
+          {!isEditingModifiers && (
+            <button
+              type="button"
+              onClick={handleEditModifiers}
+              className="flex items-center gap-2 rounded-xl border border-amber-500/30 bg-amber-500/10 px-3 py-2 text-xs font-semibold text-amber-300 transition hover:bg-amber-500/20"
+            >
+              <Pencil className="h-3.5 w-3.5" />
+              Editar modificadores
+            </button>
+          )}
+        </div>
+
         <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6">
           {character.atributos.map((attribute) => (
             <div
-              key={attribute.nome}
+              key={attribute.key}
               className="rounded-xl bg-slate-800/50 p-3 text-center"
             >
               <p className="mb-1 text-xs uppercase tracking-wide text-amber-100/40">
@@ -224,15 +303,70 @@ export default function PlayerCharacterSection({
               <p className="text-xl font-bold text-amber-100">
                 {attribute.valor}
               </p>
-              <p
-                className={`text-xs font-medium ${attribute.mod >= 0 ? "text-emerald-400" : "text-rose-400"}`}
-              >
-                {attribute.mod >= 0 ? "+" : ""}
-                {attribute.mod}
-              </p>
+
+              {isEditingModifiers ? (
+                <label className="mt-2 block">
+                  <span className="sr-only">
+                    Modificador de {attribute.nome}
+                  </span>
+                  <input
+                    type="number"
+                    min={-99}
+                    max={99}
+                    value={modifierDraft[attribute.key]}
+                    onChange={(event) =>
+                      handleModifierChange(
+                        attribute.key,
+                        Number(event.target.value) || 0,
+                      )
+                    }
+                    className="w-full rounded-lg border border-amber-500/25 bg-slate-950/60 px-2 py-1.5 text-center text-sm font-semibold text-amber-100 outline-none transition focus:border-amber-400/60"
+                  />
+                </label>
+              ) : (
+                <p
+                  className={`text-xs font-medium ${attribute.mod >= 0 ? "text-emerald-400" : "text-rose-400"}`}
+                >
+                  {attribute.mod >= 0 ? "+" : ""}
+                  {attribute.mod}
+                </p>
+              )}
             </div>
           ))}
         </div>
+
+        {isEditingModifiers && (
+          <div className="mt-4 flex flex-wrap justify-end gap-2 border-t border-amber-900/15 pt-4">
+            <button
+              type="button"
+              disabled={isSavingModifiers}
+              onClick={handleCancelModifiers}
+              className="flex items-center gap-2 rounded-xl border border-slate-600/50 px-4 py-2 text-sm font-semibold text-amber-100/60 transition hover:bg-slate-800/70 disabled:opacity-50"
+            >
+              <X className="h-4 w-4" />
+              Cancelar
+            </button>
+            <button
+              type="button"
+              disabled={isSavingModifiers}
+              onClick={handleSaveModifiers}
+              className="flex items-center gap-2 rounded-xl border border-amber-500/30 bg-amber-500/10 px-4 py-2 text-sm font-semibold text-amber-300 transition hover:bg-amber-500/20 disabled:cursor-not-allowed disabled:opacity-50"
+            >
+              {isSavingModifiers ? "Salvando..." : "Salvar modificadores"}
+            </button>
+          </div>
+        )}
+
+        {modifiersSaved && (
+          <p className="mt-3 flex items-center gap-2 text-sm text-emerald-300">
+            <CheckCircle2 className="h-4 w-4" />
+            Modificadores atualizados.
+          </p>
+        )}
+
+        {modifierError && (
+          <p className="mt-3 text-sm text-rose-300">{modifierError}</p>
+        )}
       </div>
 
       <div className="rounded-2xl border border-amber-900/25 bg-slate-900/50 p-5">

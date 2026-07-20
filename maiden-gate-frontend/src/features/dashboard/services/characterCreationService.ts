@@ -424,3 +424,14 @@ export async function updateCharacterProgress(
 
   return mapEditableCharacter(response.data.character ?? response.data);
 }
+
+export async function updateCharacterModifiers(
+  characterId: string | number,
+  modifiers: Record<AttributeKey, number>,
+) {
+  const response = await api.put(`/characters/${characterId}`, {
+    attribute_modifiers: modifiers,
+  });
+
+  return response.data.character ?? response.data;
+}

@@ -1739,6 +1739,14 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
           "Filha de Henrietta e Elio e figura central da campanha. Sua localização inicial é a Cidade Catedral, durante o Festival da Flor. Após sua revelação, seu destino dependerá das decisões dos jogadores e das facções.",
         skills:
           "Autoridade Real. Luz Nobre. Dupla Marca. Resistência ao Miasma. Presença da Donzela.",
+        stats: {
+          level: 22,
+          hp: 220,
+          mana: 210,
+          atk: 28,
+          def: 24,
+          speed: 26,
+        },
       },
       {
         collectionId: "dominio-manifesto",
@@ -1755,6 +1763,14 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
           "Rainha da linhagem principal e mãe de Eleonora. Governa a partir do Castelo da Coroa Áurea e tenta preservar a estabilidade do Manifesto enquanto a família real começa a se fragmentar.",
         skills:
           "Comando Real. Luz Sagrada. Vontade Inabalável. Sangue Nobre. Decreto da Coroa.",
+        stats: {
+          level: 28,
+          hp: 300,
+          mana: 260,
+          atk: 32,
+          def: 34,
+          speed: 24,
+        },
       },
       {
         collectionId: "dominio-manifesto",
@@ -1771,6 +1787,14 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
           "Pai de Eleonora e marido de Henrietta. Desapareceu antes do início da campanha, deixando poucas pistas e versões contraditórias sobre seu destino. Pode aparecer em diferentes momentos conforme o desenvolvimento da história.",
         skills:
           "Luz do Soberano. Proteção Real. Investigação Arcana. Resistência Dracônica.",
+        stats: {
+          level: 28,
+          hp: 290,
+          mana: 230,
+          atk: 34,
+          def: 32,
+          speed: 26,
+        },
       },
       {
         collectionId: "dominio-manifesto",
@@ -1787,6 +1811,14 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
           "Primo de Eleonora e irmão de Rose. Atua como estudioso e representante mágico da família real, circulando entre a Cidade Catedral, Songbird e Auréon.",
         skills:
           "Círculo Luminoso. Barreira Prismática. Selo Real. Leitura de Marcas.",
+        stats: {
+          level: 20,
+          hp: 170,
+          mana: 240,
+          atk: 22,
+          def: 20,
+          speed: 22,
+        },
       },
       {
         collectionId: "dominio-manifesto",
@@ -1803,6 +1835,14 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
           "Irmã de Henrietta e tia de Eleonora. Atua como conselheira da família real e pode tentar proteger a Donzela quando o restante da corte exigir medidas mais violentas.",
         skills:
           "Memória Radiante. Análise de Marca. Luz Reveladora. Conselho Sereno.",
+        stats: {
+          level: 22,
+          hp: 190,
+          mana: 250,
+          atk: 20,
+          def: 23,
+          speed: 21,
+        },
       },
       {
         collectionId: "dominio-manifesto",
@@ -1819,6 +1859,14 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
           "Irmã de Uriel e responsável por anúncios, cerimônias e apresentações ligadas à família real. Costuma circular entre Songbird e a Cidade Catedral.",
         skills:
           "Voz da Coroa. Canto de Atenção. Eco Majestoso. Presença de Palco.",
+        stats: {
+          level: 18,
+          hp: 155,
+          mana: 220,
+          atk: 18,
+          def: 18,
+          speed: 22,
+        },
       },
 
       // =========================================================
@@ -1840,6 +1888,14 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
           "Guia urbano que conhece caminhos, rumores e pessoas importantes da Cidade Catedral. Pode acompanhar os jogadores durante o Festival ou reaparecer em outras regiões conforme sua missão de espionagem.",
         skills:
           "Olhar de Pássaro. Fuga Rápida. Fala Persuasiva. Rede de Informantes.",
+        stats: {
+          level: 8,
+          hp: 161,
+          mana: 70,
+          atk: 20,
+          def: 16,
+          speed: 18,
+        },
       },
       {
         collectionId: "dominio-manifesto",
@@ -1856,6 +1912,14 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
           "Uma das principais figuras religiosas da Cidade Catedral. Seus sermões ajudam a consolidar a fé popular na família real e terão grande influência após a revelação de Eleonora.",
         skills:
           "Sermão Radiante. Persuasão Sagrada. Julgamento Público. Voz da Doutrina.",
+        stats: {
+          level: 11,
+          hp: 162,
+          mana: 145,
+          atk: 20,
+          def: 21,
+          speed: 15,
+        },
       },
       {
         collectionId: "dominio-manifesto",
@@ -1872,6 +1936,14 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
           "Comanda os guardas responsáveis pela Ponte da Catedral. Durante o Festival, precisa lidar com documentos falsificados, visitantes da Marca Oculto e ordens contraditórias vindas da família real.",
         skills:
           "Comando de Guarda. Bloqueio Radiante. Inspeção Rigorosa. Formação de Ponte.",
+        stats: {
+          level: 14,
+          hp: 213,
+          mana: 120,
+          atk: 28,
+          def: 28,
+          speed: 18,
+        },
       },
 
       // =========================================================
@@ -1893,6 +1965,14 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
           "Morador de Maré Baixa com corpo humanoide, escamas, guelras e características de peixe. Conhece detalhes sobre as construções próximas à Flor e possui um irmão gêmeo chamado Dylon no território do Sindicato.",
         skills:
           "Força de Maré. Respiração Aquática. Trabalho em Pedra. Memória das Obras.",
+        stats: {
+          level: 16,
+          hp: 217,
+          mana: 110,
+          atk: 28,
+          def: 23,
+          speed: 21,
+        },
       },
 
       // =========================================================
@@ -1914,6 +1994,14 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
           "Principal autoridade das escolas de Songbird. Entre apresentações, aulas e reuniões políticas, mantém as instituições alinhadas aos interesses do Manifesto.",
         skills:
           "Canto de Comando. Harmonia Curativa. Voz Paralisante. Autoridade de Palco.",
+        stats: {
+          level: 24,
+          hp: 210,
+          mana: 290,
+          atk: 24,
+          def: 22,
+          speed: 23,
+        },
       },
       {
         collectionId: "dominio-manifesto",
@@ -1930,6 +2018,14 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
           "Compositor respeitado de Songbird e colaborador frequente das escolas. Pode auxiliar ou colocar os jogadores em perigo ao tentar completar sua nova obra.",
         skills:
           "Melodia Persistente. Inspiração Súbita. Eco Emocional. Memória Musical.",
+        stats: {
+          level: 8,
+          hp: 111,
+          mana: 180,
+          atk: 14,
+          def: 13,
+          speed: 16,
+        },
       },
       {
         collectionId: "dominio-manifesto",
@@ -1946,6 +2042,14 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
           "Estudante de uma das Três Escolas de Songbird. Pode envolver os jogadores em rivalidades escolares, apresentações sabotadas ou no desaparecimento de outra aluna.",
         skills:
           "Nota Aguda. Canto de Distração. Improviso. Sensibilidade Angelical.",
+        stats: {
+          level: 9,
+          hp: 118,
+          mana: 145,
+          atk: 15,
+          def: 14,
+          speed: 17,
+        },
       },
 
       // =========================================================
@@ -1967,6 +2071,14 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
           "Comandante responsável por tropas e bases militares da Área 1. Costuma circular entre Forte Lúmen, Forte das Vigílias, Auréon e o Acampamento dos Errantes.",
         skills:
           "Lâmina Solar. Formação Defensiva. Intimidação Militar. Disciplina de Ferro.",
+        stats: {
+          level: 20,
+          hp: 240,
+          mana: 100,
+          atk: 30,
+          def: 29,
+          speed: 20,
+        },
       },
 
       // =========================================================
@@ -1988,6 +2100,14 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
           "Um dos líderes mais respeitados do Acampamento dos Errantes. Representa aventureiros, sobreviventes e guerreiros que rejeitam o controle do Manifesto.",
         skills:
           "Força Anômala. Rugido de Guerra. Resistência Bruta. Proteção Instintiva.",
+        stats: {
+          level: 16,
+          hp: 217,
+          mana: 110,
+          atk: 28,
+          def: 23,
+          speed: 21,
+        },
       },
       {
         collectionId: "regiao-cratera",
@@ -2004,6 +2124,14 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
           "Autoridade enviada pelo Manifesto para registrar expedições, observar os guerreiros e impedir tentativas descontroladas de atravessar o Miasma da cratera.",
         skills:
           "Respiração da Terra. Passo Firme. Controle de Multidão. Leitura de Terreno.",
+        stats: {
+          level: 10,
+          hp: 140,
+          mana: 100,
+          atk: 20,
+          def: 16,
+          speed: 23,
+        },
       },
       {
         collectionId: "regiao-cratera",
@@ -2020,6 +2148,14 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
           "Artesão de Rochaviva especializado na criação e no reparo de equipamentos para aventureiros. Sua habilidade prova que pessoas sem Marca ainda podem exercer funções decisivas.",
         skills:
           "Forja Precisa. Reparação de Campo. Análise de Material. Improvisação Mecânica.",
+        stats: {
+          level: 10,
+          hp: 125,
+          mana: 60,
+          atk: 16,
+          def: 15,
+          speed: 15,
+        },
       },
 
       // =========================================================
@@ -2041,6 +2177,14 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
           "Raro elfo que vive entre os samurais de Seiran. Sua idade e experiência fazem com que conheça acontecimentos que foram esquecidos por comunidades humanas.",
         skills:
           "Respiração do Céu. Corte Sereno. Longevidade Élfica. Percepção Natural.",
+        stats: {
+          level: 24,
+          hp: 230,
+          mana: 140,
+          atk: 34,
+          def: 27,
+          speed: 32,
+        },
       },
       {
         collectionId: "dominio-manifesto",
@@ -2056,6 +2200,14 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
           "Guerreira originária de Seiran. Pode acompanhar os jogadores em expedições, viajar para outras áreas e atuar como ligação entre os samurais e as demais facções.",
         skills:
           "Respiração do Vento. Corte Silencioso. Passo Leve. Instinto do Caçador.",
+        stats: {
+          level: 18,
+          hp: 175,
+          mana: 110,
+          atk: 27,
+          def: 21,
+          speed: 30,
+        },
       },
 
       // =========================================================
@@ -2077,6 +2229,14 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
           "Uma das figuras mais influentes do Sindicato e principal autoridade de Noctária. Defende publicamente os rejeitados, mas aceita atrocidades em nome da sobrevivência da facção.",
         skills:
           "Porta do Vazio. Constructo Sombrio. Véu de Silêncio. Ordem Oculta.",
+        stats: {
+          level: 26,
+          hp: 235,
+          mana: 300,
+          atk: 28,
+          def: 26,
+          speed: 27,
+        },
       },
       {
         collectionId: "sindicato-sombras",
@@ -2092,6 +2252,14 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
           "Mensageira que percorre Noctária, Umbraford e outras regiões. Pode se tornar aliada dos jogadores caso perceba que eles investigam os desaparecimentos.",
         skills:
           "Corrida Instintiva. Sobrevivência. Rotas Secretas. Memória de Caminhos.",
+        stats: {
+          level: 12,
+          hp: 189,
+          mana: 90,
+          atk: 24,
+          def: 20,
+          speed: 22,
+        },
       },
       {
         collectionId: "sindicato-sombras",
@@ -2108,6 +2276,14 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
           "Autoridade encarregada de proteger informações e operações relacionadas à rede do Vazio. Pode ser encontrado em diferentes portais da Área 1.",
         skills:
           "Força do Guardião. Passagem Rápida. Interceptação. Resistência ao Vazio.",
+        stats: {
+          level: 20,
+          hp: 240,
+          mana: 100,
+          atk: 30,
+          def: 27,
+          speed: 22,
+        },
       },
       {
         collectionId: "sindicato-sombras",
@@ -2124,6 +2300,14 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
           "Comerciante cuja base declarada fica em Noctária, embora possa aparecer em qualquer ponto do mapa. Sempre possui um item útil, mas costuma exigir segredos, promessas ou favores como pagamento.",
         skills:
           "Estoque Improvável. Barganha Incomum. Aparição Oportuna. Leitura de Desejos.",
+        stats: {
+          level: 25,
+          hp: 220,
+          mana: 220,
+          atk: 24,
+          def: 24,
+          speed: 30,
+        },
       },
 
       // =========================================================
@@ -2145,6 +2329,14 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
           "Irmão gêmeo de Dylan, de Maré Baixa. Utiliza técnicas de Respiração para explorar as margens e suportar os efeitos do lago contaminado.",
         skills:
           "Respiração da Maré. Mergulho Profundo. Sentido Aquático. Resistência ao Frio.",
+        stats: {
+          level: 12,
+          hp: 154,
+          mana: 150,
+          atk: 22,
+          def: 18,
+          speed: 29,
+        },
       },
       {
         collectionId: "sindicato-sombras",
@@ -2161,6 +2353,14 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
           "Organiza expedições, distribui recursos e controla conflitos dentro do Acampamento do Véu. Sua autoridade surgiu por necessidade, não por nomeação oficial.",
         skills:
           "Correntes Sombrias. Ordem de Retirada. Véu Protetor. Intimidação.",
+        stats: {
+          level: 8,
+          hp: 121,
+          mana: 120,
+          atk: 16,
+          def: 14,
+          speed: 18,
+        },
       },
 
       // =========================================================
@@ -2182,6 +2382,14 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
           "Moradora idosa de Vila Névoa Baixa. Conhece histórias da costa, rotas de contrabando e acontecimentos que as autoridades preferem ignorar.",
         skills:
           "Instinto Marítimo. Resistência Física. Conhecimento Costeiro. Olhar Experiente.",
+        stats: {
+          level: 8,
+          hp: 161,
+          mana: 70,
+          atk: 20,
+          def: 16,
+          speed: 14,
+        },
       },
       {
         collectionId: "sindicato-sombras",
@@ -2198,6 +2406,14 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
           "Agente operacional que conhece os três portais da Área 1. Transporta mensagens, materiais e pessoas pela Cordilheira Silente.",
         skills:
           "Passagem Sombria. Selo de Portal. Ocultação. Rastreamento de Energia.",
+        stats: {
+          level: 12,
+          hp: 149,
+          mana: 140,
+          atk: 20,
+          def: 18,
+          speed: 26,
+        },
       },
 
       // =========================================================
@@ -2218,6 +2434,14 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
         description:
           "Modelo reutilizável para guardas da Ponte da Catedral, da Praça da Flor e das entradas do castelo.",
         skills: "Inspeção. Lança Radiante. Formação de Guarda. Alerta.",
+        stats: {
+          level: 7,
+          hp: 134,
+          mana: 85,
+          atk: 16,
+          def: 17,
+          speed: 11,
+        },
       },
       {
         collectionId: "personagens-genericos",
@@ -2233,6 +2457,14 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
         description:
           "Modelo reutilizável para soldados de bases, fortes, patrulhas e acampamentos do Manifesto.",
         skills: "Formação Militar. Lança de Luz. Defesa Coordenada. Marcha.",
+        stats: {
+          level: 7,
+          hp: 164,
+          mana: 85,
+          atk: 21,
+          def: 21,
+          speed: 11,
+        },
       },
       {
         collectionId: "personagens-genericos",
@@ -2247,6 +2479,14 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
           "Modelo reutilizável para guerreiros de elite que escoltam nobres, protegem castelos e lideram pequenos grupos militares.",
         skills:
           "Espada Radiante. Investida. Proteção Nobre. Comando de Esquadrão.",
+        stats: {
+          level: 9,
+          hp: 178,
+          mana: 95,
+          atk: 23,
+          def: 23,
+          speed: 13,
+        },
       },
       {
         collectionId: "personagens-genericos",
@@ -2263,6 +2503,14 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
           "Modelo reutilizável para sacerdotes, pregadores e responsáveis por cerimônias religiosas.",
         skills:
           "Bênção Radiante. Sermão. Conhecimento Religioso. Primeiros Socorros.",
+        stats: {
+          level: 6,
+          hp: 127,
+          mana: 120,
+          atk: 15,
+          def: 16,
+          speed: 10,
+        },
       },
       {
         collectionId: "personagens-genericos",
@@ -2279,6 +2527,14 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
           "Modelo reutilizável para homens pertencentes às famílias nobres do Manifesto.",
         skills:
           "Etiqueta. Influência Política. Persuasão. Conhecimento da Corte.",
+        stats: {
+          level: 3,
+          hp: 106,
+          mana: 65,
+          atk: 12,
+          def: 14,
+          speed: 8,
+        },
       },
       {
         collectionId: "personagens-genericos",
@@ -2294,6 +2550,14 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
           "Modelo reutilizável para mulheres pertencentes às famílias nobres do Manifesto.",
         skills:
           "Etiqueta. Influência Política. Leitura Social. Conhecimento da Corte.",
+        stats: {
+          level: 3,
+          hp: 106,
+          mana: 65,
+          atk: 12,
+          def: 14,
+          speed: 8,
+        },
       },
       {
         collectionId: "personagens-genericos",
@@ -2310,6 +2574,14 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
           "Modelo reutilizável para pedreiros, carregadores, construtores e trabalhadores responsáveis pelas obras da Cidade Catedral.",
         skills:
           "Trabalho Pesado. Conhecimento das Obras. Improvisação. Resistência.",
+        stats: {
+          level: 3,
+          hp: 76,
+          mana: 25,
+          atk: 9,
+          def: 9,
+          speed: 9,
+        },
       },
 
       // =========================================================
@@ -2330,6 +2602,14 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
         description:
           "Modelo reutilizável para jovens estudantes das Três Escolas de Songbird.",
         skills: "Canto Básico. Controle da Voz. Harmonia. Apresentação.",
+        stats: {
+          level: 4,
+          hp: 83,
+          mana: 120,
+          atk: 10,
+          def: 10,
+          speed: 13,
+        },
       },
       {
         collectionId: "personagens-genericos",
@@ -2346,6 +2626,14 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
           "Modelo reutilizável para professoras, instrutoras e responsáveis pelas escolas de Songbird.",
         skills:
           "Canto de Comando. Harmonia. Avaliação Musical. Controle Emocional.",
+        stats: {
+          level: 6,
+          hp: 97,
+          mana: 170,
+          atk: 12,
+          def: 11,
+          speed: 14,
+        },
       },
       {
         collectionId: "personagens-genericos",
@@ -2361,6 +2649,14 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
           "Modelo reutilizável para cantores, músicos, atores e artistas de Songbird.",
         skills:
           "Performance. Persuasão Artística. Improviso. Presença de Palco.",
+        stats: {
+          level: 3,
+          hp: 76,
+          mana: 115,
+          atk: 9,
+          def: 9,
+          speed: 12,
+        },
       },
 
       // =========================================================
@@ -2382,6 +2678,14 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
           "Modelo reutilizável para homens que vivem em vilas e cidades costeiras.",
         skills:
           "Conhecimento Local. Pesca Básica. Navegação Costeira. Percepção do Clima.",
+        stats: {
+          level: 6,
+          hp: 97,
+          mana: 80,
+          atk: 12,
+          def: 11,
+          speed: 11,
+        },
       },
       {
         collectionId: "personagens-genericos",
@@ -2398,6 +2702,14 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
           "Modelo reutilizável para mulheres que vivem em vilas e cidades costeiras.",
         skills:
           "Conhecimento Local. Comércio Costeiro. Navegação Básica. Percepção do Clima.",
+        stats: {
+          level: 6,
+          hp: 97,
+          mana: 80,
+          atk: 12,
+          def: 11,
+          speed: 11,
+        },
       },
       {
         collectionId: "personagens-genericos",
@@ -2414,6 +2726,14 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
           "Modelo reutilizável para crianças das comunidades costeiras.",
         skills:
           "Furtividade Infantil. Conhecimento de Atalhos. Curiosidade. Observação.",
+        stats: {
+          level: 1,
+          hp: 62,
+          mana: 15,
+          atk: 7,
+          def: 7,
+          speed: 7,
+        },
       },
       {
         collectionId: "personagens-genericos",
@@ -2428,6 +2748,14 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
         description:
           "Modelo reutilizável para pescadores de Maré Baixa, Ventomar, Névoa Baixa e outros portos.",
         skills: "Pesca. Navegação. Leitura do Mar. Sobrevivência Costeira.",
+        stats: {
+          level: 3,
+          hp: 76,
+          mana: 25,
+          atk: 9,
+          def: 9,
+          speed: 9,
+        },
       },
       {
         collectionId: "personagens-genericos",
@@ -2444,6 +2772,14 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
           "Modelo reutilizável para marinheiras, tripulantes e responsáveis por embarcações.",
         skills:
           "Navegação. Manutenção Naval. Combate a Bordo. Leitura de Rotas.",
+        stats: {
+          level: 3,
+          hp: 76,
+          mana: 25,
+          atk: 9,
+          def: 9,
+          speed: 9,
+        },
       },
 
       // =========================================================
@@ -2465,6 +2801,14 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
           "Modelo reutilizável para aventureiros reunidos no Acampamento dos Errantes.",
         skills:
           "Sobrevivência. Combate Improvisado. Exploração. Resistência ao Medo.",
+        stats: {
+          level: 11,
+          hp: 132,
+          mana: 65,
+          atk: 17,
+          def: 16,
+          speed: 16,
+        },
       },
       {
         collectionId: "personagens-genericos",
@@ -2480,6 +2824,14 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
         description:
           "Modelo reutilizável para mercenárias e caçadoras que atuam perto da cratera.",
         skills: "Combate Armado. Rastreamento. Negociação. Retirada Rápida.",
+        stats: {
+          level: 7,
+          hp: 134,
+          mana: 45,
+          atk: 18,
+          def: 16,
+          speed: 12,
+        },
       },
       {
         collectionId: "personagens-genericos",
@@ -2496,6 +2848,14 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
           "Modelo reutilizável para os numerosos guerreiros da Marca Maso encontrados em Rochaviva.",
         skills:
           "Estilo Próprio. Resistência Bruta. Ataque Instintivo. Intimidação.",
+        stats: {
+          level: 11,
+          hp: 212,
+          mana: 85,
+          atk: 28,
+          def: 23,
+          speed: 17,
+        },
       },
       {
         collectionId: "personagens-genericos",
@@ -2510,6 +2870,14 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
         description:
           "Modelo reutilizável para ferreiras, costureiras, inventoras e reparadoras de Rochaviva.",
         skills: "Artesanato. Reparação. Avaliação de Materiais. Improvisação.",
+        stats: {
+          level: 3,
+          hp: 76,
+          mana: 25,
+          atk: 9,
+          def: 9,
+          speed: 9,
+        },
       },
 
       // =========================================================
@@ -2531,6 +2899,14 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
           "Modelo reutilizável para soldados das bases, acampamentos e patrulhas do Sindicato.",
         skills:
           "Combate Coordenado. Emboscada. Sobrevivência. Defesa Improvisada.",
+        stats: {
+          level: 7,
+          hp: 134,
+          mana: 45,
+          atk: 18,
+          def: 16,
+          speed: 12,
+        },
       },
       {
         collectionId: "personagens-genericos",
@@ -2546,6 +2922,14 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
         description:
           "Modelo reutilizável para espiões, investigadores e operadores clandestinos do Sindicato.",
         skills: "Disfarce. Ocultação. Coleta de Informações. Fuga.",
+        stats: {
+          level: 7,
+          hp: 114,
+          mana: 115,
+          atk: 15,
+          def: 13,
+          speed: 21,
+        },
       },
       {
         collectionId: "personagens-genericos",
@@ -2562,6 +2946,14 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
           "Modelo reutilizável para guardas posicionados nos portais da Cordilheira Silente.",
         skills:
           "Defesa Umbral. Alerta de Energia. Bloqueio de Passagem. Silêncio.",
+        stats: {
+          level: 9,
+          hp: 158,
+          mana: 125,
+          atk: 22,
+          def: 19,
+          speed: 19,
+        },
       },
       {
         collectionId: "personagens-genericos",
@@ -2577,6 +2969,14 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
         description:
           "Modelo reutilizável para comerciantes dos mercados e túneis de Noctária.",
         skills: "Barganha. Avaliação de Item. Contatos Locais. Persuasão.",
+        stats: {
+          level: 3,
+          hp: 76,
+          mana: 25,
+          atk: 9,
+          def: 9,
+          speed: 9,
+        },
       },
       {
         collectionId: "personagens-genericos",
@@ -2593,6 +2993,14 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
           "Modelo reutilizável para homens que vivem nos bairros de Noctária.",
         skills:
           "Conhecimento Urbano. Rotas Subterrâneas. Sobrevivência. Contatos.",
+        stats: {
+          level: 6,
+          hp: 97,
+          mana: 80,
+          atk: 12,
+          def: 11,
+          speed: 11,
+        },
       },
       {
         collectionId: "personagens-genericos",
@@ -2609,6 +3017,14 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
           "Modelo reutilizável para mulheres que vivem nos bairros de Noctária.",
         skills:
           "Conhecimento Urbano. Rotas Subterrâneas. Persuasão Local. Sobrevivência.",
+        stats: {
+          level: 6,
+          hp: 97,
+          mana: 80,
+          atk: 12,
+          def: 11,
+          speed: 11,
+        },
       },
       {
         collectionId: "personagens-genericos",
@@ -2623,6 +3039,14 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
         description:
           "Modelo reutilizável para pessoas que transportam mercadorias e viajantes pelas rotas clandestinas.",
         skills: "Rotas Secretas. Ocultação de Carga. Barganha. Fuga.",
+        stats: {
+          level: 7,
+          hp: 104,
+          mana: 45,
+          atk: 13,
+          def: 12,
+          speed: 16,
+        },
       },
       {
         collectionId: "personagens-genericos",
@@ -2638,6 +3062,14 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
           "Modelo reutilizável para exploradores, estudiosos e aventureiros do Acampamento do Véu.",
         skills:
           "Exploração. Resistência ao Miasma. Coleta de Amostras. Orientação.",
+        stats: {
+          level: 7,
+          hp: 104,
+          mana: 85,
+          atk: 13,
+          def: 12,
+          speed: 16,
+        },
       },
 
       // =========================================================
@@ -2659,6 +3091,14 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
           "Guia oficial responsável por conduzir nobres e turistas pelos três campos da Planície de Vidro. Conhece rotas seguras, histórias da batalha e pontos que foram fechados pelas autoridades. Sua base fica em Prismária, mas passa a maior parte do tempo na planície.",
         skills:
           "Luz de Orientação. Conhecimento da Planície. Discurso Turístico. Detecção de Cristais.",
+        stats: {
+          level: 14,
+          hp: 183,
+          mana: 120,
+          atk: 23,
+          def: 24,
+          speed: 22,
+        },
       },
       {
         collectionId: "dominio-manifesto-area-2",
@@ -2675,6 +3115,14 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
           "Integrante distante da família real e portadora da Marca Maso. Supervisiona expedições, caça criaturas cristalinas e acompanha situações que os guias turísticos não conseguem controlar. Costuma circular entre Prismária, a Planície de Vidro e o Vale Escamado.",
         skills:
           "Impacto Instintivo. Ruptura de Cristal. Resistência Mineral. Caçada Silenciosa.",
+        stats: {
+          level: 20,
+          hp: 275,
+          mana: 130,
+          atk: 37,
+          def: 31,
+          speed: 25,
+        },
       },
 
       // =========================================================
@@ -2696,6 +3144,14 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
           "Um dos financiadores mais influentes de Nova Auréola. Dimos empresta dinheiro para comerciantes e nobres, acumulando favores e propriedades quando os contratos não são cumpridos.",
         skills:
           "Contrato Radiante. Cobrança Implacável. Influência Comercial. Memória de Dívidas.",
+        stats: {
+          level: 14,
+          hp: 183,
+          mana: 120,
+          atk: 23,
+          def: 24,
+          speed: 18,
+        },
       },
       {
         collectionId: "dominio-manifesto-area-2",
@@ -2712,6 +3168,14 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
           "Integrante distante da família real conhecida pelos duelos públicos realizados em Nova Auréola. Atua como representante da honra da corte, guarda particular e solucionadora de disputas entre famílias nobres.",
         skills:
           "Lâmina Radiante. Desafio Formal. Passo do Duelo. Contra-Ataque Luminoso.",
+        stats: {
+          level: 20,
+          hp: 255,
+          mana: 150,
+          atk: 34,
+          def: 33,
+          speed: 23,
+        },
       },
       {
         collectionId: "dominio-manifesto-area-2",
@@ -2728,6 +3192,14 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
           "Jovem herdeiro da família responsável pela Herdade Velária. Frequenta Nova Auréola, apresenta-se em salões aristocráticos e utiliza sua voz para representar os interesses comerciais da família.",
         skills:
           "Canto de Encanto. Voz Diplomática. Etiqueta Nobre. Harmonia Calmante.",
+        stats: {
+          level: 14,
+          hp: 153,
+          mana: 170,
+          atk: 20,
+          def: 19,
+          speed: 22,
+        },
       },
 
       // =========================================================
@@ -2749,6 +3221,14 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
           "Raro elfo que vive no Baixio de Auréola e trabalha nas plantações próximas. Sua longevidade permite que se lembre de como a região era antes da expansão das grandes propriedades.",
         skills:
           "Respiração da Terra. Leitura do Solo. Resistência ao Trabalho. Memória Élfica.",
+        stats: {
+          level: 14,
+          hp: 168,
+          mana: 120,
+          atk: 24,
+          def: 20,
+          speed: 27,
+        },
       },
 
       // =========================================================
@@ -2770,6 +3250,14 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
           "Prisioneiro da Penitenciária do Grilhão transportado diariamente para o Complexo Industrial de Ferrúria. Conhece rotas internas, horários de escolta e setores onde trabalhadores desapareceram.",
         skills:
           "Força de Sobrevivente. Improvisação com Ferramentas. Resistência à Dor. Fuga Instintiva.",
+        stats: {
+          level: 14,
+          hp: 203,
+          mana: 100,
+          atk: 26,
+          def: 22,
+          speed: 20,
+        },
       },
       {
         collectionId: "dominio-manifesto-area-2",
@@ -2786,6 +3274,14 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
           "Sacerdote idoso responsável pelas cerimônias do Templo da Expiação. Acompanha condenados antes de serem enviados às fábricas e mantém registros religiosos que não coincidem com os documentos da prisão.",
         skills:
           "Luz Penitente. Sermão de Obediência. Julgamento da Culpa. Supressão da Vontade.",
+        stats: {
+          level: 17,
+          hp: 204,
+          mana: 175,
+          atk: 26,
+          def: 26,
+          speed: 20,
+        },
       },
 
       // =========================================================
@@ -2807,6 +3303,14 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
           "Inspetor responsável por conferir cargas, autorizações e tripulações no maior porto militar do Manifesto. Pode bloquear a saída dos jogadores ou ajudá-los caso descubra uma irregularidade maior.",
         skills:
           "Inspeção Radiante. Autoridade Portuária. Leitura de Manifestos. Bloqueio Naval.",
+        stats: {
+          level: 17,
+          hp: 204,
+          mana: 135,
+          atk: 26,
+          def: 26,
+          speed: 20,
+        },
       },
 
       // =========================================================
@@ -2828,6 +3332,14 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
           "Uma das autoridades mais importantes do Sindicato. Sua base política fica no distrito superior de Véspera, embora viaje frequentemente para negociações, portais e encontros diplomáticos.",
         skills:
           "Passo Efêmero. Sombra Transitória. Dissolução Breve. Voz do Conselho.",
+        stats: {
+          level: 28,
+          hp: 230,
+          mana: 340,
+          atk: 30,
+          def: 26,
+          speed: 36,
+        },
       },
       {
         collectionId: "sindicato-sombras-area-2",
@@ -2844,6 +3356,14 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
           "Principal autoridade administrativa de Véspera. Precisa equilibrar os interesses da Coroa Negra, a insatisfação dos distritos inferiores e as ameaças provenientes da Barreira do Miasma.",
         skills:
           "Voz de Assembleia. Harmonia Coletiva. Canto de Contenção. Autoridade dos Distritos.",
+        stats: {
+          level: 17,
+          hp: 174,
+          mana: 185,
+          atk: 23,
+          def: 21,
+          speed: 24,
+        },
       },
 
       // =========================================================
@@ -2865,6 +3385,14 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
           "Representante informal dos habitantes de Vertígia. Organiza alimentos, reparos e evacuações nos níveis mais precários da cidade vertical.",
         skills:
           "Véu de Passagem. Organização Comunitária. Rotas Verticais. Sombra Protetora.",
+        stats: {
+          level: 22,
+          hp: 219,
+          mana: 190,
+          atk: 30,
+          def: 27,
+          speed: 31,
+        },
       },
       {
         collectionId: "sindicato-sombras-area-2",
@@ -2881,6 +3409,14 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
           "Ex-integrante da nobreza do Manifesto que abandonou sua posição após descobrir crimes escondidos pela corte. Atualmente protege comunidades de Vertígia e atua contra agentes que tentam silenciá-lo.",
         skills:
           "Fenda Abissal. Manto Sem Luz. Constructo Profundo. Conhecimento da Nobreza.",
+        stats: {
+          level: 26,
+          hp: 260,
+          mana: 310,
+          atk: 34,
+          def: 28,
+          speed: 28,
+        },
       },
       {
         collectionId: "sindicato-sombras-area-2",
@@ -2897,6 +3433,14 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
           "Engenheiro originário do Manifesto que trabalha na manutenção das plataformas, pontes e estruturas de Vertígia. Sua Marca desperta desconfiança, mas também é essencial para reforçar a cidade.",
         skills:
           "Estrutura Radiante. Reforço de Plataforma. Análise de Construção. Sinal Luminoso.",
+        stats: {
+          level: 14,
+          hp: 183,
+          mana: 120,
+          atk: 23,
+          def: 24,
+          speed: 18,
+        },
       },
 
       // =========================================================
@@ -2918,6 +3462,14 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
           "Explorador que procura corpos, materiais e sobreviventes na Planície das Cinzas Recentes. Conhece os locais mais instáveis e os primeiros sinais da Fenda Latente.",
         skills:
           "Instinto de Ruínas. Resistência Maso. Busca por Sobreviventes. Percepção de Perigo.",
+        stats: {
+          level: 18,
+          hp: 231,
+          mana: 160,
+          atk: 30,
+          def: 25,
+          speed: 27,
+        },
       },
 
       // =========================================================
@@ -2939,6 +3491,14 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
           "Elfo responsável por registrar, preparar e sepultar os corpos encontrados nas ruínas. Sua longevidade e memória tornam difícil esconder irregularidades dele.",
         skills:
           "Força Funerária. Memória Élfica. Identificação de Corpos. Resistência a Doenças.",
+        stats: {
+          level: 14,
+          hp: 203,
+          mana: 100,
+          atk: 26,
+          def: 22,
+          speed: 20,
+        },
       },
       {
         collectionId: "sindicato-sombras-area-2",
@@ -2955,6 +3515,14 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
           "Sacerdote antropomórfico com corpo humanoide, galhadas e características de cervo. Embora possua a Marca do Manifesto, vive no Sindicato e conduz cerimônias para mortos e desaparecidos.",
         skills:
           "Luz do Réquiem. Bênção dos Mortos. Presença Sagrada. Ativação Involuntária.",
+        stats: {
+          level: 17,
+          hp: 204,
+          mana: 175,
+          atk: 26,
+          def: 26,
+          speed: 20,
+        },
       },
 
       // =========================================================
@@ -2976,6 +3544,14 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
           "Integrante da rica família Volnir e responsável por parte das operações da fazenda. Sua origem élfica e sua Marca Oculto fazem dela uma presença incomum entre os proprietários da região.",
         skills:
           "Véu sobre o Rebanho. Comunicação Animal. Administração Rural. Presságio Instintivo.",
+        stats: {
+          level: 17,
+          hp: 184,
+          mana: 165,
+          atk: 25,
+          def: 22,
+          speed: 26,
+        },
       },
       // =========================================================
       // ÁREA 3 DO MANIFESTO — COMANDO REGIONAL
@@ -2996,6 +3572,14 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
           "Primo de Elio e principal autoridade militar da Área 3. Costuma permanecer em Belária durante os conselhos de guerra, mas acompanha pessoalmente operações no Forte do Limiar Dourado e em The Union.",
         skills:
           "Comando de Guerra. Formação Radiante. Lâmina do General. Estratégia de Cerco. Autoridade Real.",
+        stats: {
+          level: 32,
+          hp: 380,
+          mana: 220,
+          atk: 44,
+          def: 42,
+          speed: 28,
+        },
       },
       {
         collectionId: "dominio-manifesto-area-3",
@@ -3012,6 +3596,14 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
           "Comandante responsável pelo Forte do Limiar Dourado e pelas Três Sentinelas de Marfim. Subordinado diretamente a Aldwin, coordena a entrada de tropas e suprimentos em The Union.",
         skills:
           "Muralha Radiante. Investida Fronteiriça. Comando de Sentinelas. Golpe Solar.",
+        stats: {
+          level: 26,
+          hp: 297,
+          mana: 180,
+          atk: 40,
+          def: 38,
+          speed: 28,
+        },
       },
 
       // =========================================================
@@ -3033,6 +3625,14 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
           "Diretora do maior hospital da Área 3. Utiliza suas entoações para aliviar dores, estabilizar feridos e coordenar equipes médicas. Pode viajar até The Union durante grandes operações de resgate.",
         skills:
           "Canto Restaurador. Harmonia Vital. Voz Tranquilizadora. Comando Médico.",
+        stats: {
+          level: 23,
+          hp: 216,
+          mana: 215,
+          atk: 29,
+          def: 27,
+          speed: 30,
+        },
       },
       {
         collectionId: "dominio-manifesto-area-3",
@@ -3049,6 +3649,14 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
           "Sobrevivente resgatado próximo ao Núcleo Violeta e atualmente isolado no Hospital da Grande Aurora. Seu corpo não apresenta uma Marca, mas reage intensamente à aproximação de cristais contaminados.",
         skills:
           "Resistência Incomum. Memórias Fragmentadas. Sensibilidade ao Miasma. Sobrevivência.",
+        stats: {
+          level: 20,
+          hp: 195,
+          mana: 110,
+          atk: 26,
+          def: 24,
+          speed: 24,
+        },
       },
 
       // =========================================================
@@ -3070,6 +3678,14 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
           "Pesquisador especializado nos efeitos físicos do Miasma e em materiais retirados de The Union. Trabalha no Instituto de Maré-Luz e participa de expedições de coleta protegidas pela Base de Salferro.",
         skills:
           "Adaptação Instintiva. Análise de Amostras. Resistência Química. Percepção de Manifestação.",
+        stats: {
+          level: 23,
+          hp: 266,
+          mana: 185,
+          atk: 35,
+          def: 30,
+          speed: 28,
+        },
       },
 
       // =========================================================
@@ -3091,6 +3707,14 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
           "Representante dos agricultores e responsáveis pelos armazéns de Campoluz. Apesar de possuir a Marca Oculto, conquistou confiança por manter a produção funcionando durante crises e ataques.",
         skills:
           "Armazém Sombrio. Rotas Ocultas. Administração Agrícola. Negociação de Suprimentos.",
+        stats: {
+          level: 23,
+          hp: 226,
+          mana: 195,
+          atk: 31,
+          def: 28,
+          speed: 32,
+        },
       },
 
       // =========================================================
@@ -3112,6 +3736,14 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
           "Principal sacerdote do Templo das Sete Pétalas. Oferece bênçãos aos guerreiros antes de entrarem em The Union e participa como conselheiro espiritual nas reuniões de Belária.",
         skills:
           "Bênção das Sete Pétalas. Luz Protetora. Leitura Sagrada. Purificação Branda.",
+        stats: {
+          level: 23,
+          hp: 246,
+          mana: 205,
+          atk: 32,
+          def: 32,
+          speed: 26,
+        },
       },
 
       // =========================================================
@@ -3133,6 +3765,14 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
           "Autoridade de baixo escalão aparente que circula por Brumacorte, Umbrel e pelo Portal do Pico Oco. Sua postura discreta esconde uma existência muito mais antiga que o Sindicato atual.",
         skills:
           "Noite Perene. Corpo Atemporal. Véu Profundo. Memória de Séculos. Selo do Guardião.",
+        stats: {
+          level: 35,
+          hp: 360,
+          mana: 420,
+          atk: 42,
+          def: 38,
+          speed: 40,
+        },
       },
 
       // =========================================================
@@ -3154,6 +3794,14 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
           "Responsável pelo tratamento e isolamento dos afetados mentalmente pelo Miasma. Defende que observar a loucura é uma das formas mais eficientes de compreender a contaminação.",
         skills:
           "Véu Calmante. Supressão Mental. Diagnóstico Sombrio. Isolamento de Memórias.",
+        stats: {
+          level: 23,
+          hp: 226,
+          mana: 195,
+          atk: 31,
+          def: 28,
+          speed: 32,
+        },
       },
       {
         collectionId: "sindicato-sombras-area-3",
@@ -3170,6 +3818,14 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
           "Paciente que passou semanas perdida em uma região contaminada antes de ser levada ao Sanatório do Véu Partido. Fala sobre Claralume, Eleonora e uma futura ruptura do Núcleo Violeta.",
         skills:
           "Instinto Temporal. Resistência Maso. Memórias do Amanhã. Pressentimento.",
+        stats: {
+          level: 20,
+          hp: 245,
+          mana: 130,
+          atk: 32,
+          def: 27,
+          speed: 25,
+        },
       },
 
       // =========================================================
@@ -3191,6 +3847,14 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
           "Antropomórfica de aparência anfíbia responsável por vigiar a Casa da Escada Oca e as duas saídas conhecidas das Galerias do Subvéu. Utiliza técnicas de Respiração adaptadas a ambientes úmidos e subterrâneos.",
         skills:
           "Respiração da Corrente. Escalada Úmida. Orientação Subterrânea. Corte Fluido.",
+        stats: {
+          level: 20,
+          hp: 210,
+          mana: 150,
+          atk: 30,
+          def: 25,
+          speed: 32,
+        },
       },
 
       // =========================================================
@@ -3212,6 +3876,14 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
           "Irmão de Undine e principal observador do Berço Latente. Vive em um pequeno posto entre as montanhas e envia alertas para Umbrel quando detecta alterações na região.",
         skills:
           "Respiração do Calor. Pele Resistente. Detecção de Miasma. Investida Ígnea.",
+        stats: {
+          level: 24,
+          hp: 238,
+          mana: 170,
+          atk: 34,
+          def: 29,
+          speed: 36,
+        },
       },
       {
         collectionId: "sindicato-sombras-area-3",
@@ -3228,6 +3900,14 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
           "Agente encarregado da manutenção, ativação e segurança do portal localizado nas montanhas do extremo leste. Mantém registros detalhados de cada comportamento anormal da estrutura.",
         skills:
           "Selo do Pico. Ativação de Portal. Véu Montanhoso. Interrupção de Travessia.",
+        stats: {
+          level: 20,
+          hp: 205,
+          mana: 180,
+          atk: 28,
+          def: 25,
+          speed: 29,
+        },
       },
 
       // =========================================================
@@ -3249,6 +3929,14 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
           "Comandante escolhido para liderar uma das maiores operações conjuntas de The Union. Sua autoridade é reconhecida temporariamente por Manifesto, Sindicato e samurais.",
         skills:
           "Comando Instintivo. Rompimento de Linha. Rugido de União. Resistência de Cerco.",
+        stats: {
+          level: 28,
+          hp: 360,
+          mana: 160,
+          atk: 42,
+          def: 36,
+          speed: 28,
+        },
       },
       {
         collectionId: "the-union-area-3",
@@ -3265,6 +3953,14 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
           "Representante oficial do Sindicato nas operações de The Union. Participa da divisão de recursos, do planejamento das patrulhas e das negociações com o Manifesto.",
         skills:
           "Véu Diplomático. Comunicação Oculta. Constructo de Defesa. Negociação Estratégica.",
+        stats: {
+          level: 25,
+          hp: 230,
+          mana: 300,
+          atk: 27,
+          def: 26,
+          speed: 31,
+        },
       },
       {
         collectionId: "the-union-area-3",
@@ -3281,6 +3977,14 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
           "Representante político e militar do Manifesto dentro de The Union. Mantém sua base na Fortaleza de Solbruma e frequentemente entra em conflito com Vladimir.",
         skills:
           "Autoridade Radiante. Ordem de Formação. Barreira Diplomática. Luz de Comando.",
+        stats: {
+          level: 25,
+          hp: 300,
+          mana: 230,
+          atk: 34,
+          def: 34,
+          speed: 24,
+        },
       },
       {
         collectionId: "the-union-area-3",
@@ -3297,6 +4001,14 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
           "Samurai responsável por representar as comunidades da Respiração nas operações conjuntas. Atua como mediador entre Vladimir, Alexandre e os guerreiros independentes.",
         skills:
           "Respiração do Equilíbrio. Corte Mediador. Postura Imóvel. Leitura de Combate.",
+        stats: {
+          level: 27,
+          hp: 260,
+          mana: 180,
+          atk: 38,
+          def: 30,
+          speed: 38,
+        },
       },
 
       // =========================================================
@@ -3318,6 +4030,14 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
           "Curandeira élfica que atua entre os acampamentos de The Union e a Casa do Repouso. Recusa-se a trabalhar exclusivamente para qualquer facção.",
         skills:
           "Transferência de Contaminação. Cura Instintiva. Resistência Élfica. Medicina de Campo.",
+        stats: {
+          level: 24,
+          hp: 230,
+          mana: 260,
+          atk: 24,
+          def: 25,
+          speed: 29,
+        },
       },
       {
         collectionId: "the-union-area-3",
@@ -3334,6 +4054,14 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
           "Pesquisadora responsável por registrar alterações no Núcleo Violeta. Trabalha com equipes de diferentes facções e utiliza sua voz para medir reações do Miasma.",
         skills:
           "Ressonância Violeta. Análise Sonora. Canto de Medição. Barreira Harmônica.",
+        stats: {
+          level: 22,
+          hp: 190,
+          mana: 280,
+          atk: 22,
+          def: 21,
+          speed: 25,
+        },
       },
 
       // =========================================================
@@ -3355,6 +4083,14 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
           "Caçador que utiliza entoações ofensivas para localizar, enfraquecer e atrair monstros. Circula entre os acampamentos e aceita contratos de qualquer facção.",
         skills:
           "Grito de Caça. Frequência Rompedora. Rastreamento Sonoro. Canto de Provocação.",
+        stats: {
+          level: 25,
+          hp: 240,
+          mana: 280,
+          atk: 34,
+          def: 24,
+          speed: 30,
+        },
       },
       {
         collectionId: "the-union-area-3",
@@ -3371,6 +4107,14 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
           "Antropomórfico de corpo humanoide e características lupinas. É um dos combatentes mais conhecidos dos acampamentos de The Union e costuma liderar caçadas próximas ao Núcleo Violeta.",
         skills:
           "Faro de Miasma. Fúria Bestial. Caçada em Grupo. Resistência Selvagem.",
+        stats: {
+          level: 28,
+          hp: 390,
+          mana: 130,
+          atk: 44,
+          def: 34,
+          speed: 34,
+        },
       },
 
       // =========================================================
@@ -3392,6 +4136,14 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
           "Integrante desaparecido de uma ramificação da família real, encontrado sozinho nos arredores de Claralume. É o único sobrevivente conhecido capaz de relatar os últimos momentos da cidade.",
         skills:
           "Luz Desgastada. Memória Real. Resistência à Contaminação. Chamado de Claralume.",
+        stats: {
+          level: 26,
+          hp: 280,
+          mana: 220,
+          atk: 34,
+          def: 31,
+          speed: 26,
+        },
       },
 
       // =========================================================
@@ -3412,6 +4164,14 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
         description:
           "Agente do Manifesto infiltrado entre transportadores e exploradores das galerias. Pode aparecer como aliado, informante ou antagonista dependendo do que os jogadores descobrirem.",
         skills: "Disfarce Radiante. Selo Falso. Espionagem. Fuga Subterrânea.",
+        stats: {
+          level: 24,
+          hp: 220,
+          mana: 180,
+          atk: 31,
+          def: 24,
+          speed: 35,
+        },
       },
       {
         collectionId: "the-union-area-3",
@@ -3428,6 +4188,14 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
           "Comerciante responsável por abastecer os acampamentos de The Union com alimentos, equipamentos, remédios e objetos difíceis de encontrar.",
         skills:
           "Armazém Sombrio. Rede Comercial. Contrabando. Barganha de Campo.",
+        stats: {
+          level: 24,
+          hp: 233,
+          mana: 200,
+          atk: 32,
+          def: 29,
+          speed: 33,
+        },
       },
 
       // =========================================================
@@ -3449,6 +4217,14 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
           "Capitão responsável por transportar alimentos, medicamentos, feridos e curandeiros entre a Ilha da Lágrima Clara, Porto Boreal e os acampamentos de The Union.",
         skills:
           "Respiração da Maré. Navegação de Risco. Resgate Marítimo. Comando de Tripulação.",
+        stats: {
+          level: 24,
+          hp: 268,
+          mana: 170,
+          atk: 39,
+          def: 33,
+          speed: 36,
+        },
       },
     ],
 
@@ -3462,6 +4238,14 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
         skills: "Bomba de Fumaça. Corte Rápido. Fuga pelas Rochas.",
         description:
           "Criminoso comum das rotas montanhosas. Ataca viajantes isolados, mas costuma fugir quando encontra resistência real.",
+        stats: {
+          level: 3,
+          hp: 83,
+          mana: 22,
+          atk: 10,
+          def: 9,
+          speed: 8,
+        },
       },
       {
         collectionId: "regiao-cratera",
@@ -3473,6 +4257,14 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
           "Marcha Silenciosa. Pele Roxa. Grito Sem Voz. Contaminação Leve.",
         description:
           "Pessoa ou criatura exposta ao Miasma por tempo demais. Move-se de forma irregular, não fala e parece reagir a sons distantes que ninguém mais escuta.",
+        stats: {
+          level: 10,
+          hp: 189,
+          mana: 120,
+          atk: 21,
+          def: 18,
+          speed: 14,
+        },
       },
       {
         collectionId: "regiao-cratera",
@@ -3484,6 +4276,14 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
           "Imitação Imperfeita. Corpo Instável. Ataque Repetido. Dissolução.",
         description:
           "Cópia contaminada de uma criatura ou guerreiro de outra realidade. Possui aspecto roxo, comportamento agressivo e incapacidade de comunicação.",
+        stats: {
+          level: 17,
+          hp: 554,
+          mana: 228,
+          atk: 38,
+          def: 33,
+          speed: 20,
+        },
       },
       {
         collectionId: "regiao-cratera",
@@ -3495,6 +4295,14 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
           "Barreira Roxa. Esmagamento. Pulsação de Miasma. Regeneração Instável.",
         description:
           "Criatura massiva formada dentro da Cratera do Último Miasma. Parece proteger o centro da região contaminada, mas ninguém sabe se age por instinto ou por comando.",
+        stats: {
+          level: 19,
+          hp: 333,
+          mana: 156,
+          atk: 36,
+          def: 29,
+          speed: 21,
+        },
       },
       {
         collectionId: "regiao-cratera",
@@ -3505,6 +4313,14 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
         skills: "Incorporal. Copiar. Drenar Esperança. Vozes Sobrepostas.",
         description:
           "Entidade consciente que se espalha por contato de sangue e memórias fragmentadas. Suas vítimas relatam ouvir pensamentos que não pertencem a elas.",
+        stats: {
+          level: 24,
+          hp: 1000,
+          mana: 500,
+          atk: 40,
+          def: 34,
+          speed: 30,
+        },
       },
       {
         collectionId: "sindicato-sombras",
@@ -3515,6 +4331,14 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
         skills: "Travessia Curta. Corte Escuro. Corpo Sem Luz. Defesa Umbral.",
         description:
           "Forma defensiva criada pela energia dos portais ocultos do Sindicato. Não possui vontade própria, apenas protege entradas e elimina testemunhas.",
+        stats: {
+          level: 12,
+          hp: 227,
+          mana: 58,
+          atk: 25,
+          def: 21,
+          speed: 16,
+        },
       },
       {
         collectionId: "sindicato-sombras",
@@ -3526,6 +4350,14 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
           "Reflexo Falso. Afogamento Mental. Névoa sobre a Água. Chamado do Fundo.",
         description:
           "Criatura que surge no Lago do Véu Roxo. Seu corpo parece feito de água escura e luz roxa, e seus reflexos mostram versões distorcidas de quem o encara.",
+        stats: {
+          level: 15,
+          hp: 275,
+          mana: 140,
+          atk: 30,
+          def: 25,
+          speed: 18,
+        },
       },
       {
         collectionId: "dominio-manifesto",
@@ -3536,6 +4368,14 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
         skills: "Clarão Cego. Garra Radiante. Escamas de Luz. Fúria de Sangue.",
         description:
           "Manifestação rara e perigosa ligada ao sangue nobre do Manifesto. Pode surgir como experimento, segredo exposto ou consequência de uma transformação fora de controle.",
+        stats: {
+          level: 21,
+          hp: 371,
+          mana: 164,
+          atk: 40,
+          def: 32,
+          speed: 23,
+        },
       },
       // =========================================================
       // ÁREA 1 DO MANIFESTO — CRIATURAS ÚNICAS E MINIBOSSES
@@ -3551,6 +4391,14 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
           "Canto sem Voz. Asas de Ressonância. Lâminas Harmônicas. Eco da Invocadora. Colapso Angelical.",
         description:
           "Fragmento de um Anjo que permaneceu no mundo após perder sua ligação com uma Entoadora. Incapaz de compreender a ausência de sua invocadora, reage violentamente a músicas, vozes e instrumentos. Costuma aparecer nas proximidades de Songbird.",
+        stats: {
+          level: 18,
+          hp: 320,
+          mana: 260,
+          atk: 30,
+          def: 24,
+          speed: 28,
+        },
       },
       {
         collectionId: "dominio-manifesto",
@@ -3562,6 +4410,14 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
           "Sopro Ancestral. Escamas do Fim. Voo Tempestuoso. Rugido Dracônico. Fúria Derradeira.",
         description:
           "Possivelmente o último dragão verdadeiro que não surgiu da transformação de um integrante da linhagem real. Vive escondido nas montanhas da Área 1 e carrega ferimentos antigos que jamais cicatrizaram.",
+        stats: {
+          level: 22,
+          hp: 600,
+          mana: 200,
+          atk: 38,
+          def: 34,
+          speed: 26,
+        },
       },
       {
         collectionId: "dominio-manifesto",
@@ -3573,6 +4429,14 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
           "Sopro Solar Instável. Escamas Reais. Garra do Cárcere. Fúria do Isolamento. Forma Irreversível.",
         description:
           "Membro da família real aprisionado e apagado dos registros depois de perder a capacidade de retornar à forma humana. Leonard passou muitos anos isolado, tornando-se agressivo, confuso e incapaz de reconhecer a própria família.",
+        stats: {
+          level: 24,
+          hp: 650,
+          mana: 220,
+          atk: 40,
+          def: 36,
+          speed: 24,
+        },
       },
       {
         collectionId: "regiao-cratera",
@@ -3584,6 +4448,14 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
           "Barreira Roxa. Esmagamento. Pulsação de Miasma. Regeneração Instável. Chamado da Cratera.",
         description:
           "Criatura massiva formada dentro da Cratera do Último Miasma. Parece proteger o centro da região contaminada, embora ninguém saiba se age por instinto, por comando ou para impedir que algo consiga sair.",
+        stats: {
+          level: 24,
+          hp: 541,
+          mana: 176,
+          atk: 47,
+          def: 39,
+          speed: 25,
+        },
       },
       {
         collectionId: "dominio-manifesto",
@@ -3595,6 +4467,14 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
           "Clarão Cego. Garra Radiante. Escamas de Luz. Fúria de Sangue. Explosão Nobre.",
         description:
           "Manifestação dracônica incompleta ligada ao sangue da família real. Pode surgir após uma transformação fracassada, um experimento ou a perda de controle de alguém pertencente à linhagem do Manifesto.",
+        stats: {
+          level: 23,
+          hp: 528,
+          mana: 172,
+          atk: 46,
+          def: 38,
+          speed: 24,
+        },
       },
       {
         collectionId: "dominio-manifesto",
@@ -3605,6 +4485,14 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
         skills: "Bomba de Fumaça. Corte Rápido. Emboscada. Fuga pelas Rochas.",
         description:
           "Criminoso comum das rotas montanhosas da Área 1. Ataca viajantes isolados, caravanas pequenas e peregrinos, mas costuma fugir ao encontrar resistência organizada.",
+        stats: {
+          level: 3,
+          hp: 83,
+          mana: 22,
+          atk: 10,
+          def: 9,
+          speed: 8,
+        },
       },
 
       // =========================================================
@@ -3621,6 +4509,14 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
           "Névoa Cintilante. Ferrão Alucinógeno. Enxame de Reflexos. Voo Invisível. Casulo Nebuloso.",
         description:
           "Vespa colossal responsável pela névoa permanente da Floresta da Névoa Imóvel. Suas asas liberam partículas brilhantes que distorcem caminhos, sons e lembranças, fazendo viajantes retornarem repetidamente ao mesmo ponto.",
+        stats: {
+          level: 18,
+          hp: 360,
+          mana: 180,
+          atk: 30,
+          def: 22,
+          speed: 36,
+        },
       },
       {
         collectionId: "sindicato-sombras",
@@ -3632,6 +4528,14 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
           "Reflexo Falso. Afogamento Mental. Névoa sobre a Água. Chamado do Fundo. Corpo Líquido.",
         description:
           "Criatura que emerge do Lago do Véu Roxo. Seu corpo parece composto por água escura e luz violeta, enquanto seus reflexos mostram versões deformadas das pessoas que o observam.",
+        stats: {
+          level: 20,
+          hp: 463,
+          mana: 160,
+          atk: 41,
+          def: 34,
+          speed: 22,
+        },
       },
       {
         collectionId: "sindicato-sombras",
@@ -3643,6 +4547,14 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
           "Travessia Curta. Corte Escuro. Corpo sem Luz. Defesa Umbral. Alerta do Vazio.",
         description:
           "Forma defensiva criada pela energia dos portais do Sindicato. Não possui vontade própria e existe apenas para proteger passagens, impedir invasões e eliminar testemunhas não autorizadas.",
+        stats: {
+          level: 12,
+          hp: 227,
+          mana: 58,
+          atk: 25,
+          def: 21,
+          speed: 16,
+        },
       },
 
       // =========================================================
@@ -3659,6 +4571,14 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
           "Marcha Cristalina. Formação Imóvel. Lança Prismática. Reflexo Cortante. Estilhaçamento Final.",
         description:
           "Guerreiros cristalizados durante a explosão que criou a Planície de Vidro. Alguns despertam em grupos e repetem os últimos movimentos da batalha, atacando qualquer pessoa que considerem parte do monstro original.",
+        stats: {
+          level: 20,
+          hp: 500,
+          mana: 100,
+          atk: 32,
+          def: 38,
+          speed: 18,
+        },
       },
       {
         collectionId: "dominio-manifesto-area-2",
@@ -3670,6 +4590,14 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
           "Corpo Serpentino. Mordida Rochosa. Cauda Escamada. Sopro Subterrâneo. Desabamento da Cripta.",
         description:
           "Criatura dracônica alongada que vive nas profundezas da Cripta Escamada. Seu corpo atravessa paredes e túneis, permitindo que ataque de diferentes direções e altere a estrutura da masmorra durante o combate.",
+        stats: {
+          level: 24,
+          hp: 700,
+          mana: 160,
+          atk: 42,
+          def: 38,
+          speed: 24,
+        },
       },
 
       // =========================================================
@@ -3686,6 +4614,14 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
           "Lamento Hospitalar. Toque Gelado. Possessão Breve. Memória da Dor. Travessia de Paredes.",
         description:
           "Espírito encontrado nas proximidades do Hospital da Grande Aurora. A entidade reúne fragmentos de diferentes pacientes mortos e repete pedidos de ajuda, diagnósticos e nomes que não constam nos registros oficiais.",
+        stats: {
+          level: 24,
+          hp: 420,
+          mana: 300,
+          atk: 34,
+          def: 26,
+          speed: 30,
+        },
       },
 
       // =========================================================
@@ -3702,6 +4638,14 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
           "Fascínio pelo Ouro. Roubo Aéreo. Garras Douradas. Grito da Montanha. Ninho Reluzente.",
         description:
           "Harpia das montanhas subárticas que acumula ouro, joias, armas ornamentadas e objetos brilhantes. Ataca viajantes ricos e pode abandonar um combate para perseguir um item que considere mais valioso.",
+        stats: {
+          level: 26,
+          hp: 520,
+          mana: 180,
+          atk: 38,
+          def: 30,
+          speed: 42,
+        },
       },
 
       // =========================================================
@@ -3718,6 +4662,14 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
           "Corpo Incorporal. Roubo de Memória. Cópia de Habilidades. Drenar Esperança. Vozes Sobrepostas. Mente Compartilhada.",
         description:
           "Entidade consciente que se espalha pelo contato com sangue, pensamentos e lembranças. Durante a batalha, assume formas baseadas nas memórias dos jogadores e utiliza vozes de pessoas conhecidas para enfraquecer sua vontade.",
+        stats: {
+          level: 24,
+          hp: 1000,
+          mana: 500,
+          atk: 40,
+          def: 34,
+          speed: 30,
+        },
       },
       {
         collectionId: "regiao-cratera",
@@ -3729,6 +4681,14 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
           "Espada de Monstros. Poção Mutagênica. Selo de Repulsão. Sentidos Ampliados. Besta de Prata. Mutação da Caçada.",
         description:
           "Caçador de monstros que modificou o próprio corpo utilizando extratos de criaturas e fragmentos de Miasma. Já não distingue monstros, contaminados e pessoas marcadas como ameaças, perseguindo qualquer alvo que considere antinatural.",
+        stats: {
+          level: 26,
+          hp: 900,
+          mana: 350,
+          atk: 45,
+          def: 38,
+          speed: 36,
+        },
       },
 
       // =========================================================
@@ -3745,6 +4705,14 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
           "Galhadas do Véu. Casco de Raízes. Névoa Primordial. Investida Ancestral. Chamado das Feras. Regeneração da Floresta.",
         description:
           "Criatura colossal coberta por cascas, raízes, musgo e estruturas semelhantes a galhadas. Dormiu sob a floresta por gerações e despertou após as alterações no Miasma da Área 1.",
+        stats: {
+          level: 26,
+          hp: 1300,
+          mana: 300,
+          atk: 46,
+          def: 44,
+          speed: 24,
+        },
       },
 
       // =========================================================
@@ -3761,6 +4729,14 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
           "Postura Ilustre. Reflexo Majestoso. Lâmina de Cristal. Salão Prismático. Decreto da Perfeição.",
         description:
           "Entidade alta, refinada e revestida por cristais semelhantes a roupas nobres. Trata seus adversários como convidados indignos e transforma o campo de batalha em um salão de espelhos cortantes.",
+        stats: {
+          level: 30,
+          hp: 1200,
+          mana: 500,
+          atk: 48,
+          def: 46,
+          speed: 30,
+        },
       },
       {
         collectionId: "dominio-manifesto-area-2",
@@ -3772,6 +4748,14 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
           "Passo Minúsculo. Risada Estilhaçada. Roubo de Reflexo. Fragmentação. Crescimento Repentino.",
         description:
           "Pequena criatura cristalina que acompanha O Ilustre. Sua aparência frágil esconde extrema velocidade e a capacidade de se dividir em inúmeros fragmentos independentes.",
+        stats: {
+          level: 28,
+          hp: 850,
+          mana: 450,
+          atk: 42,
+          def: 30,
+          speed: 50,
+        },
       },
       {
         collectionId: "dominio-manifesto-area-2",
@@ -3783,6 +4767,14 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
           "Etiqueta da Ruína. Reflexos Compartilhados. Dança dos Estilhaços. Troca de Corpo. Palácio de Cristal. União Ilustre.",
         description:
           "Forma completa do encontro entre O Ilustre e O Miúdo. Os dois compartilham vida, ataques e reflexos, alternando entre uma criatura colossal e duas entidades independentes durante a batalha.",
+        stats: {
+          level: 32,
+          hp: 1800,
+          mana: 650,
+          atk: 54,
+          def: 48,
+          speed: 42,
+        },
       },
 
       // =========================================================
@@ -3799,6 +4791,14 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
           "Pétalas Negras. Perfume de Decomposição. Raízes Profundas. Germinação Corrompida. Jardim do Miasma. Invocar Daninhas.",
         description:
           "Flor gigantesca nascida da combinação entre raízes da Flor original e uma concentração extrema de Miasma. Sua presença contamina o solo, altera animais e produz criaturas vegetais subordinadas.",
+        stats: {
+          level: 32,
+          hp: 2200,
+          mana: 700,
+          atk: 52,
+          def: 52,
+          speed: 18,
+        },
       },
       {
         collectionId: "sindicato-sombras-area-2",
@@ -3810,6 +4810,14 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
           "Enraizamento. Chicote Espinhoso. Esporos Roxos. Broto Parasita. Alimentar a Flor Negra.",
         description:
           "Criatura vegetal invocada pela Flor Negra. Absorve energia, corpos e habilidades dos combatentes, transferindo-os para sua invocadora enquanto permanecer viva.",
+        stats: {
+          level: 24,
+          hp: 600,
+          mana: 260,
+          atk: 36,
+          def: 32,
+          speed: 24,
+        },
       },
 
       // =========================================================
@@ -3826,6 +4834,14 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
           "Forma Perfeita. Braços Sublimes. Elevação Violeta. Julgamento da Imperfeição. Corpo Renovado. Ascensão Final.",
         description:
           "Humanoide colossal de aparência quase divina que acredita representar a evolução definitiva das criaturas expostas ao Miasma. Considera todas as outras formas de vida incompletas e tenta incorporá-las ao próprio corpo.",
+        stats: {
+          level: 36,
+          hp: 2500,
+          mana: 800,
+          atk: 62,
+          def: 58,
+          speed: 36,
+        },
       },
       {
         collectionId: "the-union-area-3",
@@ -3837,6 +4853,14 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
           "Sopro da Nevasca. Olho Escarlate. Escamas de Gelo. Tempestade Branca. Voo Boreal. Ruptura Glacial.",
         description:
           "Dragão branco que habita os setores congelados de The Union. Seu único olho vermelho consegue acompanhar movimentos através da neve, do Miasma e de estruturas sólidas.",
+        stats: {
+          level: 36,
+          hp: 2300,
+          mana: 500,
+          atk: 66,
+          def: 60,
+          speed: 44,
+        },
       },
       {
         collectionId: "the-union-area-3",
@@ -3848,6 +4872,14 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
           "Sentença Déspota. Olhar do Carrasco. Grito de Execução. Comando dos Fragmentos. Mordida Colossal.",
         description:
           "Cabeça separada de uma criatura colossal existente no Núcleo Violeta. Mesmo sem corpo, continua emitindo ordens e tentando reunir as demais partes do Carrasco Déspota.",
+        stats: {
+          level: 30,
+          hp: 900,
+          mana: 450,
+          atk: 52,
+          def: 34,
+          speed: 20,
+        },
       },
       {
         collectionId: "the-union-area-3",
@@ -3859,6 +4891,14 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
           "Muralha de Carne. Coração Tirânico. Pulso de Miasma. Regeneração Central. Absorção de Impacto.",
         description:
           "Torso gigantesco que rasteja pelo Núcleo Violeta utilizando costelas e músculos expostos. É a parte mais resistente do Carrasco e contém o núcleo responsável por sua regeneração.",
+        stats: {
+          level: 30,
+          hp: 1500,
+          mana: 250,
+          atk: 42,
+          def: 58,
+          speed: 12,
+        },
       },
       {
         collectionId: "the-union-area-3",
@@ -3870,6 +4910,14 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
           "Machado Invisível. Agarrão Duplo. Execução Horizontal. Arremesso Colossal. Punhos do Déspota.",
         description:
           "Par de braços separados que se movimenta de maneira independente. Ataca acampamentos, muralhas e grupos de guerreiros como se ainda obedecesse às ordens de uma cabeça ausente.",
+        stats: {
+          level: 30,
+          hp: 1100,
+          mana: 200,
+          atk: 60,
+          def: 40,
+          speed: 26,
+        },
       },
       {
         collectionId: "the-union-area-3",
@@ -3881,6 +4929,14 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
           "Marcha Tirânica. Pisão Sísmico. Investida sem Corpo. Salto de Execução. Onda de Impacto.",
         description:
           "Pernas colossais que atravessam The Union em busca das demais partes. Seu deslocamento provoca tremores e destrói estruturas mesmo quando não está atacando diretamente.",
+        stats: {
+          level: 30,
+          hp: 1000,
+          mana: 180,
+          atk: 48,
+          def: 38,
+          speed: 50,
+        },
       },
       {
         collectionId: "the-union-area-3",
@@ -3892,6 +4948,14 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
           "Sentença Absoluta. Machado do Déspota. Marcha da Execução. Coração Tirânico. Regeneração dos Fragmentos. Última Sentença.",
         description:
           "Forma completa criada quando cabeça, torso, braços e pernas conseguem se reunir. O Carrasco Déspota considera todos os seres vivos culpados e tenta executar qualquer criatura encontrada dentro do Núcleo Violeta.",
+        stats: {
+          level: 38,
+          hp: 3000,
+          mana: 650,
+          atk: 72,
+          def: 68,
+          speed: 36,
+        },
       },
 
       // =========================================================
@@ -3908,6 +4972,14 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
           "Oceano de Sangue. Pressão Abissal. Olho sob as Águas. Pulso Orgânico. Embarcação Engolida. Coração do Abismo.",
         description:
           "Entidade escondida nas profundezas da Fossa do Presságio. Sua presença transforma a água em um líquido semelhante a sangue e faz embarcações ouvirem batimentos vindos debaixo do oceano. Pouquíssimas pessoas sabem que ela existe.",
+        stats: {
+          level: 40,
+          hp: 4000,
+          mana: 1000,
+          atk: 80,
+          def: 72,
+          speed: 28,
+        },
       },
 
       // =========================================================
@@ -3924,6 +4996,14 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
           "Canto das Chamas. Asas Incandescentes. Espada de Fogo. Coro Ardente. Apoteose Ígnea.",
         description:
           "Anjo ligado a uma Entoadora ainda não identificada. Sua manifestação assume uma forma envolvida em fogo e reage violentamente a emoções intensas de raiva, coragem e desejo de proteção.",
+        stats: {
+          level: 28,
+          hp: 800,
+          mana: 600,
+          atk: 52,
+          def: 40,
+          speed: 36,
+        },
       },
       {
         collectionId: "dominio-manifesto",
@@ -3935,6 +5015,14 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
           "Coro Restaurador. Asas Protetoras. Luz Harmônica. Julgamento Compassivo. Ressurreição Incompleta.",
         description:
           "Anjo associado à cura, à proteção e à preservação da vida. Sua presença pode restaurar aliados, mas também impedir que pessoas morram mesmo quando seus corpos já não suportam continuar.",
+        stats: {
+          level: 28,
+          hp: 900,
+          mana: 700,
+          atk: 36,
+          def: 48,
+          speed: 32,
+        },
       },
       {
         collectionId: "dominio-manifesto",
@@ -3946,6 +5034,14 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
           "Olhar da Verdade. Canto do Julgamento. Memória Revelada. Correntes Harmônicas. Sentença Celestial.",
         description:
           "Anjo capaz de revelar segredos, lembranças e intenções escondidas. A exposição prolongada à sua voz pode obrigar uma pessoa a reviver tudo aquilo que tentou esquecer.",
+        stats: {
+          level: 28,
+          hp: 820,
+          mana: 650,
+          atk: 44,
+          def: 42,
+          speed: 34,
+        },
       },
       {
         collectionId: "dominio-manifesto",
@@ -3957,6 +5053,14 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
           "Olhos Vigilantes. Coro dos Observadores. Asas Múltiplas. Queda Celestial. Conhecimento Proibido.",
         description:
           "Anjo de aparência inquietante, coberto por olhos e asas sobrepostas. Observa acontecimentos que deveriam permanecer escondidos e pode revelar conhecimentos que ameaçam tanto o Manifesto quanto o Sindicato.",
+        stats: {
+          level: 28,
+          hp: 850,
+          mana: 700,
+          atk: 46,
+          def: 40,
+          speed: 40,
+        },
       },
 
       // =========================================================
@@ -3973,6 +5077,14 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
           "Cabeça Radiante. Cabeça do Vazio. Sopro Duplo. Escamas da Donzela. Conflito das Marcas. Asas do Despertar.",
         description:
           "Forma dracônica de Eleonora. Uma das cabeças manifesta o poder do Manifesto, enquanto a outra expressa a Marca Oculto. A transformação pode representar perda de controle, sacrifício ou domínio completo de sua natureza dupla.",
+        stats: {
+          level: 38,
+          hp: 2800,
+          mana: 900,
+          atk: 70,
+          def: 64,
+          speed: 42,
+        },
       },
       {
         collectionId: "dominio-manifesto-area-3",
@@ -3984,6 +5096,14 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
           "Sopro do General. Comando Dracônico. Escamas de Guerra. Formação dos Dragões. Investida Real. Decreto de Extermínio.",
         description:
           "Forma dracônica de Aldwin. Mesmo transformado, preserva seu conhecimento militar e coordena ecos ou manifestações dracônicas como se comandasse um exército.",
+        stats: {
+          level: 40,
+          hp: 3200,
+          mana: 700,
+          atk: 78,
+          def: 72,
+          speed: 38,
+        },
       },
 
       // =========================================================
@@ -4000,6 +5120,14 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
           "Corpo Gelatinoso. Salto Pegajoso. Absorção Leve. Divisão Incompleta.",
         description:
           "Criatura gelatinosa encontrada em cavernas, florestas úmidas, esgotos e ruínas. É comum nas três áreas, especialmente em locais com bastante água.",
+        stats: {
+          level: 1,
+          hp: 50,
+          mana: 14,
+          atk: 8,
+          def: 5,
+          speed: 7,
+        },
       },
       {
         collectionId: "criaturas-genericas",
@@ -4011,6 +5139,14 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
           "Corpo Contaminado. Cuspe Roxo. Contaminação Leve. Divisão Miasmática.",
         description:
           "Slime alterado pelo contato com Miasma. Pode surgir em qualquer região contaminada, incluindo a Cratera, as Cinzas Recentes e The Union.",
+        stats: {
+          level: 4,
+          hp: 89,
+          mana: 96,
+          atk: 13,
+          def: 9,
+          speed: 9,
+        },
       },
       {
         collectionId: "criaturas-genericas",
@@ -4022,6 +5158,14 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
           "Salto Instável. Núcleo Inchado. Explosão Final. Resíduo Pegajoso.",
         description:
           "Slime que acumula gases, calor ou energia mágica dentro do corpo. Explode ao sofrer muito dano ou ao se aproximar de fontes intensas de energia.",
+        stats: {
+          level: 4,
+          hp: 89,
+          mana: 26,
+          atk: 13,
+          def: 9,
+          speed: 9,
+        },
       },
       {
         collectionId: "criaturas-genericas",
@@ -4033,6 +5177,14 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
           "Absorção Contaminada. Imitação Orgânica. Mancha Persistente. Contaminação Moderada.",
         description:
           "Slime que absorveu partes de animais, pessoas ou monstros contaminados. Sua forma muda constantemente e pode reproduzir características das criaturas consumidas.",
+        stats: {
+          level: 10,
+          hp: 151,
+          mana: 120,
+          atk: 21,
+          def: 16,
+          speed: 14,
+        },
       },
       {
         collectionId: "criaturas-genericas",
@@ -4044,6 +5196,14 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
           "Absorver Detrito. Arremesso de Sucata. Odor Pútrido. Camuflagem em Resíduos.",
         description:
           "Slime encontrado em cidades superlotadas, portos, fábricas e depósitos. Incorpora lixo, metal, vidro e restos orgânicos ao próprio corpo.",
+        stats: {
+          level: 4,
+          hp: 89,
+          mana: 26,
+          atk: 13,
+          def: 9,
+          speed: 9,
+        },
       },
 
       // =========================================================
@@ -4059,6 +5219,14 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
         skills: "Emboscada. Faca Improvisada. Roubo Rápido. Fuga em Grupo.",
         description:
           "Pequeno humanoide encontrado em ruínas, florestas, cavernas e estradas abandonadas. Prefere atacar em grupos e fugir quando perde vantagem.",
+        stats: {
+          level: 1,
+          hp: 63,
+          mana: 14,
+          atk: 8,
+          def: 7,
+          speed: 7,
+        },
       },
       {
         collectionId: "criaturas-genericas",
@@ -4070,6 +5238,14 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
           "Tocha Arremessada. Frasco Incendiário. Resistência ao Calor. Fuga Flamejante.",
         description:
           "Goblin adaptado a regiões quentes, fábricas, forjas e cavernas vulcânicas. É especialmente comum na Área 2 e nas proximidades de instalações industriais.",
+        stats: {
+          level: 8,
+          hp: 151,
+          mana: 42,
+          atk: 17,
+          def: 14,
+          speed: 12,
+        },
       },
 
       // =========================================================
@@ -4085,6 +5261,14 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
         skills: "Clava Pesada. Agarrão. Arremesso de Pedra. Resistência Bruta.",
         description:
           "Humanoide de grande porte encontrado em florestas, colinas e ruínas. Pode ser solitário ou servir como força bruta para grupos menores.",
+        stats: {
+          level: 7,
+          hp: 215,
+          mana: 38,
+          atk: 18,
+          def: 21,
+          speed: 8,
+        },
       },
       {
         collectionId: "criaturas-genericas",
@@ -4096,6 +5280,14 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
           "Lança Colossal. Varredura. Investida. Arremesso de Lança. Formação Bruta.",
         description:
           "Ogro treinado para combater com lanças de grande alcance. Costuma proteger passagens, fortalezas abandonadas ou grupos organizados de monstros.",
+        stats: {
+          level: 10,
+          hp: 279,
+          mana: 50,
+          atk: 23,
+          def: 25,
+          speed: 10,
+        },
       },
       {
         collectionId: "criaturas-genericas",
@@ -4107,6 +5299,14 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
           "Clava Ancestral. Rugido de Comando. Pele Endurecida. Sabedoria Selvagem. Fúria Final.",
         description:
           "Ogro que sobreviveu por décadas e aprendeu a comandar outras criaturas. É mais inteligente, resistente e estratégico que os demais membros da espécie.",
+        stats: {
+          level: 13,
+          hp: 344,
+          mana: 62,
+          atk: 28,
+          def: 29,
+          speed: 12,
+        },
       },
       {
         collectionId: "criaturas-genericas",
@@ -4118,6 +5318,14 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
           "Regeneração. Golpe de Braço. Mordida. Arremesso. Fúria Regenerativa.",
         description:
           "Criatura grande e regenerativa encontrada em florestas úmidas, pontes, cavernas e regiões montanhosas das Áreas 1 e 2.",
+        stats: {
+          level: 10,
+          hp: 279,
+          mana: 50,
+          atk: 23,
+          def: 25,
+          speed: 10,
+        },
       },
       {
         collectionId: "criaturas-genericas",
@@ -4129,6 +5337,14 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
           "Camuflagem na Neve. Abraço Esmagador. Rugido da Geada. Arremesso de Gelo. Resistência ao Frio.",
         description:
           "Criatura de pelagem espessa encontrada exclusivamente nas montanhas nevadas e regiões subárticas da Área 3.",
+        stats: {
+          level: 21,
+          hp: 452,
+          mana: 94,
+          atk: 36,
+          def: 35,
+          speed: 19,
+        },
       },
 
       // =========================================================
@@ -4145,6 +5361,14 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
           "Machado Pesado. Investida. Resistência Física. Grito de Guerra.",
         description:
           "Humanoide robusto encontrado em acampamentos, ruínas e regiões afastadas. Alguns vivem como saqueadores, enquanto outros formam comunidades próprias.",
+        stats: {
+          level: 4,
+          hp: 111,
+          mana: 26,
+          atk: 13,
+          def: 11,
+          speed: 9,
+        },
       },
       {
         collectionId: "criaturas-genericas",
@@ -4156,6 +5380,14 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
           "Fuga Rápida. Grito de Alerta. Arremesso de Pedra. Mordida Desesperada.",
         description:
           "Orc ainda jovem que normalmente foge, se esconde ou chama adultos ao perceber perigo. Funciona melhor em cenas de resgate, investigação ou conflito social do que como inimigo de combate comum.",
+        stats: {
+          level: 1,
+          hp: 63,
+          mana: 14,
+          atk: 8,
+          def: 7,
+          speed: 7,
+        },
       },
 
       // =========================================================
@@ -4171,6 +5403,14 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
         skills: "Chicote de Raiz. Enterrar. Broto Rápido. Absorção do Solo.",
         description:
           "Pequena manifestação móvel das raízes da Flor. Costuma surgir em regiões onde partes subterrâneas foram cortadas, queimadas ou expostas.",
+        stats: {
+          level: 4,
+          hp: 150,
+          mana: 26,
+          atk: 13,
+          def: 17,
+          speed: 5,
+        },
       },
       {
         collectionId: "criaturas-genericas",
@@ -4182,6 +5422,14 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
           "Enraizamento. Braços Lenhosos. Absorção Vital. Prisão Vegetal. Regeneração do Solo.",
         description:
           "Grande criatura formada por raízes da Flor. Seu comportamento pode ser defensivo, agressivo ou orientado por alguma vontade desconhecida.",
+        stats: {
+          level: 10,
+          hp: 279,
+          mana: 50,
+          atk: 23,
+          def: 25,
+          speed: 10,
+        },
       },
       {
         collectionId: "criaturas-genericas",
@@ -4193,6 +5441,14 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
           "Casca Congelada. Chicote de Gelo. Enterrar na Neve. Esporos Gelados. Regeneração Invernal.",
         description:
           "Raiz adaptada às regiões frias da Área 3. Permanece imóvel sob a neve até detectar calor, movimento ou energia de uma Marca.",
+        stats: {
+          level: 18,
+          hp: 387,
+          mana: 82,
+          atk: 31,
+          def: 31,
+          speed: 16,
+        },
       },
       {
         collectionId: "criaturas-genericas",
@@ -4204,6 +5460,14 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
           "Espinhos Roxos. Dreno de Marca. Névoa Miasmática. Contaminação do Solo. Regeneração Corrompida.",
         description:
           "Raiz da Flor profundamente contaminada pelo Miasma. Pode aparecer em regiões de alta incidência e transformar a vegetação próxima em novas criaturas.",
+        stats: {
+          level: 13,
+          hp: 344,
+          mana: 132,
+          atk: 28,
+          def: 29,
+          speed: 12,
+        },
       },
 
       // =========================================================
@@ -4219,6 +5483,14 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
         skills: "Golpe Ósseo. Corpo sem Dor. Reerguer. Mordida.",
         description:
           "Restos animados por Miasma, magia ou energia residual. É comum em cemitérios, ruínas, criptas e antigos campos de batalha.",
+        stats: {
+          level: 1,
+          hp: 63,
+          mana: 14,
+          atk: 8,
+          def: 7,
+          speed: 7,
+        },
       },
       {
         collectionId: "criaturas-genericas",
@@ -4230,6 +5502,14 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
           "Espada Enferrujada. Formação Morta. Escudo Ósseo. Marcha Ininterrupta.",
         description:
           "Restos de um antigo soldado que preserva fragmentos de treinamento e continua obedecendo ordens esquecidas.",
+        stats: {
+          level: 4,
+          hp: 111,
+          mana: 26,
+          atk: 13,
+          def: 11,
+          speed: 9,
+        },
       },
       {
         collectionId: "criaturas-genericas",
@@ -4241,6 +5521,14 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
           "Lâmina Morta. Armadura Antiga. Investida Fantasma. Postura de Guarda. Duelo Eterno.",
         description:
           "Cavaleiro reanimado que mantém armadura, armas e parte de seu código de combate. Pode proteger tumbas, castelos ou membros mortos da nobreza.",
+        stats: {
+          level: 10,
+          hp: 207,
+          mana: 50,
+          atk: 23,
+          def: 19,
+          speed: 14,
+        },
       },
       {
         collectionId: "criaturas-genericas",
@@ -4252,6 +5540,14 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
           "Projétil Arcano. Maldição Óssea. Levantar Mortos. Barreira Espectral. Explosão de Mana.",
         description:
           "Restos de um usuário de magia que manteve parte de suas habilidades após a morte. Costuma controlar esqueletos menores.",
+        stats: {
+          level: 10,
+          hp: 207,
+          mana: 120,
+          atk: 23,
+          def: 19,
+          speed: 14,
+        },
       },
       {
         collectionId: "criaturas-genericas",
@@ -4263,6 +5559,14 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
           "Corpo Incorpóreo. Roubo de Alma. Grito Espiritual. Possessão Óssea. Retorno Fantasma.",
         description:
           "Esqueleto cuja alma permanece presa aos ossos. Alterna entre forma física e espiritual, tornando-se difícil de atingir.",
+        stats: {
+          level: 13,
+          hp: 255,
+          mana: 132,
+          atk: 28,
+          def: 23,
+          speed: 16,
+        },
       },
       {
         collectionId: "criaturas-genericas",
@@ -4274,6 +5578,14 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
           "Ossos Dourados. Reflexo Radiante. Toque da Ganância. Chuva de Moedas. Corpo Valioso.",
         description:
           "Esqueleto coberto por ouro, joias ou metal fundido. É encontrado em tumbas nobres, cofres e locais marcados por ganância extrema.",
+        stats: {
+          level: 13,
+          hp: 255,
+          mana: 62,
+          atk: 28,
+          def: 23,
+          speed: 16,
+        },
       },
 
       // =========================================================
@@ -4290,6 +5602,14 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
           "Escudo de Escamas. Bloqueio Baixo. Mordida. Proteção de Grupo.",
         description:
           "Humanoide reptiliano que protege aliados com grandes escudos. É mais comum nas regiões quentes da Área 2.",
+        stats: {
+          level: 8,
+          hp: 151,
+          mana: 42,
+          atk: 17,
+          def: 14,
+          speed: 12,
+        },
       },
       {
         collectionId: "criaturas-genericas",
@@ -4301,6 +5621,14 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
           "Lâmina Curva. Cauda Giratória. Escamas Resistentes. Investida Reptiliana.",
         description:
           "Guerreiro reptiliano ágil e resistente. Pode viver em ruínas quentes, vales rochosos, cavernas e regiões agrícolas afastadas.",
+        stats: {
+          level: 11,
+          hp: 199,
+          mana: 54,
+          atk: 22,
+          def: 18,
+          speed: 15,
+        },
       },
       {
         collectionId: "criaturas-genericas",
@@ -4312,6 +5640,14 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
           "Comando Escamado. Lança Serrilhada. Rugido Reptiliano. Formação de Escudos. Golpe do Capitão.",
         description:
           "Líder militar dos grupos reptilianos. Coordena escudeiros e guerreiros, utilizando estratégias simples, mas eficientes.",
+        stats: {
+          level: 17,
+          hp: 295,
+          mana: 78,
+          atk: 32,
+          def: 26,
+          speed: 20,
+        },
       },
 
       // =========================================================
@@ -4328,6 +5664,14 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
           "Voo Rasante. Ferrão da Cauda. Mordida. Garras Aéreas. Rajada de Vento.",
         description:
           "Predador alado encontrado em montanhas, penhascos e ilhas. É mais comum nas Áreas 1 e 2, mas pode migrar para regiões menos frias da Área 3.",
+        stats: {
+          level: 13,
+          hp: 255,
+          mana: 62,
+          atk: 28,
+          def: 23,
+          speed: 24,
+        },
       },
 
       // =========================================================
@@ -4344,6 +5688,14 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
           "Garras Deformadas. Corpo Irregular. Mordida Maligna. Movimento Imprevisível.",
         description:
           "Criatura deformada por magia, experimentos ou exposição incompleta ao Miasma. Pode assumir diversas aparências.",
+        stats: {
+          level: 7,
+          hp: 159,
+          mana: 108,
+          atk: 18,
+          def: 15,
+          speed: 12,
+        },
       },
       {
         collectionId: "criaturas-genericas",
@@ -4355,6 +5707,14 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
           "Investida Feroz. Múltiplas Garras. Fúria Crescente. Regeneração Selvagem.",
         description:
           "Aberração extremamente agressiva que ataca qualquer criatura próxima. Costuma surgir em regiões onde monstros diferentes foram fundidos ou contaminados juntos.",
+        stats: {
+          level: 10,
+          hp: 207,
+          mana: 120,
+          atk: 23,
+          def: 19,
+          speed: 14,
+        },
       },
       {
         collectionId: "criaturas-genericas",
@@ -4366,6 +5726,14 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
           "Pulso Roxo. Contaminação. Corpo Mutável. Névoa Interna. Regeneração Miasmática.",
         description:
           "Aberração completamente alterada pelo Miasma. É comum em zonas contaminadas, ruínas recentes e The Union.",
+        stats: {
+          level: 13,
+          hp: 255,
+          mana: 132,
+          atk: 28,
+          def: 23,
+          speed: 16,
+        },
       },
       {
         collectionId: "criaturas-genericas",
@@ -4377,6 +5745,14 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
           "Explosão Turbulenta. Mudança de Forma. Campo Instável. Ataque Aleatório. Colapso Energético.",
         description:
           "Criatura incapaz de manter uma forma física estável. Seus membros, tamanho e habilidades mudam durante a batalha.",
+        stats: {
+          level: 16,
+          hp: 303,
+          mana: 144,
+          atk: 33,
+          def: 27,
+          speed: 19,
+        },
       },
       {
         collectionId: "criaturas-genericas",
@@ -4388,6 +5764,14 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
           "Corpos Fundidos. Múltiplos Ataques. Vozes Presas. Regeneração por Absorção. Separação Violenta.",
         description:
           "Massa composta por diferentes criaturas ou pessoas fundidas pelo Miasma. Cada parte do corpo pode agir de forma independente.",
+        stats: {
+          level: 19,
+          hp: 351,
+          mana: 156,
+          atk: 38,
+          def: 31,
+          speed: 21,
+        },
       },
 
       // =========================================================
@@ -4403,6 +5787,14 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
         skills: "Mordida Venenosa. Escalada. Enrolar. Movimento Subterrâneo.",
         description:
           "Artrópode de grande porte encontrado em cavernas, florestas úmidas, esgotos e ruínas.",
+        stats: {
+          level: 4,
+          hp: 150,
+          mana: 26,
+          atk: 13,
+          def: 17,
+          speed: 13,
+        },
       },
       {
         collectionId: "criaturas-genericas",
@@ -4414,6 +5806,14 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
           "Nado Serpentino. Mordida Aquática. Enrolar Submerso. Veneno Diluidor.",
         description:
           "Centopeia adaptada a rios, lagos, pântanos e regiões costeiras. Pode aparecer no Lago do Véu Roxo, nos Lagos Claros e em cidades portuárias.",
+        stats: {
+          level: 7,
+          hp: 159,
+          mana: 38,
+          atk: 18,
+          def: 15,
+          speed: 20,
+        },
       },
       {
         collectionId: "criaturas-genericas",
@@ -4425,6 +5825,14 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
           "Travessia das Fendas. Veneno do Vazio. Carapaça Negra. Enrolar Abissal. Escuridão Total.",
         description:
           "Centopeia encontrada em cavernas profundas, portais instáveis e passagens próximas ao Vazio. Sua carapaça absorve grande parte da luz.",
+        stats: {
+          level: 13,
+          hp: 255,
+          mana: 62,
+          atk: 28,
+          def: 23,
+          speed: 24,
+        },
       },
 
       // =========================================================
@@ -4440,6 +5848,14 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
         skills: "Garras Aéreas. Grito Estridente. Voo Rasante. Roubo de Presa.",
         description:
           "Criatura alada que habita penhascos, montanhas e ruínas elevadas. Pode aparecer nas três áreas, embora evite as regiões mais frias.",
+        stats: {
+          level: 7,
+          hp: 159,
+          mana: 38,
+          atk: 18,
+          def: 15,
+          speed: 20,
+        },
       },
       {
         collectionId: "criaturas-genericas",
@@ -4451,6 +5867,14 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
           "Voo Incorpóreo. Grito dos Mortos. Garras Espectrais. Desaparecimento. Possessão Aérea.",
         description:
           "Harpia morta cuja forma permanece presa ao mundo. É encontrada em montanhas, cemitérios e locais onde bandos inteiros morreram.",
+        stats: {
+          level: 13,
+          hp: 255,
+          mana: 132,
+          atk: 28,
+          def: 23,
+          speed: 24,
+        },
       },
       {
         collectionId: "criaturas-genericas",
@@ -4462,6 +5886,14 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
           "Canto de Atração. Mergulho Aéreo. Garras Marinhas. Encanto Costeiro. Afogamento.",
         description:
           "Variante costeira que utiliza uma voz hipnótica para atrair marinheiros e viajantes até penhascos, recifes ou águas profundas.",
+        stats: {
+          level: 10,
+          hp: 207,
+          mana: 50,
+          atk: 23,
+          def: 19,
+          speed: 22,
+        },
       },
 
       // =========================================================
@@ -4478,6 +5910,14 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
           "Marcha Silenciosa. Pele Roxa. Grito sem Voz. Contaminação Leve. Perseguição Incessante.",
         description:
           "Pessoa ou criatura exposta ao Miasma por tempo demais. Move-se de forma irregular, não fala e parece reagir a sons distantes que ninguém mais consegue ouvir.",
+        stats: {
+          level: 7,
+          hp: 159,
+          mana: 108,
+          atk: 18,
+          def: 15,
+          speed: 12,
+        },
       },
       {
         collectionId: "criaturas-genericas",
@@ -4489,6 +5929,14 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
           "Imitação Imperfeita. Corpo Instável. Ataque Repetido. Cópia de Movimento. Dissolução.",
         description:
           "Cópia contaminada de uma criatura, guerreiro ou pessoa. Possui aparência violeta, comportamento agressivo e reproduz de maneira imperfeita as habilidades do original.",
+        stats: {
+          level: 10,
+          hp: 207,
+          mana: 120,
+          atk: 23,
+          def: 19,
+          speed: 14,
+        },
       },
     ],
 

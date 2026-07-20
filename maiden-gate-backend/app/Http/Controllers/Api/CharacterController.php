@@ -260,26 +260,29 @@ class CharacterController extends Controller
     }
 
     private function normalizeAttributeModifiers(?array $modifiers, array $attributes): array
-    {
-        $attributeMap = [
-            'POD' => 'pod',
-            'DES' => 'des',
-            'RES' => 'res',
-            'INT' => 'int',
-            'DET' => 'det',
-            'PRE' => 'pre',
-        ];
+{
+    $modifierKeys = [
+        'POD',
+        'DES',
+        'RES',
+        'INT',
+        'DET',
+        'PRE',
+    ];
 
-        $normalized = [];
+    $normalized = [];
 
-        foreach ($attributeMap as $modifierKey => $attributeKey) {
-            $defaultModifier = (int) floor((((int) ($attributes[$attributeKey] ?? 0)) - 10) / 2);
-            $value = $modifiers[$modifierKey] ?? $defaultModifier;
-            $normalized[$modifierKey] = max(-99, min(99, (int) $value));
-        }
+    foreach ($modifierKeys as $modifierKey) {
+        $value = $modifiers[$modifierKey] ?? 0;
 
-        return $normalized;
+        $normalized[$modifierKey] = max(
+            -99,
+            min(99, (int) $value)
+        );
     }
+
+    return $normalized;
+}
 
     public function destroy(string $id)
     {

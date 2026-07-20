@@ -57,6 +57,7 @@ export interface PlayerStat {
 }
 
 export interface CharacterAttribute {
+  key: AttributeKey;
   nome: string;
   valor: number;
   mod: number;

@@ -73,6 +73,36 @@ function getAttributeMod(value: number) {
   return Math.floor((value - 10) / 2);
 }
 
+function getAttributeModifiers(value: unknown) {
+  if (!value) return {} as Record<string, number>;
+
+  let parsed = value;
+
+  if (typeof value === "string") {
+    try {
+      parsed = JSON.parse(value);
+    } catch {
+      return {} as Record<string, number>;
+    }
+  }
+
+  if (typeof parsed !== "object" || Array.isArray(parsed)) {
+    return {} as Record<string, number>;
+  }
+
+  return Object.entries(parsed as Record<string, unknown>).reduce<
+    Record<string, number>
+  >((modifiers, [key, rawValue]) => {
+    const numberValue = Number(rawValue);
+
+    if (Number.isFinite(numberValue)) {
+      modifiers[key.toUpperCase()] = numberValue;
+    }
+
+    return modifiers;
+  }, {});
+}
+
 function getSkillType(type?: string | null) {
   if (type === "passiva") return "Passiva" as const;
   if (type === "reacao" || type === "reação") return "Reação" as const;
@@ -107,6 +137,9 @@ function mapCampaignMember(character: any) {
     .filter(Boolean)
     .join(" ");
 
+  const storedModifiers = getAttributeModifiers(
+    character.attribute_modifiers ?? character.attributeModifiers,
+  );
   const attributes = [
     { nome: "POD", valor: getNumber(character.pod, 0) },
     { nome: "DES", valor: getNumber(character.des, 0) },
@@ -116,7 +149,7 @@ function mapCampaignMember(character: any) {
     { nome: "PRE", valor: getNumber(character.pre, 0) },
   ].map((attribute) => ({
     ...attribute,
-    mod: getAttributeMod(attribute.valor),
+    mod: storedModifiers[attribute.nome] ?? getAttributeMod(attribute.valor),
   }));
 
   const skills = (character.skills ?? [])
