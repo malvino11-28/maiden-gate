@@ -1,7 +1,7 @@
 const fields = [
   ["level", "Nível"],
   ["hp", "HP"],
-  ["mana", "Mana"],
+  ["mana", "Energia"],
   ["atk", "ATQ"],
   ["def", "DEF"],
   ["speed", "Velocidade"],

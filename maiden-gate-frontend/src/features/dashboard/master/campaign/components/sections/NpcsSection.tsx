@@ -88,7 +88,7 @@ export default function NpcsSection({
         {
           name: "race",
           label: "Raça / Espécie",
-          placeholder: "Ex: Humano, Élfico...",
+          placeholder: "Ex: Humano, Élfico ou Antropomórfico",
         },
         {
           name: "occupation",

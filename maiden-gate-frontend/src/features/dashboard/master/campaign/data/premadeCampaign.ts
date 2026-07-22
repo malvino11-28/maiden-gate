@@ -173,19 +173,19 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
         id: "dominio-manifesto-area-3",
         name: "Domínio do Manifesto — Área 3",
         description:
-          "Região estratégica do Manifesto voltada ao abastecimento, à medicina, à pesquisa e à contenção do Miasma. Possui cidades agrícolas, hospitais, laboratórios, templos, fortalezas e instalações militares próximas a The Union.",
+          "Região estratégica do Manifesto voltada ao abastecimento, à medicina, à pesquisa e à contenção do Miasma. Possui cidades agrícolas, hospitais, laboratórios, templos, fortalezas e instalações militares próximas a A União.",
         color: getCollectionColor(0),
       },
       {
         id: "sindicato-sombras-area-3",
         name: "Território do Sindicato — Área 3",
         description:
-          "Região montanhosa do Sindicato marcada por cidades costeiras, portais secretos, instituições dedicadas aos afetados pelo Miasma e estruturas defensivas próximas a The Union.",
+          "Região montanhosa do Sindicato marcada por cidades costeiras, portais secretos, instituições dedicadas aos afetados pelo Miasma e estruturas defensivas próximas a A União.",
         color: getCollectionColor(1),
       },
       {
         id: "the-union-area-3",
-        name: "The Union — Área 3",
+        name: "A União — Área 3",
         description:
           "Zona de cooperação emergencial onde guerreiros, soldados, pesquisadores e usuários de todas as Marcas combatem a alta incidência de Miasma. Apesar da união oficial, cada facção mantém seus próprios interesses e operações secretas.",
         color: getCollectionColor(4),
@@ -194,7 +194,7 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
         id: "fronteira-area-3",
         name: "Territórios Neutros — Área 3",
         description:
-          "Locais próximos à Área 3 que não pertencem oficialmente ao Manifesto, ao Sindicato ou a The Union. São utilizados para recuperação, quarentena e atividades reconhecidas por diferentes facções.",
+          "Locais próximos à Área 3 que não pertencem oficialmente ao Manifesto, ao Sindicato ou a A União. São utilizados para recuperação, quarentena e atividades reconhecidas por diferentes facções.",
         color: getCollectionColor(2),
       },
       {
@@ -1202,7 +1202,7 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
           "Região marítima com alta probabilidade de surgimento de Miasma. Uma manifestação no local poderia bloquear rotas comerciais, atingir a Ilha da Concórdia e ser confundida com um ataque de uma das facções.",
       },
       // =========================================================
-      // ÁREA 3 DO MANIFESTO — FRONTEIRA COM THE UNION
+      // ÁREA 3 DO MANIFESTO — FRONTEIRA COM A União
       // =========================================================
 
       {
@@ -1210,9 +1210,9 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
         name: "Forte do Limiar Dourado",
         image: "",
         type: "Forte Fronteiriço",
-        region: "Fronteira entre o Manifesto e The Union",
+        region: "Fronteira entre o Manifesto e A União",
         description:
-          "Principal estrutura defensiva do Manifesto próxima a The Union. Controla a passagem de soldados, aventureiros, pesquisadores e suprimentos destinados à zona unificada, além de servir como ponto de retirada durante avanços do Miasma.",
+          "Principal estrutura defensiva do Manifesto próxima a A União. Controla a passagem de soldados, aventureiros, pesquisadores e suprimentos destinados à zona unificada, além de servir como ponto de retirada durante avanços do Miasma.",
       },
       {
         collectionId: "dominio-manifesto-area-3",
@@ -1221,7 +1221,7 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
         type: "Complexo de Torres Defensivas",
         region: "Sul do Forte do Limiar Dourado",
         description:
-          "Conjunto de três torres construídas para impedir que monstros vindos de The Union avancem para as cidades do Manifesto. As estruturas utilizam sinalizadores, armas de longo alcance e guerreiros especializados em contenção.",
+          "Conjunto de três torres construídas para impedir que monstros vindos de A União avancem para as cidades do Manifesto. As estruturas utilizam sinalizadores, armas de longo alcance e guerreiros especializados em contenção.",
       },
       {
         collectionId: "dominio-manifesto-area-3",
@@ -1248,7 +1248,7 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
         type: "Torre de Observação",
         region: "Três Sentinelas de Marfim",
         description:
-          "Torre responsável por observar movimentos distantes dentro de The Union e alertar sobre possíveis ondas de monstros.",
+          "Torre responsável por observar movimentos distantes dentro de A União e alertar sobre possíveis ondas de monstros.",
       },
 
       // =========================================================
@@ -1285,7 +1285,7 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
         type: "Castelo Regional",
         region: "Centro da Área 3 do Manifesto",
         description:
-          "Castelo pertencente à família nobre responsável pela administração regional. Coordena recursos militares, hospitais, plantações e operações relacionadas a The Union. Sua arquitetura é mais fortificada e funcional que a de outros castelos do Manifesto.",
+          "Castelo pertencente à família nobre responsável pela administração regional. Coordena recursos militares, hospitais, plantações e operações relacionadas a A União. Sua arquitetura é mais fortificada e funcional que a de outros castelos do Manifesto.",
       },
       {
         collectionId: "dominio-manifesto-area-3",
@@ -1294,7 +1294,7 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
         type: "Cidade Médica",
         region: "Próxima ao Castelo de Valedouro",
         description:
-          "Cidade conhecida por receber soldados feridos, contaminados e sobreviventes retirados de The Union. Civis, militares e pacientes afetados pelo Miasma convivem em um ambiente marcado por medo, esperança e preconceito.",
+          "Cidade conhecida por receber soldados feridos, contaminados e sobreviventes retirados de A União. Civis, militares e pacientes afetados pelo Miasma convivem em um ambiente marcado por medo, esperança e preconceito.",
       },
       {
         collectionId: "dominio-manifesto-area-3",
@@ -1317,7 +1317,7 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
         type: "Cidade Agrícola",
         region: "Leste de Alvorena",
         description:
-          "Cidade atravessada por grandes plantações e dedicada ao armazenamento, processamento e distribuição de alimentos. Sua produção abastece Alvorena, Valedouro, as bases militares e parte dos acampamentos de The Union.",
+          "Cidade atravessada por grandes plantações e dedicada ao armazenamento, processamento e distribuição de alimentos. Sua produção abastece Alvorena, Valedouro, as bases militares e parte dos acampamentos de A União.",
       },
       {
         collectionId: "dominio-manifesto-area-3",
@@ -1340,7 +1340,7 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
         type: "Cidade de Conselhos Militares",
         region: "Norte da região central do Manifesto",
         description:
-          "Pequena cidade preparada para receber comandantes, nobres, estrategistas e representantes de diferentes regiões. Reuniões sobre guerras, fronteiras e operações em The Union acontecem em seus edifícios protegidos.",
+          "Pequena cidade preparada para receber comandantes, nobres, estrategistas e representantes de diferentes regiões. Reuniões sobre guerras, fronteiras e operações em A União acontecem em seus edifícios protegidos.",
       },
       {
         collectionId: "dominio-manifesto-area-3",
@@ -1358,7 +1358,7 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
         type: "Grande Templo Sagrado",
         region: "Próximo a Belária",
         description:
-          "Templo dedicado diretamente à Flor. Seus sacerdotes interpretam o avanço do Miasma como consequência das guerras, dos pecados ou do afastamento da humanidade da entidade. Muitos comandantes procuram bênçãos no templo antes de entrar em The Union.",
+          "Templo dedicado diretamente à Flor. Seus sacerdotes interpretam o avanço do Miasma como consequência das guerras, dos pecados ou do afastamento da humanidade da entidade. Muitos comandantes procuram bênçãos no templo antes de entrar em A União.",
       },
 
       // =========================================================
@@ -1426,7 +1426,7 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
       },
 
       // =========================================================
-      // ÁREA 3 DO SINDICATO — ENCLAVE EM THE UNION
+      // ÁREA 3 DO SINDICATO — ENCLAVE EM A União
       // =========================================================
 
       {
@@ -1434,9 +1434,9 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
         name: "Enclave de Maré Sombria",
         image: "",
         type: "Território Separado do Sindicato",
-        region: "Trecho territorial cercado por The Union",
+        region: "Trecho territorial cercado por A União",
         description:
-          "Pequeno território do Sindicato separado da área principal pela zona unificada. Sua sobrevivência depende de rotas marítimas, suprimentos externos e acordos frágeis com os guerreiros de The Union.",
+          "Pequeno território do Sindicato separado da área principal pela zona unificada. Sua sobrevivência depende de rotas marítimas, suprimentos externos e acordos frágeis com os guerreiros de A União.",
       },
       {
         collectionId: "sindicato-sombras-area-3",
@@ -1445,7 +1445,7 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
         type: "Cidade Costeira",
         region: "Enclave de Maré Sombria",
         description:
-          "Pequena cidade que fornece alimentos, embarcações e suprimentos para o enclave. Sua população vive constantemente ameaçada pelas manifestações e criaturas de The Union.",
+          "Pequena cidade que fornece alimentos, embarcações e suprimentos para o enclave. Sua população vive constantemente ameaçada pelas manifestações e criaturas de A União.",
       },
       {
         collectionId: "sindicato-sombras-area-3",
@@ -1454,7 +1454,7 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
         type: "Pequena Base Militar",
         region: "Fronteira do Enclave de Maré Sombria",
         description:
-          "Base responsável por impedir que criaturas entrem em Porto Cendal e por controlar a passagem de soldados e aventureiros entre o enclave e The Union.",
+          "Base responsável por impedir que criaturas entrem em Porto Cendal e por controlar a passagem de soldados e aventureiros entre o enclave e A União.",
       },
 
       // =========================================================
@@ -1466,7 +1466,7 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
         name: "Três Vigias do Vazio",
         image: "",
         type: "Complexo de Torres Defensivas",
-        region: "Fronteira principal entre o Sindicato e The Union",
+        region: "Fronteira principal entre o Sindicato e A União",
         description:
           "Três torres construídas para conter monstros vindos da zona unificada. Utilizam armadilhas, constructos sombrios e mecanismos ocultos, em vez das armas tradicionais empregadas pelo Manifesto.",
       },
@@ -1484,9 +1484,9 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
         name: "Galerias do Subvéu",
         image: "",
         type: "Rede de Passagens Subterrâneas",
-        region: "Entre o território do Sindicato e The Union",
+        region: "Entre o território do Sindicato e A União",
         description:
-          "Rede de túneis que atravessa a fronteira e possui duas saídas dentro de The Union. É utilizada para espionagem, transporte de agentes, retirada de feridos e movimentações não reconhecidas oficialmente.",
+          "Rede de túneis que atravessa a fronteira e possui duas saídas dentro de A União. É utilizada para espionagem, transporte de agentes, retirada de feridos e movimentações não reconhecidas oficialmente.",
       },
 
       // =========================================================
@@ -1518,7 +1518,7 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
         type: "Portal Oculto",
         region: "Ilha do Limiar",
         description:
-          "Portal utilizado para transportar agentes, mensageiros e suprimentos sem atravessar as estradas próximas a The Union. Sua energia parece reagir à movimentação do Miasma no continente.",
+          "Portal utilizado para transportar agentes, mensageiros e suprimentos sem atravessar as estradas próximas a A União. Sua energia parece reagir à movimentação do Miasma no continente.",
       },
 
       // =========================================================
@@ -1577,7 +1577,7 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
       },
 
       // =========================================================
-      // THE UNION — SETOR OESTE
+      // A União — SETOR OESTE
       // =========================================================
 
       {
@@ -1585,7 +1585,7 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
         name: "Boca Ocidental do Subvéu",
         image: "",
         type: "Saída Subterrânea Secreta",
-        region: "Extremo oeste de The Union",
+        region: "Extremo oeste de A União",
         description:
           "Primeira saída das Galerias do Subvéu. É utilizada por agentes do Sindicato para entrar na zona unificada sem atravessar os postos oficiais.",
       },
@@ -1594,7 +1594,7 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
         name: "Acampamento das Cinco Marcas",
         image: "",
         type: "Acampamento Misto",
-        region: "Oeste de The Union",
+        region: "Oeste de A União",
         description:
           "Acampamento habitado por usuários das cinco Marcas. Cada grupo mantém seus próprios líderes, alojamentos e interesses, mas todos cooperam para combater criaturas e manifestações de Miasma.",
       },
@@ -1609,7 +1609,7 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
       },
 
       // =========================================================
-      // THE UNION — NÚCLEO DE MIASMA
+      // A União — NÚCLEO DE MIASMA
       // =========================================================
 
       {
@@ -1617,13 +1617,13 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
         name: "Núcleo Violeta",
         image: "",
         type: "Zona de Miasma Intenso",
-        region: "Interior de The Union",
+        region: "Interior de A União",
         description:
           "Ponto onde o Miasma apresenta a maior concentração conhecida da região. Criaturas surgem com frequência, habilidades tornam-se instáveis e o próprio ambiente pode mudar de forma repentina.",
       },
 
       // =========================================================
-      // THE UNION — FORTALEZA E ACAMPAMENTOS
+      // A União — FORTALEZA E ACAMPAMENTOS
       // =========================================================
 
       {
@@ -1631,7 +1631,7 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
         name: "Fortaleza de Solbruma",
         image: "",
         type: "Fortaleza do Manifesto em Território Unificado",
-        region: "Setor oriental de The Union",
+        region: "Setor oriental de A União",
         description:
           "Fortaleza construída pelo Manifesto para apoiar o Forte do Limiar Dourado. Apesar de pertencer à facção, precisa receber representantes de diferentes territórios, provocando conflitos sobre comando, recursos e acesso.",
       },
@@ -1664,7 +1664,7 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
       },
 
       // =========================================================
-      // THE UNION — CIDADE ABANDONADA
+      // A União — CIDADE ABANDONADA
       // =========================================================
 
       {
@@ -1672,7 +1672,7 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
         name: "Claralume, a Cidade Vazia",
         image: "",
         type: "Cidade Abandonada do Manifesto",
-        region: "Extremo norte de The Union",
+        region: "Extremo norte de A União",
         description:
           "Antiga cidade do Manifesto completamente vazia. As construções permanecem de pé e objetos foram deixados dentro das casas, mas não existem sinais claros de batalha. A população desapareceu ou abandonou o local repentinamente.",
       },
@@ -1686,7 +1686,7 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
         name: "Ilha da Lágrima Clara",
         image: "",
         type: "Ilha Neutra de Recuperação",
-        region: "Costa norte de The Union",
+        region: "Costa norte de A União",
         description:
           "Ilha em formato de gota reconhecida por diferentes facções como uma área sem combate. Guerreiros expostos ao Miasma são enviados para o local antes de retornarem aos seus territórios.",
       },
@@ -1697,7 +1697,7 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
         type: "Hospital Neutro",
         region: "Ilha da Lágrima Clara",
         description:
-          "Instituição onde curandeiros e estudiosos de diferentes Marcas tratam guerreiros, civis e contaminados retirados de The Union. Alguns pacientes permanecem em quarentena por longos períodos.",
+          "Instituição onde curandeiros e estudiosos de diferentes Marcas tratam guerreiros, civis e contaminados retirados de A União. Alguns pacientes permanecem em quarentena por longos períodos.",
       },
       {
         collectionId: "fronteira-area-3",
@@ -1706,7 +1706,7 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
         type: "Farol",
         region: "Ilha da Lágrima Clara",
         description:
-          "Grande farol utilizado para orientar embarcações durante tempestades e manifestações de Miasma. Sua luz pode ser vista a partir dos acampamentos do norte de The Union.",
+          "Grande farol utilizado para orientar embarcações durante tempestades e manifestações de Miasma. Sua luz pode ser vista a partir dos acampamentos do norte de A União.",
       },
       {
         collectionId: "fronteira-area-3",
@@ -1715,7 +1715,7 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
         type: "Memorial",
         region: "Ilha da Lágrima Clara",
         description:
-          "Jardim dedicado às pessoas desaparecidas em The Union cujos corpos nunca foram encontrados. Cada monumento representa um desaparecido registrado pelas facções.",
+          "Jardim dedicado às pessoas desaparecidas em A União cujos corpos nunca foram encontrados. Cada monumento representa um desaparecido registrado pelas facções.",
       },
     ],
 
@@ -1738,7 +1738,7 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
         description:
           "Filha de Henrietta e Elio e figura central da campanha. Sua localização inicial é a Cidade Catedral, durante o Festival da Flor. Após sua revelação, seu destino dependerá das decisões dos jogadores e das facções.",
         skills:
-          "Autoridade Real. Luz Nobre. Dupla Marca. Resistência ao Miasma. Presença da Donzela.",
+          "Autoridade Real -> Jogue um d20, depois divida o resultado por 3, receba Aumento em PRE baseado no resultado do dado. Ressonância Dupla -> Gera 2 PE para o grupo todo. Eclipse Linear -> .Resistência ao Miasma. Presença da Donzela.",
         stats: {
           level: 22,
           hp: 220,
@@ -1806,7 +1806,7 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
         personality:
           "Inteligente, vaidoso e teatral. Gosta de demonstrar conhecimento, mas evita situações em que possa perder o controle.",
         secret:
-          "Descobriu registros sobre manifestações incomuns da Marca do Manifesto e suspeita que Eleonora não seja o primeiro membro da família a possuir uma segunda Marca.",
+          "Descobriu registros sobre manifestações incomuns da Marca do Manifesto e suspeita que Eleonora tenha passado pela anomalia de gêmeos parasita, por isso ela teria duas marcas.",
         description:
           "Primo de Eleonora e irmão de Rose. Atua como estudioso e representante mágico da família real, circulando entre a Cidade Catedral, Songbird e Auréon.",
         skills:
@@ -1931,7 +1931,7 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
         personality:
           "Disciplinado, desconfiado e comprometido com os protocolos de segurança.",
         secret:
-          "Recebeu uma lista secreta de convidados que devem ser observados ou detidos caso tentem deixar a Cidade Catedral após o Festival.",
+          "Recebeu uma lista secreta de convidados que devem ser observados ou detidos caso tentem deixar a Cidade Catedral após o Festival. Todos são autoridades do Sindicato.",
         description:
           "Comanda os guardas responsáveis pela Ponte da Catedral. Durante o Festival, precisa lidar com documentos falsificados, visitantes da Marca Oculto e ordens contraditórias vindas da família real.",
         skills:
@@ -2095,7 +2095,7 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
         personality:
           "Bruto, protetor e desconfiado de qualquer autoridade nobre.",
         secret:
-          "Pretende atravessar o Miasma mesmo sem autorização, pois acredita que uma pessoa próxima ainda está viva dentro da cratera.",
+          "Pretende atravessar o Miasma mesmo sem autorização, pois acredita que uma pessoa próxima ainda está viva dentro da cratera. Ele está em busca de sua amada, Maria",
         description:
           "Um dos líderes mais respeitados do Acampamento dos Errantes. Representa aventureiros, sobreviventes e guerreiros que rejeitam o controle do Manifesto.",
         skills:
@@ -3569,7 +3569,7 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
         secret:
           "Suspeita que determinadas manifestações de Miasma estejam sendo provocadas ou intensificadas por experimentos realizados dentro do próprio Manifesto.",
         description:
-          "Primo de Elio e principal autoridade militar da Área 3. Costuma permanecer em Belária durante os conselhos de guerra, mas acompanha pessoalmente operações no Forte do Limiar Dourado e em The Union.",
+          "Primo de Elio e principal autoridade militar da Área 3. Costuma permanecer em Belária durante os conselhos de guerra, mas acompanha pessoalmente operações no Forte do Limiar Dourado e em A União.",
         skills:
           "Comando de Guerra. Formação Radiante. Lâmina do General. Estratégia de Cerco. Autoridade Real.",
         stats: {
@@ -3593,7 +3593,7 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
         secret:
           "Ocultou o número verdadeiro de soldados perdidos em uma recente manifestação para evitar que o Manifesto ordenasse o abandono do forte.",
         description:
-          "Comandante responsável pelo Forte do Limiar Dourado e pelas Três Sentinelas de Marfim. Subordinado diretamente a Aldwin, coordena a entrada de tropas e suprimentos em The Union.",
+          "Comandante responsável pelo Forte do Limiar Dourado e pelas Três Sentinelas de Marfim. Subordinado diretamente a Aldwin, coordena a entrada de tropas e suprimentos em A União.",
         skills:
           "Muralha Radiante. Investida Fronteiriça. Comando de Sentinelas. Golpe Solar.",
         stats: {
@@ -3622,7 +3622,7 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
         secret:
           "Descobriu que pacientes considerados incuráveis estão sendo transferidos secretamente para o Instituto de Maré-Luz sem autorização das famílias.",
         description:
-          "Diretora do maior hospital da Área 3. Utiliza suas entoações para aliviar dores, estabilizar feridos e coordenar equipes médicas. Pode viajar até The Union durante grandes operações de resgate.",
+          "Diretora do maior hospital da Área 3. Utiliza suas entoações para aliviar dores, estabilizar feridos e coordenar equipes médicas. Pode viajar até A União durante grandes operações de resgate.",
         skills:
           "Canto Restaurador. Harmonia Vital. Voz Tranquilizadora. Comando Médico.",
         stats: {
@@ -3675,7 +3675,7 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
         secret:
           "Utilizou a própria Marca para entrar em contato com uma amostra retirada do Núcleo Violeta. Desde então, consegue sentir quando novas criaturas estão prestes a surgir.",
         description:
-          "Pesquisador especializado nos efeitos físicos do Miasma e em materiais retirados de The Union. Trabalha no Instituto de Maré-Luz e participa de expedições de coleta protegidas pela Base de Salferro.",
+          "Pesquisador especializado nos efeitos físicos do Miasma e em materiais retirados de A União. Trabalha no Instituto de Maré-Luz e participa de expedições de coleta protegidas pela Base de Salferro.",
         skills:
           "Adaptação Instintiva. Análise de Amostras. Resistência Química. Percepção de Manifestação.",
         stats: {
@@ -3702,7 +3702,7 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
         personality:
           "Prático, diplomático e acostumado a defender os trabalhadores diante de autoridades militares.",
         secret:
-          "Utiliza passagens ocultas sob as plantações para transportar alimentos diretamente até comunidades de The Union sem passar pelo controle do Manifesto.",
+          "Utiliza passagens ocultas sob as plantações para transportar alimentos diretamente até comunidades de A União sem passar pelo controle do Manifesto.",
         description:
           "Representante dos agricultores e responsáveis pelos armazéns de Campoluz. Apesar de possuir a Marca Oculto, conquistou confiança por manter a produção funcionando durante crises e ataques.",
         skills:
@@ -3733,7 +3733,7 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
         secret:
           "Acredita que a Flor não deseja a destruição dos Ocultos e preserva textos religiosos que contradizem parte da doutrina oficial do Manifesto.",
         description:
-          "Principal sacerdote do Templo das Sete Pétalas. Oferece bênçãos aos guerreiros antes de entrarem em The Union e participa como conselheiro espiritual nas reuniões de Belária.",
+          "Principal sacerdote do Templo das Sete Pétalas. Oferece bênçãos aos guerreiros antes de entrarem em A União e participa como conselheiro espiritual nas reuniões de Belária.",
         skills:
           "Bênção das Sete Pétalas. Luz Protetora. Leitura Sagrada. Purificação Branda.",
         stats: {
@@ -3911,7 +3911,7 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
       },
 
       // =========================================================
-      // THE UNION — COMANDO DA OPERAÇÃO CONJUNTA
+      // A União — COMANDO DA OPERAÇÃO CONJUNTA
       // =========================================================
 
       {
@@ -3926,7 +3926,7 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
         secret:
           "Pretende abandonar ordens oficiais e evacuar toda a linha de defesa caso o Núcleo Violeta ultrapasse determinado nível, mesmo que isso entregue territórios aos monstros.",
         description:
-          "Comandante escolhido para liderar uma das maiores operações conjuntas de The Union. Sua autoridade é reconhecida temporariamente por Manifesto, Sindicato e samurais.",
+          "Comandante escolhido para liderar uma das maiores operações conjuntas de A União. Sua autoridade é reconhecida temporariamente por Manifesto, Sindicato e samurais.",
         skills:
           "Comando Instintivo. Rompimento de Linha. Rugido de União. Resistência de Cerco.",
         stats: {
@@ -3944,13 +3944,13 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
         image: "",
         brand: "Oculto",
         race: "Humano",
-        occupation: "Representante do Sindicato em The Union",
+        occupation: "Representante do Sindicato em A União",
         personality:
           "Diplomático, desconfiado e cuidadoso para não revelar mais informações do que o necessário.",
         secret:
           "Conhece a existência das Galerias do Subvéu e utiliza os túneis para enviar relatórios que não passam pelo comando conjunto.",
         description:
-          "Representante oficial do Sindicato nas operações de The Union. Participa da divisão de recursos, do planejamento das patrulhas e das negociações com o Manifesto.",
+          "Representante oficial do Sindicato nas operações de A União. Participa da divisão de recursos, do planejamento das patrulhas e das negociações com o Manifesto.",
         skills:
           "Véu Diplomático. Comunicação Oculta. Constructo de Defesa. Negociação Estratégica.",
         stats: {
@@ -3968,13 +3968,13 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
         image: "",
         brand: "Manifesto",
         race: "Humano",
-        occupation: "Representante do Manifesto em The Union",
+        occupation: "Representante do Manifesto em A União",
         personality:
           "Formal, orgulhoso e determinado a preservar a autoridade do Manifesto mesmo dentro da região unificada.",
         secret:
           "Recebeu ordens para garantir que qualquer descoberta sobre o Núcleo Violeta seja entregue primeiro ao Instituto de Maré-Luz.",
         description:
-          "Representante político e militar do Manifesto dentro de The Union. Mantém sua base na Fortaleza de Solbruma e frequentemente entra em conflito com Vladimir.",
+          "Representante político e militar do Manifesto dentro de A União. Mantém sua base na Fortaleza de Solbruma e frequentemente entra em conflito com Vladimir.",
         skills:
           "Autoridade Radiante. Ordem de Formação. Barreira Diplomática. Luz de Comando.",
         stats: {
@@ -3992,7 +3992,7 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
         image: "",
         brand: "Respiração",
         race: "Humano",
-        occupation: "Representante dos Samurais em The Union",
+        occupation: "Representante dos Samurais em A União",
         personality:
           "Sereno, imparcial e intolerante com decisões que coloquem soldados em risco por motivos políticos.",
         secret:
@@ -4012,7 +4012,7 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
       },
 
       // =========================================================
-      // THE UNION — CURA E PESQUISA
+      // A União — CURA E PESQUISA
       // =========================================================
 
       {
@@ -4027,7 +4027,7 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
         secret:
           "Consegue retirar pequenas quantidades de Miasma do corpo de uma pessoa e transferi-las temporariamente para si mesma.",
         description:
-          "Curandeira élfica que atua entre os acampamentos de The Union e a Casa do Repouso. Recusa-se a trabalhar exclusivamente para qualquer facção.",
+          "Curandeira élfica que atua entre os acampamentos de A União e a Casa do Repouso. Recusa-se a trabalhar exclusivamente para qualquer facção.",
         skills:
           "Transferência de Contaminação. Cura Instintiva. Resistência Élfica. Medicina de Campo.",
         stats: {
@@ -4065,7 +4065,7 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
       },
 
       // =========================================================
-      // THE UNION — CAÇADORES E GUERREIROS
+      // A União — CAÇADORES E GUERREIROS
       // =========================================================
 
       {
@@ -4104,7 +4104,7 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
         secret:
           "Procura membros de seu antigo grupo que desapareceram durante uma manifestação. Ele acredita que alguns foram transformados em criaturas do Miasma.",
         description:
-          "Antropomórfico de corpo humanoide e características lupinas. É um dos combatentes mais conhecidos dos acampamentos de The Union e costuma liderar caçadas próximas ao Núcleo Violeta.",
+          "Antropomórfico de corpo humanoide e características lupinas. É um dos combatentes mais conhecidos dos acampamentos de A União e costuma liderar caçadas próximas ao Núcleo Violeta.",
         skills:
           "Faro de Miasma. Fúria Bestial. Caçada em Grupo. Resistência Selvagem.",
         stats: {
@@ -4118,7 +4118,7 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
       },
 
       // =========================================================
-      // THE UNION — CLARALUME
+      // A União — CLARALUME
       // =========================================================
 
       {
@@ -4147,7 +4147,7 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
       },
 
       // =========================================================
-      // THE UNION — OPERAÇÕES CLANDESTINAS
+      // A União — OPERAÇÕES CLANDESTINAS
       // =========================================================
 
       {
@@ -4185,7 +4185,7 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
         secret:
           "Transporta mercadorias pelas Galerias do Subvéu e esconde pessoas procuradas entre seus carregamentos.",
         description:
-          "Comerciante responsável por abastecer os acampamentos de The Union com alimentos, equipamentos, remédios e objetos difíceis de encontrar.",
+          "Comerciante responsável por abastecer os acampamentos de A União com alimentos, equipamentos, remédios e objetos difíceis de encontrar.",
         skills:
           "Armazém Sombrio. Rede Comercial. Contrabando. Barganha de Campo.",
         stats: {
@@ -4214,7 +4214,7 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
         secret:
           "Mantém uma rota não registrada até uma pequena enseada próxima a Claralume, utilizada para retirar sobreviventes e transportar mensagens sem conhecimento das facções.",
         description:
-          "Capitão responsável por transportar alimentos, medicamentos, feridos e curandeiros entre a Ilha da Lágrima Clara, Porto Boreal e os acampamentos de The Union.",
+          "Capitão responsável por transportar alimentos, medicamentos, feridos e curandeiros entre a Ilha da Lágrima Clara, Porto Boreal e os acampamentos de A União.",
         skills:
           "Respiração da Maré. Navegação de Risco. Resgate Marítimo. Comando de Tripulação.",
         stats: {
@@ -4821,7 +4821,7 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
       },
 
       // =========================================================
-      // RAIDS — ÁREA 3 / THE UNION
+      // RAIDS — ÁREA 3 / A União
       // =========================================================
 
       {
@@ -4852,7 +4852,7 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
         skills:
           "Sopro da Nevasca. Olho Escarlate. Escamas de Gelo. Tempestade Branca. Voo Boreal. Ruptura Glacial.",
         description:
-          "Dragão branco que habita os setores congelados de The Union. Seu único olho vermelho consegue acompanhar movimentos através da neve, do Miasma e de estruturas sólidas.",
+          "Dragão branco que habita os setores congelados de A União. Seu único olho vermelho consegue acompanhar movimentos através da neve, do Miasma e de estruturas sólidas.",
         stats: {
           level: 36,
           hp: 2300,
@@ -4928,7 +4928,7 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
         skills:
           "Marcha Tirânica. Pisão Sísmico. Investida sem Corpo. Salto de Execução. Onda de Impacto.",
         description:
-          "Pernas colossais que atravessam The Union em busca das demais partes. Seu deslocamento provoca tremores e destrói estruturas mesmo quando não está atacando diretamente.",
+          "Pernas colossais que atravessam A União em busca das demais partes. Seu deslocamento provoca tremores e destrói estruturas mesmo quando não está atacando diretamente.",
         stats: {
           level: 30,
           hp: 1000,
@@ -5138,7 +5138,7 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
         skills:
           "Corpo Contaminado. Cuspe Roxo. Contaminação Leve. Divisão Miasmática.",
         description:
-          "Slime alterado pelo contato com Miasma. Pode surgir em qualquer região contaminada, incluindo a Cratera, as Cinzas Recentes e The Union.",
+          "Slime alterado pelo contato com Miasma. Pode surgir em qualquer região contaminada, incluindo a Cratera, as Cinzas Recentes e A União.",
         stats: {
           level: 4,
           hp: 89,
@@ -5725,7 +5725,7 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
         skills:
           "Pulso Roxo. Contaminação. Corpo Mutável. Névoa Interna. Regeneração Miasmática.",
         description:
-          "Aberração completamente alterada pelo Miasma. É comum em zonas contaminadas, ruínas recentes e The Union.",
+          "Aberração completamente alterada pelo Miasma. É comum em zonas contaminadas, ruínas recentes e A União.",
         stats: {
           level: 13,
           hp: 255,
@@ -6577,7 +6577,7 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
       },
 
       // =========================================================
-      // ITENS NARRATIVOS — THE UNION
+      // ITENS NARRATIVOS — A União
       // =========================================================
 
       {
@@ -6788,15 +6788,15 @@ const premadeCampaignSources: PremadeCampaignSource[] = [
         chronology: "História Passada",
         date: "Data exata desconhecida",
         description:
-          "A população de Claralume desapareceu sem deixar explicações claras. A cidade permanece vazia dentro de The Union, e diferentes facções apresentam versões contraditórias sobre o que aconteceu.",
+          "A população de Claralume desapareceu sem deixar explicações claras. A cidade permanece vazia dentro de A União, e diferentes facções apresentam versões contraditórias sobre o que aconteceu.",
       },
       {
         collectionId: "eventos-principais",
-        title: "A Formação de The Union",
+        title: "A Formação de A União",
         chronology: "História Passada",
         date: "Após o aumento do Miasma na Área 3",
         description:
-          "A crescente incidência de Miasma obrigou Manifesto, Sindicato, samurais e guerreiros independentes a cooperarem na Área 3. A aliança emergencial recebeu o nome de The Union, embora as facções continuem mantendo interesses próprios.",
+          "A crescente incidência de Miasma obrigou Manifesto, Sindicato, samurais e guerreiros independentes a cooperarem na Área 3. A aliança emergencial recebeu o nome de A União, embora as facções continuem mantendo interesses próprios.",
       },
       {
         collectionId: "eventos-principais",
