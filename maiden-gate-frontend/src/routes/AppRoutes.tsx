@@ -30,10 +30,10 @@ import ServerErrorPage from "../features/errors/pages/ServerErrorPage";
 import ProtectedRoute from "./ProtectedRoute";
 import RoleProtectedRoute from "./RoleProtectedRoute";
 
-export default function AppRoutes() {
+export default function AppRoutes() { {/* importa cada página do app */}
   return (
-    <Routes>
-      <Route element={<MainLayout />}>
+    <Routes> {/* elemento pai que agrupa as rotas */}
+      <Route element={<MainLayout />}> {/* rotas públicas herdam o MainLayout */}
         <Route path="/" element={<HomePage />} />
         <Route path="/rules" element={<RulesPage />} />
         <Route path="/tools" element={<ToolsPage />} />
@@ -43,9 +43,9 @@ export default function AppRoutes() {
         <Route path="/cookies" element={<CookiesPage />} />
       </Route>
 
-      <Route element={<ProtectedRoute />}>
-        <Route element={<DashboardLayout />}>
-          <Route element={<RoleProtectedRoute allowedRole="master" />}>
+      <Route element={<ProtectedRoute />}> {/* rotas privadas herdam o componente que protege as rotas e retorna o outlet*/}
+        <Route element={<DashboardLayout />}> 
+          <Route element={<RoleProtectedRoute allowedRole="master" />}> {/* retorno/proteção por tipo de usuário */}
             <Route path="/dashboard/master" element={<MasterDashboard />} />
           </Route>
 
@@ -83,6 +83,7 @@ export default function AppRoutes() {
         </Route>
       </Route>
 
+      {/* rotas de erro */}
       <Route path="/unauthorized" element={<UnauthorizedPage />} />
       <Route path="/forbidden" element={<ForbiddenPage />} />
       <Route path="/server-error" element={<ServerErrorPage />} />
