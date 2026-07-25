@@ -17,7 +17,7 @@ class AuthController extends Controller
             'password' => 'required|string|min:6',
         ]);
 
-        $user = User::create($data);
+        $user = User::create($data); // senha automaticamente criptografada devido ao casts do model
 
         return response()->json(['message' => 'usuario criado',
         'user' => $user], 201);
@@ -29,6 +29,8 @@ class AuthController extends Controller
             'name' => 'required',
             'password' => 'required',
         ]);
+
+        // fluxo de verificação de login
 
         $user = User::where('name', $data['name'])->first();
 
