@@ -19,13 +19,16 @@ use App\Http\Controllers\Api\MarcasController;
 use App\Http\Controllers\Api\NpcsController;
 use App\Http\Controllers\Api\SkillsController;
 
+// endpoints disponíveis
+// a grande maioria é Route Model Biding, ou seja, puxa um registro do db baseado no ID passado na URL
+
 /*
 |--------------------------------------------------------------------------
 | Auth
 |--------------------------------------------------------------------------
 */
 
-Route::post('/register', [AuthController::class, 'register']);
+Route::post('/register', [AuthController::class, 'register']); 
 Route::post('/login', [AuthController::class, 'login']);
 
 /*
@@ -36,7 +39,7 @@ Route::post('/login', [AuthController::class, 'login']);
 
 /* Master*/
 
-Route::get('/users/{user}/master-campaigns', [CampaignController::class, 'masterCampaigns']);
+Route::get('/users/{user}/master-campaigns', [CampaignController::class, 'masterCampaigns']); 
 Route::get('/users/{user}/player-campaigns', [CampaignController::class, 'playerCampaigns']);
 Route::get('/users/{user}/characters', [CharacterController::class, 'byUser']);
 
@@ -83,8 +86,8 @@ Route::delete('/campaign-collections/{campaignCollection}', [CampaignCollectionC
 |--------------------------------------------------------------------------
 */
 
-Route::get('/campaigns/{campaign}/locations', [LocationsController::class, 'index']);
-Route::post('/campaigns/{campaign}/locations', [LocationsController::class, 'store']);
+Route::get('/campaigns/{campaign}/locations', [LocationsController::class, 'index']); 
+Route::post('/campaigns/{campaign}/locations', [LocationsController::class, 'store']); 
 
 Route::get('/campaigns/{campaign}/npcs', [NpcsController::class, 'index']);
 Route::post('/campaigns/{campaign}/npcs', [NpcsController::class, 'store']);
@@ -137,6 +140,8 @@ Route::delete('/characters/{character}/skills/{skill}', [CharacterSkillControlle
 | Basic resources
 |--------------------------------------------------------------------------
 */
+
+// com o apiResource o código já cria as ações básicas sem a necessidade de escrever várias rotas 
 
 Route::apiResource('/campaigns', CampaignController::class);
 Route::apiResource('/campaign-users', CampaignUserController::class)->except(['update']);

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState } from "react"; 
 import { register } from "../../services/AuthService";
 
 import Modal from "../../../../shared/components/Modal/Modal";
@@ -10,17 +10,18 @@ import PasswordInput from "../../../../shared/components/Form/PasswordInput";
 import Label from "../../../../shared/components/Form/Label";
 import Button from "../../../../shared/components/Form/Button";
 
-type RegisterModalProps = {
-  isOpen: boolean;
-  onClose: () => void;
-  onOpenLogin: () => void;
-};
+  type RegisterModalProps = {
+    isOpen: boolean;
+    onClose: () => void;
+    onOpenLogin: () => void;
+  };
 
 export default function RegisterModal({
   isOpen,
   onClose,
   onOpenLogin,
 }: RegisterModalProps) {
+  {/* valores iniciais dos itens que podem ser alterados */}
   const [type, setType] = useState("player");
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
