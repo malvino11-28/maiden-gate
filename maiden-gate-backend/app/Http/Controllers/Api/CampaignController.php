@@ -31,8 +31,15 @@ class CampaignController extends Controller
      */
     public function store(Request $request)
     {
-        $this->mergeJsonPayload($request);
+        /* 
+            essa bagunça ta funcionando assim:
+            1. Recebe FormData do React | 2. Lê o JSON armazenado no payload | 3. Mistura o JSON no request
+            4. Valida campanha e elementos | 5. Abre uma transação | 6. Cria a campanha | 7. Cria as coleções
+            8. Cria localizações/npcs/monstros/itens/eventos/habilidades | 9. salva imagens | 10. devolve tudo em JSON
+        */
+        $this->mergeJsonPayload($request); // descompacta o conteúdo recebido do react
 
+        // aqui na validação o laravel verifica se o conteúdo recebido respeita as diretrizes
         $data = $request->validate([
             'master_id' => 'required|exists:users,id',
 
@@ -116,8 +123,9 @@ class CampaignController extends Controller
             'monsters.*.image' => 'nullable',
         ]);
 
-        $campaign = DB::transaction(function () use ($data, $request) {
-            $campaign = Campaign::create([
+        // function () é apenas uma ponte para que as variáveis $data e $request possam ser lidas
+        $campaign = DB::transaction(function () use ($data, $request) { // abrindo transação, garantindo rollback em caso de erro
+            $campaign = Campaign::create([ // o model campaing insere os dados na tabela
                 'master_id' => $data['master_id'],
                 'name' => $data['name'],
                 'description' => $data['description'] ?? null,
@@ -128,7 +136,9 @@ class CampaignController extends Controller
                 'notes' => $data['notes'] ?? null,
             ]);
 
-            $collectionMap = [];
+            $collectionMap = []; // isso é básicamente um dicionário de tradução vazio
+            // quando o user cria as coleções, IDs temporários são criados
+            // então, a função dela é criar uma tabela de conversão, onde assim que de fato as coleções são salvas no db, elas se transformam no ID correto
 
             foreach ($data['collections'] ?? [] as $index => $collection) {
                 $createdCollection = $campaign->collections()->create([
@@ -147,9 +157,13 @@ class CampaignController extends Controller
             foreach ($data['locations'] ?? [] as $index => $location) {
                 $image = $location['image'] ?? null;
 
-                if ($request->hasFile("locations.$index.image")) {
-                    $image = $request->file("locations.$index.image")->store('locations', 'public');
+                if ($request->hasFile("locations.$index.image")) { // se tiver um arquivo 
+                    $image = $request->file("locations.$index.image")->store('locations', 'public'); // guarda apenas o caminho
+                    // o arquivo físico fica salvo no armazenamento público
                 }
+
+                // aqui o laravel preenche automaticamente o "campaign_id" de "locations" criando dessa forma
+                // isso vale para as outras tabelas também
 
                 $campaign->locations()->create([
                     'collection_id' => $this->resolveCollectionId($location, $collectionMap, $campaign->id),
@@ -353,7 +367,7 @@ class CampaignController extends Controller
         return response()->json($query->get());
     }
 
-    public function masterView(Campaign $campaign)
+    public function masterView(Campaign $campaign) // aqui é a função que determina a visão do mestre na página de campanha
     {
         $campaign->load([
             'master',
@@ -374,7 +388,7 @@ class CampaignController extends Controller
         return response()->json($campaign);
     }
 
-    public function playerView(Request $request, Campaign $campaign)
+    public function playerView(Request $request, Campaign $campaign) // o mesmo para o jogador, porém com filtros
     {
         $visibleOnly = function ($query) {
             $query->where('visible_to_players', true)->with('collection')->latest();
@@ -522,18 +536,21 @@ class CampaignController extends Controller
     private function mergeJsonPayload(Request $request): void
     {
         if (!$request->filled('payload')) {
-            return;
+            return; 
         }
 
+        // transformando a linha de texto recebida do React em um array organizado
         $payload = json_decode((string) $request->input('payload'), true);
 
-        if (!is_array($payload) || json_last_error() !== JSON_ERROR_NONE) {
-            throw ValidationException::withMessages([
+        if (!is_array($payload) || json_last_error() !== JSON_ERROR_NONE) { // verifica se o que foi transformado de fato virou um array
+        // e se também houve algum erro ao ler o texto
+
+            throw ValidationException::withMessages([ // então o laravel para a leitura
                 'payload' => 'Os dados da campanha estão em um formato inválido.',
             ]);
         }
 
-        $request->merge($payload);
+        $request->merge($payload); // descompacta o conteúdo do request em array 
     }
 
     private function resolveCollectionId(array $element, array $collectionMap, int $campaignId): ?int
