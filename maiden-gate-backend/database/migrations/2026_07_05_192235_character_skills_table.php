@@ -9,6 +9,8 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
+
+    // liga personagens e habilidades
     public function up(): void
     {
         Schema::create('character_skills', function (Blueprint $table) {

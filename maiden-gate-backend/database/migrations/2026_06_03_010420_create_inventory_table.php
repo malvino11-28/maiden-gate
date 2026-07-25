@@ -9,6 +9,8 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
+
+    // liga personagens e inventário
     public function up(): void
     {
         Schema::create('inventory', function (Blueprint $table) {

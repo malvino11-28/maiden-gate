@@ -10,7 +10,10 @@ return new class extends Migration
      * Run the migrations.
      */
     public function up(): void
+    // tabela intermediária
     {
+        // liga usuários e campanhas
+        // também guarda as colunas de solicitação de entrada
         Schema::create('campaign_user', function (Blueprint $table) {
             $table->id();
             $table->foreignId("campaign_id")->constrained("campaigns")->onDelete("cascade");

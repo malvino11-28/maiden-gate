@@ -21,6 +21,12 @@ return new class extends Migration
             $table->timestamps();
         });
 
+        /* principais relacionamentos desta tabela:
+            possui vários personagens
+            pode mestrar várias campanhas
+            participa de campanhas por campaign_user
+        */
+
         Schema::create('sessions', function (Blueprint $table) {
             $table->string('id')->primary();
             $table->foreignId('user_id')->nullable()->index();

@@ -48,6 +48,13 @@ return new class extends Migration
             $table->integer("pr_max")->default(1);
         
             $table->timestamps();
+
+            /* relacionamentos principais:
+                pertence a um usuário
+                pode pertencer a uma marca (apesar de que é um campo obrigatório no front)
+                possui inventário
+                possui várias habilidades
+            */
         });
     }
 
