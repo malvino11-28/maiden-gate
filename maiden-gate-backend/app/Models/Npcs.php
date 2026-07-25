@@ -23,7 +23,7 @@ class Npcs extends Model
         'stats',
     ];
 
-    protected $casts = [
+    protected $casts = [ // convertendo tipos
         'visible_to_players' => 'boolean',
         'skills' => 'array',
         'stats' => 'array',

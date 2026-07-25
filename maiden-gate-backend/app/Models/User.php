@@ -21,9 +21,9 @@ class User extends Authenticatable
     protected $hidden = [
         'password',
         'remember_token',
-    ];
+    ]; // indicando o que não deve aparecer no json
 
-    protected function casts(): array
+    protected function casts(): array // convertendo tipos
     {
         return [
             'password' => 'hashed',

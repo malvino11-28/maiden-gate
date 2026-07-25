@@ -4,9 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Campaign extends Model
+// models representam as tabelas do db
+
+class Campaign extends Model // transformando tabelas em classes para serem manipuladas
 {
-    protected $fillable = [
+    protected $fillable = [ // $fillable indica os campos que podem ser preenchidos com 'create()' ou 'update()'
         'master_id',
         'current_location_id',
         'name',
@@ -16,29 +18,30 @@ class Campaign extends Model
         'players',
         'status',
         'notes'
-    ];
+    ]; // sem estar aqui, o laravel não aceita o campo por atribuição em massa
 
     public function master() 
     {
-        return $this->belongsTo(User::class, 'master_id');
+        return $this->belongsTo(User::class, 'master_id'); // "a campanha" pertence a "um usuário (mestre_id)"
     }
 
     public function characters() 
     {
-        return $this->hasMany(Character::class);
+        return $this->hasMany(Character::class); // "uma campanha" tem muitos "personagens"
     }
 
     public function users() 
     {
-        return $this->belongsToMany(User::class, 'campaign_user')
-            ->withPivot([
+        return $this->belongsToMany(User::class, 'campaign_user') // "uma campanha" tem muitos "usuários", e "um usuário" pode participar de "muitas campanhas"
+            ->withPivot([ // criando a tabela pivô que cruza os dados, "user_id x está na campaign_id y"
                 'role',
                 'character_id',
                 'status',
                 'responded_at',
                 'response_message',
-            ])
-            ->withTimestamps();
+            ]) // além de cruzar os dados, ela guarda informações extras sobre o vínculo
+            // no código isso é usado com "pivot->role" por exemplo (com foreach para navegar)
+            ->withTimestamps(); // criando a tabela pivô com o timestamp
     }
     
     public function collections()
