@@ -39,10 +39,10 @@ class DiceRollController extends Controller
         $results = [];
 
         for ($i = 0; $i < $data['quantity']; $i++) {
-            $results[] = random_int(1, $data['dice']);
+            $results[] = random_int(1, $data['dice']); // gera valores aleatórios baseado no dado escolhido e na quantidade
         }
 
-        $total = array_sum($results) + $modifier;
+        $total = array_sum($results) + $modifier; // aplica modificador ao resultado
         $critical = $data['dice'] === 20 && in_array(20, $results, true);
         $failure = $data['dice'] === 20 && in_array(1, $results, true);
 
