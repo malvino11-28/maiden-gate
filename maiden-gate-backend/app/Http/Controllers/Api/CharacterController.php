@@ -98,7 +98,7 @@ class CharacterController extends Controller
                 return [$skillId => ['unlocked' => true, 'equipped' => true]];
             })->all();
 
-            $character->skills()->syncWithoutDetaching($syncPayload);
+            $character->skills()->syncWithoutDetaching($syncPayload); // vinculando a tabela pivô
         }
 
         return response()->json(
